@@ -435,11 +435,19 @@ h1 .l2{display:block}
     tiltX = Math.max(-1, Math.min(1, (e.gamma || 0)/26));
     tiltY = Math.max(-1, Math.min(1, ((e.beta || 0) - 45)/26)); }
   addEventListener("deviceorientation", onOrient);
-  function askTilt(){ try { const D = window.DeviceOrientationEvent;
-    if (D && typeof D.requestPermission === "function") D.requestPermission().then(s => { if (s === "granted") addEventListener("deviceorientation", onOrient); }).catch(()=>{});
-  } catch(e){} }
-  addEventListener("pointerdown", askTilt, { once:true });
-  addEventListener("touchstart", askTilt, { once:true, passive:true });
+  let askedTilt = false;
+  function askTilt(){
+    if (askedTilt || hasTilt) return;
+    try { const D = window.DeviceOrientationEvent;
+      if (D && typeof D.requestPermission === "function"){
+        askedTilt = true;
+        D.requestPermission().then(s => { if (s === "granted") addEventListener("deviceorientation", onOrient); else askedTilt = false; }).catch(() => { askedTilt = false; });
+      }
+    } catch(e){ askedTilt = false; }
+  }
+  addEventListener("pointerdown", askTilt);
+  addEventListener("touchend", askTilt, { passive:true });
+  addEventListener("click", askTilt);
   function bgDraw(now){
     requestAnimationFrame(bgDraw);
     const dt = now - bgLast;

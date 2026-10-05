@@ -61,12 +61,18 @@ a{color:inherit}
 .nav a{font-size:12px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
 .nav a:hover{opacity:1;color:var(--accent)}
 .menu-btn{position:relative;width:34px;height:34px;padding:6px;background:none;border:0;cursor:pointer;display:grid;place-items:center;pointer-events:auto}
-.menu-btn img{width:22px;height:22px;transition:transform .4s cubic-bezier(.2,.7,.2,1),filter .3s}
-.menu-btn:not(.active):hover img{transform:scale(1.15) rotate(90deg)}
-.menu-btn.active img{transform:rotate(135deg) scale(1.08);filter:drop-shadow(0 0 8px rgba(43,159,224,.8))}
+.menu-btn .mico{width:22px;height:22px;overflow:visible;transition:transform .55s cubic-bezier(.3,.8,.25,1),filter .3s}
+.menu-btn .mico .c{transition:transform .55s cubic-bezier(.34,1.5,.5,1);transform-origin:center}
+.menu-btn:not(.active):hover .mico{transform:scale(1.12) rotate(90deg)}
+.menu-btn.active .mico{transform:rotate(225deg) scale(.92);filter:drop-shadow(0 0 7px rgba(43,159,224,.85))}
+.menu-btn.active .mico .c1{transform:translate(3.4px,3.4px)}
+.menu-btn.active .mico .c2{transform:translate(-3.4px,3.4px)}
+.menu-btn.active .mico .c3{transform:translate(-3.4px,-3.4px)}
+.menu-btn.active .mico .c4{transform:translate(3.4px,-3.4px)}
 .menu-btn .pulse{position:absolute;inset:-3px;border-radius:50%;border:1.5px solid var(--accent);opacity:0;pointer-events:none}
 .menu-btn.active .pulse{animation:pulseRing .7s cubic-bezier(.2,.7,.2,1)}
-@keyframes pulseRing{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(3)}}
+.menu-btn.active .pulse.p2{animation:pulseRing .7s cubic-bezier(.2,.7,.2,1) .12s}
+@keyframes pulseRing{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(3.2)}}
 /* ---------- full menu overlay ---------- */
 .menu{position:fixed;inset:0;z-index:29;background:rgba(5,8,12,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   clip-path:circle(0px at calc(100% - 48px) 46px);transition:clip-path .75s cubic-bezier(.76,0,.24,1);pointer-events:none;display:grid;place-items:center}
@@ -186,15 +192,17 @@ h1 .l2{display:block}
   h1{font-size:clamp(54px,16vw,110px)}
   .kicker{font-size:9px;letter-spacing:.3em}
   /* on phones the name line sits under the title, clear of the logo and menu */
-  .hero-head .kicker{font-size:8.5px;letter-spacing:.26em;max-width:min(84vw,320px);margin:0 auto 26px;line-height:1.9;text-align:center}
+  .hero-head .kicker{font-size:8.5px;letter-spacing:.26em;max-width:min(84vw,320px);margin:0 auto 44px;line-height:1.9;text-align:center}
   .warm{max-width:10.5em;font-size:13px;bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
   .hero-foot .cue .label{display:none}
   .big{font-size:clamp(40px,11.6vw,68px);z-index:6}
-  .big.s1{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 250px);right:var(--gutter)}
-  .big.s2{bottom:calc(env(safe-area-inset-bottom,0px) + 120px);left:var(--gutter)}
-  .small.s1,.small.s2{top:auto;width:auto;left:var(--gutter);right:var(--gutter);max-width:none;font-size:14px;line-height:1.5}
-  .small.s1{bottom:calc(env(safe-area-inset-bottom,0px) + 28px)}
-  .small.s2{bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
+  /* both chapter titles share one level — s1 left, s2 right — each with its paragraph grouped tight below */
+  .big.s1{top:53svh;bottom:auto;left:var(--gutter);right:auto;text-align:left}
+  .big.s2{top:53svh;bottom:auto;right:var(--gutter);left:auto;text-align:right}
+  .small.s1,.small.s2{bottom:auto;width:auto;font-size:14px;line-height:1.5;max-width:78vw;
+    top:calc(53svh + clamp(40px,11.6vw,68px)*1.76 + 14px)}
+  .small.s1{left:var(--gutter);right:auto;text-align:left}
+  .small.s2{right:var(--gutter);left:auto;text-align:right}
   .small::before{margin-bottom:10px}
   .file span{font-size:9.5px;padding:4px 7px}
   .chfade{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:5;pointer-events:none;opacity:0;
@@ -221,7 +229,7 @@ h1 .l2{display:block}
       <li><a href="#clients">Clients</a></li>
       <li><a href="#method">The Method</a></li>
     </ul>
-    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><span class="pulse"></span><img src="img/menu.png" alt=""></button>
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><span class="pulse"></span><span class="pulse p2"></span><svg class="mico" viewBox="0 0 24 24" fill="none" stroke="#2b9fe0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="c c1" d="M3 8V3h5"/><path class="c c2" d="M16 3h5v5"/><path class="c c3" d="M21 16v5h-5"/><path class="c c4" d="M8 21H3v-5"/></svg></button>
   </nav>
 </header>
 
@@ -253,7 +261,7 @@ h1 .l2{display:block}
       <div class="hero" id="hero">
         <div class="hero-head">
           <p class="kicker">Mo<i>|</i>Brand strategist &amp; creative director</p>
-          <h1 class="intro"><span class="t-script big-script">This</span><span class="l2"><span class="t-sans">Is Mo.</span></span></h1>
+          <h1 class="intro"><span class="t-script big-script">This</span><span class="l2"><span class="t-sans">Is Mo</span></span></h1>
         </div>
       </div>
 
@@ -271,7 +279,7 @@ h1 .l2{display:block}
       <div class="chfade" id="chfade"></div>
 
       <div class="small s1" data-ch="0">
-        <p>For fifteen years, I've been building brands from Beirut to Dubai, Salzburg, New York and more. Pizza shops, burger trucks, diamond houses, event companies, steel factories and more. Different products, same problem: nobody could tell them apart.</p>
+        <p>Fifteen years building brands from Beirut to Dubai, Salzburg and New York — pizza shops to diamond houses to event companies. Front lines, every time. Different products, same problem: nobody could tell them apart.</p>
         <p><strong>That's the job. Make you the one they can't confuse with anyone else.</strong></p>
       </div>
       <div class="small s2" data-ch="1">
@@ -425,7 +433,7 @@ h1 .l2{display:block}
         gx: (c-1)*g + (Math.random()-.5)*g*.5,
         gy: (r-1)*g + (Math.random()-.5)*g*.5,
         depth: .4 + Math.random()*.6, ph: Math.random()*6.28, sp: .4 + Math.random()*1.1,
-        a: .13 + Math.random()*.15, hot: Math.random()*1000
+        a: .17 + Math.random()*.16, hot: Math.random()*1000
       });
     }
   }
@@ -789,9 +797,16 @@ h1 .l2{display:block}
         el.style.opacity = o.toFixed(3);
         el.style.visibility = o < .01 ? "hidden" : "visible";
         const dir = i === 0 ? -1 : 1;
-        const drift = (t - (a + b) / 2) * -90;
-        const tx = mobile ? 0 : (1 - o) * 50 * dir;
-        el.style.transform = `translate3d(${tx.toFixed(1)}px,${((1 - o) * 24 + drift).toFixed(1)}px,0)`;
+        let tx, ty;
+        if (mobile){
+          tx = 0;
+          if (i === 0){ const prog = clamp01((t - a)/(b - a)); ty = (.5 - prog) * 230; } // title 2 parallaxes up through, then fades
+          else { ty = (1 - o) * 18; }                                                    // title 3 simply fades in/out
+        } else {
+          const drift = (t - (a + b) / 2) * -90;
+          tx = (1 - o) * 50 * dir; ty = (1 - o) * 24 + drift;
+        }
+        el.style.transform = `translate3d(${tx.toFixed(1)}px,${ty.toFixed(1)}px,0)`;
       });
       chfade.style.opacity = anyCh.toFixed(3);
 
@@ -800,7 +815,10 @@ h1 .l2{display:block}
       files.forEach(a => {
         const [bx, by] = (mobile ? a.dataset.m : a.dataset.d).split(",").map(Number);
         const sp = +a.dataset.sp;
-        const y = (by - (t - .26) / .66 * sp * (mobile ? .5 : 1)) * H;
+        const prog = (t - .26) / .66;
+        // mobile: rise from below the page, parallax up and out the top; desktop: unchanged
+        const y = mobile ? ((1.12 + sp*.32) - prog*(1.44 + sp*.32)) * H
+                         : (by - prog * sp) * H;
         const x = bx * W + Math.sin(t*9 + sp*7) * 8;
         const clear = ss(barZone, barZone + 50, y);
         a.style.opacity = (fo * clear).toFixed(3);

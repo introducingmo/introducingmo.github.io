@@ -358,9 +358,7 @@ h1 .l2{display:block}
       const el = document.createElement("span"); el.className = "ch"; el.textContent = c;
       el.style.transitionDelay = (letters.length * 34) + "ms";
       p.appendChild(el);
-      const sa = Math.random()*Math.PI*2;          // a random scatter direction per glyph (barbie-style burst)
-      const L = {el, c, bx: 0, by: 0, br: 0, k: .65 + Math.random() * .9, rot: (Math.random() - .5) * 140,
-        lift: (Math.random() - .5) * .4, rdx: Math.cos(sa), rdy: Math.sin(sa)};
+      const L = {el, c, bx: 0, by: 0, br: 0, k: .65 + Math.random() * .8, rot: (Math.random() - .5) * 70, lift: (Math.random() - .5) * .4};
       letters.push(L); return L;
     });
     return {top: li === 0, chars};
@@ -389,15 +387,13 @@ h1 .l2{display:block}
     placeLetters(0, 0);
   }
   function placeLetters(lev, disp){
-    // letters burst outward in random directions (barbie-style) as the rings open
-    const reach = Math.hypot(W, H) * .8;
+    const reach = Math.hypot(W, H) * .75;
     letters.forEach(L => {
-      const len = Math.hypot(L.bx, L.by) || 1, ux = L.bx/len, uy = L.by/len;
-      const d = disp * reach * L.k + lev;
-      const dirx = ux*.45 + L.rdx*.55, diry = uy*.45 + L.rdy*.55;   // mix radial with a random heading
-      const x = L.bx + dirx * d, y = L.by + diry * d + L.lift * disp * reach * L.k;
+      const len = Math.hypot(L.bx, L.by) || 1, ux = L.bx / len, uy = L.by / len;
+      const d = disp * reach * L.k + lev;                 // rise outward with the hole, then scatter
+      const x = L.bx + ux * d, y = L.by + uy * d + L.lift * disp * reach * L.k;
       const r = L.br * 180 / Math.PI + L.rot * disp;
-      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${(1 + disp*.6).toFixed(3)})`;
+      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${(1 + disp*.5).toFixed(3)})`;
       L.el.style.opacity = disp > 0 ? (1 - ss(.4, 1, disp)).toFixed(3) : "";
     });
   }
@@ -435,37 +431,28 @@ h1 .l2{display:block}
   let mx = -999, my = -999;
   let paX = 0, paY = 0, tiltX = 0, tiltY = 0, hasTilt = false;
   const PAR = () => (mobile ? 78 : 50);           // tilt/parallax reach
-  function initNodes(){                           // concentric rings: packed tight at the rim, spread wide in the centre → tunnel depth
+  const GAP = () => (mobile ? 56 : 70);           // even, sparse grid spacing
+  const AMP = () => (mobile ? 150 : 95);          // heavy tilt — the whole grid slides a long way
+  function initNodes(){                           // an even, equidistant geometric dot grid (igloo ref)
     dots = [];
-    const cx = W/2, cy = H/2;
-    const maxR = Math.hypot(W, H) * .62;
-    const N = mobile ? 30 : 34;                    // ring count
-    const arc = mobile ? 30 : 34;                  // target arc spacing between dots on a ring
-    for (let i = 1; i <= N; i++){
-      const u = i / N;
-      const rad = maxR * Math.pow(u, .58);         // exponent <1 → rings bunch toward the rim, open up toward the centre
-      const rfrac = rad / maxR;
-      const count = Math.max(4, Math.round(2*Math.PI*rad / arc));
-      const off = i * .7;                          // offset each ring so spokes don't align
-      for (let k = 0; k < count; k++){
-        const ang = (k/count)*Math.PI*2 + off;
-        dots.push({
-          bx: cx + Math.cos(ang)*rad, by: cy + Math.sin(ang)*rad,
-          depth: .14 + rfrac*rfrac*1.9,            // rim dots are "nearest" → they parallax hardest on tilt
-          ph: Math.random()*6.28, sp: .7 + Math.random()*1.7,
-          a: .2 + Math.random()*.08,
-          bright: Math.random() < .2,              // ~20% sit brighter
-          hot: Math.random()*1000, white: Math.random() < .05
-        });
-      }
+    const g = GAP(), over = AMP() + g;            // overscan so a hard tilt never bares an edge
+    const cols = Math.ceil((W + 2*over)/g) + 1, rows = Math.ceil((H + 2*over)/g) + 1;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++){
+      dots.push({
+        gx: -over + c*g, gy: -over + r*g,          // exact grid — no jitter
+        ph: Math.random()*6.28, sp: .8 + Math.random()*1.8,
+        a: .2 + Math.random()*.05,
+        bright: Math.random() < .2,                // ~20% ride brighter
+        hot: Math.random()*1000, white: Math.random() < .05
+      });
     }
-    // faint drifting nebulae — barely-there chemical clouds behind the dots (igloo ref)
+    // night clouds — soft formations drifting on their own layer (igloo ref)
     nebula = [];
-    const cols = ["110,160,210", "90,150,205", "130,180,220"];
-    for (let i = 0; i < 3; i++){
-      nebula.push({ x:.25+Math.random()*.5, y:.3+Math.random()*.45, r:.34+Math.random()*.22,
-        dx:.008+Math.random()*.014, dy:.007+Math.random()*.013, px:Math.random()*6.28, py:Math.random()*6.28,
-        amp:.04+Math.random()*.05, pulse:.05+Math.random()*.08, a:.035+Math.random()*.02, col:cols[i % cols.length] });
+    const cols2 = ["120,150,185", "95,130,170", "135,160,195"];
+    for (let i = 0; i < 4; i++){
+      nebula.push({ x:.15+Math.random()*.7, y:.2+Math.random()*.6, rx:.4+Math.random()*.35, ry:.26+Math.random()*.22,
+        dx:.006+Math.random()*.01, dy:.004+Math.random()*.008, px:Math.random()*6.28, py:Math.random()*6.28,
+        amp:.05+Math.random()*.06, pulse:.04+Math.random()*.06, a:.05+Math.random()*.03, col:cols2[i % cols2.length] });
     }
   }
   addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; }, { passive:true });
@@ -495,32 +482,35 @@ h1 .l2{display:block}
     let nx = 0, ny = 0;
     if (hasTilt){ nx = tiltX; ny = tiltY; }
     else if (mx > -900){ nx = (mx/W - .5)*2; ny = (my/H - .5)*2; }
-    paX += (nx - paX)*.09; paY += (ny - paY)*.09;       // eased, normalized -1..1
+    paX += (nx - paX)*.08; paY += (ny - paY)*.08;       // eased, normalized -1..1
     const time = now/1000;
+    const amp = AMP();
+    const gsx = paX*amp, gsy = paY*amp;                  // the grid slides heavily with tilt (spatial awareness)
     btx.setTransform(DPR,0,0,DPR,0,0); btx.clearRect(0,0,W,H);
-    // --- barely-there drifting nebulae behind everything ---
+    // --- night clouds: soft formations drifting on their own layer, parallaxing SLOWER than the grid ---
+    const csx = paX*amp*.42, csy = paY*amp*.42;
     for (const b of nebula){
-      const bx = (b.x + Math.sin(time*b.dx*6.28 + b.px)*b.amp)*W;
-      const by = (b.y + Math.cos(time*b.dy*6.28 + b.py)*b.amp)*H;
-      const br = b.r*Math.min(W,H)*(1 + .14*Math.sin(time*b.pulse*6.28 + b.px));
+      const bx = (b.x + Math.sin(time*b.dx*6.28 + b.px)*b.amp)*W + csx;
+      const by = (b.y + Math.cos(time*b.dy*6.28 + b.py)*b.amp)*H + csy;
+      const rx = b.rx*Math.min(W,H)*(1 + .12*Math.sin(time*b.pulse*6.28 + b.px));
+      const ry = b.ry*Math.min(W,H)*(1 + .12*Math.cos(time*b.pulse*6.28 + b.py));
       const al = (b.a*bgVis).toFixed(3);
-      const gg = btx.createRadialGradient(bx,by,0,bx,by,br);
+      btx.save(); btx.translate(bx,by); btx.scale(1, ry/rx);
+      const gg = btx.createRadialGradient(0,0,0,0,0,rx);
       gg.addColorStop(0, `rgba(${b.col},${al})`); gg.addColorStop(1, `rgba(${b.col},0)`);
-      btx.fillStyle = gg; btx.beginPath(); btx.arc(bx,by,br,0,7); btx.fill();
+      btx.fillStyle = gg; btx.beginPath(); btx.arc(0,0,rx,0,7); btx.fill(); btx.restore();
     }
-    const par = PAR();
     // cursor / tilt-driven magnet point
     let cxp = mx, cyp = my, active = mx > -900;
     if (!active && hasTilt){ cxp = W/2 + tiltX*W*.3; cyp = H/2 + tiltY*H*.25; active = true; }
     const mR = Math.min(W,H)*.3, maxPull = Math.min(W,H)*.075;
-    const dr = mobile ? 1.0 : 1.1;                       // uniform dot radius — specimen-like
+    const dr = mobile ? 1.15 : 1.3;                      // small, uniform, specimen-like
     for (const d of dots){
-      // obvious flicker; ~20% of dots ride brighter
-      const flick = .22 + .78*(.5 + .5*Math.sin(time*d.sp + d.ph));   // 0.22..1, strong pulse
+      const flick = .18 + .82*(.5 + .5*Math.sin(time*d.sp + d.ph));   // dynamic flicker
       let a = d.a * (d.bright ? 1.9 : 1) * flick * bgVis;
       const hot = (time*.25 + d.hot) % 7; let glow = 0;
       if (hot < .25){ glow = 1 - hot/.25; a += (d.white ? .6 : .22) * bgVis * glow; }
-      let x = d.bx + paX*d.depth*par, y = d.by + paY*d.depth*par;
+      let x = d.gx + gsx, y = d.gy + gsy;
       if (active){
         const dx = cxp - x, dy = cyp - y, dd = Math.hypot(dx,dy);
         if (dd < mR && dd > .5){ const ff = 1 - dd/mR, p = ff*ff*maxPull;
@@ -719,8 +709,7 @@ h1 .l2{display:block}
       const local = reduce ? 1 : ss(i*.06, .58 + i*.06, form);
       const ry = (1 - local) * 1.5 * (i % 2 ? 1 : -1) + (1-local) * Math.sin(th*2 + i) * .2;
       const tx = (1 - local) * (.5 + i*.08);
-      // outer rings open far faster than inner ones — they blow past the frame long before the innermost settles
-      const r = (ringBase * (1 + i*.5) + holeCss * (1.0 + i*i*.16)) * DPR;
+      const r = (ringBase * (1 + i*.5) + holeCss * 1.1) * DPR;
       const fov = r * 5;
       ringPath(vtx, r, cx, cy, tx, ry, fov, 160, 0);
       const al = (.35 + i*.09) * clamp01(form*3);

@@ -16,7 +16,7 @@
 <style>
 /* Layout: one sticky full-bleed stage. A veil with an orbit-ringed hole opens onto Mo at his table; the world re-arranges around him as he turns to face you. */
 :root{
-  --bg:#06080b;
+  --bg:#0a0b0d;
   --ink:#eef2f6;
   --soft:#c6ced7;
   --muted:#8b97a4;
@@ -89,7 +89,7 @@ a{color:inherit}
 .menu.open .menu-nav a:nth-child(3){animation-delay:.38s}
 .menu.open .menu-nav a:nth-child(4){animation-delay:.46s}
 @keyframes menuIn{to{opacity:1;transform:none}}
-.menu-social{display:grid;grid-template-columns:repeat(4,42px);gap:14px;justify-content:start;opacity:0;transform:translateY(16px)}
+.menu-social{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:224px;margin:0 auto;opacity:0;transform:translateY(16px)}
 .menu.open .menu-social{animation:menuIn .5s cubic-bezier(.2,.7,.2,1) .58s forwards}
 .menu-social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--soft);transition:color .2s,border-color .2s,background .2s,transform .2s}
 .menu-social a:hover{color:#fff;border-color:var(--accent);background:var(--accent-soft);transform:translateY(-3px)}
@@ -363,7 +363,7 @@ h1 .l2{display:block}
     });
     return {top: li === 0, chars};
   });
-  const ringBaseCss = () => Math.min(W, H) * (mobile ? .1 : .06);
+  const ringBaseCss = () => Math.min(W, H) * (mobile ? .072 : .06);
   const mctx = document.createElement("canvas").getContext("2d");
   function measureLetters(){
     if (!lines.length || !W) return;
@@ -427,12 +427,11 @@ h1 .l2{display:block}
   /* ---------- background: faint dot grid (parallax + tilt + flicker); constellation on cursor ---------- */
   const bg = $("#bg"), btx = bg.getContext("2d");
   let dots = [], sparks = [], bgVis = 0, bgShown = false, bgLast = 0;
-  let nebula = [];
   let mx = -999, my = -999;
   let paX = 0, paY = 0, tiltX = 0, tiltY = 0, hasTilt = false;
   const PAR = () => (mobile ? 78 : 50);           // tilt/parallax reach
   const GAP = () => (mobile ? 56 : 70);           // even, sparse grid spacing
-  const AMP = () => (mobile ? 150 : 95);          // heavy tilt — the whole grid slides a long way
+  const AMP = () => (mobile ? 330 : 185);         // very heavy tilt — a full tilt reveals an entirely new field of dots
   function initNodes(){                           // an even, equidistant geometric dot grid (igloo ref)
     dots = [];
     const g = GAP(), over = AMP() + g;            // overscan so a hard tilt never bares an edge
@@ -446,20 +445,12 @@ h1 .l2{display:block}
         hot: Math.random()*1000, white: Math.random() < .05
       });
     }
-    // night clouds — soft formations drifting on their own layer (igloo ref)
-    nebula = [];
-    const cols2 = ["120,150,185", "95,130,170", "135,160,195"];
-    for (let i = 0; i < 4; i++){
-      nebula.push({ x:.15+Math.random()*.7, y:.2+Math.random()*.6, rx:.4+Math.random()*.35, ry:.26+Math.random()*.22,
-        dx:.006+Math.random()*.01, dy:.004+Math.random()*.008, px:Math.random()*6.28, py:Math.random()*6.28,
-        amp:.05+Math.random()*.06, pulse:.04+Math.random()*.06, a:.05+Math.random()*.03, col:cols2[i % cols2.length] });
-    }
   }
   addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; }, { passive:true });
   // spatial awareness: device tilt on phones (gyroscope), mouse on desktop
   function onOrient(e){ if (e.gamma == null && e.beta == null) return; hasTilt = true;
-    tiltX = Math.max(-1, Math.min(1, (e.gamma || 0)/26));
-    tiltY = Math.max(-1, Math.min(1, ((e.beta || 0) - 45)/26)); }
+    tiltX = Math.max(-1, Math.min(1, (e.gamma || 0)/18));          // reactive to small tilts
+    tiltY = Math.max(-1, Math.min(1, ((e.beta || 0) - 45)/18)); }
   addEventListener("deviceorientation", onOrient);
   let askedTilt = false;
   function askTilt(){
@@ -482,24 +473,11 @@ h1 .l2{display:block}
     let nx = 0, ny = 0;
     if (hasTilt){ nx = tiltX; ny = tiltY; }
     else if (mx > -900){ nx = (mx/W - .5)*2; ny = (my/H - .5)*2; }
-    paX += (nx - paX)*.08; paY += (ny - paY)*.08;       // eased, normalized -1..1
+    paX += (nx - paX)*.17; paY += (ny - paY)*.17;       // fast, reactive follow (eased, normalized -1..1)
     const time = now/1000;
     const amp = AMP();
     const gsx = paX*amp, gsy = paY*amp;                  // the grid slides heavily with tilt (spatial awareness)
     btx.setTransform(DPR,0,0,DPR,0,0); btx.clearRect(0,0,W,H);
-    // --- night clouds: soft formations drifting on their own layer, parallaxing SLOWER than the grid ---
-    const csx = paX*amp*.42, csy = paY*amp*.42;
-    for (const b of nebula){
-      const bx = (b.x + Math.sin(time*b.dx*6.28 + b.px)*b.amp)*W + csx;
-      const by = (b.y + Math.cos(time*b.dy*6.28 + b.py)*b.amp)*H + csy;
-      const rx = b.rx*Math.min(W,H)*(1 + .12*Math.sin(time*b.pulse*6.28 + b.px));
-      const ry = b.ry*Math.min(W,H)*(1 + .12*Math.cos(time*b.pulse*6.28 + b.py));
-      const al = (b.a*bgVis).toFixed(3);
-      btx.save(); btx.translate(bx,by); btx.scale(1, ry/rx);
-      const gg = btx.createRadialGradient(0,0,0,0,0,rx);
-      gg.addColorStop(0, `rgba(${b.col},${al})`); gg.addColorStop(1, `rgba(${b.col},0)`);
-      btx.fillStyle = gg; btx.beginPath(); btx.arc(0,0,rx,0,7); btx.fill(); btx.restore();
-    }
     // cursor / tilt-driven magnet point
     let cxp = mx, cyp = my, active = mx > -900;
     if (!active && hasTilt){ cxp = W/2 + tiltX*W*.3; cyp = H/2 + tiltY*H*.25; active = true; }
@@ -709,7 +687,7 @@ h1 .l2{display:block}
       const local = reduce ? 1 : ss(i*.06, .58 + i*.06, form);
       const ry = (1 - local) * 1.5 * (i % 2 ? 1 : -1) + (1-local) * Math.sin(th*2 + i) * .2;
       const tx = (1 - local) * (.5 + i*.08);
-      const r = (ringBase * (1 + i*.5) + holeCss * 1.1) * DPR;
+      const r = (ringBase * (1 + i*(mobile ? .42 : .5)) + holeCss * 1.1) * DPR;
       const fov = r * 5;
       ringPath(vtx, r, cx, cy, tx, ry, fov, 160, 0);
       const al = (.35 + i*.09) * clamp01(form*3);
@@ -793,15 +771,18 @@ h1 .l2{display:block}
 
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,cv.width,cv.height);
-      const mh = p.h * H * DPR;
+      // emphasize the "smile at the viewer" moment — figure + orbit swell ~26% through the Creative Director beat, then settle back
+      const figScale = 1 + .26 * (ss(.60, .72, t) * (1 - ss(.90, 1.0, t)));
+      const baseMh = p.h * H * DPR;
+      const mh = baseMh * figScale;
       const im = frameAt(f);
       const ratio = im ? im.naturalWidth / im.naturalHeight : 580/864;
       const mw = mh * ratio;
-      const cx = (W/2 + p.x*W) * DPR, feet = p.b * H * DPR;
+      const cx = (W/2 + p.x*W) * DPR, feet = p.b * H * DPR + baseMh*(figScale-1)*.3;
 
       // floor shadow
       const g = ctx.createRadialGradient(cx, feet, 0, cx, feet, mw*.62);
-      g.addColorStop(0, "rgba(0,0,0,.65)"); g.addColorStop(1, "rgba(0,0,0,0)");
+      g.addColorStop(0, "rgba(0,0,0,.82)"); g.addColorStop(.6, "rgba(0,0,0,.4)"); g.addColorStop(1, "rgba(0,0,0,0)");
       ctx.save(); ctx.translate(cx, feet); ctx.scale(1, .16); ctx.translate(-cx, -feet);
       ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, feet, mw*.62, 0, 7); ctx.fill(); ctx.restore();
 
@@ -827,7 +808,10 @@ h1 .l2{display:block}
       let anyCh = 0;
       chEls.forEach(el => {
         const i = +el.dataset.ch, [a, b] = chWin[i];
-        const o = ss(a, a + .05, t) * (1 - ss(b - .04, b, t));
+        // mobile: snap to full opacity on entrance (no fade-in), fade out only later as the scroll continues
+        const o = mobile
+          ? ss(a, a + .02, t) * (1 - ss(b - .08, b, t))
+          : ss(a, a + .05, t) * (1 - ss(b - .04, b, t));
         if (el.classList.contains("small")) anyCh = Math.max(anyCh, o);
         el.style.opacity = o.toFixed(3);
         el.style.visibility = o < .01 ? "hidden" : "visible";
@@ -835,9 +819,9 @@ h1 .l2{display:block}
         let tx, ty;
         if (mobile){
           tx = 0;
-          const pin = ss(a, a + .08, t);          // 0→1 entrance easing, then holds at 1
-          if (i === 0){ ty = (1 - pin) * 120; }   // title 2 parallaxes up into place, then fixates
-          else { ty = (1 - pin) * 34; }           // title 3 parallaxes in, then fixates — both just fade on exit
+          // title + body enter together as a fully-visible block, hard-parallaxing up from below the fold
+          const enter = ss(a, a + .075, t);
+          ty = (1 - enter) * H * .82;
         } else {
           const drift = (t - (a + b) / 2) * -90;
           tx = (1 - o) * 50 * dir; ty = (1 - o) * 24 + drift;

@@ -101,8 +101,7 @@ a{color:inherit}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;touch-action:pan-y}
 .stage.can-drag{cursor:grab}
 .stage.dragging{cursor:grabbing}
-.spot{position:absolute;z-index:0;left:50%;top:-10%;width:min(110vw,1300px);height:120%;transform:translateX(-50%);pointer-events:none;
-  background:radial-gradient(ellipse 42% 58% at 50% 62%,rgba(120,170,210,.14),rgba(43,159,224,.05) 45%,transparent 72%);will-change:transform}
+.spot{display:none}  /* flat dark background — no light pool on the figure */
 .grain{position:absolute;inset:0;z-index:8;pointer-events:none;opacity:.07;mix-blend-mode:screen;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .vignette{position:absolute;inset:0;z-index:7;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 55%,transparent 55%,rgba(0,0,0,.72))}
@@ -359,7 +358,9 @@ h1 .l2{display:block}
       const el = document.createElement("span"); el.className = "ch"; el.textContent = c;
       el.style.transitionDelay = (letters.length * 34) + "ms";
       p.appendChild(el);
-      const L = {el, c, bx: 0, by: 0, br: 0, k: .65 + Math.random() * .8, rot: (Math.random() - .5) * 70, lift: (Math.random() - .5) * .4};
+      const sa = Math.random()*Math.PI*2;          // a random scatter direction per glyph (barbie-style burst)
+      const L = {el, c, bx: 0, by: 0, br: 0, k: .65 + Math.random() * .9, rot: (Math.random() - .5) * 140,
+        lift: (Math.random() - .5) * .4, rdx: Math.cos(sa), rdy: Math.sin(sa)};
       letters.push(L); return L;
     });
     return {top: li === 0, chars};
@@ -388,14 +389,16 @@ h1 .l2{display:block}
     placeLetters(0, 0);
   }
   function placeLetters(lev, disp){
-    // rings blow outward (drawVeil) while the words recede inward to the vanishing point — like entering the tunnel
-    const f = 1 - disp*disp;                              // 1 at rest → 0 pulled to centre (accelerating inward)
+    // letters burst outward in random directions (barbie-style) as the rings open
+    const reach = Math.hypot(W, H) * .8;
     letters.forEach(L => {
-      const x = L.bx * f, y = L.by * f;
-      const r = L.br * 180 / Math.PI + L.rot * disp * .5;
-      const sc = Math.max(.05, 1 - disp * .82);           // shrink as they draw in
-      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
-      L.el.style.opacity = disp > 0 ? (1 - ss(.4, .96, disp)).toFixed(3) : "";
+      const len = Math.hypot(L.bx, L.by) || 1, ux = L.bx/len, uy = L.by/len;
+      const d = disp * reach * L.k + lev;
+      const dirx = ux*.45 + L.rdx*.55, diry = uy*.45 + L.rdy*.55;   // mix radial with a random heading
+      const x = L.bx + dirx * d, y = L.by + diry * d + L.lift * disp * reach * L.k;
+      const r = L.br * 180 / Math.PI + L.rot * disp;
+      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${(1 + disp*.6).toFixed(3)})`;
+      L.el.style.opacity = disp > 0 ? (1 - ss(.4, 1, disp)).toFixed(3) : "";
     });
   }
 
@@ -428,38 +431,41 @@ h1 .l2{display:block}
   /* ---------- background: faint dot grid (parallax + tilt + flicker); constellation on cursor ---------- */
   const bg = $("#bg"), btx = bg.getContext("2d");
   let dots = [], sparks = [], bgVis = 0, bgShown = false, bgLast = 0;
-  let TUN = null, nebula = [];
+  let nebula = [];
   let mx = -999, my = -999;
   let paX = 0, paY = 0, tiltX = 0, tiltY = 0, hasTilt = false;
-  const GAP = () => (mobile ? 26 : 34);
-  function initNodes(){                           // dots wrap a vertical cylinder — Mo sits inside it, camera across at the far wall
+  const PAR = () => (mobile ? 78 : 50);           // tilt/parallax reach
+  function initNodes(){                           // concentric rings: packed tight at the rim, spread wide in the centre → tunnel depth
     dots = [];
-    const g = GAP(), cx = W/2, cy = H/2;
-    const R = 1, D = 1.75;                         // tube radius / distance to its axis (world units)
-    const f = (mobile ? .96 : .86) * (W/2) * D / R;   // focal: side walls land near the screen's left/right edges
-    const Hmax = (D + R) * (H/2) / f * 1.25;       // generate enough height to overfill the far wall top & bottom
-    TUN = { R, D, f, cx, cy, Hmax };
-    const dh = g * (D + R) / f;                    // vertical spacing (≈ g px on the far wall)
-    const dth = g * (D + R) / (f * R);             // angular spacing (≈ g px on the far wall)
-    const nTheta = Math.max(22, Math.round(2*Math.PI / dth));
-    const nH = Math.ceil(2*Hmax / dh);
-    for (let ti = 0; ti < nTheta; ti++){
-      const base = (ti / nTheta) * Math.PI*2;
-      for (let hi = 0; hi <= nH; hi++){
+    const cx = W/2, cy = H/2;
+    const maxR = Math.hypot(W, H) * .62;
+    const N = mobile ? 30 : 34;                    // ring count
+    const arc = mobile ? 30 : 34;                  // target arc spacing between dots on a ring
+    for (let i = 1; i <= N; i++){
+      const u = i / N;
+      const rad = maxR * Math.pow(u, .58);         // exponent <1 → rings bunch toward the rim, open up toward the centre
+      const rfrac = rad / maxR;
+      const count = Math.max(4, Math.round(2*Math.PI*rad / arc));
+      const off = i * .7;                          // offset each ring so spokes don't align
+      for (let k = 0; k < count; k++){
+        const ang = (k/count)*Math.PI*2 + off;
         dots.push({
-          th: base, h: -Hmax + hi*dh,                      // clean vertical staves read as the tube wall
-          ph: Math.random()*6.28, sp: .4 + Math.random()*1.1,
-          a: .22 + Math.random()*.12, hot: Math.random()*1000, white: Math.random() < .05
+          bx: cx + Math.cos(ang)*rad, by: cy + Math.sin(ang)*rad,
+          depth: .14 + rfrac*rfrac*1.9,            // rim dots are "nearest" → they parallax hardest on tilt
+          ph: Math.random()*6.28, sp: .7 + Math.random()*1.7,
+          a: .2 + Math.random()*.08,
+          bright: Math.random() < .2,              // ~20% sit brighter
+          hot: Math.random()*1000, white: Math.random() < .05
         });
       }
     }
     // faint drifting nebulae — barely-there chemical clouds behind the dots (igloo ref)
     nebula = [];
-    const cols = ["120,170,220", "90,150,205", "140,190,225"];
-    for (let i = 0; i < 4; i++){
-      nebula.push({ x:.2+Math.random()*.6, y:.2+Math.random()*.6, r:.42+Math.random()*.3,
-        dx:.012+Math.random()*.02, dy:.01+Math.random()*.02, px:Math.random()*6.28, py:Math.random()*6.28,
-        amp:.05+Math.random()*.06, pulse:.07+Math.random()*.1, a:.07+Math.random()*.035, col:cols[i % cols.length] });
+    const cols = ["110,160,210", "90,150,205", "130,180,220"];
+    for (let i = 0; i < 3; i++){
+      nebula.push({ x:.25+Math.random()*.5, y:.3+Math.random()*.45, r:.34+Math.random()*.22,
+        dx:.008+Math.random()*.014, dy:.007+Math.random()*.013, px:Math.random()*6.28, py:Math.random()*6.28,
+        amp:.04+Math.random()*.05, pulse:.05+Math.random()*.08, a:.035+Math.random()*.02, col:cols[i % cols.length] });
     }
   }
   addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; }, { passive:true });
@@ -502,41 +508,32 @@ h1 .l2{display:block}
       gg.addColorStop(0, `rgba(${b.col},${al})`); gg.addColorStop(1, `rgba(${b.col},0)`);
       btx.fillStyle = gg; btx.beginPath(); btx.arc(bx,by,br,0,7); btx.fill();
     }
-    const T = TUN;
-    // tilt steers a camera INSIDE the vertical tube: yaw to see around a side wall, look up/down to see more
-    const yaw = paX * (mobile ? .95 : .7), camY = paY * T.D * .5;
-    const flow = time * .045;                            // slow travel up the tube so it feels alive
-    const span = 2*T.Hmax, sFar = T.f/(T.D+T.R), sNear = T.f/(T.D-T.R);
+    const par = PAR();
     // cursor / tilt-driven magnet point
     let cxp = mx, cyp = my, active = mx > -900;
     if (!active && hasTilt){ cxp = W/2 + tiltX*W*.3; cyp = H/2 + tiltY*H*.25; active = true; }
-    const mR = Math.min(W,H)*.32, maxPull = Math.min(W,H)*.09;
+    const mR = Math.min(W,H)*.3, maxPull = Math.min(W,H)*.075;
+    const dr = mobile ? 1.0 : 1.1;                       // uniform dot radius — specimen-like
     for (const d of dots){
-      const ang = d.th + yaw, cz = Math.cos(ang);
-      if (cz < -.32) continue;                           // the near wall (between camera and Mo) stays hidden
-      const Z = T.D + T.R*cz; if (Z < .3) continue;
-      const invZ = 1/Z, s = T.f*invZ;
-      let hh = d.h + flow; hh = ((hh + T.Hmax) % span + span) % span - T.Hmax;   // wrap the endless tube off-screen
-      let x = T.cx + T.f*(T.R*Math.sin(ang))*invZ;
-      let y = T.cy + T.f*(hh - camY)*invZ;
-      const sN = clamp01((s - sFar)/(sNear - sFar));      // 0 far back wall · 1 near side walls
-      const fl = .72 + .28*Math.sin(time*d.sp + d.ph);
-      let a = (d.a + sN*sN*.5) * fl * bgVis;               // side walls glow much brighter than the far wall
+      // obvious flicker; ~20% of dots ride brighter
+      const flick = .22 + .78*(.5 + .5*Math.sin(time*d.sp + d.ph));   // 0.22..1, strong pulse
+      let a = d.a * (d.bright ? 1.9 : 1) * flick * bgVis;
       const hot = (time*.25 + d.hot) % 7; let glow = 0;
-      if (hot < .25){ glow = 1 - hot/.25; a += (d.white ? .62 : .2) * bgVis * glow; }
+      if (hot < .25){ glow = 1 - hot/.25; a += (d.white ? .6 : .22) * bgVis * glow; }
+      let x = d.bx + paX*d.depth*par, y = d.by + paY*d.depth*par;
       if (active){
         const dx = cxp - x, dy = cyp - y, dd = Math.hypot(dx,dy);
         if (dd < mR && dd > .5){ const ff = 1 - dd/mR, p = ff*ff*maxPull;
-          x += dx/dd*p; y += dy/dd*p; a += ff*.38*bgVis;
-          const ex = ff*ff*7; x += Math.cos(time*11 + d.ph*12)*ex; y += Math.sin(time*11.6 + d.ph*12)*ex;
+          x += dx/dd*p; y += dy/dd*p; a += ff*.3*bgVis;
+          const ex = ff*ff*6; x += Math.cos(time*10 + d.ph*12)*ex; y += Math.sin(time*10.6 + d.ph*12)*ex;
         }
       }
       if (a < .004) continue;
       a = Math.min(1, a);
       if (d.white && glow > 0){ const m = glow;
         btx.fillStyle = `rgba(${Math.round(155+100*m)},${Math.round(190+65*m)},${Math.round(222+33*m)},${a.toFixed(3)})`;
-      } else btx.fillStyle = `rgba(155,190,222,${a.toFixed(3)})`;
-      btx.beginPath(); btx.arc(x, y, .75 + sN*sN*2 + (d.white?glow*.7:0), 0, 7); btx.fill();
+      } else btx.fillStyle = `rgba(165,198,228,${a.toFixed(3)})`;
+      btx.beginPath(); btx.arc(x, y, dr, 0, 7); btx.fill();
     }
     // the cursor itself: a soft blue magnet dot (smaller on phones)
     if (active){
@@ -625,7 +622,7 @@ h1 .l2{display:block}
     barZone = barBottom + 40;
     const headTop = (hp.b - hp.h) * H + .025 * hp.h * H;
     const gap = Math.max(12, (headTop - barBottom - heroHead.offsetHeight) / 2);
-    heroHead.style.top = (barBottom + gap).toFixed(1) + "px";
+    heroHead.style.top = (barBottom + gap + H*.035).toFixed(1) + "px";   // nudged a touch lower
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => requestAnimationFrame(placeHeroTitle));
   let r0 = 120, holeCss = 0, barZone = 90;
@@ -722,7 +719,8 @@ h1 .l2{display:block}
       const local = reduce ? 1 : ss(i*.06, .58 + i*.06, form);
       const ry = (1 - local) * 1.5 * (i % 2 ? 1 : -1) + (1-local) * Math.sin(th*2 + i) * .2;
       const tx = (1 - local) * (.5 + i*.08);
-      const r = (ringBase * (1 + i*.5) + holeCss * 1.1) * DPR;
+      // outer rings open far faster than inner ones — they blow past the frame long before the innermost settles
+      const r = (ringBase * (1 + i*.5) + holeCss * (1.0 + i*i*.16)) * DPR;
       const fov = r * 5;
       ringPath(vtx, r, cx, cy, tx, ry, fov, 160, 0);
       const al = (.35 + i*.09) * clamp01(form*3);
@@ -753,8 +751,8 @@ h1 .l2{display:block}
       smoothT += step; dirty = true;
     }
     const t = smoothT;
-    // dots are fully present from the moment the opener reveals them (no scroll fade-in), then clear at the very end
-    bgVis = ss(.004, .02, t) * (1 - ss(.9, 1, t));
+    // dots are fully present the instant the hero is revealed — no scroll fade-in — then clear at the very end
+    bgVis = 1 - ss(.9, 1, t);
 
     if (!dragging){
       if (Math.abs(spinV) > 1e-4){ spin += spinV; spinV *= .93; dirty = true; }

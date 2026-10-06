@@ -89,7 +89,7 @@ a{color:inherit}
 .menu.open .menu-nav a:nth-child(3){animation-delay:.38s}
 .menu.open .menu-nav a:nth-child(4){animation-delay:.46s}
 @keyframes menuIn{to{opacity:1;transform:none}}
-.menu-social{display:flex;flex-wrap:wrap;gap:14px;opacity:0;transform:translateY(16px)}
+.menu-social{display:grid;grid-template-columns:repeat(4,42px);gap:14px;justify-content:start;opacity:0;transform:translateY(16px)}
 .menu.open .menu-social{animation:menuIn .5s cubic-bezier(.2,.7,.2,1) .58s forwards}
 .menu-social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--soft);transition:color .2s,border-color .2s,background .2s,transform .2s}
 .menu-social a:hover{color:#fff;border-color:var(--accent);background:var(--accent-soft);transform:translateY(-3px)}
@@ -116,8 +116,8 @@ a{color:inherit}
 
 /* ---------- hero ---------- */
 .hero{position:absolute;inset:0;z-index:1;pointer-events:none;will-change:opacity,transform}
-.hero-head{position:absolute;left:0;right:0;top:clamp(68px,9.5svh,104px);text-align:center;padding-inline:var(--gutter)}
-.kicker{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);margin:0 0 clamp(22px,3.4svh,40px)}
+.hero-head{position:absolute;left:0;right:0;top:clamp(92px,13svh,150px);text-align:center;padding-inline:var(--gutter)}
+.kicker{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);margin:0 0 clamp(30px,4.6svh,54px)}
 .kicker i{font-style:normal;color:var(--accent);margin:0 .9em}
 h1{margin:0;font-weight:400;line-height:.84;font-size:clamp(48px,6.7vw,108px);text-wrap:balance}
 h1 .t-script{font-size:.96em;line-height:0;display:inline-block;transform:translateY(-.06em) rotate(-6deg);margin:0 .02em 0 .06em}
@@ -388,14 +388,14 @@ h1 .l2{display:block}
     placeLetters(0, 0);
   }
   function placeLetters(lev, disp){
-    const reach = Math.hypot(W, H) * .75;
+    // rings blow outward (drawVeil) while the words recede inward to the vanishing point — like entering the tunnel
+    const f = 1 - disp*disp;                              // 1 at rest → 0 pulled to centre (accelerating inward)
     letters.forEach(L => {
-      const len = Math.hypot(L.bx, L.by) || 1, ux = L.bx / len, uy = L.by / len;
-      const d = disp * reach * L.k + lev;                 // rise outward with the hole, then scatter
-      const x = L.bx + ux * d, y = L.by + uy * d + L.lift * disp * reach * L.k;
-      const r = L.br * 180 / Math.PI + L.rot * disp;
-      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${(1 + disp*.5).toFixed(3)})`;
-      L.el.style.opacity = disp > 0 ? (1 - ss(.4, 1, disp)).toFixed(3) : "";
+      const x = L.bx * f, y = L.by * f;
+      const r = L.br * 180 / Math.PI + L.rot * disp * .5;
+      const sc = Math.max(.05, 1 - disp * .82);           // shrink as they draw in
+      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
+      L.el.style.opacity = disp > 0 ? (1 - ss(.4, .96, disp)).toFixed(3) : "";
     });
   }
 
@@ -428,30 +428,38 @@ h1 .l2{display:block}
   /* ---------- background: faint dot grid (parallax + tilt + flicker); constellation on cursor ---------- */
   const bg = $("#bg"), btx = bg.getContext("2d");
   let dots = [], sparks = [], bgVis = 0, bgShown = false, bgLast = 0;
+  let TUN = null, nebula = [];
   let mx = -999, my = -999;
   let paX = 0, paY = 0, tiltX = 0, tiltY = 0, hasTilt = false;
-  const GAP = () => (mobile ? 36 : 42), AMP = () => (mobile ? 100 : 58);
-  function initNodes(){                           // builds the dot field as a radial tunnel of concentric rings
-    const g = GAP(); dots = [];
-    const cx = W/2, cy = H/2;
-    const half = Math.hypot(W, H) * .5;           // centre → corner
-    const maxR = half * 1.45;                     // overscan so a hard tilt never bares an edge
-    for (let ri = 1; ri < 90; ri++){
-      const rad = g * .62 * Math.pow(ri, 1.08);   // rings ease apart toward the rim (perspective to a vanishing point)
-      if (rad > maxR) break;
-      const rfrac = Math.min(1, rad / half);      // 0 at the vanishing point, 1 at the screen edge
-      const count = Math.max(6, Math.round(2*Math.PI*rad / g));
-      const off = ri * .7;                        // rotate each ring so the spokes never line up
-      for (let k = 0; k < count; k++){
-        const ang = (k/count)*Math.PI*2 + off;
+  const GAP = () => (mobile ? 26 : 34);
+  function initNodes(){                           // dots wrap a vertical cylinder — Mo sits inside it, camera across at the far wall
+    dots = [];
+    const g = GAP(), cx = W/2, cy = H/2;
+    const R = 1, D = 1.75;                         // tube radius / distance to its axis (world units)
+    const f = (mobile ? .96 : .86) * (W/2) * D / R;   // focal: side walls land near the screen's left/right edges
+    const Hmax = (D + R) * (H/2) / f * 1.25;       // generate enough height to overfill the far wall top & bottom
+    TUN = { R, D, f, cx, cy, Hmax };
+    const dh = g * (D + R) / f;                    // vertical spacing (≈ g px on the far wall)
+    const dth = g * (D + R) / (f * R);             // angular spacing (≈ g px on the far wall)
+    const nTheta = Math.max(22, Math.round(2*Math.PI / dth));
+    const nH = Math.ceil(2*Hmax / dh);
+    for (let ti = 0; ti < nTheta; ti++){
+      const base = (ti / nTheta) * Math.PI*2;
+      for (let hi = 0; hi <= nH; hi++){
         dots.push({
-          bx: cx + Math.cos(ang)*rad, by: cy + Math.sin(ang)*rad,
-          depth: .14 + rfrac*rfrac*1.95,          // rim dots read as "nearest" → they swing hardest on tilt
+          th: base, h: -Hmax + hi*dh,                      // clean vertical staves read as the tube wall
           ph: Math.random()*6.28, sp: .4 + Math.random()*1.1,
-          a: .2 + rfrac*.22 + Math.random()*.1,   // brighter toward the mouth of the tunnel
-          hot: Math.random()*1000, white: Math.random() < .05
+          a: .22 + Math.random()*.12, hot: Math.random()*1000, white: Math.random() < .05
         });
       }
+    }
+    // faint drifting nebulae — barely-there chemical clouds behind the dots (igloo ref)
+    nebula = [];
+    const cols = ["120,170,220", "90,150,205", "140,190,225"];
+    for (let i = 0; i < 4; i++){
+      nebula.push({ x:.2+Math.random()*.6, y:.2+Math.random()*.6, r:.42+Math.random()*.3,
+        dx:.012+Math.random()*.02, dy:.01+Math.random()*.02, px:Math.random()*6.28, py:Math.random()*6.28,
+        amp:.05+Math.random()*.06, pulse:.07+Math.random()*.1, a:.07+Math.random()*.035, col:cols[i % cols.length] });
     }
   }
   addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; }, { passive:true });
@@ -481,38 +489,54 @@ h1 .l2{display:block}
     let nx = 0, ny = 0;
     if (hasTilt){ nx = tiltX; ny = tiltY; }
     else if (mx > -900){ nx = (mx/W - .5)*2; ny = (my/H - .5)*2; }
-    const amp = AMP();
-    paX += (nx*amp - paX)*.09; paY += (ny*amp - paY)*.09;
+    paX += (nx - paX)*.09; paY += (ny - paY)*.09;       // eased, normalized -1..1
     const time = now/1000;
     btx.setTransform(DPR,0,0,DPR,0,0); btx.clearRect(0,0,W,H);
+    // --- barely-there drifting nebulae behind everything ---
+    for (const b of nebula){
+      const bx = (b.x + Math.sin(time*b.dx*6.28 + b.px)*b.amp)*W;
+      const by = (b.y + Math.cos(time*b.dy*6.28 + b.py)*b.amp)*H;
+      const br = b.r*Math.min(W,H)*(1 + .14*Math.sin(time*b.pulse*6.28 + b.px));
+      const al = (b.a*bgVis).toFixed(3);
+      const gg = btx.createRadialGradient(bx,by,0,bx,by,br);
+      gg.addColorStop(0, `rgba(${b.col},${al})`); gg.addColorStop(1, `rgba(${b.col},0)`);
+      btx.fillStyle = gg; btx.beginPath(); btx.arc(bx,by,br,0,7); btx.fill();
+    }
+    const T = TUN;
+    // tilt steers a camera INSIDE the vertical tube: yaw to see around a side wall, look up/down to see more
+    const yaw = paX * (mobile ? .95 : .7), camY = paY * T.D * .5;
+    const flow = time * .045;                            // slow travel up the tube so it feels alive
+    const span = 2*T.Hmax, sFar = T.f/(T.D+T.R), sNear = T.f/(T.D-T.R);
     // cursor / tilt-driven magnet point
     let cxp = mx, cyp = my, active = mx > -900;
-    if (!active && hasTilt){ cxp = W/2 + tiltX*W*.32; cyp = H/2 + tiltY*H*.26; active = true; }
-    const mR = Math.min(W,H)*.34, maxPull = Math.min(W,H)*.10;
-    // radial tunnel: depth-scaled parallax (rim swings hardest) + flicker + a lively magnetic pull toward the cursor
+    if (!active && hasTilt){ cxp = W/2 + tiltX*W*.3; cyp = H/2 + tiltY*H*.25; active = true; }
+    const mR = Math.min(W,H)*.32, maxPull = Math.min(W,H)*.09;
     for (const d of dots){
-      const fl = .62 + .38*Math.sin(time*d.sp + d.ph);
-      let a = d.a * fl * bgVis;
-      // hot twinkle: a brief flare; ~5% of dots flare all the way to pure white for depth
+      const ang = d.th + yaw, cz = Math.cos(ang);
+      if (cz < -.32) continue;                           // the near wall (between camera and Mo) stays hidden
+      const Z = T.D + T.R*cz; if (Z < .3) continue;
+      const invZ = 1/Z, s = T.f*invZ;
+      let hh = d.h + flow; hh = ((hh + T.Hmax) % span + span) % span - T.Hmax;   // wrap the endless tube off-screen
+      let x = T.cx + T.f*(T.R*Math.sin(ang))*invZ;
+      let y = T.cy + T.f*(hh - camY)*invZ;
+      const sN = clamp01((s - sFar)/(sNear - sFar));      // 0 far back wall · 1 near side walls
+      const fl = .72 + .28*Math.sin(time*d.sp + d.ph);
+      let a = (d.a + sN*sN*.5) * fl * bgVis;               // side walls glow much brighter than the far wall
       const hot = (time*.25 + d.hot) % 7; let glow = 0;
       if (hot < .25){ glow = 1 - hot/.25; a += (d.white ? .62 : .2) * bgVis * glow; }
-      let x = d.bx + paX*d.depth, y = d.by + paY*d.depth;
       if (active){
         const dx = cxp - x, dy = cyp - y, dd = Math.hypot(dx,dy);
-        if (dd < mR && dd > .5){ const f = 1 - dd/mR, p = f*f*maxPull;
-          x += dx/dd*p; y += dy/dd*p; a += f*.4*bgVis;
-          // excited particles: swirl faster and wider the closer they are to the cursor
-          const ex = f*f*8.5;
-          x += Math.cos(time*11 + d.ph*12)*ex; y += Math.sin(time*11.6 + d.ph*12)*ex;
+        if (dd < mR && dd > .5){ const ff = 1 - dd/mR, p = ff*ff*maxPull;
+          x += dx/dd*p; y += dy/dd*p; a += ff*.38*bgVis;
+          const ex = ff*ff*7; x += Math.cos(time*11 + d.ph*12)*ex; y += Math.sin(time*11.6 + d.ph*12)*ex;
         }
       }
       if (a < .004) continue;
       a = Math.min(1, a);
-      if (d.white && glow > 0){ const m = glow;                  // base blue → pure white at the flare peak
-        const R = Math.round(155 + 100*m), G = Math.round(190 + 65*m), B = Math.round(222 + 33*m);
-        btx.fillStyle = `rgba(${R},${G},${B},${a.toFixed(3)})`;
+      if (d.white && glow > 0){ const m = glow;
+        btx.fillStyle = `rgba(${Math.round(155+100*m)},${Math.round(190+65*m)},${Math.round(222+33*m)},${a.toFixed(3)})`;
       } else btx.fillStyle = `rgba(155,190,222,${a.toFixed(3)})`;
-      btx.beginPath(); btx.arc(x, y, .5 + d.depth*.62 + (d.white?glow*.7:0), 0, 7); btx.fill();
+      btx.beginPath(); btx.arc(x, y, .75 + sN*sN*2 + (d.white?glow*.7:0), 0, 7); btx.fill();
     }
     // the cursor itself: a soft blue magnet dot (smaller on phones)
     if (active){

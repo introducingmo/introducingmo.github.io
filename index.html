@@ -809,9 +809,10 @@ h1 .l2{display:block}
       chEls.forEach(el => {
         const i = +el.dataset.ch, [a, b] = chWin[i];
         // mobile: snap to full opacity on entrance (no fade-in), fade out only later as the scroll continues
+        // snap to full opacity on entrance (no fade-in) — the parallax does the entering; fade only on exit
         const o = mobile
           ? ss(a, a + .02, t) * (1 - ss(b - .08, b, t))
-          : ss(a, a + .05, t) * (1 - ss(b - .04, b, t));
+          : ss(a, a + .015, t) * (1 - ss(b - .04, b, t));
         if (el.classList.contains("small")) anyCh = Math.max(anyCh, o);
         el.style.opacity = o.toFixed(3);
         el.style.visibility = o < .01 ? "hidden" : "visible";
@@ -823,8 +824,10 @@ h1 .l2{display:block}
           const enter = ss(a, a + .075, t);
           ty = (1 - enter) * H * .82;
         } else {
-          const drift = (t - (a + b) / 2) * -90;
-          tx = (1 - o) * 50 * dir; ty = (1 - o) * 24 + drift;
+          // desktop: same hard parallax up from below the fold as the folders, then a gentle drift
+          const enter = ss(a, a + .09, t);
+          const drift = (t - (a + .09)) * -90 * enter;
+          tx = 0; ty = (1 - enter) * H * .85 + drift;
         }
         el.style.transform = `translate3d(${tx.toFixed(1)}px,${ty.toFixed(1)}px,0)`;
       });

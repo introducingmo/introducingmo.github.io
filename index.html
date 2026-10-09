@@ -211,7 +211,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     background:linear-gradient(180deg,transparent,rgba(6,8,11,.86) 34%,var(--bg) 70%)}
   /* lift the dot field above the chapter scrim, keep text on top */
   #bg{z-index:6}
-  .hero,.big,.small,.hero-foot{z-index:7}
+  .hero,.big,.small{z-index:7}
+  .hero-foot{z-index:1}   /* side lines rise behind Mo and the orbit */
   /* a rounder, fainter glow that doesn't fight the shadow under Mo */
   .spot{width:min(116vw,540px);height:min(116vw,540px);top:26%;left:50%;transform:translate(-50%,-4%);
     background:radial-gradient(circle at 50% 50%,rgba(120,170,210,.12),rgba(43,159,224,.045) 42%,transparent 64%)}

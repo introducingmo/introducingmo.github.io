@@ -343,7 +343,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const cv = $("#world"), ctx = cv.getContext("2d");
   const veil = $("#veil"), vtx = veil.getContext("2d");
   const pre = $("#pre"), pctL = $("#pctL");
-  const heroEl = $("#hero"), heroFoot = $("#heroFoot"), spotEl = $("#spot"), topBar = $("#top-bar"), chfade = $("#chfade");
+  const heroEl = $("#hero"), heroFoot = $("#heroFoot"), heroCue = document.querySelector("#heroFoot .cue"), spotEl = $("#spot"), topBar = $("#top-bar"), chfade = $("#chfade");
   const chEls = [...document.querySelectorAll("[data-ch]")];
   const files = [...document.querySelectorAll(".file")];
 
@@ -812,12 +812,15 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       drawTableRing(p, cx, ringCy, R, true, th, ta);
 
       // hero type
-      const ht = 1 - ss(.22, .29, t);
-      heroEl.style.opacity = ht.toFixed(3);
-      heroEl.style.transform = `scale(${(1 - (1-ht)*.04).toFixed(4)})`;
-      heroEl.style.visibility = ht < .01 ? "hidden" : "visible";
-      heroFoot.style.opacity = ht.toFixed(3);
-      heroFoot.style.visibility = ht < .01 ? "hidden" : "visible";
+      // hero type parallaxes up and out instead of fading: the title outruns Mo, the two side lines outrun everything
+      const hp = clamp01((t - .21) / .15);
+      heroEl.style.opacity = "1";
+      heroEl.style.transform = `translate3d(0,${(-hp * H * .62).toFixed(1)}px,0)`;
+      heroEl.style.visibility = hp >= 1 ? "hidden" : "visible";
+      heroFoot.style.opacity = "1";
+      heroFoot.style.transform = `translate3d(0,${(-hp * H * 1.15).toFixed(1)}px,0)`;
+      heroFoot.style.visibility = hp >= 1 ? "hidden" : "visible";
+      heroCue.style.opacity = (1 - ss(.205, .235, t)).toFixed(3);   // the scroll cue bows out once you're moving
       stage.classList.toggle("can-drag", heroLive());
       spotEl.style.transform = `translate3d(calc(-50% + ${(p.x*W).toFixed(1)}px),${mobile ? ((p.b - .86)*H).toFixed(1) : 0}px,0)`;
 

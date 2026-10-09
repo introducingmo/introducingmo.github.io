@@ -790,7 +790,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,cv.width,cv.height);
       // emphasize the "smile at the viewer" moment — figure + orbit swell ~26% through the Creative Director beat, then settle back
-      const figScale = 1 + .26 * (ss(.60, .72, t) * (1 - ss(.90, 1.0, t)));
+      const figScale = 1 + .26 * ss(.60, .72, t) * (1 - clamp01((t - .78) / .22));   // grows for the smile, then eases back continuously to the end of the scroll
       const baseMh = p.h * H * DPR;
       const mh = baseMh * figScale;
       const im = frameAt(f);
@@ -842,12 +842,14 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         if (mobile){
           tx = 0;
           // title + body enter together as a fully-visible block, hard-parallaxing up from below the fold
-          const enter = ss(a, a + .075, t);
+          // title 2 lands exactly as Mo settles into place (t≈.38); title 3 keeps its quicker entrance
+          const enter = i === 0 ? ss(.27, .38, t) : ss(a, a + .075, t);
           ty = (1 - enter) * H * .82;
         } else {
           // desktop: same hard parallax up from below the fold as the folders, then a gentle drift
-          const enter = ss(a, a + .09, t);
-          const drift = (t - (a + .09)) * -90 * enter;
+          const e0 = i === 0 ? .38 : a + .09;
+          const enter = i === 0 ? ss(.27, .38, t) : ss(a, e0, t);
+          const drift = (t - e0) * -90 * enter;
           tx = 0; ty = (1 - enter) * H * .85 + drift;
         }
         el.style.transform = `translate3d(${tx.toFixed(1)}px,${ty.toFixed(1)}px,0)`;

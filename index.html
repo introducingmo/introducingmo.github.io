@@ -177,6 +177,8 @@ h1 .l2{display:block}
 .pre .cue{opacity:0;transition:opacity .8s}
 .pre.loaded .cue{opacity:1}
 .pre.loaded .pct{opacity:0}
+html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
+.pre-txt .ch{will-change:transform,opacity,filter}
 
 /* ---------- end strip ---------- */
 .end{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;text-align:center;padding:clamp(70px,14svh,140px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 56px);border-top:1px solid var(--line);background:var(--bg)}
@@ -303,11 +305,11 @@ h1 .l2{display:block}
       <!-- preloader -->
       <div class="pre" id="pre">
         <canvas id="veil"></canvas>
-        <p class="pre-txt a" aria-hidden="true">Ready to rise</p>
-        <p class="pre-txt b" aria-hidden="true">above the noise?</p>
+        <p class="pre-txt a" aria-hidden="true">Building</p>
+        <p class="pre-txt b" aria-hidden="true">Gravity</p>
         <span class="pct l" id="pctL">000</span><span class="pct r">%</span>
         <div class="cue"><span class="label">Scroll down</span><span class="rail"></span></div>
-        <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Ready to rise above the noise?</h2>
+        <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Building gravity</h2>
       </div>
     </div>
   </section>
@@ -325,6 +327,13 @@ h1 .l2{display:block}
   // a refresh always starts from the top, so the preloader plays again
   try { history.scrollRestoration = "manual"; } catch(e) {}
   window.scrollTo(0, 0);
+  // no scrolling until the counter hits 100% and the cue appears
+  let scrollLocked = true;
+  document.documentElement.classList.add("locked");
+  const blockScroll = (e) => { if (scrollLocked) e.preventDefault(); };
+  addEventListener("wheel", blockScroll, { passive:false });
+  addEventListener("touchmove", blockScroll, { passive:false });
+  addEventListener("keydown", (e) => { if (scrollLocked && [" ","ArrowDown","ArrowUp","PageDown","PageUp","Home","End"].includes(e.key)) e.preventDefault(); });
   let preDone = false;
   const N = 97;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -358,7 +367,7 @@ h1 .l2{display:block}
       const el = document.createElement("span"); el.className = "ch"; el.textContent = c;
       el.style.transitionDelay = (letters.length * 34) + "ms";
       p.appendChild(el);
-      const L = {el, c, bx: 0, by: 0, br: 0, k: .65 + Math.random() * .8, rot: (Math.random() - .5) * 70, lift: (Math.random() - .5) * .4};
+      const L = {el, c, bx: 0, by: 0, br: 0, k: .45 + Math.random() * 1.15, rot: (Math.random() - .5) * 70, lift: (Math.random() - .5) * .4};
       letters.push(L); return L;
     });
     return {top: li === 0, chars};
@@ -387,14 +396,15 @@ h1 .l2{display:block}
     placeLetters(0, 0);
   }
   function placeLetters(lev, disp){
-    const reach = Math.hypot(W, H) * .75;
+    // letters fly toward the viewer: each at its own speed, growing and defocusing as they near the lens
     letters.forEach(L => {
-      const len = Math.hypot(L.bx, L.by) || 1, ux = L.bx / len, uy = L.by / len;
-      const d = disp * reach * L.k + lev;                 // rise outward with the hole, then scatter
-      const x = L.bx + ux * d, y = L.by + uy * d + L.lift * disp * reach * L.k;
-      const r = L.br * 180 / Math.PI + L.rot * disp;
-      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${(1 + disp*.5).toFixed(3)})`;
-      L.el.style.opacity = disp > 0 ? (1 - ss(.4, 1, disp)).toFixed(3) : "";
+      const z = Math.min(.93, Math.pow(disp, 1.4) * L.k);     // 0 on the ring → .93 right at the camera
+      const s = 1 / (1 - z);                                   // perspective scale
+      const x = L.bx * s + L.lift * W * z, y = L.by * s + L.lift * H * .4 * z;
+      const r = L.br * 180 / Math.PI + L.rot * z;
+      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${s.toFixed(3)})`;
+      L.el.style.filter = z > .02 ? `blur(${Math.min(18, (s - 1) * 1.6).toFixed(1)}px)` : "";
+      L.el.style.opacity = disp > 0 ? (1 - ss(.55, .93, z)).toFixed(3) : "";
     });
   }
 
@@ -687,10 +697,12 @@ h1 .l2{display:block}
       const local = reduce ? 1 : ss(i*.06, .58 + i*.06, form);
       const ry = (1 - local) * 1.5 * (i % 2 ? 1 : -1) + (1-local) * Math.sin(th*2 + i) * .2;
       const tx = (1 - local) * (.5 + i*.08);
-      const r = (ringBase * (1 + i*(mobile ? .42 : .5)) + holeCss * 1.1) * DPR;
+      // once scrolling starts, the seven rings collapse into a single orbit around the hole
+      const merge = ss(0, .35, open);
+      const r = (ringBase * (1 + i*(mobile ? .42 : .5)*(1 - merge)) + holeCss * 1.1) * DPR;
       const fov = r * 5;
       ringPath(vtx, r, cx, cy, tx, ry, fov, 160, 0);
-      const al = (.35 + i*.09) * clamp01(form*3);
+      const al = (.35 + i*.09) * clamp01(form*3) * (i === 0 ? 1 : 1 - merge*.92);
       vtx.strokeStyle = `rgba(43,159,224,${al*.25})`; vtx.lineWidth = 5*DPR; vtx.stroke();
       vtx.strokeStyle = `rgba(110,190,240,${al})`; vtx.lineWidth = 1.2*DPR; vtx.stroke();
       // dots orbit the hole like a little solar system (inner rings faster), with a subtle cursor parallax
@@ -736,14 +748,18 @@ h1 .l2{display:block}
     shownPct += (Math.min(loadFrac, form) * 100 - shownPct) * .12;
     pctL.textContent = String(Math.round(shownPct)).padStart(3, "0");
     if (!readyFlag && form > .45){ readyFlag = true; pre.classList.add("ready"); }
-    if (!loadedFlag && loadFrac >= .999 && form >= 1){ loadedFlag = true; pre.classList.add("loaded"); }
+    if (scrollLocked && window.scrollY) window.scrollTo(0, 0);
+    if (!loadedFlag && loadFrac >= .999 && form >= 1){
+      loadedFlag = true; pre.classList.add("loaded");
+      // release once the counter has faded out and "scroll down" is showing
+      setTimeout(() => { scrollLocked = false; document.documentElement.classList.remove("locked"); }, 650);
+    }
 
     if (!preDone){
       const vis = 1 - ss(.17, .21, t);
       if (vis > .001){
         pre.hidden = false;
         drawVeil(form, open, theta);
-        veil.style.filter = open > .01 ? `blur(${(open*16).toFixed(1)}px)` : "none";
         veil.style.opacity = vis.toFixed(3);
         const disp = ss(.06, .19, t);
         placeLetters(Math.min(holeCss, H * .3), disp);

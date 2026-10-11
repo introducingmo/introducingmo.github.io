@@ -121,7 +121,9 @@ a{color:inherit}
 .s1b{position:absolute;inset:0;z-index:6;pointer-events:none}
 .s1b-line{position:absolute;left:0;right:0;top:0;width:min(22em,86vw);margin:0 auto;text-align:center;text-wrap:balance;
   font-family:var(--f-ui);font-weight:300;font-size:clamp(21px,2.3vw,36px);line-height:1.28;color:var(--ink);opacity:0;visibility:hidden;will-change:opacity,transform}
-.s1b-line em{font-family:var(--t-serif);font-style:italic;font-weight:400;font-size:1.14em;color:var(--accent);letter-spacing:.005em}
+.s1b-line em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.06em;color:var(--ink);letter-spacing:.005em}
+.s1b-line em.pull{color:var(--accent)}
+.s1b-line b{font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.015em;font-size:1.04em;color:var(--ink)}
 .s1b-word{position:absolute;left:0;top:0;white-space:nowrap;font-family:var(--f-ui);font-weight:400;font-size:clamp(14px,1.15vw,18px);letter-spacing:.03em;
   color:#d6e6f2;opacity:0;visibility:hidden;will-change:transform,opacity}
 
@@ -337,11 +339,12 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
       <!-- section 1B: gravity — one blue atom, a line beneath it, and the outcomes it pulls in -->
       <div class="s1b" id="s1b">
-        <p class="s1b-line">Most brands spend their time <em>chasing</em> attention.</p>
-        <p class="s1b-line">Better brands <em>pull it in</em>.</p>
-        <p class="s1b-line">That <em>pull</em> is gravity.</p>
-        <p class="s1b-line">The goal isn’t to be everywhere.</p>
-        <p class="s1b-line">The goal is to become impossible to ignore.</p>
+        <!-- type follows the titles: light sans carries, Playfair italic is the felt word (blue = the pull), heavy sans is the point -->
+        <p class="s1b-line">Most brands spend their time <em>chasing</em> <b>attention</b>.</p>
+        <p class="s1b-line"><b>Better brands</b> <em class="pull">pull it in</em>.</p>
+        <p class="s1b-line">That <em class="pull">pull</em> is <b>gravity</b>.</p>
+        <p class="s1b-line">The goal isn’t to be <em>everywhere</em>.</p>
+        <p class="s1b-line">The goal is to become <b>impossible</b> <em class="pull">to&nbsp;ignore</em>.</p>
         <div aria-hidden="true">
           <span class="s1b-word">Attention</span><span class="s1b-word">Trust</span><span class="s1b-word">Retention</span><span class="s1b-word">Positive reviews</span>
           <span class="s1b-word">Post engagement</span><span class="s1b-word">Hoarding your products</span><span class="s1b-word">Community</span><span class="s1b-word">Loyal customers</span>
@@ -429,9 +432,9 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- frames: A = hero turntable (no smile, drag to explore) · B = scroll turn (to the smile) ---------- */
   // both clips share one camera; each set is cropped differently, so frames are drawn by their source-crop geometry
-  const NA = 120;
-  const FRAMES_V = "36";                               // bump whenever frame images change, so no phone mixes cached old frames with new
-  const GEO = { A: { x0: 100, w: 870 }, B: { x0: 233, w: 718 }, h: 1070, refX: 592 };
+  const NA = 144;
+  const FRAMES_V = "37";                               // bump whenever frame images change, so no phone mixes cached old frames with new
+  const GEO = { A: { x0: 170, w: 796 }, B: { x0: 233, w: 718 }, h: 1070, refX: 592 };
   let W = 0, H = 0, DPR = 1, mobile = false, loaded = 0, gateTotal = 1;
   const frames = new Array(N).fill(null), framesA = new Array(NA).fill(null);
   function loadFrames(){
@@ -465,7 +468,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- background: faint dot grid (parallax + tilt + flicker); constellation on cursor ---------- */
   const bg = $("#bg"), btx = bg.getContext("2d");
-  let dots = [], sparks = [], bgVis = 0, bgShown = false, bgLast = 0;
+  let dots = [], sparks = [], bgVis = 0, bgShown = false, bgLast = 0, bgOver = 0, bgSpan = 1, bgScroll = 0;
   let mx = -999, my = -999;
   let paX = 0, paY = 0, tiltX = 0, tiltY = 0, hasTilt = false;
   const PAR = () => (mobile ? 78 : 50);           // tilt/parallax reach
@@ -475,6 +478,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     dots = [];
     const g = GAP(), over = AMP() + g;            // overscan so a hard tilt never bares an edge
     const cols = Math.ceil((W + 2*over)/g) + 1, rows = Math.ceil((H + 2*over)/g) + 1;
+    bgOver = over; bgSpan = rows * g;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++){
       dots.push({
         gx: -over + c*g, gy: -over + r*g,          // exact grid — no jitter
@@ -487,9 +491,27 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   }
   addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; }, { passive:true });
   // spatial awareness: device tilt on phones (gyroscope), mouse on desktop
-  function onOrient(e){ if (e.gamma == null && e.beta == null) return; hasTilt = true;
-    tiltX = Math.max(-1, Math.min(1, (e.gamma || 0)/18));          // reactive to small tilts
-    tiltY = Math.max(-1, Math.min(1, ((e.beta || 0) - 45)/18)); }
+  // tilt = how far the phone has turned from however it's being held (that rest pose re-learns itself over a few seconds),
+  // on both axes at once — so a diagonal tilt moves the field diagonally — with a soft, proportional response (no hard stop)
+  let tiltN = null, tiltLastT = 0, tiltLastG = 0;
+  function onOrient(e){
+    if (e.gamma == null && e.beta == null) return; hasTilt = true;
+    const b = e.beta || 0, g = e.gamma || 0, now = performance.now();
+    // passing upright makes the angles flip; treat a jump like that as a fresh rest pose instead of a wild swing
+    const jumped = Math.abs(g - tiltLastG) > 60;
+    tiltLastG = g;
+    if (!tiltN || jumped || now - tiltLastT > 1500) tiltN = { b, g };
+    else { const k = 1 - Math.exp(-(now - tiltLastT) / 3500); tiltN.b += (b - tiltN.b) * k; tiltN.g += (g - tiltN.g) * k; }
+    tiltLastT = now;
+    let dx = g - tiltN.g, dy = b - tiltN.b;
+    const ang = ((screen.orientation && screen.orientation.angle) || window.orientation || 0) % 360;
+    if (ang === 90 || ang === -270) [dx, dy] = [dy, -dx];
+    else if (ang === 270 || ang === -90) [dx, dy] = [-dy, dx];
+    else if (ang === 180 || ang === -180) [dx, dy] = [-dx, -dy];
+    const REACH = 20;                                                      // degrees: ~20° gives most of the travel, ~40° the rest
+    tiltX = Math.tanh(dx / REACH);
+    tiltY = Math.tanh(dy / REACH);
+  }
   addEventListener("deviceorientation", onOrient);
   let askedTilt = false;
   function askTilt(){
@@ -498,6 +520,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       if (D && typeof D.requestPermission === "function"){
         askedTilt = true;
         D.requestPermission().then(s => { if (s === "granted") addEventListener("deviceorientation", onOrient); else askedTilt = false; }).catch(() => { askedTilt = false; });
+        const DM = window.DeviceMotionEvent;                                  // same iOS prompt; asked together so one tap covers both
+        if (DM && typeof DM.requestPermission === "function") DM.requestPermission().catch(() => {});
       }
     } catch(e){ askedTilt = false; }
   }
@@ -527,7 +551,9 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       let a = d.a * (d.bright ? 1.9 : 1) * flick * bgVis;
       const hot = (time*.25 + d.hot) % 7; let glow = 0;
       if (hot < .25){ glow = 1 - hot/.25; a += (d.white ? .6 : .22) * bgVis * glow; }
-      let x = d.gx + gsx, y = d.gy + gsy;
+      // 1B: the stars drift up with the scroll (slower than the foreground), wrapping so the field never runs out
+      const gy = bgScroll ? ((d.gy + bgOver - bgScroll) % bgSpan + bgSpan) % bgSpan - bgOver : d.gy;
+      let x = d.gx + gsx, y = gy + gsy;
       if (active){
         const dx = cxp - x, dy = cyp - y, dd = Math.hypot(dx,dy);
         if (dd < mR && dd > .5){ const ff = 1 - dd/mR, p = ff*ff*maxPull;
@@ -599,10 +625,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   }
 
   /* ---------- drag to rotate (hero) ---------- */
-  // the turntable is a full 360 loop at an even 3° per frame (0..NA): 0 = opening three-quarter pose (matches the scroll set),
-  // ~19 / ~79 = profiles, ~109 = facing the viewer, ~49 = his back. Visitors can spin him all the way round,
+  // the turntable is a full 360 loop at an even 2.5° per frame (0..NA): 0 = opening three-quarter pose (matches the scroll set),
+  // ~22 / ~94 = profiles, ~130 = facing the viewer, ~58 = his back. Visitors can spin him all the way round,
   // but he never comes to rest facing away: a release inside the back zone glides on to the nearest profile.
-  const A_BACK = 49, A_ZONE = 30, A_IDLE_C = 109, A_IDLE_A = 27;      // back zone = everything behind the two profiles
+  const A_BACK = 58, A_ZONE = 36, A_IDLE_C = 130, A_IDLE_A = 33;      // back zone = everything behind the two profiles
   const A_FPR = NA / (2*Math.PI);                 // frames per radian of drag
   const wrapN = (v, n) => ((v % n) + n) % n, wrapHalf = (v, n) => wrapN(v + n/2, n) - n/2;
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
@@ -858,6 +884,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     const sB = clamp01((smoothT - FA) / (1 - FA)) * SB;    // section 1B progress, in screens of scroll (0–6.5)
     // the dots are fully present the instant the hero is revealed and stay as the stars of 1B
     bgVis = 1;
+    bgScroll = sB * H * .42;
     // 1B opens: title 3 and Mo parallax up and away (no fade) while the room falls to pure black
     const exB = clamp01(sB / .85), exE = Math.pow(exB, 1.7);
     const voidO = ss(.1, .8, sB);

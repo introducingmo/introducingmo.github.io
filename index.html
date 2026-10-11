@@ -153,10 +153,11 @@ h1 .l2{display:block}
   letter-spacing:.42em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .big.s2 .eyebrow{text-align:right;margin-right:-.42em}
 .big.s1{font-size:clamp(48px,6vw,112px)}
-.yr{display:flex;align-items:flex-end;justify-content:flex-end;gap:.34em}
+.yr{display:flex;align-items:flex-end;justify-content:flex-end;gap:.34em;padding-bottom:.42em}   /* room for the script Y's descender */
 .yr-num{font-variant-numeric:tabular-nums;font-size:1.12em}
 .yr-num{white-space:nowrap}
 .yr-num .b{color:var(--accent)}
+.yr-num .yr-w{display:inline-block;font-size:1.02em;line-height:0;letter-spacing:0;transform:translateY(-.06em) rotate(-5deg);margin:0 .14em 0 .04em}
 .small p.q{margin-top:1.1em}
 .small em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.14em;color:var(--ink)}
 .big.s1{left:var(--gutter);top:clamp(96px,15svh,150px);text-align:left}
@@ -170,6 +171,7 @@ h1 .l2{display:block}
 .small.s2{right:var(--gutter);bottom:clamp(40px,9svh,96px);width:min(27em,34vw);text-align:right}
 .small::before{content:"";display:block;width:36px;height:1px;background:var(--accent);margin-bottom:16px}
 .small.s2::before{margin-left:auto}
+.small.s2 p{text-wrap:balance}
 
 /* collab folders (placeholders) */
 .file{position:absolute;z-index:3;left:0;top:0;display:grid;justify-items:center;gap:8px;text-decoration:none;opacity:0;will-change:transform,opacity}
@@ -393,8 +395,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- frames: A = hero turntable (no smile, drag to explore) · B = scroll turn (to the smile) ---------- */
   // both clips share one camera; each set is cropped differently, so frames are drawn by their source-crop geometry
-  const NA = 70;
-  const GEO = { A: { x0: 100, w: 810 }, B: { x0: 233, w: 718 }, h: 1070, refX: 592 };
+  const NA = 120;
+  const GEO = { A: { x0: 100, w: 870 }, B: { x0: 233, w: 718 }, h: 1070, refX: 592 };
   let W = 0, H = 0, DPR = 1, mobile = false, loaded = 0, gateTotal = 1;
   const frames = new Array(N).fill(null), framesA = new Array(NA).fill(null);
   function loadFrames(){
@@ -402,9 +404,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     const order = (n, steps) => { const o = [], seen = new Set(); for (const st of steps) for (let i = 0; i < n; i += st) if (!seen.has(i)) { seen.add(i); o.push(i); } if (!seen.has(n-1)) o.splice(1, 0, n-1); return o; };
     const a = order(NA, [8, 4, 2, 1]), b = order(N, [32, 16, 8, 4, 2, 1]);
     const bGate = b.filter(i => i % 8 === 0 || i === N-1).length;   // these come first in the coarse-to-fine order
-    // the preloader waits for the whole turntable + a light pass of the scroll set; the rest streams in on the hero
-    const jobs = [...a.map(i => ({arr: framesA, i, dir: "f/a/" + set, gate: true})),
+    // the preloader waits for every other turntable frame + a light pass of the scroll set; the rest streams in on the hero
+    let jobs = [...a.map(i => ({arr: framesA, i, dir: "f/a/" + set, gate: i % 2 === 0})),
                   ...b.map((i, k) => ({arr: frames, i, dir: "f/" + set, gate: k < bGate}))];
+    jobs.sort((p, q) => q.gate - p.gate);                       // stable: gate frames first, coarse-to-fine order kept
     gateTotal = jobs.filter(j => j.gate).length;
     let idx = 0;
     const next = () => {
@@ -552,17 +555,25 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   }
 
   /* ---------- drag to rotate (hero) ---------- */
+  // the turntable is a full 360 loop, measured in frames (0..NA): 0 = opening three-quarter pose (matches the scroll set),
+  // ~24 / ~85 = profiles, ~104 = facing the viewer, ~56 = his back. Visitors can spin him all the way round,
+  // but he never comes to rest facing away: a release inside the back zone glides on to the nearest profile.
+  const A_BACK = 54, A_ZONE = 22, A_IDLE_C = 114.5, A_IDLE_A = 29;
+  const A_FPR = NA / (2*Math.PI);                 // frames per radian of drag
+  const wrapN = (v, n) => ((v % n) + n) % n, wrapHalf = (v, n) => wrapN(v + n/2, n) - n/2;
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
+  let aPos = 0, aVel = 0, aExit = 0, idleClk = Math.asin((NA - A_IDLE_C) / A_IDLE_A);   // idle sway starts on frame 0
   const heroLive = () => preDone && smoothT < .26;
   stage.addEventListener("pointerdown", e => {
     if (!heroLive() || e.target.closest("a")) return;
-    dragging = true; interacted = true; lastX = e.clientX; lastT = performance.now(); spinV = 0;
+    dragging = true; interacted = true; lastX = e.clientX; lastT = performance.now(); spinV = 0; aVel = 0; aExit = 0;
     stage.classList.add("dragging");
   });
   addEventListener("pointermove", e => {
     if (!dragging) return;
-    const now = performance.now(), dx = e.clientX - lastX, g = mobile ? .011 : .0065;
-    spin += dx * g; spinV = dx * g / Math.max(8, now - lastT) * 16;
+    const now = performance.now(), dx = e.clientX - lastX, g = mobile ? .011 : .0065, fpr = A_FPR;
+    spin += dx * g; aPos += dx * g * fpr;
+    aVel = dx * g * fpr / Math.max(8, now - lastT) * 16;
     lastX = e.clientX; lastT = now; dirty = true;
   }, {passive:true});
   const endDrag = () => { if (dragging) { dragging = false; stage.classList.remove("dragging"); } };
@@ -690,8 +701,26 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     bgVis = 1 - ss(.9, 1, t);
 
     if (!dragging){
-      if (Math.abs(spinV) > 1e-4){ spin += spinV; spinV *= .93; dirty = true; }
-      else if (!interacted && !reduce && heroLive()){ spin += dt * .00026; dirty = true; }
+      if (!interacted){
+        if (!reduce && heroLive()){ idleClk += dt * .00026; spin += dt * .00026; dirty = true; }
+        aPos = A_IDLE_C + A_IDLE_A * Math.sin(idleClk);
+      } else {
+        const k = Math.min(2, dt / 16.7);
+        if (Math.abs(aVel) > .004){ aPos += aVel * k; spin += aVel * k / (A_FPR); aVel *= Math.pow(.93, k); dirty = true; }
+        else aVel = 0;
+        // never rest facing away: once the spin has slowed inside the back zone, glide on to the profile ahead
+        const dB = wrapHalf(aPos - A_BACK, NA);
+        if (Math.abs(dB) < A_ZONE && Math.abs(aVel) < .35){
+          if (!aExit) aExit = Math.abs(aVel) > .02 ? Math.sign(aVel) : (Math.sign(dB) || 1);
+          const target = (aPos - dB) + aExit * (A_ZONE + 3);   // just past the profile, on the spin's side
+          const toGo = target - aPos;
+          const stepA = toGo * (1 - Math.pow(.9, k)) + aExit * .08 * k;
+          const before = spin;
+          aPos += Math.abs(stepA) > Math.abs(toGo) ? toGo : stepA;
+          spin = before + stepA / (A_FPR);
+          aVel = 0; dirty = true;
+        } else if (Math.abs(dB) >= A_ZONE) aExit = 0;
+      }
     }
     if (!reduce) theta += dt * .00018;
     dirty = true;
@@ -753,7 +782,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const p = sample(mobile ? mob : desk, t);
       // hero turntable (set A) ping-pongs left profile → front → right profile, so his back never shows;
       // as the scroll heads to title 2 it unwinds to its first pose and crossfades into the scroll set (B)
-      const aIdx = (1 - Math.cos(spin)) / 2 * (NA - 1) * (1 - ss(.16, .23, t));
+      const aIdx = wrapN(wrapHalf(aPos, NA) * (1 - ss(.16, .23, t)), NA);   // unwinds the short way to frame 0
       const xB = ss(.205, .25, t);
       const f = p.f;
 
@@ -780,7 +809,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const drawSet = (im, g, al) => { if (!im || al <= .003) return; ctx.globalAlpha = al;
         ctx.drawImage(im, cx + (g.x0 - GEO.refX) * s1, feet - mh, g.w * s1, mh); ctx.globalAlpha = 1; };
       { // blend neighbouring turntable frames so slow spins glide instead of stepping
-        const i0 = Math.floor(aIdx), fr = aIdx - i0, a0 = framesA[i0], a1 = framesA[Math.min(NA-1, i0+1)];
+        const i0 = Math.floor(aIdx) % NA, fr = aIdx - Math.floor(aIdx), a0 = framesA[i0], a1 = framesA[(i0 + 1) % NA];
         if (a0 && a1 && fr > .02){ drawSet(a0, GEO.A, 1 - xB); drawSet(a1, GEO.A, (1 - xB) * fr); }
         else drawSet(frameIn(framesA, aIdx), GEO.A, 1 - xB);
       }
@@ -809,7 +838,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const yKey = yp >= 1 ? "done" : String(Math.round(18 * yp));
       if (yKey !== yrShown){
         yrShown = yKey;
-        yrNum.innerHTML = yp >= 1 ? '<span>18</span> <span class="b">Years</span>'
+        yrNum.innerHTML = yp >= 1 ? '<span>18</span> <span class="t-script yr-w">Years</span>'
                                   : '<span>20</span><span class="b">' + String(8 + (+yKey)).padStart(2, "0") + '</span>';
       }
 

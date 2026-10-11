@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Allura&family=Playfair+Display:ital,wght@1,400;1,500&family=Lato:wght@300;400;700&family=Archivo:wdth,wght@62..125,800..900&family=Instrument+Serif:ital@0;1&family=Mrs+Saint+Delafield&display=swap">
 <style>
-/* Layout: one sticky full-bleed stage. A veil with an orbit-ringed hole opens onto Mo at his table; the world re-arranges around him as he turns to face you. */
+/* Layout: one sticky full-bleed stage. A small preloader builds gravity (wing + orbit), then opens onto Mo at his table; the world re-arranges around him as he turns to face you. */
 :root{
   --bg:#05080c;
   --ink:#eef2f6;
@@ -122,6 +122,9 @@ h1{margin:0;font-weight:400;line-height:.84;font-size:clamp(48px,6.7vw,108px);te
 h1 .t-script{font-size:.96em;line-height:0;display:inline-block;transform:translateY(-.06em) rotate(-6deg);margin:0 .02em 0 .06em}
 h1 .l2{display:block}
 .intro .big-script{display:block;font-size:1.16em;line-height:.56;transform:rotate(-4deg);transform-origin:center;margin:0 0 -.08em;white-space:nowrap}
+.statement{position:absolute;left:0;right:0;top:100%;width:min(34em,86vw);margin:18px auto 0;font-weight:300;font-size:clamp(14px,1.15vw,17px);line-height:1.55;
+  color:var(--soft);opacity:0;text-wrap:balance;will-change:opacity,transform}
+.statement em{display:block;margin-top:.3em;font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.16em;color:var(--ink)}
 .hero-foot{position:absolute;z-index:1;inset:auto 0 0 0;pointer-events:none}
 .warm{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + clamp(96px,14svh,150px));margin:0;max-width:17em;
   font-family:var(--f-serif);font-style:italic;font-size:clamp(15px,1.35vw,20px);line-height:1.3;color:var(--ink);opacity:.88}
@@ -146,6 +149,17 @@ h1 .l2{display:block}
 .big .t-script{font-size:.96em;display:inline-block;line-height:0;transform:translateY(-.04em) rotate(-6deg);margin-left:.08em}
 .big .amp{color:var(--accent);margin-right:.12em}
 .big > span{display:block}
+.big .eyebrow{position:absolute;bottom:100%;left:0;right:0;margin-bottom:clamp(14px,1.6vw,24px);font-family:var(--f-ui);font-weight:400;font-size:11px;line-height:1.4;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.big.s2 .eyebrow{text-align:right;margin-right:-.42em}
+.big.s1{font-size:clamp(48px,6vw,112px)}
+.yr{display:flex;align-items:flex-end;justify-content:flex-end;gap:.34em}
+.yr-num{font-variant-numeric:tabular-nums;font-size:1.12em}
+.yr-lbl{font-size:.66em;line-height:1;padding-bottom:.08em;white-space:nowrap;opacity:0;transform:translateX(-.25em);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.yr-lbl.on{opacity:1;transform:none}
+.yr-lbl b{font-weight:400;color:var(--accent)}
+.small p.q{margin-top:1.1em}
+.small em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.14em;color:var(--ink)}
 .big.s1{left:var(--gutter);top:clamp(96px,15svh,150px);text-align:left}
 .big.s2{right:var(--gutter);bottom:clamp(40px,9svh,96px);text-align:right}
 .small{position:absolute;z-index:6;margin:0;max-width:30em;opacity:0;will-change:opacity,transform;pointer-events:none;
@@ -153,8 +167,8 @@ h1 .l2{display:block}
 .small p{margin:0 0 .9em}
 .small p:last-child{margin:0}
 .small strong{font-weight:700;color:var(--ink)}
-.small.s1{left:var(--gutter);top:calc(clamp(96px,15svh,150px) + clamp(56px,7.4vw,136px)*.88*2 + 28px);width:min(30em,36vw)}
-.small.s2{right:var(--gutter);bottom:calc(clamp(40px,9svh,96px) + clamp(56px,7.4vw,136px)*.88*2 + 40px);width:min(27em,34vw);text-align:right}
+.small.s1{left:var(--gutter);top:calc(clamp(96px,15svh,150px) + clamp(48px,6vw,112px)*.88*3 + 28px);width:min(30em,36vw)}
+.small.s2{right:var(--gutter);bottom:clamp(40px,9svh,96px);width:min(27em,34vw);text-align:right}
 .small::before{content:"";display:block;width:36px;height:1px;background:var(--accent);margin-bottom:16px}
 .small.s2::before{margin-left:auto}
 
@@ -165,21 +179,23 @@ h1 .l2{display:block}
 .file span::after{content:" ↗";letter-spacing:0}
 .file:hover svg{transform:translateY(-4px) rotate(-4deg)}
 
-/* ---------- preloader veil ---------- */
-.pre{position:absolute;inset:0;z-index:20;pointer-events:none}
-#veil{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);display:block;will-change:filter,opacity}
-.pre-txt{position:absolute;inset:0;margin:0;font-family:var(--f-sans);font-weight:900;text-transform:uppercase;line-height:1;color:var(--ink)}
-.pre-txt .ch{position:absolute;left:50%;top:50%;opacity:0;transition:opacity .8s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity;white-space:pre}
-.pre.ready .pre-txt .ch{opacity:1}
-.pct{position:absolute;top:50%;transform:translateY(-50%);font-size:12px;letter-spacing:.2em;color:var(--muted);font-variant-numeric:tabular-nums;transition:opacity .6s}
-.pct.l{left:var(--gutter)}
-.pct.r{right:var(--gutter)}
-.pre .cue{opacity:0;transition:opacity .8s}
-.pre.loaded .cue{opacity:1}
-.pre.loaded .pct{opacity:0}
-.pre.loaded .pre-txt .ch{transition:none}
+/* ---------- preloader: the wing draws itself, an orbit forms, gravity builds ---------- */
+.pre{position:absolute;inset:0;z-index:20;background:var(--bg);display:grid;place-items:center;pointer-events:none;transition:opacity .95s cubic-bezier(.45,0,.2,1)}
+.pre.out{opacity:0}
+.pre-act{display:grid;justify-items:center;gap:20px;transition:transform 1.1s cubic-bezier(.5,0,.2,1)}
+.pre.out .pre-act{transform:scale(1.12)}
+.pre-mark{position:relative;width:132px;height:132px}
+.pre-orbit{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transition:transform 1.1s cubic-bezier(.55,0,.25,1),opacity .9s}
+.pre.out .pre-orbit{transform:scale(2.4);opacity:0}
+.pre-orbit .ring{fill:none;stroke:rgba(110,190,240,.6);stroke-width:1;opacity:0}
+.pre-orbit .dot{fill:#a8dcf8;opacity:0;filter:drop-shadow(0 0 4px rgba(43,159,224,.9))}
+.pre-wing{position:absolute;left:50%;top:50%;width:42px;height:auto;overflow:visible;transform:translate(-50%,-50%)}
+.pre-wing path{fill:none;stroke:var(--accent);stroke-width:7;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.pre-wing image{opacity:0}
+.pre-label{margin:0;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);padding-left:.42em}
+.pre-count{margin:-10px 0 0;font-size:10px;letter-spacing:.24em;color:var(--soft);font-variant-numeric:tabular-nums;padding-left:.24em}
 html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
-.pre-txt .ch{will-change:transform,opacity,filter}
+@media (max-width:820px){.pre-mark{width:116px;height:116px}.pre-wing{width:36px}}
 
 /* ---------- end strip ---------- */
 .end{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;text-align:center;padding:clamp(70px,14svh,140px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 56px);border-top:1px solid var(--line);background:var(--bg)}
@@ -198,6 +214,9 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   .warm{max-width:10.5em;font-size:13px;bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
   .hero-foot .cue .label{display:none}
   .big{font-size:clamp(40px,11.6vw,68px);z-index:6}
+  .big.s1{font-size:clamp(38px,10.8vw,62px)}
+  .big .eyebrow{font-size:8.5px;letter-spacing:.26em;margin-bottom:12px}
+  .big.s2 .eyebrow{margin-right:-.26em}
   /* both chapter titles share one level — s1 left, s2 right — each with its paragraph grouped tight below */
   .big.s1{top:53svh;bottom:auto;left:var(--gutter);right:auto;text-align:left}
   .big.s2{top:53svh;bottom:auto;right:var(--gutter);left:auto;text-align:right}
@@ -271,12 +290,13 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         <div class="hero-head">
           <p class="kicker">Mo<i>|</i>Brand strategist &amp; creative director</p>
           <h1 class="intro"><span class="t-script big-script">This</span><span class="l2"><span class="t-sans">Is Mo</span></span></h1>
+          <p class="statement" id="statement">Mo is a brand strategist and creative director who helps businesses answer one question well: <em>why should anyone choose you?</em></p>
         </div>
       </div>
 
       <!-- chapter headlines sit behind Mo -->
-      <h2 class="big s1" data-ch="0"><span><span class="t-script">The</span> <span class="t-serif">Brand</span></span><span class="t-sans">Strategist</span></h2>
-      <h2 class="big s2" data-ch="1"><span><span class="t-serif amp">&amp;</span><span class="t-serif">Creative</span></span><span class="t-sans">Director</span></h2>
+      <h2 class="big s1" data-ch="0"><span class="eyebrow">Been there, done that</span><span><span class="t-script">I've</span> <span class="t-serif">sat on</span></span><span class="t-sans">both sides</span><span class="t-serif">of the table</span></h2>
+      <h2 class="big s2" data-ch="1" aria-label="18 years of service, 2008 to 2026"><span class="eyebrow">Years of service</span><span class="yr"><span class="t-sans yr-num" id="yrNum">2008</span><span class="t-serif yr-lbl" id="yrLbl"><b>18</b> years</span></span></h2>
 
       <canvas id="world" aria-label="Mo at his table, turning to face you as you scroll" role="img"></canvas>
 
@@ -288,11 +308,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       <div class="chfade" id="chfade"></div>
 
       <div class="small s1" data-ch="0">
-        <p>Fifteen years building brands from Beirut to Dubai, Salzburg and New York — pizza shops to diamond houses to event companies. Front lines, every time. Different products, same problem: nobody could tell them apart.</p>
-        <p><strong>That's the job. Make you the one they can't confuse with anyone else.</strong></p>
+        <p>I've hired agencies, and founded agencies. I've served businesses, and built businesses. My clients get my experience on a silver platter.</p>
+        <p class="q"><em>But how much experience does Mo have?</em></p>
       </div>
       <div class="small s2" data-ch="1">
-        <p>A strategist who designs, a designer who thinks in strategy. For founders who've put real money on the line — and can't afford a brand that only looks nice.</p>
+        <p>It started with student projects. Eighteen years later, the projects became businesses.</p>
       </div>
 
       <div class="hero-foot" id="heroFoot">
@@ -306,11 +326,14 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
       <!-- preloader -->
       <div class="pre" id="pre">
-        <canvas id="veil"></canvas>
-        <p class="pre-txt a" aria-hidden="true">Building</p>
-        <p class="pre-txt b" aria-hidden="true">Gravity</p>
-        <span class="pct l" id="pctL">000</span><span class="pct r">%</span>
-        <div class="cue"><span class="label">Scroll down</span><span class="rail"></span></div>
+        <div class="pre-act">
+          <div class="pre-mark">
+            <svg class="pre-orbit" viewBox="-66 -66 132 132" aria-hidden="true"><circle class="ring" r="54" pathLength="1" transform="rotate(-90)"/><circle class="dot" r="2.6"/></svg>
+            <svg class="pre-wing" viewBox="0 0 240 254" aria-hidden="true"><image href="img/wing.png" width="240" height="254"/><path d="M239.8 0.0 L238.2 0.0 L237.5 1.0 L193.0 32.8 L154.2 58.0 L105.0 88.0 L91.8 95.2 L62.2 112.8 L46.8 121.0 L39.8 125.2 L35.0 129.2 L33.0 131.8 L31.0 135.5 L29.8 140.5 L29.5 151.2 L30.0 165.2 L29.0 184.8 L27.0 201.2 L23.8 214.0 L21.0 222.2 L15.0 235.0 L10.0 242.8 L0.0 253.8 L2.2 253.8 L3.0 252.8 L5.5 251.5 L10.5 247.8 L16.8 241.8 L20.8 237.0 L25.8 230.0 L29.5 223.8 L32.8 217.2 L35.0 210.0 L35.8 208.5 L37.5 206.8 L38.5 206.8 L39.0 207.5 L41.2 217.2 L45.0 227.2 L48.0 233.2 L52.0 239.0 L56.2 242.5 L61.8 244.2 L71.8 244.0 L73.2 243.0 L73.5 242.0 L46.8 196.5 L45.0 194.2 L44.8 191.8 L45.2 191.2 L46.2 191.5 L60.0 207.0 L65.8 212.5 L71.8 216.8 L79.5 220.5 L86.2 222.5 L90.5 223.2 L99.2 223.5 L107.8 221.8 L115.2 219.5 L114.5 218.2 L57.8 188.0 L51.8 184.0 L51.5 183.0 L52.5 182.5 L60.2 185.0 L79.2 192.5 L101.5 199.8 L106.8 200.8 L114.8 200.8 L120.5 199.8 L127.0 197.8 L133.2 194.8 L136.2 192.8 L141.2 188.5 L145.8 183.2 L147.5 180.5 L147.5 179.8 L146.8 179.0 L141.0 178.2 L130.5 177.8 L104.8 174.2 L60.8 170.2 L58.2 169.8 L57.5 169.0 L57.5 168.2 L58.2 167.8 L137.5 168.2 L147.2 166.8 L153.2 164.8 L159.2 161.8 L164.8 157.8 L168.5 154.2 L171.8 150.0 L173.8 146.0 L175.0 141.2 L174.8 139.0 L171.8 138.8 L154.0 142.0 L151.8 142.0 L118.2 147.0 L92.5 150.0 L62.2 154.8 L56.5 155.0 L56.0 154.2 L58.8 152.8 L60.0 152.8 L66.2 150.8 L85.5 146.8 L98.5 143.0 L110.8 140.8 L149.2 131.5 L163.2 127.5 L172.2 123.8 L177.2 120.2 L180.8 116.8 L184.5 111.5 L187.8 105.0 L194.8 85.8 L198.8 78.8 L199.0 77.5 L179.8 85.0 L152.2 96.8 L135.8 103.0 L70.5 130.2 L69.0 130.2 L68.5 129.5 L72.8 126.8 L98.5 113.8 L118.2 104.8 L141.8 93.0 L154.2 87.5 L162.5 82.8 L178.2 75.5 L193.5 66.8 L207.8 56.8 L216.2 49.8 L221.5 44.5 L225.8 39.2 L231.5 30.0 L234.5 23.5 L237.8 13.2 L239.0 6.2 L239.8 5.5 Z" pathLength="1"/></svg>
+          </div>
+          <p class="pre-label">Building gravity</p>
+          <p class="pre-count"><span id="pctL">0</span>%</p>
+        </div>
         <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Building gravity</h2>
       </div>
     </div>
@@ -342,9 +365,17 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const $ = (s) => document.querySelector(s);
   const stage = $("#stage"), wrap = stage.parentElement;
   const cv = $("#world"), ctx = cv.getContext("2d");
-  const veil = $("#veil"), vtx = veil.getContext("2d");
   const pre = $("#pre"), pctL = $("#pctL");
+  const wingLine = pre.querySelector(".pre-wing path"), wingFill = pre.querySelector(".pre-wing image");
+  const pRing = pre.querySelector(".pre-orbit .ring"), pDot = pre.querySelector(".pre-orbit .dot");
+  const statementEl = $("#statement"), yrNum = $("#yrNum"), yrLbl = $("#yrLbl");
+  const bigS1 = $(".big.s1"), bigS2 = $(".big.s2"), smS1 = $(".small.s1"), smS2 = $(".small.s2");
   const heroEl = $("#hero"), heroFoot = $("#heroFoot"), heroCue = document.querySelector("#heroFoot .cue"), spotEl = $("#spot"), topBar = $("#top-bar"), chfade = $("#chfade");
+  topBar.style.opacity = "0"; topBar.querySelector(".nav").style.opacity = "0";   // the preloader owns a black screen
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    topBar.style.transition = "opacity .9s cubic-bezier(.45,0,.2,1)";
+    topBar.querySelector(".nav").style.transition = "opacity .9s";
+  }));
   const chEls = [...document.querySelectorAll("[data-ch]")];
   const files = [...document.querySelectorAll(".file")];
 
@@ -360,55 +391,6 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         <path d="M8 26h64" stroke="#fff" stroke-opacity=".35"/>
       </svg>`);
   });
-
-  /* ---------- preloader letters, set on arcs that follow the orbit ---------- */
-  const letters = [];
-  const lines = [...document.querySelectorAll(".pre-txt")].map((p, li) => {
-    const text = p.textContent; p.textContent = "";
-    const chars = [...text].map(c => {
-      const el = document.createElement("span"); el.className = "ch"; el.textContent = c;
-      el.style.transitionDelay = (letters.length * 34) + "ms";
-      p.appendChild(el);
-      const L = {el, c, bx: 0, by: 0, br: 0, k: 1 + Math.random() * 1.1, rot: (Math.random() - .5) * 70, lift: (Math.random() - .5) * .4};
-      letters.push(L); return L;
-    });
-    return {top: li === 0, chars};
-  });
-  const ringBaseCss = () => Math.min(W, H) * (mobile ? .072 : .06);
-  const mctx = document.createElement("canvas").getContext("2d");
-  function measureLetters(){
-    if (!lines.length || !W) return;
-    const rT = ringBaseCss() * 2.25;                     // text rides between the 3rd and 4th rings
-    const fam = getComputedStyle(lines[0].chars[0].el).fontFamily;
-    const widths = (fs) => lines.map(l => { mctx.font = `900 ${fs}px ${fam}`; return l.chars.map(L => mctx.measureText(L.c).width + fs*.04); });
-    const w1 = widths(100), longest = Math.max(...w1.map(a => a.reduce((x, y) => x + y, 0)));
-    const fs = Math.min(mobile ? 22 : 40, 100 * (Math.PI * rT * .74) / longest);
-    const ws = widths(fs);
-    lines.forEach((l, li) => {
-      const total = ws[li].reduce((x, y) => x + y, 0);
-      let run = -total / 2;
-      l.chars.forEach((L, ci) => {
-        const w = ws[li][ci], mid = run + w / 2; run += w;
-        const th = mid / rT;                              // arc angle for this glyph
-        L.el.style.fontSize = fs + "px";
-        if (l.top){ L.bx = rT * Math.sin(th); L.by = -rT * Math.cos(th); L.br = th; }
-        else { L.bx = rT * Math.sin(th); L.by = rT * Math.cos(th); L.br = -th; }
-      });
-    });
-    placeLetters(0, 0);
-  }
-  function placeLetters(lev, disp){
-    // letters fly toward the viewer: each at its own speed, growing and defocusing as they near the lens
-    letters.forEach(L => {
-      const z = Math.min(.95, Math.pow(disp, 1.3) * L.k);     // 0 on the ring → .93 right at the camera
-      const s = 1 / (1 - z);                                   // perspective scale
-      const x = L.bx * s + L.lift * W * z, y = L.by * s + L.lift * H * .4 * z;
-      const r = L.br * 180 / Math.PI + L.rot * z;
-      L.el.style.transform = `translate(-50%,-50%) translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(1)}deg) scale(${s.toFixed(3)})`;
-      L.el.style.filter = z > .02 ? `blur(${Math.min(18, (s - 1) * 1.6).toFixed(1)}px)` : "";
-      L.el.style.opacity = disp > 0 ? (1 - ss(.6, .95, z)).toFixed(3) : "";
-    });
-  }
 
   /* ---------- frames ---------- */
   let W = 0, H = 0, DPR = 1, mobile = false, loaded = 0;
@@ -564,7 +546,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- drag to rotate (hero) ---------- */
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
-  const heroLive = () => smoothT < .26 && (preDone || smoothT > .16);
+  const heroLive = () => preDone && smoothT < .26;
   stage.addEventListener("pointerdown", e => {
     if (!heroLive() || e.target.closest("a")) return;
     dragging = true; interacted = true; lastX = e.clientX; lastT = performance.now(); spinV = 0;
@@ -585,29 +567,49 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     W = r.width; H = r.height; mobile = W <= 820;
     DPR = Math.min(window.devicePixelRatio || 1, mobile ? 2 : 1.75);
     cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
-    const vr = veil.getBoundingClientRect();
-    veil.width = Math.round(vr.width * DPR); veil.height = Math.round(vr.height * DPR);
     bg.width = Math.round(W * DPR); bg.height = Math.round(H * DPR); initNodes();
     r0 = Math.min(W, H) * (mobile ? .085 : .065);
-    pre.style.setProperty("--hole", (mobile ? 12 : 16) + "px");
-    requestAnimationFrame(measureLetters);
     requestAnimationFrame(placeHeroTitle);
+    requestAnimationFrame(placeChapters);
     dirty = true;
   }
   const heroHead = document.querySelector(".hero-head");
+  let headShift = 0, figDrop = 0;
   function placeHeroTitle(){
-    if (!mobile){ heroHead.style.top = ""; barZone = topBar.querySelector(".mark").getBoundingClientRect().bottom + 40; return; }
-    const hp = mob[0];
     const barBottom = topBar.querySelector(".mark").getBoundingClientRect().bottom - stage.getBoundingClientRect().top;
     barZone = barBottom + 40;
-    const headTop = (hp.b - hp.h) * H + .025 * hp.h * H;
-    const gap = Math.max(12, (headTop - barBottom - heroHead.offsetHeight) / 2);
-    heroHead.style.top = (barBottom + gap + H*.035).toFixed(1) + "px";   // nudged a touch lower
+    const hp = (mobile ? mob : desk)[0];
+    if (mobile){
+      const headTop = (hp.b - hp.h) * H + .025 * hp.h * H;
+      const gap = Math.max(12, (headTop - barBottom - heroHead.offsetHeight) / 2);
+      heroHead.style.top = (barBottom + gap + H*.035).toFixed(1) + "px";   // nudged a touch lower
+    } else heroHead.style.top = "";
+    // room for the statement: lift the title block (never into the bar), and ease Mo down only if that isn't enough
+    const titleBottom = heroHead.offsetTop + heroHead.offsetHeight;
+    const figHead = (hp.b - hp.h * .93) * H;
+    const need = titleBottom + 18 + statementEl.offsetHeight + 14 - figHead;
+    const cap = Math.max(0, heroHead.offsetTop - barBottom - 10);
+    headShift = Math.max(mobile ? 22 : 28, Math.min(cap, need));
+    figDrop = Math.max(0, Math.min(H * (mobile ? .05 : .06), need - headShift));
+  }
+  // chapter paragraphs sit directly under their titles, whatever the title's height
+  function placeChapters(){
+    if (!W) return;
+    const gap = mobile ? 14 : 28;
+    smS1.style.top = (bigS1.offsetTop + bigS1.offsetHeight + gap).toFixed(1) + "px";
+    if (mobile){
+      bigS2.style.bottom = ""; smS2.style.bottom = "";
+      smS2.style.top = (bigS2.offsetTop + bigS2.offsetHeight + gap).toFixed(1) + "px";
+    } else {
+      smS2.style.top = "";
+      const smBottom = H - (smS2.offsetTop + smS2.offsetHeight);
+      bigS2.style.bottom = (smBottom + smS2.offsetHeight + 26).toFixed(1) + "px";
+    }
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => requestAnimationFrame(placeHeroTitle));
-  let r0 = 120, holeCss = 0, barZone = 90;
+  let r0 = 120, barZone = 90;
   new ResizeObserver(size).observe(stage);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measureLetters(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeChapters(); placeHeroTitle(); });
 
   function targetT(){
     const r = wrap.getBoundingClientRect();
@@ -671,64 +673,14 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   }
 
   /* ---------- the veil with its orbit hole ---------- */
-  function drawVeil(form, open, th){
-    const vw = veil.width, vh = veil.height, cx = vw/2, cy = vh/2;
-    vtx.setTransform(1,0,0,1,0,0);
-    vtx.globalCompositeOperation = "source-over";
-    vtx.clearRect(0,0,vw,vh);
-    const g = vtx.createRadialGradient(cx, cy, 0, cx, cy, Math.hypot(vw, vh)/2);
-    g.addColorStop(0, "#0b1118"); g.addColorStop(1, "#05070a");
-    vtx.fillStyle = g; vtx.fillRect(0,0,vw,vh);
-
-    // the hole forms as the rings settle, then opens with scroll
-    const e = ss(.22, 1, open);   // the hole only tears open once the letters are on their way out
-    // a pinhole of a few pixels that tears open as you scroll
-    holeCss = lerp(0, 3, ss(.35, 1, form)) + e * Math.hypot(W, H) * .75;
-    const holeR = holeCss * DPR;
-    if (holeR > 1){
-      vtx.globalCompositeOperation = "destination-out";
-      const hg = vtx.createRadialGradient(cx, cy, Math.max(0, holeR - Math.max(1.5*DPR, holeR*.14)), cx, cy, holeR);
-      hg.addColorStop(0, "rgba(0,0,0,1)"); hg.addColorStop(1, "rgba(0,0,0,0)");
-      vtx.fillStyle = hg; vtx.beginPath(); vtx.arc(cx, cy, holeR, 0, 7); vtx.fill();
-      vtx.globalCompositeOperation = "source-over";
-    }
-
-    // seven rings: tumbling lenses that settle into concentric circles around the hole
-    const ringBase = ringBaseCss();
-    for (let i = 0; i < 7; i++){
-      const local = reduce ? 1 : ss(i*.06, .58 + i*.06, form);
-      const ry = (1 - local) * 1.5 * (i % 2 ? 1 : -1) + (1-local) * Math.sin(th*2 + i) * .2;
-      const tx = (1 - local) * (.5 + i*.08);
-      // once scrolling starts, the seven rings collapse into a single orbit around the hole
-      const merge = ss(0, .35, open);
-      const r = (ringBase * (1 + i*(mobile ? .42 : .5)*(1 - merge)) + holeCss * 1.1) * DPR;
-      const fov = r * 5;
-      ringPath(vtx, r, cx, cy, tx, ry, fov, 160, 0);
-      const al = (.35 + i*.09) * clamp01(form*3) * (i === 0 ? 1 : 1 - merge*.92);
-      vtx.strokeStyle = `rgba(43,159,224,${al*.25})`; vtx.lineWidth = 5*DPR; vtx.stroke();
-      vtx.strokeStyle = `rgba(110,190,240,${al})`; vtx.lineWidth = 1.2*DPR; vtx.stroke();
-      // dots orbit the hole like a little solar system (inner rings faster), with a subtle cursor parallax
-      const a = i*1.3 + th*(1.15 + (6-i)*.12);
-      const q = project(r, a, cx, cy, tx, ry, fov);
-      const pcx = (mx > -900 ? (mx/W - .5) : 0), pcy = (my > -900 ? (my/H - .5) : 0);
-      const par = (5 + i*3.4) * DPR;
-      const qx = q[0] + pcx*par, qy = q[1] + pcy*par;
-      const rad = (2.2 + i*.45) * DPR;
-      vtx.fillStyle = `rgba(43,159,224,${.3*al})`; vtx.beginPath(); vtx.arc(qx, qy, rad*2.4, 0, 7); vtx.fill();
-      vtx.fillStyle = `rgba(170,220,248,${Math.min(1, al*1.4)})`; vtx.beginPath(); vtx.arc(qx, qy, rad, 0, 7); vtx.fill();
-    }
-  }
-
   /* ---------- render loop ---------- */
-  let shownPct = 0, readyFlag = false, loadedFlag = false;
+  let shownPct = 0, preState = 0, phaseAt = 0, yrStart = 0;
   function render(now){
     const dt = Math.min(64, now - last); last = now;
     const tt = targetT();
     const k = reduce ? 1 : 1 - Math.pow(1 - .14, dt/16.7);
     if (Math.abs(tt - smoothT) > 1e-5){
       let step = (tt - smoothT) * k;
-      // ease the opener in slowly so a fast swipe can't blow past it
-      if (smoothT < .24 && step > 0){ const cap = .006 * (dt/16.7); if (step > cap) step = cap; }
       smoothT += step; dirty = true;
     }
     const t = smoothT;
@@ -742,47 +694,59 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     if (!reduce) theta += dt * .00018;
     dirty = true;
 
-    const form = reduce ? 1 : clamp01((now - t0 - 250) / 2600);
-    const open = ss(.008, .17, t);
-
-    /* --- preloader --- */
+    /* --- preloader: wing draws, orbit forms with the counter; at 100% it closes and the dot slings once around --- */
     const loadFrac = loaded / N;
-    shownPct += (Math.min(loadFrac, form) * 100 - shownPct) * .12;
-    pctL.textContent = String(Math.round(shownPct)).padStart(3, "0");
-    if (!readyFlag && form > .45){ readyFlag = true; pre.classList.add("ready"); }
     if (scrollLocked && window.scrollY) window.scrollTo(0, 0);
-    if (!loadedFlag && loadFrac >= .999 && form >= 1){
-      loadedFlag = true; pre.classList.add("loaded");
-      // release once the counter has faded out and "scroll down" is showing
-      setTimeout(() => { scrollLocked = false; document.documentElement.classList.remove("locked"); }, 650);
-    }
-
     if (!preDone){
-      const vis = 1 - ss(.17, .21, t);
-      if (vis > .001){
-        pre.hidden = false;
-        drawVeil(form, open, theta);
-        veil.style.opacity = vis.toFixed(3);
-        const disp = ss(.008, .12, t);   // letters start with the first scroll and are gone by the time the hole reveals the hero
-        placeLetters(Math.min(holeCss, H * .3), disp);
-        const ui = 1 - ss(0, .05, t);
-        pre.querySelectorAll(".pct,.cue").forEach(el => el.style.visibility = ui < .02 ? "hidden" : "visible");
-        pre.querySelector(".cue").style.filter = `opacity(${ui.toFixed(3)})`;
-        preDone = false;
-      } else {
-        // the preloader plays once per visit; scrolling back up lands on the hero
-        preDone = true; pre.remove(); letters.length = 0;
+      const T = now - t0;
+      const draw = reduce ? 1 : ss(150, 1750, T);
+      wingLine.style.strokeDashoffset = (1 - draw).toFixed(4);
+      wingLine.style.opacity = (1 - ss(1900, 2500, T) * .85).toFixed(3);
+      wingFill.style.opacity = (reduce ? 1 : ss(1400, 2300, T)).toFixed(3);
+      const timeFrac = reduce ? 1 : clamp01((T - 450) / 2700);
+      const target = Math.min(loadFrac, timeFrac) * 100;
+      shownPct += (target - shownPct) * .1;
+      if (target >= 100 && shownPct > 99.4) shownPct = 100;
+      pctL.textContent = String(Math.floor(shownPct));
+      const formIn = reduce ? 1 : ss(500, 1000, T);
+      let arc = .05 + .85 * (shownPct / 100), ang = arc;           // turns, measured from 12 o'clock
+      if (preState === 0 && shownPct >= 100 && draw >= 1) { preState = 1; phaseAt = now; }
+      if (preState >= 1){
+        const u = clamp01((now - phaseAt) / (reduce ? 1 : 1350));
+        ang = .9 + 1.1 * Math.pow(u, 2.3);                        // accelerating lap
+        arc = Math.min(1, ang);
+        if (preState === 1 && u >= 1){
+          preState = 2; phaseAt = now; pre.classList.add("out");
+          topBar.style.opacity = "1";
+        }
+        if (preState === 2){
+          const v = (now - phaseAt) / 1000;
+          ang = 2 + v * 2.4 + v * v * 3;                           // keeps slinging as the scene opens
+          if (v > (reduce ? 0 : 1.05)){
+            preDone = true; pre.remove();
+            scrollLocked = false; document.documentElement.classList.remove("locked");
+          }
+        }
+      }
+      if (!preDone){
+        pRing.style.opacity = formIn.toFixed(3);
+        pRing.style.strokeDasharray = `${arc.toFixed(4)} 1`;
+        const a = ang * Math.PI * 2 - Math.PI / 2;
+        pDot.setAttribute("cx", (54 * Math.cos(a)).toFixed(2));
+        pDot.setAttribute("cy", (54 * Math.sin(a)).toFixed(2));
+        pDot.style.opacity = formIn.toFixed(3);
       }
     }
 
     /* --- header --- */
-    const hb = preDone ? 1 : ss(.14, .21, t);
-    topBar.querySelector(".nav").style.opacity = hb.toFixed(3);
-    topBar.classList.toggle("live", hb > .5);
+    topBar.querySelector(".nav").style.opacity = preDone || preState === 2 ? "1" : "0";
 
     if (dirty && W){
       dirty = false;
       const p = sample(mobile ? mob : desk, t);
+      // statement beat: as the scroll begins, the title lifts and the statement settles in under it
+      const st = ss(.02, .1, t);
+      p.b += st * (figDrop / H) * (1 - ss(.22, .38, t));
       const heroFrame = (1 - Math.cos(spin)) / 2 * 40;          // drag sweeps the three-quarter range
       const w = ss(.22, .42, t);
       const f = lerp(heroFrame, p.f, w);
@@ -822,6 +786,19 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       heroFoot.style.transform = `translate3d(0,${(-hp * H * 1.15).toFixed(1)}px,0)`;
       heroFoot.style.visibility = hp >= 1 ? "hidden" : "visible";
       heroCue.style.opacity = (1 - ss(.205, .235, t)).toFixed(3);   // the scroll cue bows out once you're moving
+      heroHead.style.transform = `translate3d(0,${(-st * headShift).toFixed(1)}px,0)`;
+      statementEl.style.opacity = st.toFixed(3);
+      statementEl.style.transform = `translate3d(0,${((1 - st) * 16).toFixed(1)}px,0)`;
+
+      // years-of-service counter: once title 3 has landed, 2008 runs up to 2026, then "18 years" joins it
+      const yLanded = t >= chWin[1][0] + (mobile ? .07 : .085);
+      if (t < chWin[1][0]){ yrStart = 0; yrNum.textContent = "2008"; yrLbl.classList.remove("on"); }
+      else if (yLanded && !yrStart) yrStart = now;
+      if (yrStart){
+        const yu = clamp01((now - yrStart) / (reduce ? 1 : 1500));
+        yrNum.textContent = String(2008 + Math.round(18 * (1 - Math.pow(1 - yu, 3))));
+        if (yu >= 1) yrLbl.classList.add("on");
+      }
       stage.classList.toggle("can-drag", heroLive());
       spotEl.style.transform = `translate3d(calc(-50% + ${(p.x*W).toFixed(1)}px),${mobile ? ((p.b - .86)*H).toFixed(1) : 0}px,0)`;
 

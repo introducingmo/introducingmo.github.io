@@ -89,12 +89,20 @@ a{color:inherit}
 .menu.open .menu-nav a:nth-child(3){animation-delay:.38s}
 .menu.open .menu-nav a:nth-child(4){animation-delay:.46s}
 @keyframes menuIn{to{opacity:1;transform:none}}
+@keyframes menuOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-26px)}}
 .menu-social{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:224px;margin:0 auto;opacity:0;transform:translateY(16px)}
 .menu.open .menu-social{animation:menuIn .5s cubic-bezier(.2,.7,.2,1) .58s forwards}
+/* closing: everything floats up and out, last-in first-out, before the circle closes */
+.menu.closing .menu-nav a,.menu.closing .menu-social{animation:menuOut .42s cubic-bezier(.5,0,.75,0) both}
+.menu.closing .menu-social{animation-delay:0s}
+.menu.closing .menu-nav a:nth-child(4){animation-delay:.05s}
+.menu.closing .menu-nav a:nth-child(3){animation-delay:.10s}
+.menu.closing .menu-nav a:nth-child(2){animation-delay:.15s}
+.menu.closing .menu-nav a:nth-child(1){animation-delay:.20s}
 .menu-social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--soft);transition:color .2s,border-color .2s,background .2s,transform .2s}
 .menu-social a:hover{color:#fff;border-color:var(--accent);background:var(--accent-soft);transform:translateY(-3px)}
 .menu-social svg{width:18px;height:18px;fill:currentColor}
-@media (prefers-reduced-motion:reduce){.menu,.menu-nav a,.menu-social{transition:none;animation:none}.menu.open .menu-nav a,.menu.open .menu-social{opacity:1;transform:none;animation:none}}
+@media (prefers-reduced-motion:reduce){.menu,.menu-nav a,.menu-social{transition:none;animation:none}.menu.open .menu-nav a,.menu.open .menu-social{opacity:1;transform:none;animation:none}.menu.closing .menu-nav a,.menu.closing .menu-social{opacity:0;animation:none}}
 
 /* ---------- stage ---------- */
 .story-wrap{position:relative;height:400vh}
@@ -193,6 +201,7 @@ h1 .l2{display:block}
 .pre-wing{position:absolute;left:50%;top:50%;width:42px;height:auto;overflow:visible;transform:translate(-50%,-50%)}
 .pre-wing path{fill:none;stroke:var(--accent);stroke-width:7;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
 .pre-wing image{opacity:0}
+.pre-fly{position:fixed;z-index:40;transform-origin:0 0;pointer-events:none;transition:transform .7s cubic-bezier(.7,0,.18,1);filter:drop-shadow(0 0 10px rgba(43,159,224,.55))}
 .pre-label{margin:0;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);padding-left:.42em}
 .pre-count{margin:-10px 0 0;font-size:10px;letter-spacing:.24em;color:var(--soft);font-variant-numeric:tabular-nums;padding-left:.24em}
 html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
@@ -291,7 +300,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         <div class="hero-head">
           <p class="kicker">Mo<i>|</i>Brand strategist &amp; creative director</p>
           <h1 class="intro"><span class="t-script big-script">This</span><span class="l2"><span class="t-sans">Is Mo</span></span></h1>
-          <p class="statement" id="statement">Mo is a brand strategist and creative director who helps businesses answer one question well: <em>why should anyone choose you?</em></p>
+          <p class="statement" id="statement">Mo is a brand strategist and creative director who helps businesses answer one question well: <em>why should anyone choose your brand?</em></p>
         </div>
       </div>
 
@@ -396,6 +405,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   /* ---------- frames: A = hero turntable (no smile, drag to explore) · B = scroll turn (to the smile) ---------- */
   // both clips share one camera; each set is cropped differently, so frames are drawn by their source-crop geometry
   const NA = 120;
+  const FRAMES_V = "36";                               // bump whenever frame images change, so no phone mixes cached old frames with new
   const GEO = { A: { x0: 100, w: 870 }, B: { x0: 233, w: 718 }, h: 1070, refX: 592 };
   let W = 0, H = 0, DPR = 1, mobile = false, loaded = 0, gateTotal = 1;
   const frames = new Array(N).fill(null), framesA = new Array(NA).fill(null);
@@ -417,7 +427,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const done = (ok) => { if (ok) j.arr[j.i] = im; if (j.gate) loaded++; dirty = true; next(); };
       im.onload = () => { im.decode ? im.decode().then(() => done(true), () => done(true)) : done(true); };
       im.onerror = () => done(false);
-      im.src = j.dir + "/" + String(j.i).padStart(2, "0") + ".webp";
+      im.src = j.dir + "/" + String(j.i).padStart(2, "0") + ".webp?v=" + FRAMES_V;
     };
     for (let k = 0; k < 6; k++) next();
   }
@@ -522,9 +532,18 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   (function wireMenu(){
     const btn = document.querySelector(".menu-btn"), menu = $("#menu");
     if (!btn || !menu) return;
-    const setOpen = (open) => { menu.classList.toggle("open", open); btn.classList.toggle("active", open);
+    let tShut = 0, tDone = 0;
+    const setOpen = (open) => {
+      clearTimeout(tShut); clearTimeout(tDone);
+      if (open){ menu.classList.remove("closing"); menu.classList.add("open"); }
+      else if (menu.classList.contains("open") && !menu.classList.contains("closing")){
+        menu.classList.add("closing");                                   // links float out first…
+        tShut = setTimeout(() => menu.classList.remove("open"), 300);     // …then the circle closes behind them
+        tDone = setTimeout(() => menu.classList.remove("closing"), 1100);
+      }
+      btn.classList.toggle("active", open);
       menu.setAttribute("aria-hidden", open ? "false" : "true"); btn.setAttribute("aria-expanded", open ? "true" : "false"); };
-    btn.addEventListener("click", () => setOpen(!menu.classList.contains("open")));
+    btn.addEventListener("click", () => setOpen(!menu.classList.contains("open") || menu.classList.contains("closing")));
     menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setOpen(false)));
     addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
   })();
@@ -555,10 +574,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   }
 
   /* ---------- drag to rotate (hero) ---------- */
-  // the turntable is a full 360 loop, measured in frames (0..NA): 0 = opening three-quarter pose (matches the scroll set),
-  // ~24 / ~85 = profiles, ~104 = facing the viewer, ~56 = his back. Visitors can spin him all the way round,
+  // the turntable is a full 360 loop at an even 3° per frame (0..NA): 0 = opening three-quarter pose (matches the scroll set),
+  // ~19 / ~79 = profiles, ~109 = facing the viewer, ~49 = his back. Visitors can spin him all the way round,
   // but he never comes to rest facing away: a release inside the back zone glides on to the nearest profile.
-  const A_BACK = 54, A_ZONE = 22, A_IDLE_C = 114.5, A_IDLE_A = 29;
+  const A_BACK = 49, A_ZONE = 30, A_IDLE_C = 109, A_IDLE_A = 27;      // back zone = everything behind the two profiles
   const A_FPR = NA / (2*Math.PI);                 // frames per radian of drag
   const wrapN = (v, n) => ((v % n) + n) % n, wrapHalf = (v, n) => wrapN(v + n/2, n) - n/2;
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
@@ -608,6 +627,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   // chapter paragraphs sit directly under their titles, whatever the title's height
   function placeChapters(){
     if (!W) return;
+    chEls.forEach(el => { el._exD = 0; });                 // exit distances are re-measured after layout changes
     const gap = mobile ? 14 : 28;
     smS1.style.top = (bigS1.offsetTop + bigS1.offsetHeight + gap).toFixed(1) + "px";
     if (mobile){
@@ -652,7 +672,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   }
 
   /* ---------- table orbit (main canvas) ---------- */
-  const TXT = "ROTATE TO EXPLORE  ·  ROTATE TO EXPLORE  ·  ROTATE TO EXPLORE  ·  ";
+  const TXT = "ROTATE TO SPIN MO  ·  ROTATE TO SPIN MO  ·  ROTATE TO SPIN MO  ·  ";
   function drawTableRing(p, cx, cy, R, front, th, ta){
     const tx = p.tx*Math.PI/180, fov = R*4.2, seg = mobile ? 96 : 140, side = front ? 1 : -1;
     for (let i = 0; i < 3; i++){
@@ -687,7 +707,28 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- the veil with its orbit hole ---------- */
   /* ---------- render loop ---------- */
-  let shownPct = 0, preState = 0, phaseAt = 0, yrShown = "";
+  let shownPct = 0, preState = 0, phaseAt = 0, yrShown = "", wingOff = 1, wingFillV = 0;
+  const WING_P = 900;                                   // one draw → fill → retract loop (ms)
+  const markImg = topBar.querySelector(".mark img");
+  markImg.style.visibility = "hidden";                  // the preloader's wing becomes the header mark
+  let landed = false;
+  const land = () => { if (landed) return; landed = true; markImg.style.visibility = ""; const f = $(".pre-fly"); if (f) f.remove(); };
+  function flyToMark(){
+    const wingEl = pre.querySelector(".pre-wing"), wr = wingEl.getBoundingClientRect(), mb = markImg.getBoundingClientRect();
+    if (reduce || !wr.width || !mb.width) { land(); return; }
+    const ar = 240 / 254; let mw = mb.width, mh = mb.height;      // where object-fit: contain actually draws the mark
+    if (mw / mh > ar) mw = mh * ar; else mh = mw / ar;
+    const mx = mb.left + (mb.width - mw) / 2, my = mb.top + (mb.height - mh) / 2;
+    const fly = document.createElement("img");
+    fly.src = "img/wing.png"; fly.alt = ""; fly.className = "pre-fly";
+    Object.assign(fly.style, { left: wr.left + "px", top: wr.top + "px", width: wr.width + "px", height: wr.height + "px" });
+    document.body.appendChild(fly);
+    wingEl.style.opacity = "0";
+    fly.getBoundingClientRect();
+    fly.style.transform = `translate(${(mx - wr.left).toFixed(1)}px,${(my - wr.top).toFixed(1)}px) scale(${(mw / wr.width).toFixed(4)})`;
+    fly.addEventListener("transitionend", land, { once: true });
+    setTimeout(land, 1000);
+  }
   function render(now){
     const dt = Math.min(64, now - last); last = now;
     const tt = targetT();
@@ -725,49 +766,49 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     if (!reduce) theta += dt * .00018;
     dirty = true;
 
-    /* --- preloader: wing draws, orbit forms with the counter; at 100% it closes and the dot slings once around --- */
+    /* --- preloader: the wing loops like a spinner (draw → fill → retract) while the counter climbs;
+           at 100% it settles filled, then flies into its place in the header as the hero opens --- */
     const loadFrac = loaded / gateTotal;
     if (scrollLocked && window.scrollY) window.scrollTo(0, 0);
     if (!preDone){
       const T = now - t0;
-      const draw = reduce ? 1 : ss(120, 1300, T);
-      wingLine.style.strokeDashoffset = (1 - draw).toFixed(4);
-      wingLine.style.opacity = (1 - ss(1500, 2000, T) * .85).toFixed(3);
-      wingFill.style.opacity = (reduce ? 1 : ss(1050, 1700, T)).toFixed(3);
-      const timeFrac = reduce ? 1 : clamp01((T - 250) / 1900);
+      const timeFrac = reduce ? 1 : clamp01((T - 250) / 2300);
       const target = Math.min(loadFrac, timeFrac) * 100;
       shownPct += (target - shownPct) * .1;
       if (target >= 100 && shownPct > 99.4) shownPct = 100;
       pctL.textContent = String(Math.floor(shownPct));
-      const formIn = reduce ? 1 : ss(500, 1000, T);
-      let arc = .05 + .85 * (shownPct / 100), ang = arc;           // turns, measured from 12 o'clock
-      if (preState === 0 && shownPct >= 100 && draw >= 1) { preState = 1; phaseAt = now; }
-      if (preState >= 1){
-        const u = clamp01((now - phaseAt) / (reduce ? 1 : 1150));
-        if (preState === 1){                                         // the wing draws itself again as the orbit closes
-          wingLine.style.opacity = "1";
-          wingLine.style.strokeDashoffset = (1 - ss(0, .88, u)).toFixed(4);
-          wingFill.style.opacity = Math.max(1 - ss(0, .12, u), ss(.6, 1, u)).toFixed(3);
-        }
-        ang = .9 + 1.1 * Math.pow(u, 2.3);                        // accelerating lap
-        arc = Math.min(1, ang);
-        if (preState === 1 && u >= 1){
-          preState = 2; phaseAt = now; pre.classList.add("out");
+      if (preState === 0){
+        const u = reduce ? .6 : (T % WING_P) / WING_P;
+        const off = u < .42 ? 1 - ss(0, .42, u) : u < .74 ? 0 : -ss(.74, 1, u);     // draw in, hold, retract out the far end
+        const fill = ss(.34, .54, u) * (1 - ss(.76, .96, u));
+        wingLine.style.strokeDashoffset = off.toFixed(4);
+        wingLine.style.opacity = "1";
+        wingFill.style.opacity = fill.toFixed(3);
+        wingOff = off; wingFillV = fill;
+        if (shownPct >= 100){ preState = 1; phaseAt = now; }
+      }
+      if (preState === 1){                                            // settle: line completes, wing fills solid
+        const e = ss(0, 1, clamp01((now - phaseAt) / (reduce ? 1 : 240)));
+        wingLine.style.strokeDashoffset = (wingOff * (1 - e)).toFixed(4);
+        wingFill.style.opacity = (wingFillV + (1 - wingFillV) * e).toFixed(3);
+        wingLine.style.opacity = (1 - e * .9).toFixed(3);
+        if (e >= 1){
+          preState = 2; phaseAt = now;
+          flyToMark();
+          pre.classList.add("out");
           topBar.style.opacity = "1";
         }
-        if (preState === 2){
-          const v = (now - phaseAt) / 1000;
-          ang = 2 + v * 2.4 + v * v * 3;                           // keeps slinging as the scene opens
-          if (v > (reduce ? 0 : .9)){
-            preDone = true; pre.remove();
-            scrollLocked = false; document.documentElement.classList.remove("locked");
-          }
-        }
+      }
+      if (preState === 2 && now - phaseAt > (reduce ? 0 : 900)){
+        preDone = true; pre.remove();
+        scrollLocked = false; document.documentElement.classList.remove("locked");
       }
       if (!preDone){
+        const formIn = reduce ? 1 : ss(250, 700, T);
+        const arc = preState === 0 ? .04 + .96 * (shownPct / 100) : 1;
         pRing.style.opacity = formIn.toFixed(3);
         pRing.style.strokeDasharray = `${arc.toFixed(4)} 1`;
-        const a = ang * Math.PI * 2 - Math.PI / 2;
+        const a = arc * Math.PI * 2 - Math.PI / 2;
         pDot.setAttribute("cx", (54 * Math.cos(a)).toFixed(2));
         pDot.setAttribute("cy", (54 * Math.sin(a)).toFixed(2));
         pDot.style.opacity = formIn.toFixed(3);
@@ -792,14 +833,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const figScale = 1 + .26 * ss(.60, .72, t) * (1 - clamp01((t - .78) / .22));   // grows for the smile, then eases back continuously to the end of the scroll
       const baseMh = p.h * H * DPR;
       const mh = baseMh * figScale;
-      const s1 = mh / GEO.h, mw = 718 * s1;           // footprint of the figure (shadow) stays constant across sets
+      const s1 = mh / GEO.h;
       const cx = (W/2 + p.x*W) * DPR, feet = p.b * H * DPR + baseMh*(figScale-1)*.3;
-
-      // floor shadow
-      const g = ctx.createRadialGradient(cx, feet, 0, cx, feet, mw*.62);
-      g.addColorStop(0, "rgba(0,0,0,.82)"); g.addColorStop(.6, "rgba(0,0,0,.4)"); g.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.save(); ctx.translate(cx, feet); ctx.scale(1, .16); ctx.translate(-cx, -feet);
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, feet, mw*.62, 0, 7); ctx.fill(); ctx.restore();
 
       // the orbit rides just under the tabletop
       const ringCy = feet - p.rc*mh, R = p.rr*mh;
@@ -850,7 +885,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         // snap to full opacity on entrance (no fade-in) — the parallax does the entering; fade only on exit
         const o = mobile
           ? ss(a, a + .02, t) * (1 - ss(b - .08, b, t))
-          : ss(a, a + .015, t) * (1 - ss(b - .04, b, t));
+          : i === 0 ? ss(a, a + .015, t) * (t < .615 ? 1 : 0)            // desktop title 2 leaves by parallax, not a fade
+                    : ss(a, a + .015, t) * (1 - ss(b - .04, b, t));
         if (el.classList.contains("small")) anyCh = Math.max(anyCh, o);
         el.style.opacity = o.toFixed(3);
         el.style.visibility = o < .01 ? "hidden" : "visible";
@@ -867,7 +903,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
           const e0 = i === 0 ? .38 : a + .09;
           const enter = i === 0 ? ss(.27, .38, t) : ss(a, e0, t);
           const drift = (t - e0) * -90 * enter;
-          tx = 0; ty = (1 - enter) * H * .85 + drift;
+          // title 2 + its text then accelerate up and out past the top of the frame (each travels its own distance)
+          let exitY = 0;
+          if (i === 0){ const x = clamp01((t - .50) / .115); if (!el._exD) el._exD = el.offsetTop + el.offsetHeight + 90; exitY = x * x * el._exD; }
+          tx = 0; ty = (1 - enter) * H * .85 + drift - exitY;
         }
         el.style.transform = `translate3d(${tx.toFixed(1)}px,${ty.toFixed(1)}px,0)`;
       });

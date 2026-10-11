@@ -122,7 +122,7 @@ h1{margin:0;font-weight:400;line-height:.84;font-size:clamp(48px,6.7vw,108px);te
 h1 .t-script{font-size:.96em;line-height:0;display:inline-block;transform:translateY(-.06em) rotate(-6deg);margin:0 .02em 0 .06em}
 h1 .l2{display:block}
 .intro .big-script{display:block;font-size:1.16em;line-height:.56;transform:rotate(-4deg);transform-origin:center;margin:0 0 -.08em;white-space:nowrap}
-.statement{position:absolute;left:0;right:0;top:100%;width:min(34em,86vw);margin:18px auto 0;font-weight:300;font-size:clamp(14px,1.15vw,17px);line-height:1.55;
+.statement{position:absolute;left:0;right:0;top:0;width:min(32em,86vw);margin:0 auto;font-weight:300;font-size:clamp(15px,1.3vw,20px);line-height:1.55;
   color:var(--soft);opacity:0;text-wrap:balance;will-change:opacity,transform}
 .statement em{display:block;margin-top:.3em;font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.16em;color:var(--ink)}
 .hero-foot{position:absolute;z-index:1;inset:auto 0 0 0;pointer-events:none}
@@ -155,9 +155,8 @@ h1 .l2{display:block}
 .big.s1{font-size:clamp(48px,6vw,112px)}
 .yr{display:flex;align-items:flex-end;justify-content:flex-end;gap:.34em}
 .yr-num{font-variant-numeric:tabular-nums;font-size:1.12em}
-.yr-lbl{font-size:.66em;line-height:1;padding-bottom:.08em;white-space:nowrap;opacity:0;transform:translateX(-.25em);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-.yr-lbl.on{opacity:1;transform:none}
-.yr-lbl b{font-weight:400;color:var(--accent)}
+.yr-num{white-space:nowrap}
+.yr-num .b{color:var(--accent)}
 .small p.q{margin-top:1.1em}
 .small em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.14em;color:var(--ink)}
 .big.s1{left:var(--gutter);top:clamp(96px,15svh,150px);text-align:left}
@@ -295,8 +294,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       </div>
 
       <!-- chapter headlines sit behind Mo -->
-      <h2 class="big s1" data-ch="0"><span class="eyebrow">Been there, done that</span><span><span class="t-script">I've</span> <span class="t-serif">sat on</span></span><span class="t-sans">both sides</span><span class="t-serif">of the table</span></h2>
-      <h2 class="big s2" data-ch="1" aria-label="18 years of service, 2008 to 2026"><span class="eyebrow">Years of service</span><span class="yr"><span class="t-sans yr-num" id="yrNum">2008</span><span class="t-serif yr-lbl" id="yrLbl"><b>18</b> years</span></span></h2>
+      <h2 class="big s1" data-ch="0"><span class="eyebrow">Been there, done that</span><span><span class="t-script">He's</span> <span class="t-serif">sat on</span></span><span class="t-sans">both sides</span><span class="t-serif">of the table</span></h2>
+      <h2 class="big s2" data-ch="1" aria-label="18 years of service, 2008 to 2026"><span class="eyebrow">Years of service</span><span class="yr"><span class="t-sans yr-num" id="yrNum"><span>20</span><span class="b">08</span></span></span></h2>
 
       <canvas id="world" aria-label="Mo at his table, turning to face you as you scroll" role="img"></canvas>
 
@@ -308,7 +307,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       <div class="chfade" id="chfade"></div>
 
       <div class="small s1" data-ch="0">
-        <p>I've hired agencies, and founded agencies. I've served businesses, and built businesses. My clients get my experience on a silver platter.</p>
+        <p>I’ve hired agencies, and founded agencies. Served businesses, built businesses. My clients get my experience on a silver platter.</p>
         <p class="q"><em>But how much experience does Mo have?</em></p>
       </div>
       <div class="small s2" data-ch="1">
@@ -316,8 +315,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       </div>
 
       <div class="hero-foot" id="heroFoot">
-        <p class="warm l">Coffee, tea, or a cold Long&nbsp;Island?</p>
-        <p class="warm r">Welcome to the table, pull up a&nbsp;chair.</p>
+        <p class="warm l">Welcome to the table. Pull up a&nbsp;chair.</p>
+        <p class="warm r">Coffee, tea, or a cold Long&nbsp;Island?</p>
         <div class="cue"><span class="label">Scroll down</span><span class="rail"></span></div>
       </div>
 
@@ -368,7 +367,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const pre = $("#pre"), pctL = $("#pctL");
   const wingLine = pre.querySelector(".pre-wing path"), wingFill = pre.querySelector(".pre-wing image");
   const pRing = pre.querySelector(".pre-orbit .ring"), pDot = pre.querySelector(".pre-orbit .dot");
-  const statementEl = $("#statement"), yrNum = $("#yrNum"), yrLbl = $("#yrLbl");
+  const statementEl = $("#statement"), yrNum = $("#yrNum");
   const bigS1 = $(".big.s1"), bigS2 = $(".big.s2"), smS1 = $(".small.s1"), smS2 = $(".small.s2");
   const heroEl = $("#hero"), heroFoot = $("#heroFoot"), heroCue = document.querySelector("#heroFoot .cue"), spotEl = $("#spot"), topBar = $("#top-bar"), chfade = $("#chfade");
   topBar.style.opacity = "0"; topBar.querySelector(".nav").style.opacity = "0";   // the preloader owns a black screen
@@ -392,29 +391,37 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       </svg>`);
   });
 
-  /* ---------- frames ---------- */
-  let W = 0, H = 0, DPR = 1, mobile = false, loaded = 0;
-  const frames = new Array(N).fill(null);
+  /* ---------- frames: A = hero turntable (no smile, drag to explore) · B = scroll turn (to the smile) ---------- */
+  // both clips share one camera; each set is cropped differently, so frames are drawn by their source-crop geometry
+  const NA = 56;
+  const GEO = { A: { x0: 100, w: 810 }, B: { x0: 233, w: 718 }, h: 1070, refX: 592 };
+  let W = 0, H = 0, DPR = 1, mobile = false, loaded = 0, gateTotal = 1;
+  const frames = new Array(N).fill(null), framesA = new Array(NA).fill(null);
   function loadFrames(){
     const set = (Math.min(window.devicePixelRatio || 1, 2) * Math.min(innerWidth, 900) > 900) ? "hi" : "lo";
-    const order = [], seen = new Set();
-    for (const step of [32, 16, 8, 4, 2, 1]) for (let i = 0; i < N; i += step) if (!seen.has(i)) { seen.add(i); order.push(i); }
-    if (!seen.has(N-1)) order.splice(1, 0, N-1);
+    const order = (n, steps) => { const o = [], seen = new Set(); for (const st of steps) for (let i = 0; i < n; i += st) if (!seen.has(i)) { seen.add(i); o.push(i); } if (!seen.has(n-1)) o.splice(1, 0, n-1); return o; };
+    const a = order(NA, [8, 4, 2, 1]), b = order(N, [32, 16, 8, 4, 2, 1]);
+    const bGate = b.filter(i => i % 8 === 0 || i === N-1).length;   // these come first in the coarse-to-fine order
+    // the preloader waits for the whole turntable + a light pass of the scroll set; the rest streams in on the hero
+    const jobs = [...a.map(i => ({arr: framesA, i, dir: "f/a/" + set, gate: true})),
+                  ...b.map((i, k) => ({arr: frames, i, dir: "f/" + set, gate: k < bGate}))];
+    gateTotal = jobs.filter(j => j.gate).length;
     let idx = 0;
     const next = () => {
-      if (idx >= order.length) return;
-      const i = order[idx++];
+      if (idx >= jobs.length) return;
+      const j = jobs[idx++];
       const im = new Image(); im.decoding = "async";
-      im.onload = () => { const fin = () => { frames[i] = im; loaded++; dirty = true; next(); }; im.decode ? im.decode().then(fin, fin) : fin(); };
-      im.onerror = () => { loaded++; next(); };
-      im.src = "f/" + set + "/" + String(i).padStart(2, "0") + ".webp";
+      const done = (ok) => { if (ok) j.arr[j.i] = im; if (j.gate) loaded++; dirty = true; next(); };
+      im.onload = () => { im.decode ? im.decode().then(() => done(true), () => done(true)) : done(true); };
+      im.onerror = () => done(false);
+      im.src = j.dir + "/" + String(j.i).padStart(2, "0") + ".webp";
     };
     for (let k = 0; k < 6; k++) next();
   }
-  function frameAt(f){
-    const i = Math.max(0, Math.min(N-1, Math.round(f)));
-    if (frames[i]) return frames[i];
-    for (let d = 1; d < N; d++) { if (frames[i-d]) return frames[i-d]; if (frames[i+d]) return frames[i+d]; }
+  function frameIn(arr, f){
+    const n = arr.length, i = Math.max(0, Math.min(n-1, Math.round(f)));
+    if (arr[i]) return arr[i];
+    for (let d = 1; d < n; d++) { if (arr[i-d]) return arr[i-d]; if (arr[i+d]) return arr[i+d]; }
     return null;
   }
 
@@ -574,7 +581,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     dirty = true;
   }
   const heroHead = document.querySelector(".hero-head");
-  let headShift = 0, figDrop = 0;
+  const heroH1 = heroHead.querySelector("h1");
   function placeHeroTitle(){
     const barBottom = topBar.querySelector(".mark").getBoundingClientRect().bottom - stage.getBoundingClientRect().top;
     barZone = barBottom + 40;
@@ -584,13 +591,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const gap = Math.max(12, (headTop - barBottom - heroHead.offsetHeight) / 2);
       heroHead.style.top = (barBottom + gap + H*.035).toFixed(1) + "px";   // nudged a touch lower
     } else heroHead.style.top = "";
-    // room for the statement: lift the title block (never into the bar), and ease Mo down only if that isn't enough
-    const titleBottom = heroHead.offsetTop + heroHead.offsetHeight;
-    const figHead = (hp.b - hp.h * .93) * H;
-    const need = titleBottom + 18 + statementEl.offsetHeight + 14 - figHead;
-    const cap = Math.max(0, heroHead.offsetTop - barBottom - 10);
-    headShift = Math.max(mobile ? 22 : 28, Math.min(cap, need));
-    figDrop = Math.max(0, Math.min(H * (mobile ? .05 : .06), need - headShift));
+    // the statement takes the title's place: centred on where "This Is Mo" sits
+    statementEl.style.top = (heroH1.offsetTop + heroH1.offsetHeight / 2 - statementEl.offsetHeight / 2).toFixed(1) + "px";
   }
   // chapter paragraphs sit directly under their titles, whatever the title's height
   function placeChapters(){
@@ -674,7 +676,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- the veil with its orbit hole ---------- */
   /* ---------- render loop ---------- */
-  let shownPct = 0, preState = 0, phaseAt = 0, yrStart = 0;
+  let shownPct = 0, preState = 0, phaseAt = 0, yrShown = "";
   function render(now){
     const dt = Math.min(64, now - last); last = now;
     const tt = targetT();
@@ -695,15 +697,15 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     dirty = true;
 
     /* --- preloader: wing draws, orbit forms with the counter; at 100% it closes and the dot slings once around --- */
-    const loadFrac = loaded / N;
+    const loadFrac = loaded / gateTotal;
     if (scrollLocked && window.scrollY) window.scrollTo(0, 0);
     if (!preDone){
       const T = now - t0;
-      const draw = reduce ? 1 : ss(150, 1750, T);
+      const draw = reduce ? 1 : ss(120, 1300, T);
       wingLine.style.strokeDashoffset = (1 - draw).toFixed(4);
-      wingLine.style.opacity = (1 - ss(1900, 2500, T) * .85).toFixed(3);
-      wingFill.style.opacity = (reduce ? 1 : ss(1400, 2300, T)).toFixed(3);
-      const timeFrac = reduce ? 1 : clamp01((T - 450) / 2700);
+      wingLine.style.opacity = (1 - ss(1500, 2000, T) * .85).toFixed(3);
+      wingFill.style.opacity = (reduce ? 1 : ss(1050, 1700, T)).toFixed(3);
+      const timeFrac = reduce ? 1 : clamp01((T - 250) / 1900);
       const target = Math.min(loadFrac, timeFrac) * 100;
       shownPct += (target - shownPct) * .1;
       if (target >= 100 && shownPct > 99.4) shownPct = 100;
@@ -712,7 +714,12 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       let arc = .05 + .85 * (shownPct / 100), ang = arc;           // turns, measured from 12 o'clock
       if (preState === 0 && shownPct >= 100 && draw >= 1) { preState = 1; phaseAt = now; }
       if (preState >= 1){
-        const u = clamp01((now - phaseAt) / (reduce ? 1 : 1350));
+        const u = clamp01((now - phaseAt) / (reduce ? 1 : 1150));
+        if (preState === 1){                                         // the wing draws itself again as the orbit closes
+          wingLine.style.opacity = "1";
+          wingLine.style.strokeDashoffset = (1 - ss(0, .88, u)).toFixed(4);
+          wingFill.style.opacity = Math.max(1 - ss(0, .12, u), ss(.6, 1, u)).toFixed(3);
+        }
         ang = .9 + 1.1 * Math.pow(u, 2.3);                        // accelerating lap
         arc = Math.min(1, ang);
         if (preState === 1 && u >= 1){
@@ -722,7 +729,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         if (preState === 2){
           const v = (now - phaseAt) / 1000;
           ang = 2 + v * 2.4 + v * v * 3;                           // keeps slinging as the scene opens
-          if (v > (reduce ? 0 : 1.05)){
+          if (v > (reduce ? 0 : .9)){
             preDone = true; pre.remove();
             scrollLocked = false; document.documentElement.classList.remove("locked");
           }
@@ -744,12 +751,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     if (dirty && W){
       dirty = false;
       const p = sample(mobile ? mob : desk, t);
-      // statement beat: as the scroll begins, the title lifts and the statement settles in under it
-      const st = ss(.02, .1, t);
-      p.b += st * (figDrop / H) * (1 - ss(.22, .38, t));
-      const heroFrame = (1 - Math.cos(spin)) / 2 * 40;          // drag sweeps the three-quarter range
-      const w = ss(.22, .42, t);
-      const f = lerp(heroFrame, p.f, w);
+      // hero turntable (set A) ping-pongs left profile → front → right profile, so his back never shows;
+      // as the scroll heads to title 2 it unwinds to its first pose and crossfades into the scroll set (B)
+      const aIdx = (1 - Math.cos(spin)) / 2 * (NA - 1) * (1 - ss(.16, .23, t));
+      const xB = ss(.205, .25, t);
+      const f = p.f;
 
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,cv.width,cv.height);
@@ -757,9 +763,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const figScale = 1 + .26 * ss(.60, .72, t) * (1 - clamp01((t - .78) / .22));   // grows for the smile, then eases back continuously to the end of the scroll
       const baseMh = p.h * H * DPR;
       const mh = baseMh * figScale;
-      const im = frameAt(f);
-      const ratio = im ? im.naturalWidth / im.naturalHeight : 580/864;
-      const mw = mh * ratio;
+      const s1 = mh / GEO.h, mw = 718 * s1;           // footprint of the figure (shadow) stays constant across sets
       const cx = (W/2 + p.x*W) * DPR, feet = p.b * H * DPR + baseMh*(figScale-1)*.3;
 
       // floor shadow
@@ -773,7 +777,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const th = theta + spin + t*8;
       const ta = 1 - ss(.22, .28, t);
       drawTableRing(p, cx, ringCy, R, false, th, ta);
-      if (im) ctx.drawImage(im, cx - mw/2, feet - mh, mw, mh);
+      const drawSet = (im, g, al) => { if (!im || al <= .003) return; ctx.globalAlpha = al;
+        ctx.drawImage(im, cx + (g.x0 - GEO.refX) * s1, feet - mh, g.w * s1, mh); ctx.globalAlpha = 1; };
+      drawSet(frameIn(framesA, aIdx), GEO.A, 1 - xB);
+      drawSet(frameIn(frames, f), GEO.B, xB);
       drawTableRing(p, cx, ringCy, R, true, th, ta);
 
       // hero type
@@ -786,21 +793,21 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       heroFoot.style.transform = `translate3d(0,${(-hp * H * 1.15).toFixed(1)}px,0)`;
       heroFoot.style.visibility = hp >= 1 ? "hidden" : "visible";
       heroCue.style.opacity = (1 - ss(.205, .235, t)).toFixed(3);   // the scroll cue bows out once you're moving
-      heroHead.style.transform = `translate3d(0,${(-st * headShift).toFixed(1)}px,0)`;
-      statementEl.style.opacity = st.toFixed(3);
-      statementEl.style.transform = `translate3d(0,${((1 - st) * 16).toFixed(1)}px,0)`;
+      // "This Is Mo" bows out and the statement fades into its spot
+      const tOut = ss(.02, .075, t), sIn = ss(.055, .12, t);
+      heroH1.style.opacity = (1 - tOut).toFixed(3);
+      heroH1.style.transform = `translate3d(0,${(-tOut * 10).toFixed(1)}px,0) scale(${(1 - tOut * .04).toFixed(4)})`;
+      statementEl.style.opacity = sIn.toFixed(3);
+      statementEl.style.transform = `translate3d(0,${((1 - sIn) * 12).toFixed(1)}px,0)`;
 
-      // years-of-service counter: once title 3 has landed, 2008 runs up to 2026, then "18 years" joins it
-      const yLanded = t >= chWin[1][0] + (mobile ? .07 : .085);
-      if (t < chWin[1][0]){ yrStart = 0; yrNum.textContent = "2008"; yrLbl.classList.remove("on"); }
-      else if (yLanded && !yrStart) yrStart = now;
-      if (yrStart){
-        const yu = clamp01((now - yrStart) / (reduce ? 1 : 1500));
-        yrNum.textContent = String(2008 + Math.round(18 * (1 - Math.pow(1 - yu, 3))));
-        if (yu >= 1) yrLbl.classList.add("on");
+      // years of service run with the scroll: down counts up, up counts down; at 2026 it becomes "18 Years"
+      const yp = clamp01((t - (chWin[1][0] + .06)) / .14);
+      const yKey = yp >= 1 ? "done" : String(Math.round(18 * yp));
+      if (yKey !== yrShown){
+        yrShown = yKey;
+        yrNum.innerHTML = yp >= 1 ? '<span>18</span> <span class="b">Years</span>'
+                                  : '<span>20</span><span class="b">' + String(8 + (+yKey)).padStart(2, "0") + '</span>';
       }
-      stage.classList.toggle("can-drag", heroLive());
-      spotEl.style.transform = `translate3d(calc(-50% + ${(p.x*W).toFixed(1)}px),${mobile ? ((p.b - .86)*H).toFixed(1) : 0}px,0)`;
 
       // chapters
       let anyCh = 0;

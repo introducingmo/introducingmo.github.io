@@ -117,6 +117,17 @@ a{color:inherit}
 #bg{position:absolute;inset:0;z-index:1;width:100%;height:100%;display:block;pointer-events:none}
 .void{position:absolute;inset:0;z-index:1;background:#000;opacity:0;pointer-events:none}   /* 1B: the room falls away to pure black; the stars stay */
 
+/* ---------- phones held sideways: the experience is composed for portrait ---------- */
+.turn{display:none}
+@media (orientation:landscape) and (max-height:520px) and (hover:none) and (pointer:coarse){
+  .turn{position:fixed;inset:0;z-index:100;display:grid;place-content:center;justify-items:center;gap:14px;background:#000;text-align:center;padding:24px}
+  .turn svg{width:34px;height:auto;color:var(--accent);animation:turnPhone 2.4s cubic-bezier(.65,0,.35,1) infinite}
+  .turn .k{margin:6px 0 0;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);padding-left:.42em}
+  .turn .l{margin:0;font-family:var(--f-serif);font-style:italic;font-size:22px;color:var(--ink)}
+}
+@keyframes turnPhone{0%,20%{transform:rotate(-90deg)}55%,100%{transform:rotate(0)}}
+@media (prefers-reduced-motion:reduce){.turn svg{animation:none}}
+
 /* ---------- section 1B: gravity ---------- */
 .s1b{position:absolute;inset:0;z-index:6;pointer-events:none}
 .s1b-line{position:absolute;left:0;right:0;top:0;width:min(22em,86vw);margin:0 auto;text-align:center;text-wrap:balance;
@@ -301,6 +312,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 </div>
 
 <main id="top">
+  <div class="turn" aria-hidden="true">
+    <svg viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="1.5" width="21" height="37" rx="4"/><path d="M9 34.5h6"/></svg>
+    <p class="k">Introducing Mo</p>
+    <p class="l">Turn your phone upright.</p>
+  </div>
   <section class="story-wrap" id="story" aria-label="Introducing Mo">
     <div class="stage" id="stage">
       <div class="spot" id="spot"></div>
@@ -403,6 +419,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const $ = (s) => document.querySelector(s);
   const stage = $("#stage"), wrap = stage.parentElement;
   const cv = $("#world"), ctx = cv.getContext("2d");
+  const figC = document.createElement("canvas"), fctx = figC.getContext("2d");   // off-screen mixer for the figure layers
   const pre = $("#pre"), pctL = $("#pctL");
   const wingLine = pre.querySelector(".pre-wing path"), wingFill = pre.querySelector(".pre-wing image");
   const pRing = pre.querySelector(".pre-orbit .ring"), pDot = pre.querySelector(".pre-orbit .dot");
@@ -528,15 +545,14 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   addEventListener("pointerdown", askTilt);
   addEventListener("touchend", askTilt, { passive:true });
   addEventListener("click", askTilt);
-  function bgDraw(now){
-    requestAnimationFrame(bgDraw);
-    const dt = now - bgLast;
-    if (dt < 28) return; bgLast = now;
+  function bgDraw(now){                                   // called from the main render loop every frame
+    const dt = Math.min(64, now - bgLast); bgLast = now;
     if (bgVis <= .004){ if (bgShown){ btx.clearRect(0,0,bg.width,bg.height); bgShown = false; } return; }
     let nx = 0, ny = 0;
     if (hasTilt){ nx = tiltX; ny = tiltY; }
     else if (mx > -900){ nx = (mx/W - .5)*2; ny = (my/H - .5)*2; }
-    paX += (nx - paX)*.17; paY += (ny - paY)*.17;       // fast, reactive follow (eased, normalized -1..1)
+    const kf = 1 - Math.pow(1 - .17, dt / 28);
+    paX += (nx - paX)*kf; paY += (ny - paY)*kf;         // fast, reactive follow (eased, normalized -1..1), same feel at any frame rate
     const time = now/1000;
     const amp = AMP();
     const gsx = paX*amp, gsy = paY*amp;                  // the grid slides heavily with tilt (spatial awareness)
@@ -551,7 +567,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       let a = d.a * (d.bright ? 1.9 : 1) * flick * bgVis;
       const hot = (time*.25 + d.hot) % 7; let glow = 0;
       if (hot < .25){ glow = 1 - hot/.25; a += (d.white ? .6 : .22) * bgVis * glow; }
-      // 1B: the stars drift up with the scroll (slower than the foreground), wrapping so the field never runs out
+      // the stars drift up with the scroll (slower than the foreground), wrapping so the field never runs out
       const gy = bgScroll ? ((d.gy + bgOver - bgScroll) % bgSpan + bgSpan) % bgSpan - bgOver : d.gy;
       let x = d.gx + gsx, y = gy + gsy;
       if (active){
@@ -884,7 +900,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     const sB = clamp01((smoothT - FA) / (1 - FA)) * SB;    // section 1B progress, in screens of scroll (0–6.5)
     // the dots are fully present the instant the hero is revealed and stay as the stars of 1B
     bgVis = 1;
-    bgScroll = sB * H * .42;
+    bgScroll = smoothT * 9.5 * H * .42;                   // the stars drift up with the scroll through the whole experience
+    bgDraw(now);
     // 1B opens: title 3 and Mo parallax up and away (no fade) while the room falls to pure black
     const exB = clamp01(sB / .85), exE = Math.pow(exB, 1.7);
     const voidO = ss(.1, .8, sB);
@@ -991,15 +1008,30 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const th = theta + spin + t*8;
       const ta = 1 - ss(.22, .28, t);
       if (exB < 1) drawTableRing(p, cx, ringCy, R, false, th, ta);
-      const drawSet = (im, g, al) => { if (!im || al <= .003) return; ctx.globalAlpha = al;
-        ctx.drawImage(im, cx + (g.x0 - GEO.refX) * s1, feet - mh, g.w * s1, mh); ctx.globalAlpha = 1; };
-      if (exB < 1 && xB < 1){ // blend neighbouring turntable frames so slow spins glide instead of stepping
-        const i0 = Math.floor(aIdx) % NA, fr = aIdx - Math.floor(aIdx), a0 = framesA[i0], a1 = framesA[(i0 + 1) % NA];
-        if (a0 && a1 && fr > .02){ drawSet(a0, GEO.A, 1 - xB); drawSet(a1, GEO.A, (1 - xB) * fr); }
-        else drawSet(frameIn(framesA, aIdx), GEO.A, 1 - xB);
-      }
       if (exB < 1){
-        drawSet(frameIn(frames, f), GEO.B, xB);
+        // every figure layer (two neighbouring turntable frames, and the scroll set during the handoff) is mixed into one
+        // solid layer first, with weights that add up to 1 — so he is fully opaque at every point of every blend
+        const layers = [];
+        if (xB < 1){                                   // blend neighbouring turntable frames so slow spins glide instead of stepping
+          const i0 = Math.floor(aIdx) % NA, fr = aIdx - Math.floor(aIdx), a0 = framesA[i0], a1 = framesA[(i0 + 1) % NA];
+          if (a0 && a1 && fr > .02){ layers.push([a0, GEO.A, (1 - xB) * (1 - fr)], [a1, GEO.A, (1 - xB) * fr]); }
+          else layers.push([frameIn(framesA, aIdx), GEO.A, 1 - xB]);
+        }
+        if (xB > 0) layers.push([frameIn(frames, f), GEO.B, xB]);
+        const live = layers.filter(l => l[0] && l[2] > .002), sum = live.reduce((a, l) => a + l[2], 0);
+        const rectX = g => cx + (g.x0 - GEO.refX) * s1;
+        if (live.length === 1){
+          const [im, g] = live[0]; ctx.drawImage(im, rectX(g), feet - mh, g.w * s1, mh);
+        } else if (live.length > 1){
+          const left = Math.floor(Math.min(...live.map(l => rectX(l[1])))), right = Math.ceil(Math.max(...live.map(l => rectX(l[1]) + l[1].w * s1)));
+          const top = Math.floor(feet - mh), fw = right - left, fh = Math.ceil(mh) + 2;
+          if (figC.width < fw || figC.height < fh){ figC.width = Math.max(figC.width, fw); figC.height = Math.max(figC.height, fh); }
+          fctx.setTransform(1,0,0,1,0,0); fctx.globalCompositeOperation = "source-over"; fctx.globalAlpha = 1; fctx.clearRect(0, 0, fw, fh);
+          fctx.globalCompositeOperation = "lighter";
+          for (const [im, g, w] of live){ fctx.globalAlpha = w / sum; fctx.drawImage(im, rectX(g) - left, feet - mh - top, g.w * s1, mh); }
+          fctx.globalCompositeOperation = "source-over"; fctx.globalAlpha = 1;
+          ctx.drawImage(figC, 0, 0, fw, fh, left, top, fw, fh);
+        }
         drawTableRing(p, cx, ringCy, R, true, th, ta);
       }
       ctx.setTransform(1,0,0,1,0,0);
@@ -1099,7 +1131,6 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   size();
   loadFrames();
   requestAnimationFrame(render);
-  requestAnimationFrame(bgDraw);
 })();
 </script>
 

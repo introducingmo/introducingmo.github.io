@@ -105,7 +105,7 @@ a{color:inherit}
 @media (prefers-reduced-motion:reduce){.menu,.menu-nav a,.menu-social{transition:none;animation:none}.menu.open .menu-nav a,.menu.open .menu-social{opacity:1;transform:none;animation:none}.menu.closing .menu-nav a,.menu.closing .menu-social{opacity:0;animation:none}}
 
 /* ---------- stage ---------- */
-.story-wrap{position:relative;height:400vh}
+.story-wrap{position:relative;height:1050vh}   /* 1A (Mo + three titles) = first 300vh of scroll, 1B (gravity) = the remaining 650vh */
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;touch-action:pan-y}
 .stage.can-drag{cursor:grab}
 .stage.dragging{cursor:grabbing}
@@ -115,6 +115,15 @@ a{color:inherit}
 .vignette{position:absolute;inset:0;z-index:7;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 55%,transparent 55%,rgba(0,0,0,.72))}
 #world{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block}
 #bg{position:absolute;inset:0;z-index:1;width:100%;height:100%;display:block;pointer-events:none}
+.void{position:absolute;inset:0;z-index:1;background:#000;opacity:0;pointer-events:none}   /* 1B: the room falls away to pure black; the stars stay */
+
+/* ---------- section 1B: gravity ---------- */
+.s1b{position:absolute;inset:0;z-index:6;pointer-events:none}
+.s1b-line{position:absolute;left:0;right:0;top:0;width:min(22em,86vw);margin:0 auto;text-align:center;text-wrap:balance;
+  font-family:var(--f-ui);font-weight:300;font-size:clamp(21px,2.3vw,36px);line-height:1.28;color:var(--ink);opacity:0;visibility:hidden;will-change:opacity,transform}
+.s1b-line em{font-family:var(--t-serif);font-style:italic;font-weight:400;font-size:1.14em;color:var(--accent);letter-spacing:.005em}
+.s1b-word{position:absolute;left:0;top:0;white-space:nowrap;font-family:var(--f-ui);font-weight:400;font-size:clamp(14px,1.15vw,18px);letter-spacing:.03em;
+  color:#d6e6f2;opacity:0;visibility:hidden;will-change:transform,opacity}
 
 /* shared type */
 .t-sans{font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.02em}
@@ -293,6 +302,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   <section class="story-wrap" id="story" aria-label="Introducing Mo">
     <div class="stage" id="stage">
       <div class="spot" id="spot"></div>
+      <div class="void" id="void"></div>
       <canvas id="bg" aria-hidden="true"></canvas>
 
       <!-- hero -->
@@ -323,6 +333,21 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       </div>
       <div class="small s2" data-ch="1">
         <p>It started with student projects. Eighteen years later, the projects became businesses.</p>
+      </div>
+
+      <!-- section 1B: gravity — one blue atom, a line beneath it, and the outcomes it pulls in -->
+      <div class="s1b" id="s1b">
+        <p class="s1b-line">Most brands spend their time <em>chasing</em> attention.</p>
+        <p class="s1b-line">Better brands <em>pull it in</em>.</p>
+        <p class="s1b-line">That <em>pull</em> is gravity.</p>
+        <p class="s1b-line">The goal isn’t to be everywhere.</p>
+        <p class="s1b-line">The goal is to become impossible to ignore.</p>
+        <div aria-hidden="true">
+          <span class="s1b-word">Attention</span><span class="s1b-word">Trust</span><span class="s1b-word">Retention</span><span class="s1b-word">Positive reviews</span>
+          <span class="s1b-word">Post engagement</span><span class="s1b-word">Hoarding your products</span><span class="s1b-word">Community</span><span class="s1b-word">Loyal customers</span>
+          <span class="s1b-word">Raving fans</span><span class="s1b-word">Talent</span><span class="s1b-word">Word of mouth</span><span class="s1b-word">Repeat business</span>
+          <span class="s1b-word">Opportunity</span><span class="s1b-word">Partnership</span><span class="s1b-word">Growth</span><span class="s1b-word">Impact</span>
+        </div>
       </div>
 
       <div class="hero-foot" id="heroFoot">
@@ -582,7 +607,9 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const wrapN = (v, n) => ((v % n) + n) % n, wrapHalf = (v, n) => wrapN(v + n/2, n) - n/2;
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
   let aPos = 0, aVel = 0, aExit = 0, idleClk = Math.asin((NA - A_IDLE_C) / A_IDLE_A);   // idle sway starts on frame 0
-  const heroLive = () => preDone && smoothT < .26;
+  // scroll budget: 1A = 300vh of the 950vh scroll span (timings inside 1A are unchanged), 1B = the remaining 650vh, measured in screens
+  const FA = 300 / 950, SB = 6.5;
+  const heroLive = () => preDone && smoothT < .26 * FA;
   stage.addEventListener("pointerdown", e => {
     if (!heroLive() || e.target.closest("a")) return;
     dragging = true; interacted = true; lastX = e.clientX; lastT = performance.now(); spinV = 0; aVel = 0; aExit = 0;
@@ -729,6 +756,96 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     fly.addEventListener("transitionend", land, { once: true });
     setTimeout(land, 1000);
   }
+  /* ---------- section 1B: the atom, its lines, and the outcomes it pulls in ---------- */
+  const voidEl = $("#void"), grainEl = document.querySelector(".grain");
+  const gLines = [...document.querySelectorAll(".s1b-line")], gWords = [...document.querySelectorAll(".s1b-word")];
+  // each line: [starts fading in, fully in, starts leaving, gone] — in screens of 1B scroll; all share one spot under the atom
+  const G_LINES = [[.8, 1.05, 1.45, 1.7], [1.6, 1.85, 2.6, 2.85], [2.75, 3.0, 4.6, 4.85], [5.1, 5.35, 5.7, 5.95], [5.85, 6.1, 99, 99]];
+  const G_W0 = 3.0, G_WSTEP = .08, G_WDUR = .95;   // outcomes: first sets off at 3.0, one every .08 screens, each takes .95 to fall in
+  const gSeed = gWords.map((el, i) => {
+    let a = (-90 + i * 137.508) % 360; if (a < 0) a += 360;            // golden-angle spread: consecutive words come from different edges
+    if (a > 62 && a < 118) a = a < 90 ? 62 - (i % 3) * 7 : 118 + (i % 3) * 7;   // keep bottom-centre clear for the line under the atom
+    return { a: a * Math.PI / 180, w: 0, h: 0 };
+  });
+  let gMeasured = 0, gWordsOn = false, gLinesOn = false;
+  function drawGravity(sB, now){
+    const ax = W / 2, ay = H * (mobile ? .40 : .42);
+    // one line at a time, in the same spot under the atom, scroll-synced (rises in, drifts up and out)
+    if (sB > .7 || gLinesOn){
+      const lineTop = ay + (mobile ? 76 : 108);
+      gLines.forEach((el, i) => {
+        const [a, b, c, d] = G_LINES[i];
+        const vin = ss(a, b, sB), vout = ss(c, d, sB), o = vin * (1 - vout);
+        el.style.opacity = o.toFixed(3);
+        el.style.visibility = o < .005 ? "hidden" : "visible";
+        if (o >= .005) el.style.transform = `translate3d(0,${(lineTop + (1 - vin) * 22 - vout * 22).toFixed(1)}px,0)`;
+      });
+      gLinesOn = sB > .7;
+    }
+    // the outcomes: in from the edges, barely moving at first, then rushing in as the pull takes them (a slight spiral), shrinking into the atom
+    const wEnd = G_W0 + G_WSTEP * gWords.length + G_WDUR;
+    const wordsActive = sB > G_W0 - .05 && sB < wEnd + .1;
+    if (wordsActive || gWordsOn){
+      if (gMeasured !== W){ gMeasured = W; gWords.forEach((el, i) => { gSeed[i].w = el.offsetWidth; gSeed[i].h = el.offsetHeight; }); }
+      gWords.forEach((el, i) => {
+        const q = (sB - (G_W0 + i * G_WSTEP)) / G_WDUR;
+        if (q <= 0 || q >= 1){ if (el.style.visibility !== "hidden"){ el.style.visibility = "hidden"; el.style.opacity = "0"; } return; }
+        const sd = gSeed[i], ca = Math.cos(sd.a), sa = Math.sin(sd.a);
+        // appear at the screen edge along this word's ray from the atom, fully on screen (never clipped)
+        const tx = ca > 0 ? (W - ax) / ca : ca < 0 ? -ax / ca : 1e9, ty = sa > 0 ? (H - ay) / sa : sa < 0 ? -ay / sa : 1e9;
+        const R = Math.min(tx, ty), m = mobile ? 14 : 28;
+        const sx = Math.min(W - m - sd.w / 2, Math.max(m + sd.w / 2, ax + R * ca));
+        const sy = Math.min(H - m - sd.h / 2, Math.max((mobile ? 74 : 84) + sd.h / 2, ay + R * sa));
+        const r0 = Math.hypot(sx - ax, sy - ay), a0 = Math.atan2(sy - ay, sx - ax);
+        const e = Math.pow(q, 2.2);
+        const r = r0 * (1 - e), ang = a0 + .55 * e;
+        const x = ax + r * Math.cos(ang), y = ay + r * Math.sin(ang);
+        const sc = 1 - .78 * ss(.55, 1, q);
+        const o = ss(0, .07, q) * (1 - ss(.82, .98, q));
+        el.style.visibility = "visible";
+        el.style.opacity = o.toFixed(3);
+        el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) translate(-50%,-50%) scale(${sc.toFixed(3)})`;
+      });
+      gWordsOn = wordsActive;
+    }
+    let absorbed = 0, flare = 0;
+    if (sB > G_W0) for (let i = 0; i < gWords.length; i++){
+      const q = (sB - (G_W0 + i * G_WSTEP)) / G_WDUR;
+      absorbed += ss(.86, 1, q);                                     // each word that lands feeds the atom…
+      flare += Math.max(0, 1 - Math.abs(q - 1) / .06);               // …and makes it flare as it arrives
+    }
+    // the atom: a blue core in a soft halo with three thin orbits and their electrons; it ignites, then grows 30% as it feeds
+    const ig = ss(.55, 1.0, sB);
+    if (ig <= .002) return;
+    const grow = 1 + .3 * absorbed / gWords.length;
+    const pop = ig < 1 ? 1 + 2.70158 * Math.pow(ig - 1, 3) + 1.70158 * Math.pow(ig - 1, 2) : 1;   // ease-out-back ignition
+    const rc = (mobile ? 8 : 12) * grow * pop;
+    flare = Math.min(1, flare);
+    ctx.save(); ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const hr = rc * (5.2 + flare * 2.2);
+    const hg = ctx.createRadialGradient(ax, ay, 0, ax, ay, hr);
+    hg.addColorStop(0, `rgba(43,159,224,${(.55 * ig + .3 * flare).toFixed(3)})`);
+    hg.addColorStop(.32, `rgba(43,159,224,${(.16 * ig + .1 * flare).toFixed(3)})`);
+    hg.addColorStop(1, "rgba(43,159,224,0)");
+    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(ax, ay, hr, 0, 7); ctx.fill();
+    const orb = ss(.25, 1, ig);
+    for (let k = 0; k < 3; k++){
+      const rot = k * Math.PI / 3 + now * .00004 * (k === 1 ? -1 : 1), rx = rc * 4.3, ry = rc * 1.35;
+      ctx.strokeStyle = `rgba(140,205,245,${(.3 * orb).toFixed(3)})`; ctx.lineWidth = .8;
+      ctx.beginPath(); ctx.ellipse(ax, ay, rx, ry, rot, 0, Math.PI * 2 * orb); ctx.stroke();
+      if (orb > .98){
+        const e = now * .0015 * (1 + k * .37) + k * 2.1, ex = rx * Math.cos(e), ey = ry * Math.sin(e);
+        const px = ax + ex * Math.cos(rot) - ey * Math.sin(rot), py = ay + ex * Math.sin(rot) + ey * Math.cos(rot);
+        ctx.fillStyle = "rgba(200,235,252,.95)"; ctx.shadowColor = "rgba(43,159,224,.9)"; ctx.shadowBlur = 6;
+        ctx.beginPath(); ctx.arc(px, py, 1.5, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+      }
+    }
+    const cg = ctx.createRadialGradient(ax - rc * .3, ay - rc * .3, 0, ax, ay, rc);
+    cg.addColorStop(0, "#eaf7ff"); cg.addColorStop(.45, "#5cc0f2"); cg.addColorStop(1, "#1f86c8");
+    ctx.globalAlpha = Math.min(1, ig * 1.5); ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(ax, ay, rc, 0, 7); ctx.fill();
+    ctx.restore();
+  }
+
   function render(now){
     const dt = Math.min(64, now - last); last = now;
     const tt = targetT();
@@ -737,9 +854,13 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       let step = (tt - smoothT) * k;
       smoothT += step; dirty = true;
     }
-    const t = smoothT;
-    // dots are fully present the instant the hero is revealed — no scroll fade-in — then clear at the very end
-    bgVis = 1 - ss(.9, 1, t);
+    const t = clamp01(smoothT / FA);                       // section 1A progress (0–1)
+    const sB = clamp01((smoothT - FA) / (1 - FA)) * SB;    // section 1B progress, in screens of scroll (0–6.5)
+    // the dots are fully present the instant the hero is revealed and stay as the stars of 1B
+    bgVis = 1;
+    // 1B opens: title 3 and Mo parallax up and away (no fade) while the room falls to pure black
+    const exB = clamp01(sB / .85), exE = Math.pow(exB, 1.7);
+    const voidO = ss(.1, .8, sB);
 
     if (!dragging){
       if (!interacted){
@@ -829,6 +950,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,cv.width,cv.height);
+      const figLift = exE * H * 1.05 * DPR;                 // 1B: Mo, table and orbit rise up and out together (the text outruns him)
+      ctx.setTransform(1,0,0,1,0,-figLift);
       // emphasize the "smile at the viewer" moment — figure + orbit swell ~26% through the Creative Director beat, then settle back
       const figScale = 1 + .26 * ss(.60, .72, t) * (1 - clamp01((t - .78) / .22));   // grows for the smile, then eases back continuously to the end of the scroll
       const baseMh = p.h * H * DPR;
@@ -840,16 +963,20 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       const ringCy = feet - p.rc*mh, R = p.rr*mh;
       const th = theta + spin + t*8;
       const ta = 1 - ss(.22, .28, t);
-      drawTableRing(p, cx, ringCy, R, false, th, ta);
+      if (exB < 1) drawTableRing(p, cx, ringCy, R, false, th, ta);
       const drawSet = (im, g, al) => { if (!im || al <= .003) return; ctx.globalAlpha = al;
         ctx.drawImage(im, cx + (g.x0 - GEO.refX) * s1, feet - mh, g.w * s1, mh); ctx.globalAlpha = 1; };
-      { // blend neighbouring turntable frames so slow spins glide instead of stepping
+      if (exB < 1 && xB < 1){ // blend neighbouring turntable frames so slow spins glide instead of stepping
         const i0 = Math.floor(aIdx) % NA, fr = aIdx - Math.floor(aIdx), a0 = framesA[i0], a1 = framesA[(i0 + 1) % NA];
         if (a0 && a1 && fr > .02){ drawSet(a0, GEO.A, 1 - xB); drawSet(a1, GEO.A, (1 - xB) * fr); }
         else drawSet(frameIn(framesA, aIdx), GEO.A, 1 - xB);
       }
-      drawSet(frameIn(frames, f), GEO.B, xB);
-      drawTableRing(p, cx, ringCy, R, true, th, ta);
+      if (exB < 1){
+        drawSet(frameIn(frames, f), GEO.B, xB);
+        drawTableRing(p, cx, ringCy, R, true, th, ta);
+      }
+      ctx.setTransform(1,0,0,1,0,0);
+      drawGravity(sB, now);
 
       // hero type
       // hero type parallaxes up and out instead of fading: the title outruns Mo, the two side lines outrun everything
@@ -908,12 +1035,20 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
           if (i === 0){ const x = clamp01((t - .50) / .115); if (!el._exD) el._exD = el.offsetTop + el.offsetHeight + 90; exitY = x * x * el._exD; }
           tx = 0; ty = (1 - enter) * H * .85 + drift - exitY;
         }
+        if (i === 1) el.style.zIndex = exB > 0 ? "1" : "";      // on the way out it rises behind Mo, not across him
+        if (i === 1 && exB > 0){
+          if (!el._exD) el._exD = Math.max(el.offsetTop + el.offsetHeight + 90, H);
+          ty -= Math.pow(exB, 1.3) * el._exD * 1.3;           // title 3 outruns Mo; its text (lower down) travels furthest, fastest
+          if (exB >= 1) el.style.visibility = "hidden";
+        }
         el.style.transform = `translate3d(${tx.toFixed(1)}px,${ty.toFixed(1)}px,0)`;
       });
-      chfade.style.opacity = anyCh.toFixed(3);
+      chfade.style.opacity = (anyCh * (1 - exB)).toFixed(3);
+      voidEl.style.opacity = voidO.toFixed(3);
+      grainEl.style.opacity = (.07 * (1 - voidO)).toFixed(3);
 
       // collab folders drift up through both chapters at their own depth
-      const fo = ss(.26, .32, t) * (1 - ss(.93, .99, t));
+      const fo = ss(.26, .32, t) * (exB < 1 ? 1 : 0);
       files.forEach(a => {
         const [bx, by] = (mobile ? a.dataset.m : a.dataset.d).split(",").map(Number);
         const sp = +a.dataset.sp;
@@ -921,8 +1056,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         // mobile: rise from below the page, parallax up and out the top; by sets how high each starts
         // (vertical stagger), sp sets travel speed — a higher sp folder overtakes the others; desktop: unchanged
         const startY = 1.14 + (1 - by) * .30;
-        const y = mobile ? (startY - prog * (1.52 + sp * .88)) * H
-                         : (by - prog * sp) * H;
+        const y = (mobile ? (startY - prog * (1.52 + sp * .88)) * H
+                          : (by - prog * sp) * H) - exE * H * (1.25 + sp * .3);
         const x = bx * W + Math.sin(t*9 + sp*7) * 8;
         // mobile: stay fully opaque all the way out the top (even across the header); desktop: fade into the bar as before
         const clear = ss(barZone, barZone + 50, y);

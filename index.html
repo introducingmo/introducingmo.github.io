@@ -393,7 +393,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- frames: A = hero turntable (no smile, drag to explore) · B = scroll turn (to the smile) ---------- */
   // both clips share one camera; each set is cropped differently, so frames are drawn by their source-crop geometry
-  const NA = 56;
+  const NA = 70;
   const GEO = { A: { x0: 100, w: 810 }, B: { x0: 233, w: 718 }, h: 1070, refX: 592 };
   let W = 0, H = 0, DPR = 1, mobile = false, loaded = 0, gateTotal = 1;
   const frames = new Array(N).fill(null), framesA = new Array(NA).fill(null);
@@ -779,7 +779,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       drawTableRing(p, cx, ringCy, R, false, th, ta);
       const drawSet = (im, g, al) => { if (!im || al <= .003) return; ctx.globalAlpha = al;
         ctx.drawImage(im, cx + (g.x0 - GEO.refX) * s1, feet - mh, g.w * s1, mh); ctx.globalAlpha = 1; };
-      drawSet(frameIn(framesA, aIdx), GEO.A, 1 - xB);
+      { // blend neighbouring turntable frames so slow spins glide instead of stepping
+        const i0 = Math.floor(aIdx), fr = aIdx - i0, a0 = framesA[i0], a1 = framesA[Math.min(NA-1, i0+1)];
+        if (a0 && a1 && fr > .02){ drawSet(a0, GEO.A, 1 - xB); drawSet(a1, GEO.A, (1 - xB) * fr); }
+        else drawSet(frameIn(framesA, aIdx), GEO.A, 1 - xB);
+      }
       drawSet(frameIn(frames, f), GEO.B, xB);
       drawTableRing(p, cx, ringCy, R, true, th, ta);
 

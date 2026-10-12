@@ -113,7 +113,7 @@ a{color:inherit}
 @media (prefers-reduced-motion:reduce){.menu,.menu-nav a,.menu-social{transition:none;animation:none}.menu.open .menu-nav a,.menu.open .menu-social{opacity:1;transform:none;animation:none}.menu.closing .menu-nav a,.menu.closing .menu-social{opacity:0;animation:none}}
 
 /* ---------- stage ---------- */
-.story-wrap{position:relative;height:1140vh}   /* 1A (Mo + three titles) = first 300vh of scroll, 1B (gravity, ending in the blue flood) = the remaining 740vh */
+.story-wrap{position:relative;height:1120vh}   /* 1A (Mo + three titles) = first 300vh of scroll, 1B (gravity, ending in the blue flood) = the remaining 720vh */
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;touch-action:pan-y}
 .stage.can-drag{cursor:grab}
 .stage.dragging{cursor:grabbing}
@@ -124,7 +124,7 @@ a{color:inherit}
 #world{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block}
 #bg{position:absolute;inset:0;z-index:1;width:100%;height:100%;display:block;pointer-events:none}
 .void{position:absolute;inset:0;z-index:1;background:#000;opacity:0;pointer-events:none}
-.flood{position:absolute;inset:0;z-index:1;background:var(--accent);clip-path:circle(0px at 50% 42%);visibility:hidden;pointer-events:none}   /* end of 1B: the wing blue spills out of the atom */   /* 1B: the room falls away to pure black; the stars stay */
+/* 1B: the room falls away to pure black; the stars stay. The blue flood at its end is drawn by #wkSky (the work section), above the atom */
 
 /* ---------- phones held sideways: the experience is composed for portrait ---------- */
 .turn{display:none}
@@ -139,9 +139,9 @@ a{color:inherit}
 
 
 /* ---------- the work: a blue section after 1B (title → gravity well ⇄ grid) ---------- */
-.work{position:relative;background-color:var(--accent);color:#fff;
-  background-image:radial-gradient(circle,rgba(255,255,255,.34) 1.3px,transparent 1.6px);background-size:68px 68px;background-position:34px 34px}
-@media (max-width:760px){.work{background-size:54px 54px;background-position:27px 27px;background-image:radial-gradient(circle,rgba(255,255,255,.34) 1.1px,transparent 1.4px)}}
+.work{position:relative;isolation:isolate;background-color:var(--accent);color:#fff}
+/* the sky: wing blue with distant clouds, fixed to the screen. Painted above the 1B stage (it is the flood), below the work */
+.wk-sky{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none;visibility:hidden}
 .wk-switch{position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);height:0;z-index:40}
 .wk-switch .switch{position:relative;margin-left:max(16px,4vw)}
 .switch{display:inline-flex;padding:2px;border-radius:999px;border:1px solid rgba(255,255,255,.55);background:rgba(5,8,12,.1)}
@@ -150,11 +150,17 @@ a{color:inherit}
 .switch button svg{width:11px;height:11px}
 .switch button[aria-pressed="true"]{background:#fff;color:#1772ad}
 .switch button:focus-visible{outline:2px solid #fff;outline-offset:2px}
-.wk-head{min-height:88vh;min-height:88svh;display:grid;align-content:end;padding-block:120px 9vh;padding-inline:max(16px,4vw)}
+.wk-head{position:relative;z-index:2;height:0;pointer-events:none}   /* gravity mode: the title rises straight out of the flood, over the (pinned) stage */
+.work.grid .wk-head{height:auto}
+.wk-hd{padding:clamp(10px,2.4svh,28px) max(16px,4vw) 0}
+/* the switch, the index and the brand label wait for the title to leave, then fade in on the spot */
+.wk-switch .switch,.wk-idx,.wk-who{transition:opacity .45s ease,visibility 0s linear .45s}
+.work:not(.chrome) .wk-switch .switch,.work:not(.chrome) .wk-idx,.work:not(.chrome) .wk-who{opacity:0;visibility:hidden}
+.work.chrome .wk-switch .switch,.work.chrome .wk-idx,.work.chrome .wk-who{transition:opacity .45s ease}
 .wk-head h2{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.025em;font-size:clamp(72px,13vw,220px);line-height:.85;color:#fff}
 .wk-head h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
 .wk-head p{margin:18px 0 0;max-width:30em;font-weight:300;font-size:clamp(15px,1.3vw,19px);line-height:1.5;color:rgba(255,255,255,.82)}
-.wk-trk{position:relative;height:640vh}
+.wk-trk{position:relative;z-index:1;height:640vh}
 .wk-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .wk-card{--cw:560px;position:absolute;left:0;top:0;width:var(--cw);box-sizing:border-box;margin:0;border-radius:10px;overflow:hidden;
   background:#08131f;color:#fff;will-change:transform,opacity;transform-origin:50% 50%;visibility:hidden}
@@ -182,13 +188,15 @@ a{color:inherit}
 .wk-idx button:hover,.wk-idx button.on{color:#fff}
 .wk-idx button:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media (max-width:760px){.wk-idx{display:none}.wk-who .w{font-size:clamp(26px,8vw,38px)}}
-.wk-grid{padding:96px 14px 110px}
-.wk-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-@media (max-width:999px){.wk-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:639px){.wk-tiles{grid-template-columns:1fr;gap:16px}.wk-grid{padding-inline:12px}}
-.tile{position:relative;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1d79b4;outline:none;
-  opacity:0;transform:translateY(46px) scale(.975);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
-.tile.in{opacity:1;transform:none}
+.wk-grid{position:relative;z-index:1;padding:64px 14px 120px;overflow-x:clip}   /* tiles tumble out sideways; never a sideways scroll */
+/* two per row, sized so a whole tile fits the screen; the odd one out sits centred on the last row */
+.wk-tiles{--g:clamp(10px,1.5vw,24px);position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--g);
+  max-width:min(1240px,calc((100svh - 150px) * 1.6 + var(--g)));margin-inline:auto}
+.tile:last-child:nth-child(odd){grid-column:1 / -1;justify-self:center;width:calc((100% - var(--g)) / 2)}
+@media (max-width:639px){.wk-grid{padding-inline:10px}}
+.tile{position:relative;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1d79b4;outline:none;will-change:transform;
+  opacity:0;transition:opacity 1s ease;transition-delay:var(--d,0s)}
+.tile.in{opacity:1}
 .tile .px{position:absolute;left:0;right:0;top:-7%;bottom:-7%;will-change:transform}
 .tile .px img{width:100%;height:100%;object-fit:cover;display:block;animation:kb 18s ease-in-out infinite alternate;animation-delay:var(--kb,0s);transform-origin:var(--ko,50% 50%)}
 @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1)}}
@@ -203,6 +211,8 @@ a{color:inherit}
 .tile dt{font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.62)}
 .tile dd{margin:3px 0 0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .wk-cta{justify-self:start}
+@media (max-width:639px){.tile{border-radius:9px}.tile .ov{padding:11px;gap:5px}.tile dl{display:none}.tile .om{font-size:7px;letter-spacing:.18em}
+  .tile h3{font-size:17px}.tile p{font-size:12px;line-height:1.3}.tile .wk-cta{font-size:8px}}
 @media (hover:hover){.tile:hover .ov{opacity:1}.tile:hover .ov>*{transform:none;opacity:1}}
 .tile.open .ov,.tile:focus-visible .ov{opacity:1}
 .tile.open .ov>*,.tile:focus-visible .ov>*{transform:none;opacity:1}
@@ -403,7 +413,6 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     <div class="stage" id="stage">
       <div class="spot" id="spot"></div>
       <div class="void" id="void"></div>
-      <div class="flood" id="flood"></div>
       <canvas id="bg" aria-hidden="true"></canvas>
 
       <!-- hero -->
@@ -478,11 +487,12 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
 
   <section class="work" id="work" aria-label="The work">
+    <canvas class="wk-sky" id="wkSky" aria-hidden="true"></canvas>
     <div class="wk-switch"><div class="switch" role="group" aria-label="Layout">
       <button type="button" data-mode="well" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="4.5" width="9" height="9" rx="1" transform="rotate(-8 8 9)"/><rect x="3.5" y="2.5" width="9" height="9" rx="1" transform="rotate(7 8 7)"/></svg>Gravity</button>
       <button type="button" data-mode="grid" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
     </div></div>
-    <header class="wk-head"><h2>The <em>work</em></h2><p>Nine brands, pulled in one by one.</p></header>
+    <header class="wk-head"><div class="wk-hd"><h2>The <em>work</em></h2><p>Nine brands, pulled in one by one.</p></div></header>
     <div class="wk-trk" id="wkTrk">
       <div class="wk-stage" id="wkStage">
         <div id="wkPile"></div>
@@ -694,6 +704,121 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     btx.setTransform(1,0,0,1,0,0);
     bgShown = true;
   }
+
+  /* ---------- the sky: wing blue with distant clouds at three depths (the flood at the end of 1B, then the whole work section) ---------- */
+  const sky = $("#wkSky"), skx = sky.getContext("2d");
+  let skyClouds = [], skyL = [], skyW = 0, skyH = 0, skyDPR = 1, skyShown = false, skyFl = 0, skyFx = 0, skyFy0 = 0;
+  let skyPX = 0, skyPY = 0, skyLast = 0, skyMx = -1, skyMy = -1;
+  addEventListener("pointermove", e => { if (e.pointerType === "mouse"){ skyMx = e.clientX; skyMy = e.clientY; } }, { passive:true });
+  // one soft cloud: broad overlapping puffs, a softer crown along the top, a flat hazy base; lit from above, bluer underneath.
+  // Far clouds are long, low streaks. Drawn at half resolution and scaled up, so every edge stays soft.
+  function cloudSprite(w, h, far){
+    const q = .5, c = document.createElement("canvas"); c.width = Math.ceil(w * q); c.height = Math.ceil(h * q);
+    const x = c.getContext("2d"), base = h * .72, R = Math.random;
+    x.scale(q, q);
+    const puff = (cx, cy, rx, ry, a) => {
+      x.save(); x.translate(cx, cy); x.scale(rx / ry, 1);
+      const g = x.createRadialGradient(0, 0, 0, 0, 0, ry);
+      g.addColorStop(0, `rgba(255,255,255,${a})`); g.addColorStop(.35, `rgba(255,255,255,${a * .82})`);
+      g.addColorStop(.7, `rgba(255,255,255,${a * .3})`); g.addColorStop(1, "rgba(255,255,255,0)");
+      x.fillStyle = g; x.beginPath(); x.arc(0, 0, ry, 0, 7); x.fill(); x.restore();
+    };
+    const peak = .32 + R() * .36;
+    const prof = u => Math.max(0, 1 - Math.pow(Math.abs(u - peak) / (u < peak ? peak - .04 : .96 - peak), 1.8));   // height profile 0..1
+    if (far){
+      const n = 4 + Math.floor(R() * 3);
+      for (let k = 0; k < n; k++){
+        const u = .14 + .72 * (k + .5) / n + (R() - .5) * .1, pr = prof(u), r = h * (.26 + .2 * pr);
+        puff(u * w, base - h * .12 * pr, r * (1.6 + R() * .8), r, .42);
+      }
+    } else {
+      const nb = 5 + Math.floor(R() * 3);                               // the body
+      for (let k = 0; k < nb; k++){
+        const u = .1 + .8 * (k + .5) / nb + (R() - .5) * .08, pr = prof(u), r = h * (.18 + .24 * pr);
+        puff(u * w, base - r * .35 - h * .16 * pr, r * 1.15, r, .4);
+      }
+      const nc = 4 + Math.floor(R() * 4);                               // the crown
+      for (let k = 0; k < nc; k++){
+        const u = peak + (R() - .5) * .5, pr = prof(u); if (pr < .2) continue;
+        const r = h * (.13 + .1 * R());
+        puff(u * w, base - h * (.18 + .38 * pr) + r * .4, r, r, .32);
+      }
+    }
+    x.save(); x.translate(w / 2, base); x.scale(1, far ? .14 : .18);   // a long, low haze along the base
+    const wg = x.createRadialGradient(0, 0, 0, 0, 0, w * .48);
+    wg.addColorStop(0, "rgba(255,255,255,.45)"); wg.addColorStop(1, "rgba(255,255,255,0)");
+    x.fillStyle = wg; x.beginPath(); x.arc(0, 0, w * .48, 0, 7); x.fill(); x.restore();
+    x.globalCompositeOperation = "destination-in";                    // flatten the underside, softly
+    const m = x.createLinearGradient(0, 0, 0, h); m.addColorStop(0, "#000"); m.addColorStop(.7, "#000"); m.addColorStop(.97, "rgba(0,0,0,0)");
+    x.fillStyle = m; x.fillRect(0, 0, w, h);
+    x.globalCompositeOperation = "source-atop";                       // shade the belly
+    const sh = x.createLinearGradient(0, h * .25, 0, h * .85);
+    sh.addColorStop(0, "rgba(255,255,255,0)"); sh.addColorStop(1, far ? "rgba(112,180,230,.7)" : "rgba(150,198,236,.5)");
+    x.fillStyle = sh; x.fillRect(0, 0, w, h);
+    return c;
+  }
+  function skyInit(){
+    const r = sky.getBoundingClientRect();
+    skyW = r.width || innerWidth; skyH = r.height || innerHeight;
+    const mob = skyW <= 820, k = mob ? .74 : Math.min(1.15, Math.max(.8, skyW / 1440));
+    skyDPR = Math.min(window.devicePixelRatio || 1, mob ? 2 : 1.5);
+    sky.width = Math.round(skyW * skyDPR); sky.height = Math.round(skyH * skyDPR);
+    const area = mob ? 1 : Math.max(.7, skyW * skyH / (1440 * 900));
+    // far → near: smaller, fainter, flatter, bluer and slower far away; bigger, brighter and quicker up close
+    skyL = [
+      { n: Math.round((mob ? 18 : 18) * area), w: [90, 180],  asp: .32, a: [.14, .25], sp: .05, wind: 2.5, par: 8,  far: true },
+      { n: Math.round((mob ? 8 : 9) * area),   w: [190, 330], asp: .42, a: [.2, .32],  sp: .13, wind: 5,   par: 22 },
+      { n: Math.round((mob ? 3 : 4) * area),   w: [360, 560], asp: .46, a: [.24, .36], sp: .26, wind: 9,   par: 42 }
+    ];
+    skyClouds = [];
+    skyL.forEach(L => {
+      L.mX = L.w[1] * k + L.par + 20; L.mY = L.w[1] * k * L.asp + L.par + 20;
+      L.spanX = skyW + 2 * L.mX; L.spanY = skyH + 2 * L.mY;
+      for (let j = 0; j < L.n; j++){
+        const w = (L.w[0] + Math.random() * (L.w[1] - L.w[0])) * k, h = w * L.asp * (.85 + Math.random() * .3);
+        skyClouds.push({ L, w, h, img: cloudSprite(w, h, L.far),
+          bx: Math.random() * L.spanX, by: (j + .15 + Math.random() * .7) / L.n * L.spanY,   // stratified: no clumps, no gaps
+          a: L.a[0] + Math.random() * (L.a[1] - L.a[0]),
+          ph: Math.random() * 6.28, fs: .6 + Math.random() * 1.1, hot: Math.random() });
+      }
+    });
+  }
+  new ResizeObserver(skyInit).observe(sky);
+  function skyDraw(now){
+    const dt = Math.min(64, now - skyLast); skyLast = now;
+    if (!skyW) return;
+    const wr = wkEl.getBoundingClientRect(), inWork = wr.top < skyH && wr.bottom > 0;
+    if (skyFl <= .001 && !inWork){ if (skyShown){ sky.style.visibility = "hidden"; skyShown = false; } return; }
+    if (!skyShown){ sky.style.visibility = "visible"; skyShown = true; }
+    let nx = 0, ny = 0;                                                 // the same spatial awareness as the stars: tilt, or the mouse
+    if (hasTilt){ nx = tiltX; ny = tiltY; } else if (skyMx >= 0){ nx = (skyMx / skyW - .5) * 2; ny = (skyMy / skyH - .5) * 2; }
+    const kf = reduce ? 1 : 1 - Math.pow(1 - .06, dt / 16.7);
+    skyPX += (nx - skyPX) * kf; skyPY += (ny - skyPY) * kf;
+    skx.setTransform(skyDPR, 0, 0, skyDPR, 0, 0); skx.clearRect(0, 0, skyW, skyH);
+    skx.save();
+    if (!(skyFl >= 1 || wr.top <= 0)){                                // still flooding: the circle out of the atom, plus the work section below it
+      const st = stage.getBoundingClientRect().top, fy = st + skyFy0, top = Math.max(0, wr.top);
+      skx.beginPath();
+      if (skyFl > .001){ const R = Math.hypot(Math.max(skyFx, skyW - skyFx), Math.max(fy, skyH - fy)) * skyFl + 1; skx.arc(skyFx, fy, R, 0, Math.PI * 2); }
+      if (inWork) skx.rect(0, top, skyW, skyH - top);
+      skx.clip();
+    }
+    skx.fillStyle = "#2b9fe0"; skx.fillRect(0, 0, skyW, skyH);
+    const time = reduce ? 0 : now / 1000, sy = window.scrollY;
+    const ca = inWork && wr.top < skyH * .5 ? 1 : Math.max(inWork ? .6 : 0, ss(.2, 1, skyFl));   // the clouds gather as the blue fills the room
+    for (const c of skyClouds){
+      const L = c.L;
+      let y = c.by - sy * L.sp; y = ((y % L.spanY) + L.spanY) % L.spanY - L.mY + skyPY * L.par * .7;   // drift up with the scroll, slower far away
+      let x = c.bx + time * L.wind; x = ((x % L.spanX) + L.spanX) % L.spanX - L.mX + skyPX * L.par;    // and with the wind
+      if (x > skyW || x + c.w < 0 || y > skyH || y + c.h < 0) continue;
+      // flicker: each cloud breathes on its own clock, and now and then catches the light
+      let a = c.a * ca * (.42 + .58 * (.5 + .5 * Math.sin(time * c.fs + c.ph)));
+      const hot = (time * .07 + c.hot) % 1; if (hot < .05) a *= 1 + .7 * Math.sin(hot / .05 * Math.PI);
+      if (a < .004) continue;
+      skx.globalAlpha = Math.min(1, a); skx.drawImage(c.img, x, y, c.w, c.h);
+    }
+    skx.restore(); skx.globalAlpha = 1;
+  }
   /* ---------- menu overlay ---------- */
   (function wireMenu(){
     const btn = document.querySelector(".menu-btn"), menu = $("#menu");
@@ -748,8 +873,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const wrapN = (v, n) => ((v % n) + n) % n, wrapHalf = (v, n) => wrapN(v + n/2, n) - n/2;
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
   let aPos = 0, aVel = 0, aExit = 0, idleClk = Math.asin((NA - A_IDLE_C) / A_IDLE_A);   // idle sway starts on frame 0
-  // scroll budget: 1A = 300vh of the 1040vh scroll span (timings inside 1A are unchanged), 1B = the remaining 740vh, measured in screens
-  const FA = 300 / 1040, SB = 7.4;
+  // scroll budget: 1A = 300vh of the 1020vh scroll span (timings inside 1A are unchanged), 1B = the remaining 720vh, measured in screens
+  const FA = 300 / 1020, SB = 7.2;
   const heroLive = () => preDone && smoothT < .26 * FA;
   stage.addEventListener("pointerdown", e => {
     if (!heroLive() || e.target.closest("a")) return;
@@ -840,7 +965,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   }
 
   /* ---------- table orbit (main canvas) ---------- */
-  const TXT = "ROTATE TO SPIN MO  ·  ROTATE TO SPIN MO  ·  ROTATE TO SPIN MO  ·  ";
+  const TXT = "ROTATE TO SPIN   ·   ROTATE TO SPIN   ·   ROTATE TO SPIN   ·   ";   // 63 characters, so the letter spacing barely changes
   function drawTableRing(p, cx, cy, R, front, th, ta){
     const tx = p.tx*Math.PI/180, fov = R*4.2, seg = mobile ? 96 : 140, side = front ? 1 : -1;
     for (let i = 0; i < 3; i++){
@@ -898,10 +1023,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     setTimeout(land, 1000);
   }
   /* ---------- section 1B: the atom, its lines, and the outcomes it pulls in ---------- */
-  const voidEl = $("#void"), grainEl = document.querySelector(".grain"), floodEl = $("#flood"), vignetteEl = document.querySelector(".vignette");
+  const voidEl = $("#void"), grainEl = document.querySelector(".grain"), vignetteEl = document.querySelector(".vignette");
   const gLines = [...document.querySelectorAll(".s1b-line")], gWords = [...document.querySelectorAll(".s1b-word")];
   // each line: [starts fading in, fully in, starts leaving, gone] — in screens of 1B scroll; all share one spot under the atom
-  const G_LINES = [[.8, 1.05, 1.45, 1.7], [1.6, 1.85, 2.6, 2.85], [2.75, 3.0, 4.6, 4.85], [5.1, 5.35, 5.7, 5.95], [5.85, 6.1, 6.6, 6.88]];
+  const G_LINES = [[.8, 1.05, 1.45, 1.7], [1.6, 1.85, 2.6, 2.85], [2.75, 3.0, 4.6, 4.85], [5.1, 5.35, 5.7, 5.95], [5.85, 6.1, 6.48, 6.7]];   // the last line has gone before the blue reaches it
   const G_W0 = 3.0, G_WSTEP = .08, G_WDUR = .95;   // outcomes: first sets off at 3.0, one every .08 screens, each takes .95 to fall in
   const gSeed = gWords.map((el, i) => {
     let a = (-90 + i * 137.508) % 360; if (a < 0) a += 360;            // golden-angle spread: consecutive words come from different edges
@@ -1019,14 +1144,17 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       alt: "Ayam Al Lulu identity in blush and powder blue: stationery, menu, bag, Arabic shutter sign, mural and the uniformed team" },
   ];
   const WK_ROT = [-7, 8.5, -6, 9, -8, 6.5, -9, 7, -6.5];        // alternating, never near straight: neighbours differ by 12°+
-  const WK_IN = [-55, 25, -20, 60, -75, 5, 45, -35, 15];         // entry direction, degrees from the right (− above, + below)
+  const WK_IN = [38, 25, -20, 60, -75, 5, 45, -35, 15];          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll
   const WK_DY = [0, 14, -10, 8, -14, 10, -6, 12, -8];
-  const WK_S0 = .04, WK_STEP = .1, WK_DUR = .13;
+  const WK_S0 = 0, WK_STEP = .1, WK_DUR = .13;
+  // the first card starts early — while "The work" is still rising past mid-screen — and has landed by the time the title is gone
+  const wkStart = (i, span) => i ? WK_S0 + i * WK_STEP : -innerHeight * .55 / span;
+  const wkDur = (i, span) => i ? WK_DUR : innerHeight * .9 / span;
   const escH = v => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
   const wkData = p => `<div><dt>Location</dt><dd>${escH(p.loc)}</dd></div><div><dt>Orbit</dt><dd>${escH(p.orbit)}</dd></div><div><dt>Mass · est.</dt><dd>${escH(p.mass)}</dd></div><div><dt>Strategy included</dt><dd>Yes</dd></div>`;
   const wkCta = p => p.link ? `<a class="wk-cta" href="${p.link}" target="_blank" rel="noopener">See profile ↗</a>` : "";
   const wkEl = $("#work"), wkTrk = $("#wkTrk"), wkStage = $("#wkStage"), wkPile = $("#wkPile"), wkIdx = $("#wkIdx"), wkGrid = $("#wkGrid"), wkTiles = $("#wkTiles");
-  const wkWhoS = $("#wkWhoS"), wkWhoW = $("#wkWhoW"), wkWho = wkWhoS.parentElement, wkHead = $(".wk-head");
+  const wkWhoS = $("#wkWhoS"), wkWhoW = $("#wkWhoW"), wkWho = wkWhoS.parentElement, wkHead = $(".wk-head"), wkHeadP = wkHead.querySelector("p");
   wkPile.innerHTML = WK.map((p, i) => `<article class="wk-card" data-i="${i}">
       <div class="wk-media"><img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async"></div>
       <div class="wk-info"><p class="wk-meta"><span>${escH(p.cat)}</span><span class="sc">${escH(p.scope)}</span></p>
@@ -1036,11 +1164,13 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   wkIdx.innerHTML = WK.map((p, i) => `<li><button type="button" data-i="${i}">${escH(p.short)}</button></li>`).join("");
   const wkBtns = [...wkIdx.querySelectorAll("button")];
   const KO = ["30% 40%", "70% 30%", "50% 72%", "62% 58%"];
-  wkTiles.innerHTML = WK.map((p, i) => `<article class="tile" tabindex="0" aria-label="${escH(p.name)}, ${escH(p.cat)}, ${escH(p.scope)}" style="--d:${((i % 3) * .09).toFixed(2)}s;--kb:${(-i * 2.3).toFixed(1)}s;--ko:${KO[i % 4]}">
+  wkTiles.innerHTML = WK.map((p, i) => `<article class="tile" tabindex="0" aria-label="${escH(p.name)}, ${escH(p.cat)}, ${escH(p.scope)}" style="--d:${((i % 2) * .12).toFixed(2)}s;--kb:${(-i * 2.3).toFixed(1)}s;--ko:${KO[i % 4]}">
       <div class="px"><img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async"></div>
       <div class="ov"><span class="om">${escH(p.cat)} · ${escH(p.scope)}</span><h3>${escH(p.name)}</h3><p>${escH(p.line)}</p><dl>${wkData(p)}</dl>${wkCta(p)}</div>
     </article>`).join("");
   const wkTileEls = [...wkTiles.children], wkPx = wkTileEls.map(t => t.querySelector(".px"));
+  const wkSide = wkTileEls.map((_, i) => (i === WK.length - 1 && WK.length % 2) ? 0 : (i % 2 ? 1 : -1));   // left column, right column, the lone last tile
+  let wkChrome = false;
   let wkW = 0, wkH = 0, wkMob = false, wkCw = 560, wkCh = [], wkAX = 0, wkAY = 0, wkGap = 100, wkSp = 0, wkCur = -2, wkMode = "well";
   function wkLayout(){
     const r = wkStage.getBoundingClientRect(); wkW = r.width || innerWidth; wkH = r.height || innerHeight; wkMob = wkW < 760;
@@ -1054,23 +1184,35 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     wkWho.style.maxWidth = wkMob ? "none" : Math.max(220, Math.round(wkAX - wkCw / 2 - Math.max(16, wkW * .04) - 30)) + "px";
   }
   function wkFrame(dt){
-    if (wkMode === "grid"){                                   // gentle parallax inside each tile as the grid scrolls
-      const vh = innerHeight;
+    // the title has left the frame → the switch, the index and the first brand's name fade in on the spot
+    const chrome = wkHeadP.getBoundingClientRect().bottom < 56;
+    if (chrome !== wkChrome){ wkChrome = chrome; wkEl.classList.toggle("chrome", chrome); }
+    if (wkMode === "grid"){
+      // as the grid scrolls: the left column tumbles out to the left, the right column to the right; the image parallax inside stays
+      const vh = innerHeight, vw = innerWidth, top0 = wkTiles.getBoundingClientRect().top;
       wkTileEls.forEach((t, i) => {
-        const r = t.getBoundingClientRect(); if (r.bottom < -40 || r.top > vh + 40) return;
-        const off = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
+        const y0 = top0 + t.offsetTop, h = t.offsetHeight;   // layout position (untouched by the tumble)
+        if (y0 + h < -120 || y0 > vh + 120) return;
+        const mid = y0 + h / 2 - vh / 2;
+        const off = Math.max(-1, Math.min(1, mid / vh));
         wkPx[i].style.transform = `translate3d(0,${(-off * 5.5).toFixed(2)}%,0)`;
+        if (reduce) return;
+        const c = Math.max(-1, Math.min(1, mid / (vh / 2 + h / 2)));      // +1 just entering at the bottom … −1 just leaving at the top
+        const m = Math.pow(c < 0 ? -c : c * .5, 1.6);                    // settled mid-screen; a soft swing in, a full tumble out
+        const sd = wkSide[i], rs = sd || (c < 0 ? 1 : -1) * .3;
+        const x = sd * m * vw * .17, y = c < 0 ? m * h * .1 : 0, rot = rs * m * 17, sc = 1 - m * .07;
+        t.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
       });
       return;
     }
     const r = wkTrk.getBoundingClientRect();
     if (r.bottom < -60 || r.top > innerHeight + 60) return;
-    const span = Math.max(1, wkTrk.offsetHeight - innerHeight), tp = clamp01(-r.top / span);
+    const span = Math.max(1, wkTrk.offsetHeight - innerHeight), tp = Math.max(-1, Math.min(1, -r.top / span));   // below 0: the stage is still rising into place
     wkSp += (tp - wkSp) * (reduce ? 1 : 1 - Math.pow(1 - .16, dt / 16.7));
     const p = wkSp, n = WK.length;
-    const qs = WK.map((_, i) => clamp01((p - (WK_S0 + i * WK_STEP)) / WK_DUR));
+    const qs = WK.map((_, i) => clamp01((p - wkStart(i, span)) / wkDur(i, span)));
     let c = -1; qs.forEach(q => { c += ss(.55, 1, q); }); c = Math.max(0, c);   // the camera follows the newest card, so the stack migrates left
-    let cur = -1;
+    let cur = wkChrome ? 0 : -1;                                // the first name shows the moment the title is gone
     wkCards.forEach((el, i) => {
       const q = qs[i]; if (q >= .35) cur = i;                // the label names the card that has (mostly) arrived
       const back = c - i, tx = wkAX + (i - c) * wkGap;
@@ -1093,7 +1235,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   // the index: click a brand and the scroll carries you to the moment it lands
   wkBtns.forEach(b => b.addEventListener("click", () => {
     const i = +b.dataset.i, span = wkTrk.offsetHeight - innerHeight;
-    const top = wkTrk.getBoundingClientRect().top + window.scrollY + span * Math.min(1, WK_S0 + i * WK_STEP + WK_DUR * .86);   // the moment this card has landed, before the next one arrives
+    const top = wkTrk.getBoundingClientRect().top + window.scrollY + span * Math.min(1, wkStart(i, span) + wkDur(i, span) * .86);   // the moment this card has landed, before the next one arrives
     window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
   }));
   // grid: tiles rise in as they enter; on touch screens the details open on the tile in the middle of the screen
@@ -1108,14 +1250,15 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   function wkSetMode(m){
     if (m === wkMode) return; wkMode = m;
     wkSw.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
-    const headEnd = wkHead.getBoundingClientRect().bottom + window.scrollY;
+    wkEl.classList.toggle("grid", m === "grid");
     if (m === "grid"){
       wkTrk.hidden = true; wkGrid.hidden = false;
-      wkTileEls.forEach(t => { t.classList.remove("in"); wkReveal.observe(t); });
-      window.scrollTo(0, headEnd - 30);
+      wkTileEls.forEach(t => { t.classList.remove("in"); t.style.transform = ""; wkReveal.observe(t); });
+      window.scrollTo(0, wkHeadP.getBoundingClientRect().bottom + window.scrollY - 20);   // just past the title: the switch stays in view
     } else {
       wkGrid.hidden = true; wkTrk.hidden = false; wkLayout(); wkCur = -2;
-      window.scrollTo(0, headEnd);
+      const span = wkTrk.offsetHeight - innerHeight;
+      window.scrollTo(0, wkTrk.getBoundingClientRect().top + window.scrollY + Math.max(span * (wkStart(0, span) + wkDur(0, span) * .86), wkHeadP.getBoundingClientRect().bottom - wkTrk.getBoundingClientRect().top));   // back to the first card, landed, title gone
     }
   }
   wkSw.forEach(b => b.addEventListener("click", () => wkSetMode(b.dataset.mode)));
@@ -1135,7 +1278,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     const sB = clamp01((smoothT - FA) / (1 - FA)) * SB;    // section 1B progress, in screens of scroll (0–6.5)
     // the dots are fully present the instant the hero is revealed and stay as the stars of 1B
     bgVis = 1;
-    bgScroll = smoothT * 10.4 * H * .42;                   // the stars drift up with the scroll through the whole experience
+    bgScroll = smoothT * 10.2 * H * .42;                   // the stars drift up with the scroll through the whole experience
     bgDraw(now);
     // 1B opens: title 3 and Mo parallax up and away (no fade) while the room falls to pure black
     const exB = clamp01(sB / .85), exE = Math.pow(exB, 1.7);
@@ -1341,14 +1484,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       voidEl.style.opacity = voidO.toFixed(3);
       grainEl.style.opacity = (.07 * (1 - voidO)).toFixed(3);
       { // the flood: a circle of wing blue grows from the atom until it fills the room (the work section below is the same blue)
-        const fl = ss(6.62, 7.2, sB), fx = W / 2, fy = H * (mobile ? .40 : .42);
-        bgBlue = fl;
-        if (fl <= .001){ if (floodEl.style.visibility !== "hidden") floodEl.style.visibility = "hidden"; }
-        else {
-          const R = Math.hypot(Math.max(fx, W - fx), Math.max(fy, H - fy)) * fl + 1;
-          floodEl.style.visibility = "visible";
-          floodEl.style.clipPath = fl >= 1 ? "none" : `circle(${R.toFixed(1)}px at ${fx.toFixed(1)}px ${fy.toFixed(1)}px)`;
-        }
+        const fl = ss(6.62, 7.15, sB), fx = W / 2, fy = H * (mobile ? .40 : .42);   // fy: within the stage
+        bgBlue = fl; skyFl = fl; skyFx = fx; skyFy0 = fy;      // drawn every frame by skyDraw, in front of the atom
         vignetteEl.style.opacity = (1 - fl).toFixed(3);
       }
 
@@ -1371,6 +1508,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         a.style.transform = `translate3d(calc(${x.toFixed(1)}px - 50%),calc(${y.toFixed(1)}px - 50%),0)`;
       });
     }
+    skyDraw(now);
     wkFrame(dt);
     { // the header goes white wherever it sits over the blue (the end of 1B, and the whole work section)
       const wr = wkEl.getBoundingClientRect(), sr = wrap.getBoundingClientRect();

@@ -134,6 +134,7 @@ a{color:inherit}
   font-family:var(--f-ui);font-weight:300;font-size:clamp(21px,2.3vw,36px);line-height:1.28;color:var(--ink);opacity:0;visibility:hidden;will-change:opacity,transform}
 .s1b-line em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.06em;color:var(--ink);letter-spacing:.005em}
 .s1b-line em.pull{color:var(--accent)}
+.s1b-line em,.s1b-line b{white-space:nowrap}   /* a styled phrase never splits across lines */
 .s1b-line b{font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.015em;font-size:1.04em;color:var(--ink)}
 .s1b-word{position:absolute;left:0;top:0;white-space:nowrap;font-family:var(--f-ui);font-weight:400;font-size:clamp(14px,1.15vw,18px);letter-spacing:.03em;
   color:#d6e6f2;opacity:0;visibility:hidden;will-change:transform,opacity}
@@ -356,10 +357,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       <!-- section 1B: gravity — one blue atom, a line beneath it, and the outcomes it pulls in -->
       <div class="s1b" id="s1b">
         <!-- type follows the titles: light sans carries, Playfair italic is the felt word (blue = the pull), heavy sans is the point -->
-        <p class="s1b-line">Most brands spend their time <em>chasing</em> <b>attention</b>.</p>
+        <p class="s1b-line">Most brands <b>waste their time</b> <em class="pull">chasing attention</em>.</p>
         <p class="s1b-line"><b>Better brands</b> <em class="pull">pull it in</em>.</p>
         <p class="s1b-line">That <em class="pull">pull</em> is <b>gravity</b>.</p>
-        <p class="s1b-line">The goal isn’t to be <em>everywhere</em>.</p>
+        <p class="s1b-line"><b>The goal</b> isn’t to be <em class="pull">everywhere</em>.</p>
         <p class="s1b-line">The goal is to become <b>impossible</b> <em class="pull">to&nbsp;ignore</em>.</p>
         <div aria-hidden="true">
           <span class="s1b-word">Attention</span><span class="s1b-word">Trust</span><span class="s1b-word">Retention</span><span class="s1b-word">Positive reviews</span>

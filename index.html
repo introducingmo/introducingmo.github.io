@@ -740,9 +740,9 @@ float layer(vec2 c,float sc,float sp,float wind,float par,float th,vec2 seed){
   return smoothstep(th,th+.17,n);}
 void main(){
   vec2 cell=floor(gl_FragCoord.xy),c=(cell+.5)*uPitch;          /* texel row 0 = the top row of cells */
-  float far=layer(c,200.,.05,3.,18.,.56,vec2(3.1,7.7))*.4;
-  float mid=layer(c,340.,.13,6.,46.,.58,vec2(11.3,1.9))*.72;
-  float nr=layer(c,600.,.26,10.,90.,.575,vec2(5.7,13.1));
+  float far=layer(c,100.,.05,3.,18.,.59,vec2(3.1,7.7))*.38;       /* small, scattered clouds */
+  float mid=layer(c,165.,.13,6.,46.,.62,vec2(11.3,1.9))*.66;
+  float nr=layer(c,270.,.26,10.,90.,.635,vec2(5.7,13.1))*.9;
   float d=1.-(1.-far)*(1.-mid)*(1.-nr);
   d*=mix(.3,1.,smoothstep(40.,150.,c.y));                        /* thinner behind the header, so the menu stays legible */
   float lw=min(uView.x*.62,560.);                                  /* and behind the brand name, bottom left */
@@ -763,11 +763,11 @@ void main(){
   vec2 cell=floor(p/uPitch);
   float d=texture2D(uTex,(cell+.5)/uGrid).r*uFade;
   vec2 f=p-(cell+.5)*uPitch;
-  float r=uPitch*.48*sqrt(d);
+  float r=uPitch*.45*sqrt(d);
   float dt=clamp((r-length(f))*uDpr+.5,0.,1.)*step(.04,d);
   vec3 blue=mix(vec3(.141,.580,.851),vec3(.180,.643,.894),clamp(p.y/uView.y,0.,1.));   /* the wing blue, a touch deeper at the top */
-  vec3 dc=mix(vec3(.60,.81,.95),vec3(1.),smoothstep(.12,.8,d));                        /* thin dots stay sky-blue, dense ones turn white */
-  vec3 col=mix(blue,dc,dt*mix(.55,1.,d));
+  vec3 dc=mix(vec3(.58,.80,.95),vec3(.9,.96,1.),smoothstep(.15,.9,d));                 /* thin dots stay sky-blue, dense ones turn (nearly) white */
+  vec3 col=mix(blue,dc,dt*mix(.5,.86,d));
   gl_FragColor=vec4(col*m,m);}`;
   function skyProg(fs){
     const sh = (t, src) => { const o = sgl.createShader(t); sgl.shaderSource(o, src); sgl.compileShader(o);
@@ -819,7 +819,7 @@ void main(){
     sgl.bindFramebuffer(sgl.FRAMEBUFFER, null); sgl.viewport(0, 0, sky.width, sky.height); sgl.useProgram(skyP2.pr);
     sgl.activeTexture(sgl.TEXTURE0); sgl.bindTexture(sgl.TEXTURE_2D, skyTex); sgl.uniform1i(skyP2.u.uTex, 0);
     sgl.drawArrays(sgl.TRIANGLE_STRIP, 0, 4);
-    sgl.readPixels(0, 0, 1, 1, sgl.RGBA, sgl.UNSIGNED_BYTE, new Uint8Array(4));   // waits for the GPU: the work is really done
+    sgl.flush();
     sgl.clearColor(0, 0, 0, 0); sgl.clear(sgl.COLOR_BUFFER_BIT);
   }
   setTimeout(skyWarm, 1200);
@@ -852,7 +852,7 @@ void main(){
     sgl.bindFramebuffer(sgl.FRAMEBUFFER, skyFB); sgl.viewport(0, 0, skyGW, skyGH);
     sgl.useProgram(skyP1.pr);
     sgl.uniform1f(skyP1.u.uPitch, skyPitch); sgl.uniform1f(skyP1.u.uT, time);
-    sgl.uniform1f(skyP1.u.uScroll, window.scrollY % 200000); sgl.uniform1f(skyP1.u.uScale, skyW <= 820 ? .68 : Math.min(1.25, Math.max(.85, skyW / 1440))); sgl.uniform2f(skyP1.u.uPar, skyPX, skyPY); sgl.uniform2f(skyP1.u.uView, skyW, M.vh);
+    sgl.uniform1f(skyP1.u.uScroll, window.scrollY % 200000); sgl.uniform1f(skyP1.u.uScale, skyW <= 820 ? .8 : Math.min(1.25, Math.max(.85, skyW / 1440))); sgl.uniform2f(skyP1.u.uPar, skyPX, skyPY); sgl.uniform2f(skyP1.u.uView, skyW, M.vh);
     sgl.drawArrays(sgl.TRIANGLE_STRIP, 0, 4);
     // pass 2: the dots, masked to the flood
     sgl.bindFramebuffer(sgl.FRAMEBUFFER, null); sgl.viewport(0, 0, sky.width, sky.height);

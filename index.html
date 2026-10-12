@@ -47,7 +47,15 @@ a{color:inherit}
 .top .mark{pointer-events:auto}
 .top .nav{opacity:0}
 .top.live .nav{pointer-events:auto}
-.mark{display:block;width:28px;height:29px}
+.mark{position:relative;display:block;width:28px;height:29px}
+.mark .wh{position:absolute;inset:0;opacity:0}
+.mark img{transition:opacity .45s}
+.top.on-blue .mark img{opacity:0}
+.top.on-blue .mark .wh{opacity:1}       /* over the blue the wing (and the menu icon) turn white so they never vanish */
+.menu-btn{color:var(--accent)}
+.top.on-blue .menu-btn{color:#fff}
+.top.on-blue .nav a{opacity:.95}
+.top.on-blue .nav a:hover{color:#fff}
 .mark img{width:100%;height:100%;object-fit:contain;display:block;animation:heartbeat 2.1s ease-in-out infinite;transform-origin:center}
 @keyframes heartbeat{0%{filter:drop-shadow(0 0 0 rgba(43,159,224,0));transform:scale(1)}
   7%{filter:drop-shadow(0 0 9px rgba(43,159,224,.75));transform:scale(1.08)}
@@ -105,7 +113,7 @@ a{color:inherit}
 @media (prefers-reduced-motion:reduce){.menu,.menu-nav a,.menu-social{transition:none;animation:none}.menu.open .menu-nav a,.menu.open .menu-social{opacity:1;transform:none;animation:none}.menu.closing .menu-nav a,.menu.closing .menu-social{opacity:0;animation:none}}
 
 /* ---------- stage ---------- */
-.story-wrap{position:relative;height:1050vh}   /* 1A (Mo + three titles) = first 300vh of scroll, 1B (gravity) = the remaining 650vh */
+.story-wrap{position:relative;height:1140vh}   /* 1A (Mo + three titles) = first 300vh of scroll, 1B (gravity, ending in the blue flood) = the remaining 740vh */
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;touch-action:pan-y}
 .stage.can-drag{cursor:grab}
 .stage.dragging{cursor:grabbing}
@@ -115,7 +123,8 @@ a{color:inherit}
 .vignette{position:absolute;inset:0;z-index:7;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 55%,transparent 55%,rgba(0,0,0,.72))}
 #world{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block}
 #bg{position:absolute;inset:0;z-index:1;width:100%;height:100%;display:block;pointer-events:none}
-.void{position:absolute;inset:0;z-index:1;background:#000;opacity:0;pointer-events:none}   /* 1B: the room falls away to pure black; the stars stay */
+.void{position:absolute;inset:0;z-index:1;background:#000;opacity:0;pointer-events:none}
+.flood{position:absolute;inset:0;z-index:1;background:var(--accent);clip-path:circle(0px at 50% 42%);visibility:hidden;pointer-events:none}   /* end of 1B: the wing blue spills out of the atom */   /* 1B: the room falls away to pure black; the stars stay */
 
 /* ---------- phones held sideways: the experience is composed for portrait ---------- */
 .turn{display:none}
@@ -127,6 +136,78 @@ a{color:inherit}
 }
 @keyframes turnPhone{0%,20%{transform:rotate(-90deg)}55%,100%{transform:rotate(0)}}
 @media (prefers-reduced-motion:reduce){.turn svg{animation:none}}
+
+
+/* ---------- the work: a blue section after 1B (title → gravity well ⇄ grid) ---------- */
+.work{position:relative;background-color:var(--accent);color:#fff;
+  background-image:radial-gradient(circle,rgba(255,255,255,.34) 1.3px,transparent 1.6px);background-size:68px 68px;background-position:34px 34px}
+@media (max-width:760px){.work{background-size:54px 54px;background-position:27px 27px;background-image:radial-gradient(circle,rgba(255,255,255,.34) 1.1px,transparent 1.4px)}}
+.wk-switch{position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);height:0;z-index:40}
+.wk-switch .switch{position:relative;margin-left:max(16px,4vw)}
+.switch{display:inline-flex;padding:2px;border-radius:999px;border:1px solid rgba(255,255,255,.55);background:rgba(5,8,12,.1)}
+.switch button{min-height:28px;padding:0 10px;border:0;border-radius:999px;background:none;color:#fff;cursor:pointer;
+  font-family:var(--f-ui);font-weight:700;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px}
+.switch button svg{width:11px;height:11px}
+.switch button[aria-pressed="true"]{background:#fff;color:#1772ad}
+.switch button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.wk-head{min-height:88vh;min-height:88svh;display:grid;align-content:end;padding-block:120px 9vh;padding-inline:max(16px,4vw)}
+.wk-head h2{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.025em;font-size:clamp(72px,13vw,220px);line-height:.85;color:#fff}
+.wk-head h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.wk-head p{margin:18px 0 0;max-width:30em;font-weight:300;font-size:clamp(15px,1.3vw,19px);line-height:1.5;color:rgba(255,255,255,.82)}
+.wk-trk{position:relative;height:640vh}
+.wk-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.wk-card{--cw:560px;position:absolute;left:0;top:0;width:var(--cw);box-sizing:border-box;margin:0;border-radius:10px;overflow:hidden;
+  background:#08131f;color:#fff;will-change:transform,opacity;transform-origin:50% 50%;visibility:hidden}
+.wk-card::after{content:"";position:absolute;inset:0;background:#05101c;opacity:var(--fog,0);pointer-events:none}   /* older cards sink back into depth */
+.wk-media{aspect-ratio:4/5;overflow:hidden;background:#0d2236}
+.wk-media img{width:100%;height:100%;object-fit:cover;display:block}
+.wk-info{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:8px 22px;padding:16px 18px 18px;align-items:start}
+.wk-meta{grid-column:1 / -1;display:flex;justify-content:space-between;gap:12px;margin:0;font-size:9px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.6)}
+.wk-meta .sc{color:#7cc8f2;text-align:right}
+.wk-t h3{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(22px,calc(var(--cw) * .052),32px);line-height:.95;letter-spacing:-.015em;text-wrap:balance}
+.wk-t p{margin:7px 0 0;font-family:var(--f-serif);font-style:italic;font-size:clamp(14px,calc(var(--cw) * .029),17px);line-height:1.32;color:rgba(255,255,255,.88);text-wrap:pretty}
+.wk-data{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin:2px 0 0}
+.wk-data div{min-width:0}
+.wk-data dt{font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.wk-data dd{margin:3px 0 0;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk-cta{grid-column:1 / -1;justify-self:end;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:#7cc8f2;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.wk-cta:hover{color:#fff}
+.wk-cta:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (max-width:760px){.wk-info{grid-template-columns:1fr;padding:13px 14px 15px;gap:9px}.wk-data dd{font-size:11.5px}}
+.wk-who{position:absolute;left:max(16px,4vw);bottom:calc(env(safe-area-inset-bottom,0px) + 22px);display:grid;gap:6px;z-index:200;pointer-events:none;text-shadow:0 1px 22px rgba(4,30,58,.35)}
+.wk-who .s{font-size:10px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.78)}
+.wk-who .w{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(30px,4.2vw,66px);line-height:.9;letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.wk-idx{position:absolute;right:max(16px,4vw);top:50%;transform:translateY(-50%);display:grid;gap:4px;margin:0;padding:0;list-style:none;z-index:200}
+.wk-idx button{background:none;border:0;padding:6px 0;text-align:left;cursor:pointer;font-family:var(--f-ui);font-weight:700;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.5);transition:color .3s}
+.wk-idx button:hover,.wk-idx button.on{color:#fff}
+.wk-idx button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (max-width:760px){.wk-idx{display:none}.wk-who .w{font-size:clamp(26px,8vw,38px)}}
+.wk-grid{padding:96px 14px 110px}
+.wk-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:999px){.wk-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:639px){.wk-tiles{grid-template-columns:1fr;gap:16px}.wk-grid{padding-inline:12px}}
+.tile{position:relative;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1d79b4;outline:none;
+  opacity:0;transform:translateY(46px) scale(.975);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.tile.in{opacity:1;transform:none}
+.tile .px{position:absolute;left:0;right:0;top:-7%;bottom:-7%;will-change:transform}
+.tile .px img{width:100%;height:100%;object-fit:cover;display:block;animation:kb 18s ease-in-out infinite alternate;animation-delay:var(--kb,0s);transform-origin:var(--ko,50% 50%)}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1)}}
+.tile .ov{position:absolute;inset:0;display:grid;align-content:end;gap:8px;padding:22px;color:#fff;opacity:0;transition:opacity .5s ease;
+  background:linear-gradient(180deg,rgba(5,16,28,0) 30%,rgba(5,16,28,.6) 60%,rgba(5,16,28,.92) 100%)}
+.tile .ov>*{transform:translateY(14px);opacity:0;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
+.tile .ov>*:nth-child(2){transition-delay:.05s}.tile .ov>*:nth-child(3){transition-delay:.1s}.tile .ov>*:nth-child(4){transition-delay:.15s}.tile .ov>*:nth-child(5){transition-delay:.2s}
+.tile .om{font-size:9px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.72)}
+.tile h3{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(22px,2.2vw,32px);line-height:.95;letter-spacing:-.015em}
+.tile p{margin:0;font-family:var(--f-serif);font-style:italic;font-size:clamp(14px,1.2vw,17px);line-height:1.35}
+.tile dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;margin:4px 0 0;padding-top:11px;border-top:1px solid rgba(255,255,255,.28)}
+.tile dt{font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.tile dd{margin:3px 0 0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .wk-cta{justify-self:start}
+@media (hover:hover){.tile:hover .ov{opacity:1}.tile:hover .ov>*{transform:none;opacity:1}}
+.tile.open .ov,.tile:focus-visible .ov{opacity:1}
+.tile.open .ov>*,.tile:focus-visible .ov>*{transform:none;opacity:1}
+.tile:focus-visible{box-shadow:0 0 0 2px #fff}
+@media (prefers-reduced-motion:reduce){.tile{transition:none;opacity:1;transform:none}.tile .px img{animation:none}.tile .ov,.tile .ov>*{transition:none}}
 
 /* ---------- section 1B: gravity ---------- */
 .s1b{position:absolute;inset:0;z-index:6;pointer-events:none}
@@ -276,7 +357,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 <body style="margin:0">
 
 <header class="top" id="top-bar">
-  <a class="mark" href="#top" aria-label="Introducing Mo, home"><img src="img/wing.png" alt=""></a>
+  <a class="mark" href="#top" aria-label="Introducing Mo, home"><img src="img/wing.png" alt=""><img class="wh" src="img/wing-white.png" alt=""></a>
   <nav class="nav" aria-label="Main">
     <ul>
       <li><a href="#story">Story</a></li>
@@ -284,7 +365,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       <li><a href="#clients">Clients</a></li>
       <li><a href="#method">The Method</a></li>
     </ul>
-    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><span class="pulse"></span><span class="pulse p2"></span><svg class="mico" viewBox="0 0 24 24" fill="none" stroke="#2b9fe0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="c c1" d="M3 8V3h5"/><path class="c c2" d="M16 3h5v5"/><path class="c c3" d="M21 16v5h-5"/><path class="c c4" d="M8 21H3v-5"/></svg></button>
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><span class="pulse"></span><span class="pulse p2"></span><svg class="mico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="c c1" d="M3 8V3h5"/><path class="c c2" d="M16 3h5v5"/><path class="c c3" d="M21 16v5h-5"/><path class="c c4" d="M8 21H3v-5"/></svg></button>
   </nav>
 </header>
 
@@ -322,6 +403,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     <div class="stage" id="stage">
       <div class="spot" id="spot"></div>
       <div class="void" id="void"></div>
+      <div class="flood" id="flood"></div>
       <canvas id="bg" aria-hidden="true"></canvas>
 
       <!-- hero -->
@@ -394,6 +476,22 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     </div>
   </section>
 
+
+  <section class="work" id="work" aria-label="The work">
+    <div class="wk-switch"><div class="switch" role="group" aria-label="Layout">
+      <button type="button" data-mode="well" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="4.5" width="9" height="9" rx="1" transform="rotate(-8 8 9)"/><rect x="3.5" y="2.5" width="9" height="9" rx="1" transform="rotate(7 8 7)"/></svg>Gravity</button>
+      <button type="button" data-mode="grid" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
+    </div></div>
+    <header class="wk-head"><h2>The <em>work</em></h2><p>Nine brands, pulled in one by one.</p></header>
+    <div class="wk-trk" id="wkTrk">
+      <div class="wk-stage" id="wkStage">
+        <div id="wkPile"></div>
+        <ol class="wk-idx" id="wkIdx" aria-label="Jump to a brand"></ol>
+        <div class="wk-who" aria-live="polite"><span class="s" id="wkWhoS"></span><span class="w" id="wkWhoW"></span></div>
+      </div>
+    </div>
+    <div class="wk-grid" id="wkGrid" hidden><div class="wk-tiles" id="wkTiles"></div></div>
+  </section>
   <footer class="end" id="collabs">
     <img src="img/wing.png" alt="Introducing Mo">
     <p class="kicker">Mo<i>|</i>Brand strategist &amp; creative director</p>
@@ -486,7 +584,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
   /* ---------- background: faint dot grid (parallax + tilt + flicker); constellation on cursor ---------- */
   const bg = $("#bg"), btx = bg.getContext("2d");
-  let dots = [], sparks = [], bgVis = 0, bgShown = false, bgLast = 0, bgOver = 0, bgSpan = 1, bgScroll = 0;
+  let dots = [], sparks = [], bgVis = 0, bgShown = false, bgLast = 0, bgOver = 0, bgSpan = 1, bgScroll = 0, bgBlue = 0;
   let mx = -999, my = -999;
   let paX = 0, paY = 0, tiltX = 0, tiltY = 0, hasTilt = false;
   const PAR = () => (mobile ? 78 : 50);           // tilt/parallax reach
@@ -582,7 +680,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       a = Math.min(1, a);
       if (d.white && glow > 0){ const m = glow;
         btx.fillStyle = `rgba(${Math.round(155+100*m)},${Math.round(190+65*m)},${Math.round(222+33*m)},${a.toFixed(3)})`;
-      } else btx.fillStyle = `rgba(165,198,228,${a.toFixed(3)})`;
+      } else btx.fillStyle = bgBlue > .01 ? `rgba(${Math.round(165 + 90 * bgBlue)},${Math.round(198 + 57 * bgBlue)},${Math.round(228 + 27 * bgBlue)},${Math.min(1, a * (1 + .35 * bgBlue)).toFixed(3)})` : `rgba(165,198,228,${a.toFixed(3)})`;
       btx.beginPath(); btx.arc(x, y, dr, 0, 7); btx.fill();
     }
     // the cursor itself: a soft blue magnet dot (smaller on phones)
@@ -650,8 +748,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const wrapN = (v, n) => ((v % n) + n) % n, wrapHalf = (v, n) => wrapN(v + n/2, n) - n/2;
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
   let aPos = 0, aVel = 0, aExit = 0, idleClk = Math.asin((NA - A_IDLE_C) / A_IDLE_A);   // idle sway starts on frame 0
-  // scroll budget: 1A = 300vh of the 950vh scroll span (timings inside 1A are unchanged), 1B = the remaining 650vh, measured in screens
-  const FA = 300 / 950, SB = 6.5;
+  // scroll budget: 1A = 300vh of the 1040vh scroll span (timings inside 1A are unchanged), 1B = the remaining 740vh, measured in screens
+  const FA = 300 / 1040, SB = 7.4;
   const heroLive = () => preDone && smoothT < .26 * FA;
   stage.addEventListener("pointerdown", e => {
     if (!heroLive() || e.target.closest("a")) return;
@@ -800,10 +898,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     setTimeout(land, 1000);
   }
   /* ---------- section 1B: the atom, its lines, and the outcomes it pulls in ---------- */
-  const voidEl = $("#void"), grainEl = document.querySelector(".grain");
+  const voidEl = $("#void"), grainEl = document.querySelector(".grain"), floodEl = $("#flood"), vignetteEl = document.querySelector(".vignette");
   const gLines = [...document.querySelectorAll(".s1b-line")], gWords = [...document.querySelectorAll(".s1b-word")];
   // each line: [starts fading in, fully in, starts leaving, gone] — in screens of 1B scroll; all share one spot under the atom
-  const G_LINES = [[.8, 1.05, 1.45, 1.7], [1.6, 1.85, 2.6, 2.85], [2.75, 3.0, 4.6, 4.85], [5.1, 5.35, 5.7, 5.95], [5.85, 6.1, 99, 99]];
+  const G_LINES = [[.8, 1.05, 1.45, 1.7], [1.6, 1.85, 2.6, 2.85], [2.75, 3.0, 4.6, 4.85], [5.1, 5.35, 5.7, 5.95], [5.85, 6.1, 6.6, 6.88]];
   const G_W0 = 3.0, G_WSTEP = .08, G_WDUR = .95;   // outcomes: first sets off at 3.0, one every .08 screens, each takes .95 to fall in
   const gSeed = gWords.map((el, i) => {
     let a = (-90 + i * 137.508) % 360; if (a < 0) a += 360;            // golden-angle spread: consecutive words come from different edges
@@ -858,11 +956,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       flare += Math.max(0, 1 - Math.abs(q - 1) / .06);               // …and makes it flare as it arrives
     }
     // the atom: a blue core in a soft halo with three thin orbits and their electrons; it ignites, then grows 30% as it feeds
-    const ig = ss(.55, 1.0, sB);
+    const ig0 = ss(.55, 1.0, sB), out = ss(6.62, 6.95, sB), ig = ig0 * (1 - out);   // at the very end it swells into the blue and is gone
     if (ig <= .002) return;
     const grow = 1 + .3 * absorbed / gWords.length;
-    const pop = ig < 1 ? 1 + 2.70158 * Math.pow(ig - 1, 3) + 1.70158 * Math.pow(ig - 1, 2) : 1;   // ease-out-back ignition
-    const rc = (mobile ? 8 : 12) * grow * pop;
+    const pop = ig0 < 1 ? 1 + 2.70158 * Math.pow(ig0 - 1, 3) + 1.70158 * Math.pow(ig0 - 1, 2) : 1;   // ease-out-back ignition
+    const rc = (mobile ? 8 : 12) * grow * pop * (1 + 1.4 * out);
     flare = Math.min(1, flare);
     ctx.save(); ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     const hr = rc * (5.2 + flare * 2.2);
@@ -889,6 +987,142 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     ctx.restore();
   }
 
+  /* ---------- the work: gravity well ⇄ grid ---------- */
+  const WK = [
+    { name: "Beiruti Saj", short: "Beiruti Saj", cat: "Restaurant", scope: "Branding & Launch", line: "Beirut opens its doors in the heart of Europe.",
+      loc: "Salzburg, Austria", orbit: "2 years", mass: "$70k", img: "beiruti-saj",
+      alt: "Beiruti Saj identity: logo engraved in a wooden table, an embroidered denim apron, the shopfront and the menu" },
+    { name: "HKN Diamonds", short: "HKN Diamonds", cat: "Jeweler", scope: "Rebranding", line: "A name worth repeating, set in diamonds.",
+      loc: "Beirut, Lebanon", orbit: "9 years", mass: "$1M", img: "hkn-diamonds",
+      alt: "HKN Diamonds rebrand: website on a desktop and phones, brand guideline spreads and a diamond tennis bracelet" },
+    { name: "800PIZZA", short: "800PIZZA", cat: "Pizza restaurant", scope: "Design & Content Strategy", line: "Thin, light and crispy, served with the match.",
+      loc: "Dubai, United Arab Emirates", orbit: "19 years", mass: "$1.5M", img: "800pizza",
+      alt: "800PIZZA football campaign: illustrated pizza box, posters, menu, flour sacks and a white chef shirt with burgundy braces" },
+    { name: "Institute for Learning Organizations", short: "ILO", cat: "Consultancy", scope: "Rebranding & Launch", line: "Shaping the future with better learning.",
+      loc: "Telemark county, Norway", orbit: "20 years", mass: "$200k", img: "ilo-learning-organizations",
+      alt: "Institute for Learning Organizations rebrand: new logo construction, social page on a desktop and the OnTrack21 workbook" },
+    { name: "Chef Charles Webb", short: "Charles Webb", cat: "Chef & Entrepreneur", scope: "Brand Uplift & Launch", line: "From Cinco de Mayo to live streaming innovation.",
+      loc: "Chicago, USA", orbit: "30 years", mass: "$500k", img: "chef-charles-webb",
+      alt: "Chef Charles Webb seasoning a dish in a Mexican-tiled kitchen, with his masterclass deck and case-study slides" },
+    { name: "Simply Quiche", short: "Simply Quiche", cat: "Frozen Foods", scope: "Content Strategy", line: "Ready in no time, whenever the craving hits.",
+      loc: "Amman, Jordan", orbit: "20 years", mass: "$1.5M", img: "simply-quiche",
+      alt: "Simply Quiche and Simply Pie boxes on marble, phones showing night-snack social posts, and fresh-baked pies" },
+    { name: "Brand Story MET", short: "Brand Story", cat: "Events Company", scope: "Rebranding & Launch", line: "Where brands and ideas meet.",
+      loc: "Jeddah, Saudi Arabia", orbit: "5 years", mass: "$400k", img: "brand-story",
+      alt: "Brand Story stationery suite in blue and violet: letterhead, cards, envelopes, a tablet and the company profile",
+      link: "https://brandstory.com.sa/wp-content/uploads/2023/11/Brand-Story-Company-Profile-Web.pdf" },
+    { name: "PBF: Pastrami, Burgers & Fries", short: "PBF", cat: "Food Truck to Restaurant", scope: "Branding & Launch", line: "It started with a truck. The queue built the restaurant.",
+      loc: "Maten, Lebanon", orbit: "8 years", mass: "$300k", img: "pbf-pastrami-burgers-fries",
+      alt: "A woman biting into a PBF burger in front of the red PBF food truck, with branded bags and wrappers" },
+    { name: "Ayam Al Lulu", short: "Ayam Al Lulu", cat: "Resto-café", scope: "Branding & Launch", line: "Lebanon’s golden days, served in Jeddah.",
+      loc: "Jeddah, Saudi Arabia", orbit: "8 years", mass: "$450k", img: "ayam-al-lulu",
+      alt: "Ayam Al Lulu identity in blush and powder blue: stationery, menu, bag, Arabic shutter sign, mural and the uniformed team" },
+  ];
+  const WK_ROT = [-7, 8.5, -6, 9, -8, 6.5, -9, 7, -6.5];        // alternating, never near straight: neighbours differ by 12°+
+  const WK_IN = [-55, 25, -20, 60, -75, 5, 45, -35, 15];         // entry direction, degrees from the right (− above, + below)
+  const WK_DY = [0, 14, -10, 8, -14, 10, -6, 12, -8];
+  const WK_S0 = .04, WK_STEP = .1, WK_DUR = .13;
+  const escH = v => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const wkData = p => `<div><dt>Location</dt><dd>${escH(p.loc)}</dd></div><div><dt>Orbit</dt><dd>${escH(p.orbit)}</dd></div><div><dt>Mass · est.</dt><dd>${escH(p.mass)}</dd></div><div><dt>Strategy included</dt><dd>Yes</dd></div>`;
+  const wkCta = p => p.link ? `<a class="wk-cta" href="${p.link}" target="_blank" rel="noopener">See profile ↗</a>` : "";
+  const wkEl = $("#work"), wkTrk = $("#wkTrk"), wkStage = $("#wkStage"), wkPile = $("#wkPile"), wkIdx = $("#wkIdx"), wkGrid = $("#wkGrid"), wkTiles = $("#wkTiles");
+  const wkWhoS = $("#wkWhoS"), wkWhoW = $("#wkWhoW"), wkWho = wkWhoS.parentElement, wkHead = $(".wk-head");
+  wkPile.innerHTML = WK.map((p, i) => `<article class="wk-card" data-i="${i}">
+      <div class="wk-media"><img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async"></div>
+      <div class="wk-info"><p class="wk-meta"><span>${escH(p.cat)}</span><span class="sc">${escH(p.scope)}</span></p>
+        <div class="wk-t"><h3>${escH(p.name)}</h3><p>${escH(p.line)}</p></div><dl class="wk-data">${wkData(p)}</dl>${wkCta(p)}</div>
+    </article>`).join("");
+  const wkCards = [...wkPile.children];
+  wkIdx.innerHTML = WK.map((p, i) => `<li><button type="button" data-i="${i}">${escH(p.short)}</button></li>`).join("");
+  const wkBtns = [...wkIdx.querySelectorAll("button")];
+  const KO = ["30% 40%", "70% 30%", "50% 72%", "62% 58%"];
+  wkTiles.innerHTML = WK.map((p, i) => `<article class="tile" tabindex="0" aria-label="${escH(p.name)}, ${escH(p.cat)}, ${escH(p.scope)}" style="--d:${((i % 3) * .09).toFixed(2)}s;--kb:${(-i * 2.3).toFixed(1)}s;--ko:${KO[i % 4]}">
+      <div class="px"><img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async"></div>
+      <div class="ov"><span class="om">${escH(p.cat)} · ${escH(p.scope)}</span><h3>${escH(p.name)}</h3><p>${escH(p.line)}</p><dl>${wkData(p)}</dl>${wkCta(p)}</div>
+    </article>`).join("");
+  const wkTileEls = [...wkTiles.children], wkPx = wkTileEls.map(t => t.querySelector(".px"));
+  let wkW = 0, wkH = 0, wkMob = false, wkCw = 560, wkCh = [], wkAX = 0, wkAY = 0, wkGap = 100, wkSp = 0, wkCur = -2, wkMode = "well";
+  function wkLayout(){
+    const r = wkStage.getBoundingClientRect(); wkW = r.width || innerWidth; wkH = r.height || innerHeight; wkMob = wkW < 760;
+    wkCw = Math.round(Math.max(220, wkMob ? Math.min(wkW * .84, 380, (wkH * .78 - 190) * .8) : Math.min(620, wkW * .42, (wkH - 170) * .8)));
+    wkCards.forEach(c => c.style.setProperty("--cw", wkCw + "px"));
+    wkCh = wkCards.map(c => c.offsetHeight || wkCw * 1.5);
+    const chM = Math.max(...wkCh);
+    wkAX = wkW * (wkMob ? .54 : .56);
+    wkAY = wkMob ? Math.min(wkH * .47, wkH - 118 - chM / 2) : wkH - 16 - chM / 2;   // the info strip always stays on screen; the top may crop
+    wkGap = wkCw * (wkMob ? .17 : .2);
+    wkWho.style.maxWidth = wkMob ? "none" : Math.max(220, Math.round(wkAX - wkCw / 2 - Math.max(16, wkW * .04) - 30)) + "px";
+  }
+  function wkFrame(dt){
+    if (wkMode === "grid"){                                   // gentle parallax inside each tile as the grid scrolls
+      const vh = innerHeight;
+      wkTileEls.forEach((t, i) => {
+        const r = t.getBoundingClientRect(); if (r.bottom < -40 || r.top > vh + 40) return;
+        const off = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
+        wkPx[i].style.transform = `translate3d(0,${(-off * 5.5).toFixed(2)}%,0)`;
+      });
+      return;
+    }
+    const r = wkTrk.getBoundingClientRect();
+    if (r.bottom < -60 || r.top > innerHeight + 60) return;
+    const span = Math.max(1, wkTrk.offsetHeight - innerHeight), tp = clamp01(-r.top / span);
+    wkSp += (tp - wkSp) * (reduce ? 1 : 1 - Math.pow(1 - .16, dt / 16.7));
+    const p = wkSp, n = WK.length;
+    const qs = WK.map((_, i) => clamp01((p - (WK_S0 + i * WK_STEP)) / WK_DUR));
+    let c = -1; qs.forEach(q => { c += ss(.55, 1, q); }); c = Math.max(0, c);   // the camera follows the newest card, so the stack migrates left
+    let cur = -1;
+    wkCards.forEach((el, i) => {
+      const q = qs[i]; if (q >= .35) cur = i;                // the label names the card that has (mostly) arrived
+      const back = c - i, tx = wkAX + (i - c) * wkGap;
+      if (q <= 0 || tx + wkCw * .7 < 0){ if (el.style.visibility !== "hidden"){ el.style.visibility = "hidden"; el.style.opacity = "0"; } return; }
+      const e = q < .5 ? 4 * q * q * q : 1 - Math.pow(-2 * q + 2, 3) / 2;
+      const a0 = WK_IN[i] * Math.PI / 180, R0 = Math.hypot(wkW, wkH) * .78, ang = a0 + .35 * (1 - e);
+      const x = tx + Math.cos(ang) * R0 * (1 - e), y = wkAY + WK_DY[i] + Math.sin(ang) * R0 * (1 - e);
+      const rot = WK_ROT[i] + (1 - e) * (i % 2 ? 18 : -18), sc = .74 + .26 * e;
+      el.style.visibility = "visible"; el.style.opacity = ss(0, .06, q).toFixed(3); el.style.zIndex = 10 + i;
+      el.style.setProperty("--fog", Math.min(.72, Math.max(0, (back - .1) * .46)).toFixed(3));   // older cards recede, so the white label stays readable
+      el.style.pointerEvents = back > .5 ? "none" : "auto";
+      el.style.transform = `translate3d(${(x - wkCw / 2).toFixed(1)}px,${(y - wkCh[i] / 2).toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+    });
+    if (cur !== wkCur){
+      wkCur = cur;
+      wkWhoS.textContent = cur >= 0 ? WK[cur].scope : ""; wkWhoW.textContent = cur >= 0 ? WK[cur].name : "";
+      wkBtns.forEach((b, i) => b.classList.toggle("on", i === cur));
+    }
+  }
+  // the index: click a brand and the scroll carries you to the moment it lands
+  wkBtns.forEach(b => b.addEventListener("click", () => {
+    const i = +b.dataset.i, span = wkTrk.offsetHeight - innerHeight;
+    const top = wkTrk.getBoundingClientRect().top + window.scrollY + span * Math.min(1, WK_S0 + i * WK_STEP + WK_DUR * .86);   // the moment this card has landed, before the next one arrives
+    window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+  }));
+  // grid: tiles rise in as they enter; on touch screens the details open on the tile in the middle of the screen
+  const wkReveal = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting){ en.target.classList.add("in"); wkReveal.unobserve(en.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  const touchOnly = matchMedia("(hover: none)").matches;
+  const wkCenter = touchOnly ? new IntersectionObserver(es => es.forEach(en => en.target.classList.toggle("open", en.isIntersecting)), { rootMargin: "-40% 0px -40% 0px" }) : null;
+  wkTileEls.forEach(t => {
+    if (wkCenter) wkCenter.observe(t);
+    t.addEventListener("click", e => { if (e.target.closest("a")) return; if (touchOnly) t.classList.toggle("open"); });
+  });
+  const wkSw = [...document.querySelectorAll(".wk-switch button")];
+  function wkSetMode(m){
+    if (m === wkMode) return; wkMode = m;
+    wkSw.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+    const headEnd = wkHead.getBoundingClientRect().bottom + window.scrollY;
+    if (m === "grid"){
+      wkTrk.hidden = true; wkGrid.hidden = false;
+      wkTileEls.forEach(t => { t.classList.remove("in"); wkReveal.observe(t); });
+      window.scrollTo(0, headEnd - 30);
+    } else {
+      wkGrid.hidden = true; wkTrk.hidden = false; wkLayout(); wkCur = -2;
+      window.scrollTo(0, headEnd);
+    }
+  }
+  wkSw.forEach(b => b.addEventListener("click", () => wkSetMode(b.dataset.mode)));
+  addEventListener("resize", () => { if (wkMode === "well") wkLayout(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => wkLayout());
+  wkLayout();
+
   function render(now){
     const dt = Math.min(64, now - last); last = now;
     const tt = targetT();
@@ -901,7 +1135,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     const sB = clamp01((smoothT - FA) / (1 - FA)) * SB;    // section 1B progress, in screens of scroll (0–6.5)
     // the dots are fully present the instant the hero is revealed and stay as the stars of 1B
     bgVis = 1;
-    bgScroll = smoothT * 9.5 * H * .42;                   // the stars drift up with the scroll through the whole experience
+    bgScroll = smoothT * 10.4 * H * .42;                   // the stars drift up with the scroll through the whole experience
     bgDraw(now);
     // 1B opens: title 3 and Mo parallax up and away (no fade) while the room falls to pure black
     const exB = clamp01(sB / .85), exE = Math.pow(exB, 1.7);
@@ -1106,6 +1340,17 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       chfade.style.opacity = (anyCh * (1 - exB)).toFixed(3);
       voidEl.style.opacity = voidO.toFixed(3);
       grainEl.style.opacity = (.07 * (1 - voidO)).toFixed(3);
+      { // the flood: a circle of wing blue grows from the atom until it fills the room (the work section below is the same blue)
+        const fl = ss(6.62, 7.2, sB), fx = W / 2, fy = H * (mobile ? .40 : .42);
+        bgBlue = fl;
+        if (fl <= .001){ if (floodEl.style.visibility !== "hidden") floodEl.style.visibility = "hidden"; }
+        else {
+          const R = Math.hypot(Math.max(fx, W - fx), Math.max(fy, H - fy)) * fl + 1;
+          floodEl.style.visibility = "visible";
+          floodEl.style.clipPath = fl >= 1 ? "none" : `circle(${R.toFixed(1)}px at ${fx.toFixed(1)}px ${fy.toFixed(1)}px)`;
+        }
+        vignetteEl.style.opacity = (1 - fl).toFixed(3);
+      }
 
       // collab folders drift up through both chapters at their own depth
       const fo = ss(.26, .32, t) * (exB < 1 ? 1 : 0);
@@ -1125,6 +1370,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         a.style.visibility = fo < .01 ? "hidden" : "visible";
         a.style.transform = `translate3d(calc(${x.toFixed(1)}px - 50%),calc(${y.toFixed(1)}px - 50%),0)`;
       });
+    }
+    wkFrame(dt);
+    { // the header goes white wherever it sits over the blue (the end of 1B, and the whole work section)
+      const wr = wkEl.getBoundingClientRect(), sr = wrap.getBoundingClientRect();
+      topBar.classList.toggle("on-blue", (bgBlue > .5 && sr.bottom > 60) || (wr.top < 60 && wr.bottom > 30));
     }
     requestAnimationFrame(render);
   }

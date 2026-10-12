@@ -141,10 +141,10 @@ a{color:inherit}
 /* ---------- the work: a blue section after 1B (title → gravity well ⇄ grid) ---------- */
 .work{position:relative;isolation:isolate;background-color:var(--accent);color:#fff}
 /* the sky: wing blue with distant clouds, fixed to the screen. Painted above the 1B stage (it is the flood), below the work */
-.wk-sky{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none;visibility:hidden}
+.wk-sky{position:fixed;left:0;top:0;width:100%;height:100vh;height:100lvh;display:block;z-index:0;pointer-events:none;visibility:hidden}   /* the large viewport: the toolbar sliding never resizes it */
 .wk-switch{position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);height:0;z-index:40}
 .wk-switch .switch{position:relative;margin-left:max(16px,4vw)}
-.switch{display:inline-flex;padding:2px;border-radius:999px;border:1px solid rgba(255,255,255,.55);background:rgba(5,8,12,.1)}
+.switch{display:inline-flex;padding:2px;border-radius:999px;border:1px solid rgba(255,255,255,.55);background:rgba(16,100,160,.4);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}   /* holds its own over a halftone cloud */
 .switch button{min-height:28px;padding:0 10px;border:0;border-radius:999px;background:none;color:#fff;cursor:pointer;
   font-family:var(--f-ui);font-weight:700;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px}
 .switch button svg{width:11px;height:11px}
@@ -157,9 +157,9 @@ a{color:inherit}
 .wk-switch .switch,.wk-idx,.wk-who{transition:opacity .45s ease,visibility 0s linear .45s}
 .work:not(.chrome) .wk-switch .switch,.work:not(.chrome) .wk-idx,.work:not(.chrome) .wk-who{opacity:0;visibility:hidden}
 .work.chrome .wk-switch .switch,.work.chrome .wk-idx,.work.chrome .wk-who{transition:opacity .45s ease}
-.wk-head h2{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.025em;font-size:clamp(72px,13vw,220px);line-height:.85;color:#fff}
+.wk-head h2{margin:0;text-shadow:0 2px 30px rgba(4,30,58,.22);font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.025em;font-size:clamp(72px,13vw,220px);line-height:.85;color:#fff}
 .wk-head h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
-.wk-head p{margin:18px 0 0;max-width:30em;font-weight:300;font-size:clamp(15px,1.3vw,19px);line-height:1.5;color:rgba(255,255,255,.82)}
+.wk-head p{margin:18px 0 0;max-width:30em;font-weight:400;font-size:clamp(15px,1.3vw,19px);line-height:1.5;color:#fff;text-shadow:0 1px 16px rgba(4,30,58,.55),0 0 2px rgba(4,30,58,.3)}
 .wk-trk{position:relative;z-index:1;height:640vh}
 .wk-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .wk-card{--cw:560px;position:absolute;left:0;top:0;width:var(--cw);box-sizing:border-box;margin:0;border-radius:10px;overflow:hidden;
@@ -180,7 +180,7 @@ a{color:inherit}
 .wk-cta:hover{color:#fff}
 .wk-cta:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media (max-width:760px){.wk-info{grid-template-columns:1fr;padding:13px 14px 15px;gap:9px}.wk-data dd{font-size:11.5px}}
-.wk-who{position:absolute;left:max(16px,4vw);bottom:calc(env(safe-area-inset-bottom,0px) + 22px);display:grid;gap:6px;z-index:200;pointer-events:none;text-shadow:0 1px 22px rgba(4,30,58,.35)}
+.wk-who{position:absolute;left:max(16px,4vw);bottom:calc(env(safe-area-inset-bottom,0px) + 22px);display:grid;gap:6px;z-index:200;pointer-events:none;text-shadow:0 1px 18px rgba(4,30,58,.5),0 0 2px rgba(4,30,58,.25)}
 .wk-who .s{font-size:10px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.78)}
 .wk-who .w{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(30px,4.2vw,66px);line-height:.9;letter-spacing:-.02em;color:#fff;text-wrap:balance}
 .wk-idx{position:absolute;right:max(16px,4vw);top:50%;transform:translateY(-50%);display:grid;gap:4px;margin:0;padding:0;list-style:none;z-index:200}
@@ -448,11 +448,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       <!-- section 1B: gravity — one blue atom, a line beneath it, and the outcomes it pulls in -->
       <div class="s1b" id="s1b">
         <!-- type follows the titles: light sans carries, Playfair italic is the felt word (blue = the pull), heavy sans is the point -->
-        <p class="s1b-line">Most brands <b>waste their time</b> <em class="pull">chasing attention</em>.</p>
-        <p class="s1b-line"><b>Better brands</b> <em class="pull">pull it in</em>.</p>
-        <p class="s1b-line">That <em class="pull">pull</em> is <b>gravity</b>.</p>
-        <p class="s1b-line"><b>The goal</b> isn’t to be <em class="pull">everywhere</em>.</p>
-        <p class="s1b-line">The goal is to become <b>impossible</b> <em class="pull">to&nbsp;ignore</em>.</p>
+        <p class="s1b-line">Most brands <b>waste their time</b> <em class="pull">projecting</em>.</p>
+        <p class="s1b-line">Better brands <b>invest their time</b> <em class="pull">attracting</em>.</p>
+        <p class="s1b-line">Let’s call it <b>gravity</b>.</p>
+        <p class="s1b-line"><b>The goal</b> isn’t to broadcast your brand <em class="pull">louder</em>.</p>
+        <p class="s1b-line">It’s to pull <b>the right people</b> <em class="pull">closer</em>.</p>
         <div aria-hidden="true">
           <span class="s1b-word">Attention</span><span class="s1b-word">Trust</span><span class="s1b-word">Retention</span><span class="s1b-word">Positive reviews</span>
           <span class="s1b-word">Post engagement</span><span class="s1b-word">Hoarding your products</span><span class="s1b-word">Community</span><span class="s1b-word">Loyal customers</span>
@@ -486,13 +486,13 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   </section>
 
 
-  <section class="work" id="work" aria-label="The work">
+  <section class="work" id="work" aria-label="Field work">
     <canvas class="wk-sky" id="wkSky" aria-hidden="true"></canvas>
     <div class="wk-switch"><div class="switch" role="group" aria-label="Layout">
       <button type="button" data-mode="well" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="4.5" width="9" height="9" rx="1" transform="rotate(-8 8 9)"/><rect x="3.5" y="2.5" width="9" height="9" rx="1" transform="rotate(7 8 7)"/></svg>Gravity</button>
       <button type="button" data-mode="grid" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
     </div></div>
-    <header class="wk-head"><div class="wk-hd"><h2>The <em>work</em></h2><p>Nine brands, pulled in one by one.</p></div></header>
+    <header class="wk-head"><div class="wk-hd"><h2>Field <em>work</em></h2><p>The work behind the pull.</p></div></header>
     <div class="wk-trk" id="wkTrk">
       <div class="wk-stage" id="wkStage">
         <div id="wkPile"></div>
@@ -660,6 +660,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     let nx = 0, ny = 0;
     if (hasTilt){ nx = tiltX; ny = tiltY; }
     else if (mx > -900){ nx = (mx/W - .5)*2; ny = (my/H - .5)*2; }
+    if (drTouch){ nx += drX; ny += drY; }                 // phones: the field also drifts with the scroll
     const kf = 1 - Math.pow(1 - .17, dt / 28);
     paX += (nx - paX)*kf; paY += (ny - paY)*kf;         // fast, reactive follow (eased, normalized -1..1), same feel at any frame rate
     const time = now/1000;
@@ -705,120 +706,165 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     bgShown = true;
   }
 
-  /* ---------- the sky: wing blue with distant clouds at three depths (the flood at the end of 1B, then the whole work section) ---------- */
-  const sky = $("#wkSky"), skx = sky.getContext("2d");
-  let skyClouds = [], skyL = [], skyW = 0, skyH = 0, skyDPR = 1, skyShown = false, skyFl = 0, skyFx = 0, skyFy0 = 0;
-  let skyPX = 0, skyPY = 0, skyLast = 0, skyMx = -1, skyMy = -1;
+  /* ---------- drift while scrolling (phones): on top of tilt, the field sways side to side as you travel down the page
+     and leans against a fast scroll, settling when you stop ---------- */
+  const drTouch = matchMedia("(hover: none)").matches;
+  let drV = 0, drLastY = window.scrollY, drX = 0, drY = 0;
+  function driftStep(dt){
+    if (!drTouch || reduce){ drX = drY = 0; return; }
+    const y = window.scrollY, v = (y - drLastY) / Math.max(1, dt); drLastY = y;
+    drV += (Math.max(-1, Math.min(1, v / 2.2)) - drV) * (1 - Math.pow(1 - .09, dt / 16.7));
+    drX = Math.sin(y / (innerHeight * 1.4)) * .42;
+    drY = -drV * .5;
+  }
+
+  /* ---------- the sky: wing blue with halftone clouds at three depths (the flood at the end of 1B, then the whole work section).
+     Drawn on the GPU in two passes: cloud density once per halftone cell, then a dot per cell sized by that density.
+     Sized to the large viewport, so the phone's toolbar sliding in and out never resizes it. ---------- */
+  const sky = $("#wkSky");
+  let skyFl = 0, skyFx = 0, skyFy0 = 0, skyShown = false, skyCover = false, skyW = 0, skyH = 0, skyDPR = 1, skyPitch = 10, skyGW = 1, skyGH = 1;
+  let skyPX = 0, skyPY = 0, skyLast = 0, skyMx = -1, skyMy = -1, sgl = null, s2d = null, skyP1 = null, skyP2 = null, skyFB = null, skyTex = null;
   addEventListener("pointermove", e => { if (e.pointerType === "mouse"){ skyMx = e.clientX; skyMy = e.clientY; } }, { passive:true });
-  // one soft cloud: broad overlapping puffs, a softer crown along the top, a flat hazy base; lit from above, bluer underneath.
-  // Far clouds are long, low streaks. Drawn at half resolution and scaled up, so every edge stays soft.
-  function cloudSprite(w, h, far){
-    const q = .5, c = document.createElement("canvas"); c.width = Math.ceil(w * q); c.height = Math.ceil(h * q);
-    const x = c.getContext("2d"), base = h * .72, R = Math.random;
-    x.scale(q, q);
-    const puff = (cx, cy, rx, ry, a) => {
-      x.save(); x.translate(cx, cy); x.scale(rx / ry, 1);
-      const g = x.createRadialGradient(0, 0, 0, 0, 0, ry);
-      g.addColorStop(0, `rgba(255,255,255,${a})`); g.addColorStop(.35, `rgba(255,255,255,${a * .82})`);
-      g.addColorStop(.7, `rgba(255,255,255,${a * .3})`); g.addColorStop(1, "rgba(255,255,255,0)");
-      x.fillStyle = g; x.beginPath(); x.arc(0, 0, ry, 0, 7); x.fill(); x.restore();
-    };
-    const peak = .32 + R() * .36;
-    const prof = u => Math.max(0, 1 - Math.pow(Math.abs(u - peak) / (u < peak ? peak - .04 : .96 - peak), 1.8));   // height profile 0..1
-    if (far){
-      const n = 4 + Math.floor(R() * 3);
-      for (let k = 0; k < n; k++){
-        const u = .14 + .72 * (k + .5) / n + (R() - .5) * .1, pr = prof(u), r = h * (.26 + .2 * pr);
-        puff(u * w, base - h * .12 * pr, r * (1.6 + R() * .8), r, .42);
-      }
-    } else {
-      const nb = 5 + Math.floor(R() * 3);                               // the body
-      for (let k = 0; k < nb; k++){
-        const u = .1 + .8 * (k + .5) / nb + (R() - .5) * .08, pr = prof(u), r = h * (.18 + .24 * pr);
-        puff(u * w, base - r * .35 - h * .16 * pr, r * 1.15, r, .4);
-      }
-      const nc = 4 + Math.floor(R() * 4);                               // the crown
-      for (let k = 0; k < nc; k++){
-        const u = peak + (R() - .5) * .5, pr = prof(u); if (pr < .2) continue;
-        const r = h * (.13 + .1 * R());
-        puff(u * w, base - h * (.18 + .38 * pr) + r * .4, r, r, .32);
-      }
+  const SKY_VS = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
+  const SKY_FS1 = `precision highp float;
+uniform float uPitch,uT,uScroll,uScale;uniform vec2 uPar,uView;
+float h12(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
+float vn(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*f*(f*(f*6.-15.)+10.);
+  return mix(mix(h12(i),h12(i+vec2(1.,0.)),u.x),mix(h12(i+vec2(0.,1.)),h12(i+vec2(1.,1.)),u.x),u.y);}
+float fbm(vec2 p){float s=0.,a=.55;for(int k=0;k<4;k++){s+=a*vn(p);p=p*2.03+vec2(17.1,9.7);a*=.42;}return s/.917;}   /* 0..1 */
+/* one layer: wider than tall, drifting with the wind, rising with the scroll (slower far away), nudged by tilt / the mouse / the scroll drift */
+float layer(vec2 c,float sc,float sp,float wind,float par,float th,vec2 seed){
+  vec2 q=c+vec2(-uT*wind-uPar.x*par,uScroll*sp-uPar.y*par*.7);
+  q/=sc*uScale;q.y*=2.3;
+  float n=fbm(q+seed);
+  return smoothstep(th,th+.17,n);}
+void main(){
+  vec2 cell=floor(gl_FragCoord.xy),c=(cell+.5)*uPitch;          /* texel row 0 = the top row of cells */
+  float far=layer(c,200.,.05,3.,18.,.56,vec2(3.1,7.7))*.4;
+  float mid=layer(c,340.,.13,6.,46.,.58,vec2(11.3,1.9))*.72;
+  float nr=layer(c,600.,.26,10.,90.,.575,vec2(5.7,13.1));
+  float d=1.-(1.-far)*(1.-mid)*(1.-nr);
+  d*=mix(.3,1.,smoothstep(40.,150.,c.y));                        /* thinner behind the header, so the menu stays legible */
+  float lw=min(uView.x*.62,560.);                                  /* and behind the brand name, bottom left */
+  d*=1.-.6*smoothstep(uView.y-230.,uView.y-120.,c.y)*(1.-smoothstep(lw-140.,lw+40.,c.x));
+  float ph=h12(cell*1.37+4.1)*6.2832,fs=.7+1.5*h12(cell+9.2);   /* every dot flickers on its own clock */
+  d*=1.-.3*(.5+.5*sin(uT*fs+ph))*(1.-d);                          /* (the thin edges flicker most; the dense cores hold) */
+  gl_FragColor=vec4(d,0.,0.,1.);}`;
+  const SKY_FS2 = `precision highp float;
+uniform sampler2D uTex;uniform vec2 uGrid,uView;uniform float uPitch,uDpr,uWorkTop,uFade;uniform vec3 uFlood;
+void main(){
+  vec2 p=vec2(gl_FragCoord.x,uView.y*uDpr-gl_FragCoord.y)/uDpr;     /* css px, y down */
+  float m=1.;
+  if(uFlood.z>=0.){                                               /* still flooding: the circle out of the atom, plus the work section below */
+    float cm=clamp((uFlood.z-length(p-uFlood.xy))*uDpr+.5,0.,1.);
+    float wm=clamp((p.y-uWorkTop)*uDpr+.5,0.,1.);
+    m=max(cm,wm);}
+  if(m<=0.){gl_FragColor=vec4(0.);return;}
+  vec2 cell=floor(p/uPitch);
+  float d=texture2D(uTex,(cell+.5)/uGrid).r*uFade;
+  vec2 f=p-(cell+.5)*uPitch;
+  float r=uPitch*.48*sqrt(d);
+  float dt=clamp((r-length(f))*uDpr+.5,0.,1.)*step(.04,d);
+  vec3 blue=mix(vec3(.141,.580,.851),vec3(.180,.643,.894),clamp(p.y/uView.y,0.,1.));   /* the wing blue, a touch deeper at the top */
+  vec3 dc=mix(vec3(.60,.81,.95),vec3(1.),smoothstep(.12,.8,d));                        /* thin dots stay sky-blue, dense ones turn white */
+  vec3 col=mix(blue,dc,dt*mix(.55,1.,d));
+  gl_FragColor=vec4(col*m,m);}`;
+  function skyProg(fs){
+    const sh = (t, src) => { const o = sgl.createShader(t); sgl.shaderSource(o, src); sgl.compileShader(o);
+      if (!sgl.getShaderParameter(o, sgl.COMPILE_STATUS)) throw new Error(sgl.getShaderInfoLog(o)); return o; };
+    const pr = sgl.createProgram(); sgl.attachShader(pr, sh(sgl.VERTEX_SHADER, SKY_VS)); sgl.attachShader(pr, sh(sgl.FRAGMENT_SHADER, fs));
+    sgl.bindAttribLocation(pr, 0, "a"); sgl.linkProgram(pr);
+    if (!sgl.getProgramParameter(pr, sgl.LINK_STATUS)) throw new Error(sgl.getProgramInfoLog(pr));
+    const u = {}; for (const n of ["uPitch","uT","uScroll","uScale","uPar","uTex","uGrid","uView","uDpr","uWorkTop","uFade","uFlood"]) u[n] = sgl.getUniformLocation(pr, n);
+    return { pr, u };
+  }
+  function skyGL(){
+    try {
+      sgl = sky.getContext("webgl", { alpha:true, premultipliedAlpha:true, antialias:false, depth:false, stencil:false, preserveDrawingBuffer:false, powerPreference:"low-power" });
+      if (!sgl) throw 0;
+      skyP1 = skyProg(SKY_FS1); skyP2 = skyProg(SKY_FS2);
+      const buf = sgl.createBuffer(); sgl.bindBuffer(sgl.ARRAY_BUFFER, buf);
+      sgl.bufferData(sgl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), sgl.STATIC_DRAW);
+      sgl.enableVertexAttribArray(0); sgl.vertexAttribPointer(0, 2, sgl.FLOAT, false, 0, 0);
+      skyTex = sgl.createTexture(); sgl.bindTexture(sgl.TEXTURE_2D, skyTex);
+      for (const [k, v] of [[sgl.TEXTURE_MIN_FILTER, sgl.NEAREST], [sgl.TEXTURE_MAG_FILTER, sgl.NEAREST], [sgl.TEXTURE_WRAP_S, sgl.CLAMP_TO_EDGE], [sgl.TEXTURE_WRAP_T, sgl.CLAMP_TO_EDGE]]) sgl.texParameteri(sgl.TEXTURE_2D, k, v);
+      skyFB = sgl.createFramebuffer();
+      skyW = 0;                                                       // forces a fresh size on the next frame
+    } catch(e){ sgl = null; s2d = sky.getContext("2d"); }             // no WebGL: plain wing blue, still flooding out of the atom
+  }
+  sky.addEventListener("webglcontextlost", e => { e.preventDefault(); sgl = null; });
+  sky.addEventListener("webglcontextrestored", () => { skyGL(); skyWarm(); });
+  skyGL();
+  function skySize(){
+    const w = sky.clientWidth || innerWidth, h = sky.clientHeight || innerHeight;
+    if (w === skyW && h === skyH) return;
+    skyW = w; skyH = h;
+    skyDPR = Math.min(window.devicePixelRatio || 1, 2);
+    skyPitch = w <= 820 ? 8 : 12;
+    sky.width = Math.round(w * skyDPR); sky.height = Math.round(h * skyDPR);
+    skyGW = Math.ceil(w / skyPitch) + 1; skyGH = Math.ceil(h / skyPitch) + 1;
+    if (sgl){
+      sgl.bindTexture(sgl.TEXTURE_2D, skyTex);
+      sgl.texImage2D(sgl.TEXTURE_2D, 0, sgl.RGBA, skyGW, skyGH, 0, sgl.RGBA, sgl.UNSIGNED_BYTE, null);
+      sgl.bindFramebuffer(sgl.FRAMEBUFFER, skyFB);
+      sgl.framebufferTexture2D(sgl.FRAMEBUFFER, sgl.COLOR_ATTACHMENT0, sgl.TEXTURE_2D, skyTex, 0);
+      sgl.bindFramebuffer(sgl.FRAMEBUFFER, null);
     }
-    x.save(); x.translate(w / 2, base); x.scale(1, far ? .14 : .18);   // a long, low haze along the base
-    const wg = x.createRadialGradient(0, 0, 0, 0, 0, w * .48);
-    wg.addColorStop(0, "rgba(255,255,255,.45)"); wg.addColorStop(1, "rgba(255,255,255,0)");
-    x.fillStyle = wg; x.beginPath(); x.arc(0, 0, w * .48, 0, 7); x.fill(); x.restore();
-    x.globalCompositeOperation = "destination-in";                    // flatten the underside, softly
-    const m = x.createLinearGradient(0, 0, 0, h); m.addColorStop(0, "#000"); m.addColorStop(.7, "#000"); m.addColorStop(.97, "rgba(0,0,0,0)");
-    x.fillStyle = m; x.fillRect(0, 0, w, h);
-    x.globalCompositeOperation = "source-atop";                       // shade the belly
-    const sh = x.createLinearGradient(0, h * .25, 0, h * .85);
-    sh.addColorStop(0, "rgba(255,255,255,0)"); sh.addColorStop(1, far ? "rgba(112,180,230,.7)" : "rgba(150,198,236,.5)");
-    x.fillStyle = sh; x.fillRect(0, 0, w, h);
-    return c;
   }
-  function skyInit(){
-    const r = sky.getBoundingClientRect();
-    skyW = r.width || innerWidth; skyH = r.height || innerHeight;
-    const mob = skyW <= 820, k = mob ? .74 : Math.min(1.15, Math.max(.8, skyW / 1440));
-    skyDPR = Math.min(window.devicePixelRatio || 1, mob ? 2 : 1.5);
-    sky.width = Math.round(skyW * skyDPR); sky.height = Math.round(skyH * skyDPR);
-    const area = mob ? 1 : Math.max(.7, skyW * skyH / (1440 * 900));
-    // far → near: smaller, fainter, flatter, bluer and slower far away; bigger, brighter and quicker up close
-    skyL = [
-      { n: Math.round((mob ? 18 : 18) * area), w: [90, 180],  asp: .32, a: [.14, .25], sp: .05, wind: 2.5, par: 8,  far: true },
-      { n: Math.round((mob ? 8 : 9) * area),   w: [190, 330], asp: .42, a: [.2, .32],  sp: .13, wind: 5,   par: 22 },
-      { n: Math.round((mob ? 3 : 4) * area),   w: [360, 560], asp: .46, a: [.24, .36], sp: .26, wind: 9,   par: 42 }
-    ];
-    skyClouds = [];
-    skyL.forEach(L => {
-      L.mX = L.w[1] * k + L.par + 20; L.mY = L.w[1] * k * L.asp + L.par + 20;
-      L.spanX = skyW + 2 * L.mX; L.spanY = skyH + 2 * L.mY;
-      for (let j = 0; j < L.n; j++){
-        const w = (L.w[0] + Math.random() * (L.w[1] - L.w[0])) * k, h = w * L.asp * (.85 + Math.random() * .3);
-        skyClouds.push({ L, w, h, img: cloudSprite(w, h, L.far),
-          bx: Math.random() * L.spanX, by: (j + .15 + Math.random() * .7) / L.n * L.spanY,   // stratified: no clumps, no gaps
-          a: L.a[0] + Math.random() * (L.a[1] - L.a[0]),
-          ph: Math.random() * 6.28, fs: .6 + Math.random() * 1.1, hot: Math.random() });
-      }
-    });
+  // compile and upload everything once while the page is still at the top, so the first spill of blue never hitches
+  function skyWarm(){
+    if (!sgl) return;
+    skySize();
+    sgl.bindFramebuffer(sgl.FRAMEBUFFER, skyFB); sgl.viewport(0, 0, skyGW, skyGH); sgl.useProgram(skyP1.pr); sgl.drawArrays(sgl.TRIANGLE_STRIP, 0, 4);
+    sgl.bindFramebuffer(sgl.FRAMEBUFFER, null); sgl.viewport(0, 0, sky.width, sky.height); sgl.useProgram(skyP2.pr);
+    sgl.activeTexture(sgl.TEXTURE0); sgl.bindTexture(sgl.TEXTURE_2D, skyTex); sgl.uniform1i(skyP2.u.uTex, 0);
+    sgl.drawArrays(sgl.TRIANGLE_STRIP, 0, 4);
+    sgl.readPixels(0, 0, 1, 1, sgl.RGBA, sgl.UNSIGNED_BYTE, new Uint8Array(4));   // waits for the GPU: the work is really done
+    sgl.clearColor(0, 0, 0, 0); sgl.clear(sgl.COLOR_BUFFER_BIT);
   }
-  new ResizeObserver(skyInit).observe(sky);
-  function skyDraw(now){
-    const dt = Math.min(64, now - skyLast); skyLast = now;
-    if (!skyW) return;
-    const wr = wkEl.getBoundingClientRect(), inWork = wr.top < skyH && wr.bottom > 0;
-    if (skyFl <= .001 && !inWork){ if (skyShown){ sky.style.visibility = "hidden"; skyShown = false; } return; }
+  setTimeout(skyWarm, 1200);
+  // M: this frame's measurements, read once at the top of render (no layout reads after the frame's style writes)
+  function skyDraw(now, dt, M){
+    const wr = M.wk, inWork = wr.top < M.vh && wr.bottom > 0;
+    const full = skyFl >= 1 || wr.top <= 0;
+    skyCover = full;                                                  // the sky fills the screen: the stars beneath needn't be drawn
+    if (skyFl <= .001 && !inWork){ skyCover = false; if (skyShown){ sky.style.visibility = "hidden"; skyShown = false; } return; }
     if (!skyShown){ sky.style.visibility = "visible"; skyShown = true; }
-    let nx = 0, ny = 0;                                                 // the same spatial awareness as the stars: tilt, or the mouse
-    if (hasTilt){ nx = tiltX; ny = tiltY; } else if (skyMx >= 0){ nx = (skyMx / skyW - .5) * 2; ny = (skyMy / skyH - .5) * 2; }
-    const kf = reduce ? 1 : 1 - Math.pow(1 - .06, dt / 16.7);
+    skySize();
+    const fy = M.st.top + skyFy0;
+    const R = full ? -1 : (skyFl > .001 ? Math.hypot(Math.max(skyFx, skyW - skyFx), Math.max(fy, skyH - fy)) * skyFl + 1 : 0);
+    const workTop = inWork ? Math.max(0, wr.top) : 1e6;
+    if (!sgl){
+      if (!s2d) return;
+      s2d.setTransform(skyDPR, 0, 0, skyDPR, 0, 0); s2d.clearRect(0, 0, skyW, skyH); s2d.save();
+      if (R >= 0){ s2d.beginPath(); if (R > 0) s2d.arc(skyFx, fy, R, 0, 7); if (inWork) s2d.rect(0, workTop, skyW, skyH - workTop); s2d.clip(); }
+      s2d.fillStyle = "#2b9fe0"; s2d.fillRect(0, 0, skyW, skyH); s2d.restore();
+      return;
+    }
+    let nx = 0, ny = 0;                                               // spatial awareness, like the stars: tilt (+ scroll drift) on phones, the mouse on desktop
+    if (hasTilt || drTouch){ nx = (hasTilt ? tiltX : 0) + drX; ny = (hasTilt ? tiltY : 0) + drY; }
+    else if (skyMx >= 0){ nx = (skyMx / skyW - .5) * 2; ny = (skyMy / skyH - .5) * 2; }
+    const kf = reduce ? 1 : 1 - Math.pow(1 - .07, dt / 16.7);
     skyPX += (nx - skyPX) * kf; skyPY += (ny - skyPY) * kf;
-    skx.setTransform(skyDPR, 0, 0, skyDPR, 0, 0); skx.clearRect(0, 0, skyW, skyH);
-    skx.save();
-    if (!(skyFl >= 1 || wr.top <= 0)){                                // still flooding: the circle out of the atom, plus the work section below it
-      const st = stage.getBoundingClientRect().top, fy = st + skyFy0, top = Math.max(0, wr.top);
-      skx.beginPath();
-      if (skyFl > .001){ const R = Math.hypot(Math.max(skyFx, skyW - skyFx), Math.max(fy, skyH - fy)) * skyFl + 1; skx.arc(skyFx, fy, R, 0, Math.PI * 2); }
-      if (inWork) skx.rect(0, top, skyW, skyH - top);
-      skx.clip();
-    }
-    skx.fillStyle = "#2b9fe0"; skx.fillRect(0, 0, skyW, skyH);
-    const time = reduce ? 0 : now / 1000, sy = window.scrollY;
-    const ca = inWork && wr.top < skyH * .5 ? 1 : Math.max(inWork ? .6 : 0, ss(.2, 1, skyFl));   // the clouds gather as the blue fills the room
-    for (const c of skyClouds){
-      const L = c.L;
-      let y = c.by - sy * L.sp; y = ((y % L.spanY) + L.spanY) % L.spanY - L.mY + skyPY * L.par * .7;   // drift up with the scroll, slower far away
-      let x = c.bx + time * L.wind; x = ((x % L.spanX) + L.spanX) % L.spanX - L.mX + skyPX * L.par;    // and with the wind
-      if (x > skyW || x + c.w < 0 || y > skyH || y + c.h < 0) continue;
-      // flicker: each cloud breathes on its own clock, and now and then catches the light
-      let a = c.a * ca * (.42 + .58 * (.5 + .5 * Math.sin(time * c.fs + c.ph)));
-      const hot = (time * .07 + c.hot) % 1; if (hot < .05) a *= 1 + .7 * Math.sin(hot / .05 * Math.PI);
-      if (a < .004) continue;
-      skx.globalAlpha = Math.min(1, a); skx.drawImage(c.img, x, y, c.w, c.h);
-    }
-    skx.restore(); skx.globalAlpha = 1;
+    const time = reduce ? 0 : (now / 1000) % 3600;
+    const fade = inWork && wr.top < M.vh * .5 ? 1 : Math.max(inWork ? .6 : 0, ss(.15, .9, skyFl));   // the clouds gather as the blue fills the room
+    // pass 1: cloud density, one texel per halftone cell
+    sgl.bindFramebuffer(sgl.FRAMEBUFFER, skyFB); sgl.viewport(0, 0, skyGW, skyGH);
+    sgl.useProgram(skyP1.pr);
+    sgl.uniform1f(skyP1.u.uPitch, skyPitch); sgl.uniform1f(skyP1.u.uT, time);
+    sgl.uniform1f(skyP1.u.uScroll, window.scrollY % 200000); sgl.uniform1f(skyP1.u.uScale, skyW <= 820 ? .68 : Math.min(1.25, Math.max(.85, skyW / 1440))); sgl.uniform2f(skyP1.u.uPar, skyPX, skyPY); sgl.uniform2f(skyP1.u.uView, skyW, M.vh);
+    sgl.drawArrays(sgl.TRIANGLE_STRIP, 0, 4);
+    // pass 2: the dots, masked to the flood
+    sgl.bindFramebuffer(sgl.FRAMEBUFFER, null); sgl.viewport(0, 0, sky.width, sky.height);
+    sgl.useProgram(skyP2.pr);
+    sgl.activeTexture(sgl.TEXTURE0); sgl.bindTexture(sgl.TEXTURE_2D, skyTex); sgl.uniform1i(skyP2.u.uTex, 0);
+    sgl.uniform2f(skyP2.u.uGrid, skyGW, skyGH); sgl.uniform2f(skyP2.u.uView, skyW, sky.height / skyDPR);
+    sgl.uniform1f(skyP2.u.uPitch, skyPitch); sgl.uniform1f(skyP2.u.uDpr, skyDPR);
+    sgl.uniform1f(skyP2.u.uWorkTop, workTop); sgl.uniform1f(skyP2.u.uFade, fade);
+    sgl.uniform3f(skyP2.u.uFlood, skyFx, fy, R);
+    sgl.drawArrays(sgl.TRIANGLE_STRIP, 0, 4);
   }
+
   /* ---------- menu overlay ---------- */
   (function wireMenu(){
     const btn = document.querySelector(".menu-btn"), menu = $("#menu");
@@ -1147,7 +1193,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   const WK_IN = [38, 25, -20, 60, -75, 5, 45, -35, 15];          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll
   const WK_DY = [0, 14, -10, 8, -14, 10, -6, 12, -8];
   const WK_S0 = 0, WK_STEP = .1, WK_DUR = .13;
-  // the first card starts early — while "The work" is still rising past mid-screen — and has landed by the time the title is gone
+  // the first card starts early — while "Field work" is still rising past mid-screen — and has landed by the time the title is gone
   const wkStart = (i, span) => i ? WK_S0 + i * WK_STEP : -innerHeight * .55 / span;
   const wkDur = (i, span) => i ? WK_DUR : innerHeight * .9 / span;
   const escH = v => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
@@ -1183,15 +1229,21 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     wkGap = wkCw * (wkMob ? .17 : .2);
     wkWho.style.maxWidth = wkMob ? "none" : Math.max(220, Math.round(wkAX - wkCw / 2 - Math.max(16, wkW * .04) - 30)) + "px";
   }
-  function wkFrame(dt){
+  // tile layout positions (offsets inside the grid never change with scroll or with the tumble) — measured only when the layout changes
+  let wkGeo = [], wkTrkH = 0;
+  const wkMeasure = () => { wkGeo = wkTileEls.map(t => [t.offsetTop, t.offsetHeight]); wkTrkH = wkTrk.offsetHeight; };
+  new ResizeObserver(wkMeasure).observe(wkTiles);
+  function wkFrame(dt, M){
     // the title has left the frame → the switch, the index and the first brand's name fade in on the spot
-    const chrome = wkHeadP.getBoundingClientRect().bottom < 56;
+    const chrome = M.hp.bottom < 56;
     if (chrome !== wkChrome){ wkChrome = chrome; wkEl.classList.toggle("chrome", chrome); }
+    if (M.wk.bottom < -60 || M.wk.top > M.vh + 60) return;      // the whole section is off screen
     if (wkMode === "grid"){
       // as the grid scrolls: the left column tumbles out to the left, the right column to the right; the image parallax inside stays
-      const vh = innerHeight, vw = innerWidth, top0 = wkTiles.getBoundingClientRect().top;
+      const vh = M.vh, vw = innerWidth, top0 = M.tiles.top;
+      if (wkGeo.length !== wkTileEls.length || !wkGeo[0][1]) wkMeasure();
       wkTileEls.forEach((t, i) => {
-        const y0 = top0 + t.offsetTop, h = t.offsetHeight;   // layout position (untouched by the tumble)
+        const y0 = top0 + wkGeo[i][0], h = wkGeo[i][1];
         if (y0 + h < -120 || y0 > vh + 120) return;
         const mid = y0 + h / 2 - vh / 2;
         const off = Math.max(-1, Math.min(1, mid / vh));
@@ -1205,9 +1257,10 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
       });
       return;
     }
-    const r = wkTrk.getBoundingClientRect();
-    if (r.bottom < -60 || r.top > innerHeight + 60) return;
-    const span = Math.max(1, wkTrk.offsetHeight - innerHeight), tp = Math.max(-1, Math.min(1, -r.top / span));   // below 0: the stage is still rising into place
+    const r = M.trk;
+    if (r.bottom < -60 || r.top > M.vh + 60) return;
+    if (!wkTrkH) wkMeasure();
+    const span = Math.max(1, wkTrkH - M.vh), tp = Math.max(-1, Math.min(1, -r.top / span));   // below 0: the stage is still rising into place
     wkSp += (tp - wkSp) * (reduce ? 1 : 1 - Math.pow(1 - .16, dt / 16.7));
     const p = wkSp, n = WK.length;
     const qs = WK.map((_, i) => clamp01((p - wkStart(i, span)) / wkDur(i, span)));
@@ -1254,18 +1307,20 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     if (m === "grid"){
       wkTrk.hidden = true; wkGrid.hidden = false;
       wkTileEls.forEach(t => { t.classList.remove("in"); t.style.transform = ""; wkReveal.observe(t); });
+      wkMeasure();
       window.scrollTo(0, wkHeadP.getBoundingClientRect().bottom + window.scrollY - 20);   // just past the title: the switch stays in view
     } else {
-      wkGrid.hidden = true; wkTrk.hidden = false; wkLayout(); wkCur = -2;
+      wkGrid.hidden = true; wkTrk.hidden = false; wkLayout(); wkMeasure(); wkCur = -2;
       const span = wkTrk.offsetHeight - innerHeight;
       window.scrollTo(0, wkTrk.getBoundingClientRect().top + window.scrollY + Math.max(span * (wkStart(0, span) + wkDur(0, span) * .86), wkHeadP.getBoundingClientRect().bottom - wkTrk.getBoundingClientRect().top));   // back to the first card, landed, title gone
     }
   }
   wkSw.forEach(b => b.addEventListener("click", () => wkSetMode(b.dataset.mode)));
-  addEventListener("resize", () => { if (wkMode === "well") wkLayout(); });
+  addEventListener("resize", () => { if (wkMode === "well") wkLayout(); wkMeasure(); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => wkLayout());
   wkLayout();
 
+  let topOnBlue = false;
   function render(now){
     const dt = Math.min(64, now - last); last = now;
     const tt = targetT();
@@ -1277,7 +1332,12 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
     const t = clamp01(smoothT / FA);                       // section 1A progress (0–1)
     const sB = clamp01((smoothT - FA) / (1 - FA)) * SB;    // section 1B progress, in screens of scroll (0–6.5)
     // the dots are fully present the instant the hero is revealed and stay as the stars of 1B
-    bgVis = 1;
+    driftStep(dt);
+    // one read of the layout per frame, before any of this frame's style writes
+    const M = { vh: innerHeight, wk: wkEl.getBoundingClientRect(), st: stage.getBoundingClientRect(), sr: wrap.getBoundingClientRect(),
+                hp: wkHeadP.getBoundingClientRect(), trk: wkMode === "well" ? wkTrk.getBoundingClientRect() : null,
+                tiles: wkMode === "grid" ? wkTiles.getBoundingClientRect() : null };
+    bgVis = skyCover ? 0 : 1;                               // under a full sky the stars needn't be drawn
     bgScroll = smoothT * 10.2 * H * .42;                   // the stars drift up with the scroll through the whole experience
     bgDraw(now);
     // 1B opens: title 3 and Mo parallax up and away (no fade) while the room falls to pure black
@@ -1508,11 +1568,11 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
         a.style.transform = `translate3d(calc(${x.toFixed(1)}px - 50%),calc(${y.toFixed(1)}px - 50%),0)`;
       });
     }
-    skyDraw(now);
-    wkFrame(dt);
+    skyDraw(now, dt, M);
+    wkFrame(dt, M);
     { // the header goes white wherever it sits over the blue (the end of 1B, and the whole work section)
-      const wr = wkEl.getBoundingClientRect(), sr = wrap.getBoundingClientRect();
-      topBar.classList.toggle("on-blue", (bgBlue > .5 && sr.bottom > 60) || (wr.top < 60 && wr.bottom > 30));
+      const wr = M.wk, sr = M.sr, ob = (bgBlue > .5 && sr.bottom > 60) || (wr.top < 60 && wr.bottom > 30);
+      if (ob !== topOnBlue){ topOnBlue = ob; topBar.classList.toggle("on-blue", ob); }
     }
     requestAnimationFrame(render);
   }

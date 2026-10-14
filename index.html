@@ -938,12 +938,11 @@ void main(){
   const wrapN = (v, n) => ((v % n) + n) % n, wrapHalf = (v, n) => wrapN(v + n/2, n) - n/2;
   let spin = 0, spinV = 0, interacted = false, dragging = false, lastX = 0, lastT = 0;
   let aPos = 0, aVel = 0, aExit = 0;
-  // left alone, Mo turns by himself the opposite way to the orbit (about one turn every 23 s), quicker past his back,
-  // lingering on his face; a flick takes over, and a moment after it dies down he carries on turning
-  const A_AUTO = .0062, A_BEAT = 108;                // frames per ms; the loading tick: one step, then two beats of stillness
-  let aAuto = 0, aHold = 0, aTickAt = 0, aAllIn = false;
-  let aTicking = false;
-  const aNextLoaded = (pos, dir) => { let i = Math.round(pos); for (let n = 0; n < NA; n++){ i += dir; if (framesA[wrapN(i, NA)]) return i; } return pos; };
+  // after the preloader Mo holds his three-quarter pose until all his turntable frames are in; from then on, left alone, he turns
+  // by himself the opposite way to the orbit (about one turn every 23 s), quicker past his back, lingering on his face;
+  // a flick takes over, and a moment after it dies down he carries on turning
+  const A_AUTO = .0062;                              // frames per ms
+  let aAuto = 0, aHold = 0, aAllIn = false;
   // scroll budget: 1A = 300vh of the 1020vh scroll span (timings inside 1A are unchanged), 1B = the remaining 720vh, measured in screens
   const FA = 300 / 1020, SB = 7.2;
   const heroLive = () => preDone && smoothT < .26 * FA;
@@ -1381,20 +1380,15 @@ void main(){
         const dB0 = wrapHalf(aPos - A_BACK, NA), back = Math.max(0, 1 - Math.abs(dB0) / (A_ZONE + 12)), fast = 1 + 1.7 * back * back;
         const go = autoOn;
         if (!aAllIn){
-          // …and while his in-between frames are still arriving, Mo turns like a second hand: a crisp step to the next frame
-          // that has arrived, then two beats of stillness — an even, deliberate rhythm instead of a stutter through the gaps
-          aAuto = 0; aTicking = true;
-          if (go && now - aTickAt >= A_BEAT * 3 / fast){                   // always a full 5° step, onto a frame the preloader guaranteed
-            const r = Math.round(aPos), to = r - (wrapN(r, 2) ? 1 : 2);
-            aPos = framesA[wrapN(to, NA)] ? to : aNextLoaded(aPos, -1); aTickAt = now;
-          }
+          // …while Mo holds still in his opening three-quarter pose until every turntable frame has arrived
+          // (no stepping through half-loaded frames on first landing)
+          aAuto = 0;
         } else {
-          if (aTicking){ aTicking = false; if (go) aAuto = -A_AUTO * fast; }       // straight from the last tick into the glide, same pace
-          aAuto += ((go ? -A_AUTO * fast : 0) - aAuto) * (1 - Math.pow(1 - .035, k));   // …and once they're all in, he glides
+          aAuto += ((go ? -A_AUTO * fast : 0) - aAuto) * (1 - Math.pow(1 - .035, k));   // …then he eases into a smooth turn, against the orbit
           aPos += aAuto * dt;
         }
       }
-      if (!autoOn){                                          // (while he turns by himself he only ever passes his back)
+      if (!autoOn || !aAllIn){                               // (while he turns by himself he only ever passes his back)
         // never rest facing away: once the spin has slowed inside the back zone, glide on to the profile ahead
         const dB = wrapHalf(aPos - A_BACK, NA);
         if (Math.abs(dB) < A_ZONE && Math.abs(aVel) < .35){

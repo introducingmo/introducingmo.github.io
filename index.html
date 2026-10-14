@@ -1376,7 +1376,7 @@ void main(){
       if (!aAllIn) aAllIn = framesA.every(Boolean);
       const autoOn = !reduce && heroLive() && now > aHold && !aVel;
       if (!reduce && heroLive()){
-        spin += dt * .00026;                                  // the orbit keeps turning on its own…
+        spin -= dt * .00026;                                  // the orbit keeps turning on its own (counter-clockwise)…
         const dB0 = wrapHalf(aPos - A_BACK, NA), back = Math.max(0, 1 - Math.abs(dB0) / (A_ZONE + 12)), fast = 1 + 1.7 * back * back;
         const go = autoOn;
         if (!aAllIn){
@@ -1384,7 +1384,7 @@ void main(){
           // (no stepping through half-loaded frames on first landing)
           aAuto = 0;
         } else {
-          aAuto += ((go ? -A_AUTO * fast : 0) - aAuto) * (1 - Math.pow(1 - .035, k));   // …then he eases into a smooth turn, against the orbit
+          aAuto += ((go ? -A_AUTO * fast : 0) - aAuto) * (1 - Math.pow(1 - .035, k));   // …then he eases into a smooth turn, clockwise: against the orbit
           aPos += aAuto * dt;
         }
       }
@@ -1403,7 +1403,7 @@ void main(){
         } else if (Math.abs(dB) >= A_ZONE) aExit = 0;
       }
     }
-    if (!reduce) theta += dt * .00018;
+    if (!reduce) theta -= dt * .00018;                     // the orbit drifts counter-clockwise (seen from above); Mo turns clockwise
     dirty = true;
 
     /* --- preloader: the wing loops like a spinner (draw → fill → retract) while the counter climbs;
@@ -1481,7 +1481,7 @@ void main(){
 
       // the orbit rides just under the tabletop
       const ringCy = feet - p.rc*mh, R = p.rr*mh;
-      const th = theta + spin + t*8;
+      const th = theta + spin - t*8;
       const ta = 1 - ss(.22, .28, t);
       if (exB < 1) drawTableRing(p, cx, ringCy, R, false, th, ta);
       if (exB < 1){

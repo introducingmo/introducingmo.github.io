@@ -10,7 +10,8 @@
 :root{
   color-scheme: light;
   --zaatar:#1B3C33;   /* Cedar: primary, locked */
-  --linen:#ECE2C0;    /* secondary, locked */
+  --linen:#F4F1E9;    /* Chalk, used on dark grounds */
+  --stone:#E3E2DA;    /* secondary surface */
   --chalk:#F4F1E9;    /* ground */
   --sage:#CDD5CB;     /* Mist: soft field */
   --clay:#B48E68;     /* Kraft: warmth */
@@ -32,7 +33,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 img,video{display:block;max-width:100%}
 svg{display:block}
 a{color:inherit}
-::selection{background:var(--linen);color:var(--zaatar)}
+::selection{background:var(--stone);color:var(--zaatar)}
 
 .wrap{padding-inline:var(--gutter);max-width:1440px;margin-inline:auto}
 .label{font-family:var(--f-label);font-weight:400;font-size:11.5px;letter-spacing:.32em;text-transform:uppercase}
@@ -112,8 +113,8 @@ p{margin:0;max-width:34em}
 .line h2{font-size:clamp(68px,13.5vw,232px);margin:.25em 0 .35em;padding-bottom:.08em}
 .line-foot{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
 .line-foot .rhyme{grid-column:1/6;font-size:clamp(26px,2.6vw,40px);color:var(--linen)}
-.line-foot p{grid-column:8/12;color:rgba(236,225,199,.82)}
-.line .ghost{position:absolute;right:-6%;bottom:-14%;width:min(54vw,720px);color:rgba(236,225,199,.06);pointer-events:none}
+.line-foot p{grid-column:8/12;color:rgba(244,241,233,.82)}
+.line .ghost{position:absolute;right:-6%;bottom:-14%;width:min(54vw,720px);color:rgba(244,241,233,.06);pointer-events:none}
 @media (max-width:860px){.line-foot .rhyme,.line-foot p{grid-column:1/-1}}
 
 /* III. MARK */
@@ -121,7 +122,7 @@ p{margin:0;max-width:34em}
 .lock{position:relative;display:flex;align-items:center;justify-content:center;padding:clamp(64px,9vw,120px) clamp(48px,8vw,110px);min-height:300px}
 .lock svg{width:100%;height:auto}
 .lock .cap{position:absolute;left:0;right:0;bottom:clamp(18px,2vw,26px);text-align:center;font-size:8.5px;letter-spacing:.36em;opacity:.7}
-.lock.primary{grid-row:1/3;background:var(--linen);color:var(--zaatar)}
+.lock.primary{grid-row:1/3;background:var(--stone);color:var(--zaatar)}
 .lock.primary svg{max-width:280px}
 .lock.mono{background:var(--zaatar);color:var(--linen)}
 .lock.mono svg{max-width:130px}
@@ -145,7 +146,7 @@ p{margin:0;max-width:34em}
 
 .donts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:clamp(72px,9vw,120px)}
 .dont{display:flex;flex-direction:column;gap:12px}
-.dont .tile{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:var(--linen);position:relative;overflow:hidden;color:var(--zaatar)}
+.dont .tile{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:var(--stone);position:relative;overflow:hidden;color:var(--zaatar)}
 .dont .tile svg{width:62%}
 .dont .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top right,transparent calc(50% - .6px),rgba(20,38,31,.45) 50%,transparent calc(50% + .6px))}
 .dont p{font-size:15px}
@@ -203,7 +204,7 @@ p{margin:0;max-width:34em}
 .mood-intro p{grid-column:4/9}
 @media (max-width:860px){.mood-intro p{grid-column:1/-1}}
 .board{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(10px,1.4vw,20px);align-items:start}
-.ph{margin:0;position:relative;overflow:hidden;background:var(--linen)}
+.ph{margin:0;position:relative;overflow:hidden;background:var(--stone)}
 .ph img{width:100%;height:100%;object-fit:cover;transform:scale(1.08) translateY(var(--py,0px));will-change:transform}
 .ph figcaption{position:absolute;left:14px;bottom:12px;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.35)}
 .b1{grid-column:1/6;aspect-ratio:3/4}
@@ -252,8 +253,8 @@ p{margin:0;max-width:34em}
 .d5x{grid-column:7/13;aspect-ratio:4/5;margin-top:-4%}
 .d6x{grid-column:1/5;aspect-ratio:9/16;margin-top:-30%}
 .dark-foot{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:clamp(64px,8vw,120px)}
-.dark-foot p{grid-column:7/12;color:rgba(236,226,192,.78);font-size:16.5px}
-.dark .ghost2{position:absolute;left:-8%;top:-6%;width:min(48vw,640px);color:rgba(236,226,192,.04);pointer-events:none}
+.dark-foot p{grid-column:7/12;color:rgba(244,241,233,.78);font-size:16.5px}
+.dark .ghost2{position:absolute;left:-8%;top:-6%;width:min(48vw,640px);color:rgba(244,241,233,.04);pointer-events:none}
 @media (max-width:860px){.dark-head .label,.dark-head h2,.dark-head .rhyme,.dark-foot p{grid-column:1/-1}}
 @media (max-width:760px){.dboard{grid-template-columns:1fr 1fr}.dboard>.ph{grid-column:auto!important;margin-top:0!important;aspect-ratio:3/4!important}}
 
@@ -298,15 +299,15 @@ p{margin:0;max-width:34em}
 .app{display:flex;flex-direction:column;gap:14px}
 .app .stage{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:clamp(28px,4vw,64px)}
 .a1{grid-column:1/8}.a1 .stage{background:var(--sage);aspect-ratio:7/5}
-.a2{grid-column:8/13}.a2 .stage{background:var(--linen);aspect-ratio:5/5.6}
+.a2{grid-column:8/13}.a2 .stage{background:var(--stone);aspect-ratio:5/5.6}
 .a3{grid-column:1/6}.a3 .stage{background:var(--chalk);outline:1px solid var(--rule);outline-offset:-1px;aspect-ratio:5/5.6}
 .a4{grid-column:6/13}.a4 .stage{background:var(--zaatar);aspect-ratio:7/5}
 @media (max-width:860px){.a1,.a2,.a3,.a4{grid-column:1/-1}.app .stage{aspect-ratio:4/3!important}}
 
-.box{width:min(78%,420px);aspect-ratio:1/1;background:var(--zaatar);color:var(--linen);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9%;box-shadow:0 40px 60px -30px rgba(10,22,18,.55),inset 0 0 0 10px rgba(236,225,199,.08);transform:rotate(-3deg)}
+.box{width:min(78%,420px);aspect-ratio:1/1;background:var(--zaatar);color:var(--linen);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9%;box-shadow:0 40px 60px -30px rgba(10,22,18,.55),inset 0 0 0 10px rgba(244,241,233,.08);transform:rotate(-3deg)}
 .box svg{width:36%;filter:drop-shadow(0 1px 0 rgba(255,255,255,.14)) drop-shadow(0 -1px 0 rgba(0,0,0,.25))}
 .box .label{font-size:clamp(8px,.8vw,11px);opacity:.75}
-.ribbon{position:absolute;left:0;right:0;top:62%;height:15%;background:var(--linen);display:flex;align-items:center;overflow:hidden;transform:rotate(-3deg) scale(1.1);box-shadow:0 8px 20px -10px rgba(10,22,18,.4)}
+.ribbon{position:absolute;left:0;right:0;top:62%;height:15%;background:linear-gradient(180deg,#c3a96f,var(--gilt) 55%,#957c47);display:flex;align-items:center;overflow:hidden;transform:rotate(-3deg) scale(1.1);box-shadow:0 8px 20px -10px rgba(10,22,18,.4)}
 .ribbon .track{display:flex;gap:2.4em;white-space:nowrap;animation:slide 32s linear infinite;color:var(--zaatar);font-size:clamp(9px,.9vw,12px)}
 @keyframes slide{to{transform:translateX(-50%)}}
 
@@ -325,7 +326,7 @@ p{margin:0;max-width:34em}
 
 .tile-stack{display:flex;gap:4%;width:100%;justify-content:center;align-items:center}
 .post{width:30%;aspect-ratio:4/5;background:center/cover no-repeat;position:relative;box-shadow:0 24px 40px -24px rgba(0,0,0,.5)}
-.post.txt{background:var(--linen);color:var(--zaatar);display:flex;align-items:center;justify-content:center;padding:8%;text-align:center}
+.post.txt{background:var(--stone);color:var(--zaatar);display:flex;align-items:center;justify-content:center;padding:8%;text-align:center}
 .post.txt .display{font-size:clamp(14px,1.7vw,24px)}
 .post.mark{background:var(--chalk);display:flex;align-items:center;justify-content:center;color:var(--zaatar)}
 .post.mark svg{width:46%}
@@ -333,8 +334,8 @@ p{margin:0;max-width:34em}
 /* CLOSE */
 .close{padding-block:clamp(120px,16vw,240px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:36px}
 .close-dark{background:var(--zaatar);color:var(--linen)}
-.close-dark .muted,.close-dark .label{color:rgba(236,226,192,.72)}
-.close-dark footer{border-top-color:rgba(236,226,192,.16)}
+.close-dark .muted,.close-dark .label{color:rgba(244,241,233,.72)}
+.close-dark footer{border-top-color:rgba(244,241,233,.16)}
 .close svg{width:min(42vw,220px);color:var(--linen)}
 .close .display{font-size:clamp(54px,8vw,128px)}
 .close .gold{padding-bottom:.08em}
@@ -508,7 +509,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 </svg></span><figcaption>Wordmark · 30 mm / 120 px</figcaption></figure>
           </div>
         </div>
-        <div class="rv d2"><h3>Two colours only.</h3><p>Cedar on light grounds, Linen on dark ones. For foil and engraving, the mark may be struck in gold.</p></div>
+        <div class="rv d2"><h3>Two colours only.</h3><p>Cedar on light grounds, Chalk on dark ones. For foil and engraving, the mark may be struck in gold.</p></div>
       </div>
     </div>
 
@@ -593,8 +594,8 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
     <div class="head"><span class="label muted rv">IV. Colour</span><h2 class="display rv d1" style="color:var(--zaatar)">Cedar first.<br>Gold last.</h2></div>
     <div class="swatches" id="swatches">
       <div class="sw"><div class="chip" style="--h:100%;min-height:340px;background:var(--zaatar)"></div><span class="tag">Locked</span><h4>Cedar</h4><dl><dd>#1B3C33</dd><dd>RGB 27 60 51</dd></dl><span class="role">Primary. The mark, boxes, after-dark grounds.</span></div>
-      <div class="sw"><div class="chip" style="--h:92%;min-height:300px;background:var(--linen)"></div><span class="tag">Locked</span><h4>Linen</h4><dl><dd>#ECE2C0</dd><dd>RGB 236 226 192</dd></dl><span class="role">The mark on dark. Tissue, cards.</span></div>
-      <div class="sw"><div class="chip" style="--h:80%;min-height:260px;background:var(--chalk);outline:1px solid var(--rule);outline-offset:-1px"></div><h4>Chalk</h4><dl><dd>#F4F1E9</dd><dd>RGB 244 241 233</dd></dl><span class="role">The ground. Most of every page.</span></div>
+      <div class="sw"><div class="chip" style="--h:92%;min-height:300px;background:var(--chalk);outline:1px solid var(--rule);outline-offset:-1px"></div><span class="tag">Locked</span><h4>Chalk</h4><dl><dd>#F4F1E9</dd><dd>RGB 244 241 233</dd></dl><span class="role">The ground, and the mark on dark.</span></div>
+      <div class="sw"><div class="chip" style="--h:80%;min-height:260px;background:var(--stone)"></div><h4>Stone</h4><dl><dd>#E3E2DA</dd><dd>RGB 227 226 218</dd></dl><span class="role">Cards, tiles, tissue. Travertine and marble.</span></div>
       <div class="sw"><div class="chip" style="--h:66%;min-height:210px;background:var(--sage)"></div><h4>Mist</h4><dl><dd>#CDD5CB</dd><dd>RGB 205 213 203</dd></dl><span class="role">Soft fields, tissue, ribbon.</span></div>
       <div class="sw"><div class="chip" style="--h:54%;min-height:170px;background:var(--clay)"></div><h4>Kraft</h4><dl><dd>#B48E68</dd><dd>RGB 180 142 104</dd></dl><span class="role">Warmth. Paper, props, skin.</span></div>
       <div class="sw"><div class="chip" style="--h:44%;min-height:140px;background:linear-gradient(160deg,#c8ae74,#a88e57 55%,#8a7444)"></div><h4>Gilt</h4><dl><dd>#B0955A</dd><dd>Gold foil</dd></dl><span class="role">Gold. Used like gold: rarely.</span></div>
@@ -606,15 +607,15 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
       <div class="ratio-bar rv d1" id="ratio">
         <span class="label muted">Proportion in use</span>
         <div class="bars">
-          <span style="--w:50;background:var(--chalk)"></span><span style="--w:18;background:var(--linen)"></span><span style="--w:16;background:var(--zaatar)"></span><span style="--w:8;background:var(--sage)"></span><span style="--w:5;background:var(--clay)"></span><span style="--w:2;background:var(--gilt)"></span><span style="--w:1;background:var(--bark)"></span>
+          <span style="--w:50;background:var(--chalk)"></span><span style="--w:18;background:var(--stone)"></span><span style="--w:16;background:var(--zaatar)"></span><span style="--w:8;background:var(--sage)"></span><span style="--w:5;background:var(--clay)"></span><span style="--w:2;background:var(--gilt)"></span><span style="--w:1;background:var(--bark)"></span>
         </div>
-        <div class="keys"><span>Chalk 50</span><span>Linen 18</span><span>Cedar 16</span><span>Mist 8</span><span>Kraft 5</span><span>Gilt 2</span><span>Ink 1</span></div>
+        <div class="keys"><span>Chalk 50</span><span>Stone 18</span><span>Cedar 16</span><span>Mist 8</span><span>Kraft 5</span><span>Gilt 2</span><span>Ink 1</span></div>
       </div>
     </div>
 
     <div class="pairs">
-      <div class="pair rv" style="background:var(--zaatar);color:var(--linen)"><span class="display">Aa</span><span class="label">Linen on Cedar</span></div>
-      <div class="pair rv d1" style="background:var(--linen);color:var(--zaatar)"><span class="display">Aa</span><span class="label">Cedar on Linen</span></div>
+      <div class="pair rv" style="background:var(--zaatar);color:var(--linen)"><span class="display">Aa</span><span class="label">Chalk on Cedar</span></div>
+      <div class="pair rv d1" style="background:var(--stone);color:var(--zaatar)"><span class="display">Aa</span><span class="label">Cedar on Stone</span></div>
       <div class="pair rv d2" style="background:var(--sage);color:var(--bark)"><span class="display">Aa</span><span class="label">Pine Ink on Mist</span></div>
       <div class="pair rv d3" style="background:var(--chalk);color:var(--gilt);outline:1px solid var(--rule);outline-offset:-1px"><span class="display">Aa</span><span class="label">Gilt on Chalk · large only</span></div>
     </div>
@@ -712,7 +713,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
           <div class="beats rv d3">
             <div><span class="label muted">Open</span><span>A hand, a clasp, a letter catching light.</span></div>
             <div><span class="label muted">Middle</span><span>The piece on skin. Two or three cuts, no more.</span></div>
-            <div><span class="label muted">Close</span><span>Monogram in Linen, "Say it in gold."</span></div>
+            <div><span class="label muted">Close</span><span>Monogram in Chalk, "Say it in gold."</span></div>
             <div><span class="label muted">Sound</span><span>Soft and instrumental. Nothing that shouts over the gold.</span></div>
           </div>
         </div>
@@ -752,7 +753,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
       <div class="why">
         <span class="label muted rv">A caption, built right</span>
         <p class="rv d1"><b>Name the piece.</b> Then one line of feeling. Then one clear next step. Three beats, nothing more.</p>
-        <p class="rv d2"><b>The line on the image</b> sits bottom-left in Gloock, Linen on a soft shadow. One per post at most.</p>
+        <p class="rv d2"><b>The line on the image</b> sits bottom-left in Gloock, Chalk on a soft shadow. One per post at most.</p>
         <p class="rv d3"><b>No emoji walls, no all-caps urgency.</b> A sparkle is already in the photo.</p>
       </div>
     </div>
@@ -769,7 +770,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 </svg><span class="label">Say it in gold</span></div><div class="ribbon"><div class="track label">
         <span>Say it in gold</span><span>✦</span><span>LiNora Jewels</span><span>✦</span><span>Say it in gold</span><span>✦</span><span>LiNora Jewels</span><span>✦</span><span>Say it in gold</span><span>✦</span><span>LiNora Jewels</span><span>✦</span>
         <span>Say it in gold</span><span>✦</span><span>LiNora Jewels</span><span>✦</span><span>Say it in gold</span><span>✦</span><span>LiNora Jewels</span><span>✦</span><span>Say it in gold</span><span>✦</span><span>LiNora Jewels</span><span>✦</span>
-      </div></div></div><span class="label muted">Gift box, Cedar with debossed monogram · Linen ribbon</span></div>
+      </div></div></div><span class="label muted">Gift box, Cedar with debossed monogram · gold ribbon</span></div>
       <div class="app a2 rv d1"><div class="stage"><div class="card"><svg xmlns="http://www.w3.org/2000/svg" viewBox="175 236 650 528">
 <path fill-rule="nonzero" fill="currentColor" d="M 395.62 238.48 L 395.63 245.01 C 380.30 245.91 361.30 248.42 353.24 263.31 C 347.39 274.11 348.03 286.51 346.70 298.33 L 346.73 649.12 C 389.96 649.08 432.44 635.60 472.41 620.40 C 498.99 610.28 524.57 597.70 551.04 587.40 C 558.42 584.53 566.33 581.24 574.06 579.86 L 573.65 577.42 C 548.75 547.91 525.46 517.03 500.71 487.41 C 494.25 479.69 487.90 471.64 480.37 464.98 L 481.23 607.07 L 466.51 612.45 L 466.54 468.62 L 464.66 446.87 C 439.87 418.47 408.23 394.08 369.64 389.12 L 370.31 382.23 C 442.03 382.91 504.81 421.41 550.03 474.75 L 702.78 658.89 C 702.91 656.56 703.50 654.36 703.64 652.01 C 706.82 597.99 701.14 540.88 703.63 486.54 C 701.69 466.76 703.04 444.07 694.52 425.58 C 687.16 409.63 671.38 407.70 655.53 406.31 L 655.53 399.80 L 767.15 399.80 L 767.14 406.31 C 756.95 407.38 745.83 408.16 737.23 414.28 C 720.18 426.39 720.75 458.05 719.93 476.83 C 717.58 530.76 718.73 585.76 719.93 639.71 C 720.12 648.55 718.38 674.82 721.62 681.20 C 724.10 686.08 740 702.76 744.73 707.79 C 764.95 729.24 791.05 754.71 822.56 754.21 L 822.56 759.92 C 802.77 762.37 784.46 762.26 765.01 757.58 C 727.00 748.44 696.77 723.30 670.59 695.57 L 579.25 584.90 C 526.07 603.64 478.30 634.71 424.58 652.41 C 353.07 675.95 237.10 685.82 194.24 608.92 C 152.46 533.98 193.02 439.30 266.89 403.88 L 266.76 411.90 C 233.03 429.68 208.01 460.79 201.95 499.03 C 192.36 559.61 224.16 628.07 287.25 642.60 L 287.30 300.77 C 285.52 283.77 286.78 260.39 269.25 251.20 C 260.51 246.63 248.93 245.53 239.19 245.01 L 239.19 238.48 Z M 395.62 238.48 "/>
 <path fill-rule="nonzero" fill="currentColor" d="M 235.93 740.37 L 235.93 733.85 C 256.69 733.25 277.47 727.70 283.96 705.69 C 286.57 696.82 286.15 688.30 287.27 679.26 C 306.77 682.74 327.05 683.73 346.73 680.89 C 346.09 703.67 351.99 721.68 375.45 728.36 C 395.95 734.20 431.98 734.43 448.97 719.98 C 469.21 702.75 463.89 669.60 466.90 645.84 L 481.16 639.34 C 482.67 660.17 481.65 683.53 487.29 703.70 C 493.90 727.35 509.17 733.35 532.51 733.85 L 532.50 740.37 Z M 235.93 740.37 "/>

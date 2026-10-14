@@ -59,7 +59,9 @@ p{margin:0;max-width:34em}
 .head .label{grid-column:1/4;display:flex;gap:14px;align-items:center}
 .head .label::before{content:"";width:28px;height:1px;background:currentColor;opacity:.6}
 .head h2{grid-column:4/13;font-size:clamp(44px,7vw,108px)}
-@media (max-width:860px){.head{grid-template-columns:1fr}.head .label,.head h2{grid-column:1}}
+.head .sub{grid-column:4/13;font-family:var(--f-text);font-style:italic;font-size:clamp(19px,1.7vw,26px);color:var(--bark-soft);margin-top:-6px;max-width:none}
+.motion-copy .sub{font-style:italic;font-size:clamp(19px,1.7vw,26px);color:var(--bark-soft)}
+@media (max-width:860px){.head{grid-template-columns:1fr}.head .label,.head h2,.head .sub{grid-column:1}}
 
 /* HERO */
 .hero{min-height:min(100svh,980px);display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center;padding-top:110px;padding-bottom:60px;position:relative}
@@ -369,7 +371,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 <path fill-rule="nonzero" fill="currentColor" d="M 693.82 301.22 L 656.75 301.22 L 622.95 379.44 Z M 649.83 301.22 L 578.13 301.22 L 613.17 385.95 Z M 571.20 301.22 L 534.13 301.22 L 604.19 378.62 Z M 694.64 296.33 L 670.20 264.56 L 657.97 296.33 Z M 533.32 296.33 L 569.17 296.33 L 556.55 264.55 Z M 647.38 296.33 L 613.68 262.98 L 579.76 296.33 Z M 666.12 261.30 L 620.5 261.30 L 652.68 293.87 Z M 606.64 261.30 L 561.83 261.30 L 574.07 293.89 Z M 556.69 256.56 L 670.43 256.58 L 672.27 258.00 C 680.54 271.06 692.95 283.12 701 296.08 C 701.69 297.21 703.10 298.26 702.70 299.83 L 615.59 395.33 L 612.93 395.62 L 525.28 299.82 L 525.59 297.18 Z M 556.69 256.56 "/>
 </svg></span><span class="label">LiNora Jewels</span></a>
   <nav class="label" aria-label="Chapters">
-    <a href="#name">Name</a><a href="#mark">Mark</a><a href="#colour">Colour</a><a href="#type">Type</a><a href="#mood">Mood</a><a href="#voice">Voice</a>
+    <a href="#name">Name</a><a href="#mark">Logo</a><a href="#colour">Colors</a><a href="#type">Fonts</a><a href="#mood">Mood</a><a href="#voice">Voice</a>
   </nav>
 </header>
 
@@ -383,7 +385,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 </svg><span class="glint" style="left:63%;top:2%"></span></div>
     <div class="hero-copy">
       <span class="label muted">Brand guidelines · Vol. 01</span>
-      <h1 class="display">Two names.<br>One light.<br>Made in gold.</h1>
+      <h1 class="display">Two names.<br>One brand.<br>Made in gold.</h1>
       <p class="rhyme">A small book of rules for a brand that turns what you mean into something worn.</p>
       <div class="hero-meta">
         <div><span class="label muted">For</span><span>LiNora Jewels</span></div>
@@ -396,12 +398,12 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 
   <!-- I. NAME -->
   <section class="wrap chapter" id="name">
-    <div class="head"><span class="label muted rv">I. The name</span></div>
+    <div class="head"><span class="label muted rv">01 · Name</span></div>
     <div class="name-grid">
       <h2 class="display name-big rv">Li<em>+</em>Nora</h2>
       <div class="name-body stack rv d2">
-        <p>LiNora began as two names held together: Lina and Noor. Noor means <i>light</i>, and light is what gold does best, especially against deep cedar green.</p>
-        <p>The mark keeps both. An L and an N joined by one sweeping line, with a single stone set above. That line is the brand. It is what a gift does between two people.</p>
+        <p>LiNora is two names held together: Lina and Noor. Two founders, side by side, sharing one name.</p>
+        <p>The logo keeps both, equally. An L and an N joined by one sweeping line, with a single stone set above. That line is the brand: two people, connected by gold. It is what a gift does too.</p>
       </div>
     </div>
     <div class="split">
@@ -418,7 +420,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 <path fill-rule="nonzero" fill="currentColor" d="M 693.82 301.22 L 656.75 301.22 L 622.95 379.44 Z M 649.83 301.22 L 578.13 301.22 L 613.17 385.95 Z M 571.20 301.22 L 534.13 301.22 L 604.19 378.62 Z M 694.64 296.33 L 670.20 264.56 L 657.97 296.33 Z M 533.32 296.33 L 569.17 296.33 L 556.55 264.55 Z M 647.38 296.33 L 613.68 262.98 L 579.76 296.33 Z M 666.12 261.30 L 620.5 261.30 L 652.68 293.87 Z M 606.64 261.30 L 561.83 261.30 L 574.07 293.89 Z M 556.69 256.56 L 670.43 256.58 L 672.27 258.00 C 680.54 271.06 692.95 283.12 701 296.08 C 701.69 297.21 703.10 298.26 702.70 299.83 L 615.59 395.33 L 612.93 395.62 L 525.28 299.82 L 525.59 297.18 Z M 556.69 256.56 "/>
 </svg></div>
     <div class="wrap chapter" style="position:relative">
-      <span class="label rv">II. The line</span>
+      <span class="label rv">02 · Slogan</span>
       <h2 class="display gold rv d1">Say it in gold.</h2>
       <div class="line-foot">
         <p class="rhyme rv d2">When words run thin,<br>let gold begin.</p>
@@ -429,7 +431,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 
   <!-- III. MARK -->
   <section class="wrap chapter" id="mark">
-    <div class="head"><span class="label muted rv">III. The mark</span><h2 class="display rv d1" style="color:var(--zaatar)">Three forms,<br>one signature.</h2></div>
+    <div class="head"><span class="label muted rv">03 · Logo</span><h2 class="display rv d1" style="color:var(--zaatar)">Logo</h2><p class="sub rv d2">Three versions, one signature.</p></div>
     <div class="lockups">
       <div class="lock primary rv"><svg xmlns="http://www.w3.org/2000/svg" viewBox="121 188 758 624">
 <path fill-rule="nonzero" fill="currentColor" d="M 431.75 190.53 L 431.75 194.43 C 422.58 194.97 411.23 196.47 406.41 205.38 C 402.91 211.83 403.29 219.25 402.5 226.32 L 402.52 436.05 C 428.36 436.03 453.76 427.97 477.66 418.88 C 493.55 412.83 508.84 405.31 524.67 399.15 C 529.08 397.43 533.81 395.46 538.43 394.64 L 538.19 393.18 C 523.30 375.53 509.38 357.07 494.58 339.36 C 490.72 334.75 486.92 329.94 482.41 325.96 L 482.93 410.91 L 474.13 414.12 L 474.15 328.13 L 473.03 315.12 C 458.20 298.15 439.28 283.56 416.21 280.60 L 416.61 276.48 C 459.5 276.89 497.03 299.90 524.07 331.80 L 615.39 441.89 C 615.48 440.50 615.82 439.19 615.91 437.78 C 617.81 405.48 614.42 371.33 615.91 338.85 C 614.74 327.02 615.55 313.45 610.46 302.40 C 606.06 292.86 596.62 291.71 587.15 290.88 L 587.14 286.99 L 653.88 286.99 L 653.88 290.88 C 647.78 291.51 641.14 291.98 635.99 295.64 C 625.80 302.88 626.14 321.81 625.65 333.04 C 624.24 365.28 624.93 398.17 625.65 430.42 C 625.76 435.71 624.72 451.41 626.66 455.23 C 628.15 458.15 637.65 468.12 640.48 471.13 C 652.57 483.95 668.17 499.18 687.01 498.89 L 687.01 502.30 C 675.18 503.76 664.23 503.70 652.60 500.90 C 629.88 495.44 611.80 480.41 596.15 463.82 L 541.54 397.65 C 509.74 408.86 481.18 427.44 449.06 438.01 C 406.30 452.09 336.97 457.99 311.34 412.02 C 286.36 367.21 310.61 310.60 354.78 289.42 L 354.70 294.21 C 334.53 304.85 319.57 323.45 315.95 346.32 C 310.21 382.53 329.23 423.46 366.95 432.15 L 366.98 227.78 C 365.91 217.61 366.67 203.63 356.19 198.14 C 350.96 195.40 344.04 194.75 338.21 194.43 L 338.22 190.53 Z M 431.75 190.53 "/>
@@ -574,7 +576,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 <path fill-rule="nonzero" fill="currentColor" d="M 266.75 635.19 L 266.76 639.02 C 258.99 639.20 251.22 638.95 243.47 638.99 C 204.55 639.21 165.37 638.53 126.23 638.98 C 125.11 638.99 124.08 639.09 123.05 639.49 L 122.21 638.61 L 122.12 635.19 Z M 266.75 635.19 "/>
 <path fill-rule="nonzero" fill="currentColor" d="M 877.87 635.19 L 877.87 639.02 C 870.11 639.20 862.34 638.95 854.58 638.99 C 815.66 639.21 776.48 638.53 737.34 638.98 C 736.23 638.99 735.20 639.09 734.16 639.49 L 733.33 638.61 L 733.23 635.19 Z M 877.87 635.19 "/>
 <path fill-rule="nonzero" fill="currentColor" d="M 592.16 511.08 C 593.14 512.07 591.94 512.16 591.27 512.41 C 586.19 514.26 581.91 514.23 577.81 518.70 C 573.30 523.60 573.48 530.17 570.82 535.89 C 567.42 527.32 567.71 519.00 558.19 514.78 C 556.64 514.09 550.41 512.64 550.11 512.33 C 549.29 511.49 550.24 511.22 550.91 510.92 C 553.59 509.72 557.01 509.35 559.87 507.77 C 567.73 503.42 567.98 495.07 570.82 487.52 C 574.03 495.34 573.89 504.09 582.60 508.20 C 584.30 509.00 591.81 510.72 592.16 511.08 "/>
-</svg></div><span class="label muted">Don't</span><p>Recolour it outside the palette.</p></div>
+</svg></div><span class="label muted">Don't</span><p>Change its color outside the palette.</p></div>
       <div class="dont rv d2"><div class="tile fx"><svg xmlns="http://www.w3.org/2000/svg" viewBox="120 335 760 330">
 <path fill-rule="nonzero" fill="currentColor" d="M 445.15 353.5 L 432.02 353.5 L 420.05 381.20 Z M 429.57 353.5 L 404.17 353.5 L 416.59 383.50 Z M 401.72 353.5 L 388.59 353.5 L 413.41 380.91 Z M 445.44 351.76 L 436.79 340.51 L 432.46 351.76 Z M 388.30 351.76 L 401.00 351.76 L 396.53 340.51 Z M 428.70 351.76 L 416.77 339.95 L 404.75 351.76 Z M 435.34 339.35 L 419.18 339.35 L 430.58 350.89 Z M 414.28 339.35 L 398.41 339.35 L 402.74 350.90 Z M 396.58 337.68 L 436.87 337.68 L 437.52 338.19 C 440.45 342.81 444.84 347.08 447.69 351.67 C 447.94 352.07 448.44 352.45 448.30 353.00 L 417.44 386.83 L 416.50 386.93 L 385.46 353.00 L 385.57 352.07 Z M 396.58 337.68 "/>
 <path fill-rule="nonzero" fill="currentColor" d="M 271.42 574.92 L 282.82 571 C 286.73 567.69 289.05 564.10 289.52 558.85 C 292.01 530.92 287.64 499.23 289.42 470.91 C 288.69 467.64 287.37 464.40 284.80 462.17 L 274.57 457.89 C 284.19 456.95 294.21 454.04 303.44 451.02 C 305.25 450.43 312.87 446.73 313.83 447.66 L 313.12 536.73 C 315.39 550.36 308.23 572.82 329.13 573.39 C 345.10 573.82 352.34 559.57 353.15 545.5 L 353.07 411.96 C 347.72 402.33 338.71 394.46 327.97 391.51 L 314.62 388.76 C 326.01 388.26 338.91 387.00 350.26 388.07 C 366.08 389.56 377.01 400.77 386.42 412.39 L 474.07 532.5 C 473.85 527.26 474.93 522.42 474.90 517.14 C 474.68 487.72 475.21 457.67 474.04 428.46 C 473.41 412.66 474.45 396.41 456.06 390.67 C 454.10 390.06 450.67 391.33 451.30 388.75 L 502.35 388.75 C 502.75 391.18 501.69 389.98 500.43 390.33 C 486.18 394.27 482.97 400.91 480.46 415.16 L 480.39 541.50 C 488.29 557.36 499.30 571.82 514.68 581.05 L 528.27 587.48 C 510.58 586.41 493.98 580.46 479.16 571.01 C 460.85 559.32 448.09 543.26 435.28 526.13 C 409.46 491.60 385.88 455.31 359.78 420.96 C 359.78 420.96 359.03 490.36 359.42 516.36 C 359.67 532.82 355.24 560.37 371.42 570.35 L 383.75 574.92 Z M 271.42 574.92 "/>
@@ -616,7 +618,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 
   <!-- IV. COLOUR -->
   <section class="wrap chapter" id="colour" style="padding-top:0">
-    <div class="head"><span class="label muted rv">IV. Colour</span><h2 class="display rv d1" style="color:var(--zaatar)">Cedar first.<br>Gold last.</h2></div>
+    <div class="head"><span class="label muted rv">04 · Colors</span><h2 class="display rv d1" style="color:var(--zaatar)">Colors</h2><p class="sub rv d2">Cedar green first. Gold last.</p></div>
     <div class="swatches" id="swatches">
       <div class="sw"><div class="chip" style="--h:100%;min-height:340px;background:var(--zaatar)"></div><span class="tag">Locked</span><h4>Cedar</h4><dl><dd>#1B3C33</dd><dd>RGB 27 60 51</dd></dl><span class="role">Primary. The mark, boxes, after-dark grounds.</span></div>
       <div class="sw"><div class="chip" style="--h:92%;min-height:300px;background:var(--chalk);outline:1px solid var(--rule);outline-offset:-1px"></div><span class="tag">Locked</span><h4>Chalk</h4><dl><dd>#F4F1E9</dd><dd>RGB 244 241 233</dd></dl><span class="role">The ground, and the mark on dark.</span></div>
@@ -648,7 +650,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 
   <!-- V. TYPE -->
   <section class="wrap chapter" id="type" style="padding-top:0">
-    <div class="head"><span class="label muted rv">V. Type</span><h2 class="display rv d1" style="color:var(--zaatar)">A serif to say it,<br>a sans to sign it.</h2></div>
+    <div class="head"><span class="label muted rv">05 · Fonts</span><h2 class="display rv d1" style="color:var(--zaatar)">Fonts</h2><p class="sub rv d2">Three fonts: one for titles, one for text, one for small labels.</p></div>
     <div class="type-rows">
       <div class="trow rv"><div class="meta"><span class="label muted">Display</span><b>Gloock</b><span class="label muted">Headlines · The line</span></div><div class="spec spec-display">Say it in gold.</div></div>
       <div class="trow rv"><div class="meta"><span class="label muted">Text</span><b>Newsreader</b><span class="label muted">Light · Light Italic</span></div><div class="spec spec-text">Every piece starts with a word you mean. <i>A letter, a name, a date.</i> We cast it in gold and wrap it for the one who'll keep it.</div></div>
@@ -659,7 +661,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 
   <!-- VI. MOOD -->
   <section class="wrap chapter" id="mood" style="padding-top:0">
-    <div class="head"><span class="label muted rv">VI. Mood</span><h2 class="display rv d1" style="color:var(--zaatar)">Soft light. Bare skin.<br>Real stone.</h2></div>
+    <div class="head"><span class="label muted rv">06 · Mood</span><h2 class="display rv d1" style="color:var(--zaatar)">Photo mood</h2><p class="sub rv d2">Soft light. Bare skin. Real stone.</p></div>
     <div class="mood-intro"><p class="rv">LiNora should feel like a quiet afternoon, not a jewellery counter. Natural textures, warm skin, one piece at a time. Gold is always the brightest thing in the frame.</p></div>
 
     <div class="board">
@@ -703,8 +705,8 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 </svg></div>
     <div class="wrap chapter" style="position:relative">
       <div class="dark-head">
-        <span class="label rv">After dark</span>
-        <h2 class="display rv d1">Cedar<br>&amp; gold.</h2>
+        <span class="label rv">07 · Dark mode</span>
+        <h2 class="display rv d1">Dark<br>mode</h2>
         <p class="rhyme rv d2">When the lights go low,<br>let the gold show.</p>
       </div>
       <div class="dboard">
@@ -732,8 +734,8 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 </svg></span>
         </div>
         <div class="motion-copy">
-          <span class="label muted rv">VII. In motion</span>
-          <h2 class="display rv d1">Slow. Close.<br>Warm.</h2>
+          <span class="label muted rv">08 · Video</span>
+          <h2 class="display rv d1">Video</h2><p class="sub rv d1" style="margin-top:-8px">Slow. Close. Warm.</p>
           <p class="rv d2">Reels move like the jewellery does: gently. Cut on a gesture, hold on the gold, end on the mark.</p>
           <div class="beats rv d3">
             <div><span class="label muted">Open</span><span>A hand, a clasp, a letter catching light.</span></div>
@@ -748,7 +750,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 
   <!-- VIII. VOICE -->
   <section class="wrap chapter" id="voice">
-    <div class="head"><span class="label muted rv">VIII. Voice</span><h2 class="display rv d1" style="color:var(--zaatar)">Say less.<br>Mean more.</h2></div>
+    <div class="head"><span class="label muted rv">09 · Voice</span><h2 class="display rv d1" style="color:var(--zaatar)">Tone of voice</h2><p class="sub rv d2">How LiNora writes. Say less, mean more.</p></div>
     <div class="voice-grid">
       <div class="principles">
         <div class="rv"><span class="label muted">Brief</span><h4>Few words, well chosen.</h4><p>One line beats a paragraph. If gold can say it, we don't have to.</p></div>
@@ -786,7 +788,7 @@ a:focus-visible{outline:1px solid var(--gilt);outline-offset:4px}
 
   <!-- IX. TOUCHPOINTS -->
   <section class="wrap chapter" id="touch" style="padding-top:0">
-    <div class="head"><span class="label muted rv">IX. Touchpoints</span><h2 class="display rv d1" style="color:var(--zaatar)">Where it lives.</h2></div>
+    <div class="head"><span class="label muted rv">10 · Applications</span><h2 class="display rv d1" style="color:var(--zaatar)">Applications</h2><p class="sub rv d2">Boxes, cards, tags and Instagram.</p></div>
     <div class="apps">
       <div class="app a1 rv"><div class="stage"><div class="box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="175 236 650 528">
 <path fill-rule="nonzero" fill="currentColor" d="M 395.62 238.48 L 395.63 245.01 C 380.30 245.91 361.30 248.42 353.24 263.31 C 347.39 274.11 348.03 286.51 346.70 298.33 L 346.73 649.12 C 389.96 649.08 432.44 635.60 472.41 620.40 C 498.99 610.28 524.57 597.70 551.04 587.40 C 558.42 584.53 566.33 581.24 574.06 579.86 L 573.65 577.42 C 548.75 547.91 525.46 517.03 500.71 487.41 C 494.25 479.69 487.90 471.64 480.37 464.98 L 481.23 607.07 L 466.51 612.45 L 466.54 468.62 L 464.66 446.87 C 439.87 418.47 408.23 394.08 369.64 389.12 L 370.31 382.23 C 442.03 382.91 504.81 421.41 550.03 474.75 L 702.78 658.89 C 702.91 656.56 703.50 654.36 703.64 652.01 C 706.82 597.99 701.14 540.88 703.63 486.54 C 701.69 466.76 703.04 444.07 694.52 425.58 C 687.16 409.63 671.38 407.70 655.53 406.31 L 655.53 399.80 L 767.15 399.80 L 767.14 406.31 C 756.95 407.38 745.83 408.16 737.23 414.28 C 720.18 426.39 720.75 458.05 719.93 476.83 C 717.58 530.76 718.73 585.76 719.93 639.71 C 720.12 648.55 718.38 674.82 721.62 681.20 C 724.10 686.08 740 702.76 744.73 707.79 C 764.95 729.24 791.05 754.71 822.56 754.21 L 822.56 759.92 C 802.77 762.37 784.46 762.26 765.01 757.58 C 727.00 748.44 696.77 723.30 670.59 695.57 L 579.25 584.90 C 526.07 603.64 478.30 634.71 424.58 652.41 C 353.07 675.95 237.10 685.82 194.24 608.92 C 152.46 533.98 193.02 439.30 266.89 403.88 L 266.76 411.90 C 233.03 429.68 208.01 460.79 201.95 499.03 C 192.36 559.61 224.16 628.07 287.25 642.60 L 287.30 300.77 C 285.52 283.77 286.78 260.39 269.25 251.20 C 260.51 246.63 248.93 245.53 239.19 245.01 L 239.19 238.48 Z M 395.62 238.48 "/>

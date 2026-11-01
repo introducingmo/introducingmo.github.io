@@ -1,3 +1,9 @@
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-900-86.woff2) format("woff2");font-weight:900;font-stretch:86%;font-display:swap}
+@font-face{font-family:"Lato";font-weight:300;src:url(../fonts/lato-300.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Lato";font-weight:400;src:url(../fonts/lato-400.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Lato";font-weight:700;src:url(../fonts/lato-700.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:400 500;src:url(../fonts/playfair-400-italic.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Mrs Saint Delafield";src:url(../fonts/mrs-saint-delafield.woff2) format("woff2");font-display:swap}
 /* Case-study pages: the same world as the home page (black, wing blue, Archivo / Playfair italic / Lato), built for reading */
 :root{
   --bg:#000;--btn:#1872b3;--ink:#eef2f6;--soft:#c6ced7;--muted:#9ba7b4;--accent:#2b9fe0;--line:rgba(255,255,255,.12);
@@ -145,3 +151,12 @@ html:not(.js) [data-rv]{opacity:1;transform:none}
   .nums{grid-template-columns:1fr 1fr;gap:20px 14px}
   .talk .row .btn{flex:1 1 100%}
 }
+/* where the numbers come from, and what came after the engagement */
+.ch-r p.src{margin-top:6px;padding-top:16px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.55;color:var(--muted)}
+.ch-r p.src b{color:var(--soft)}
+.ch-r p.aft{padding:18px 20px;border-radius:12px;background:#07101a;border:1px solid var(--line)}
+.ch-r p.aft span{display:block;margin-bottom:6px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.next.one{grid-template-columns:1fr}
+.ch-r ul.nums{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 24px;margin:0 0 36px}
+@media (max-width:860px){.ch-r ul.nums{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}}
+.ch-r ul.nums b{font-size:clamp(40px,3.9vw,64px)}

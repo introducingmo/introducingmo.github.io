@@ -21,16 +21,23 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://introducingmo.com/#mo", "name": "Mohamad Abou Younes", "alternateName": "Mo", "jobTitle": "Brand strategist and creative director", "url": "https://introducingmo.com/", "image": "https://introducingmo.com/img/about/mo-studio.webp", "email": "mailto:introducingmo@gmail.com", "telephone": "+96170783482", "address": {"@type": "PostalAddress", "addressLocality": "Beirut", "addressCountry": "LB"}, "alumniOf": {"@type": "CollegeOrUniversity", "name": "Lebanese American University"}, "sameAs": ["https://instagram.com/introducingmo", "https://linkedin.com/in/introducingmo", "https://youtube.com/@moayounes", "https://behance.net/introducingmo", "https://tiktok.com/@introducingmo3", "https://www.facebook.com/share/19Tf4hJvR9/"]}, {"@type": "ProfessionalService", "@id": "https://introducingmo.com/#practice", "name": "Introducing Mo", "url": "https://introducingmo.com/", "founder": {"@id": "https://introducingmo.com/#mo"}, "description": "Brand strategy, positioning, identity and launch campaigns for restaurants, cafés, hospitality and consumer brands.", "areaServed": ["Lebanon", "Saudi Arabia", "United Arab Emirates", "Jordan", "Europe", "United States"], "image": "https://introducingmo.com/img/og.jpg", "address": {"@type": "PostalAddress", "addressLocality": "Beirut", "addressCountry": "LB"}, "telephone": "+96170783482", "email": "introducingmo@gmail.com", "knowsAbout": ["Brand strategy", "Positioning", "Brand identity", "Restaurant branding", "Launch campaigns", "Content strategy"]}]}</script>
 <title>Introducing Mo | Brand strategist & creative director, Beirut</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,800..900&family=Playfair+Display:ital,wght@1,400;1,500&family=Lato:wght@300;400;700&family=Mrs+Saint+Delafield&display=swap">
+<link rel="preload" href="fonts/archivo-900-86.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/lato-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-400-italic.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* fonts are self-hosted (all four families are SIL Open Font License) */
+@font-face{font-family:"Archivo";src:url(fonts/archivo-900-86.woff2) format("woff2");font-weight:900;font-stretch:86%;font-display:swap}
+@font-face{font-family:"Lato";font-weight:300;src:url(fonts/lato-300.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Lato";font-weight:400;src:url(fonts/lato-400.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Lato";font-weight:700;src:url(fonts/lato-700.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:400 500;src:url(fonts/playfair-400-italic.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Mrs Saint Delafield";src:url(fonts/mrs-saint-delafield.woff2) format("woff2");font-display:swap}
 /* Layout: one sticky full-bleed stage. A small preloader builds gravity (wing + orbit), then opens onto Mo at his table; the world re-arranges around him as he turns to face you. */
 :root{
   --bg:#000;
   --ink:#eef2f6;
   --soft:#c6ced7;
-  --muted:#9ba7b4;
+  --muted:#a7b2be;
   --accent:#2b9fe0;
   --btn:#1872b3;                 /* buttons: the wing blue, one shade deeper, so white type passes contrast (5.1:1) */
   --accent-soft:rgba(43,159,224,.18);
@@ -172,7 +179,7 @@ a{color:inherit}
 
 
 /* ---------- the work: a blue section after 1B (title → gravity well ⇄ grid) ---------- */
-.work{position:relative;isolation:isolate;background-color:var(--accent);color:#fff}
+.work{position:relative;isolation:isolate;background-color:#2494d9;color:#fff}   /* = the sky's top tone, what's actually behind the type */
 /* the sky: wing blue with distant clouds, fixed to the screen. Painted above the 1B stage (it is the flood), below the work */
 .wk-sky{position:fixed;left:0;top:0;width:100%;height:100vh;height:100lvh;display:block;z-index:0;pointer-events:none;visibility:hidden}   /* the large viewport: the toolbar sliding never resizes it */
 .wk-switch{position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);height:0;z-index:40}
@@ -193,7 +200,7 @@ a{color:inherit}
 .work.chrome .wk-switch .switch,.work.chrome .wk-idx,.work.chrome .wk-who{transition:opacity .45s ease}
 .wk-head h2{margin:0;text-shadow:0 2px 30px rgba(4,30,58,.22);font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.025em;font-size:clamp(72px,13vw,220px);line-height:.85;color:#fff}
 .wk-head h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
-.wk-head p{margin:18px 0 0;max-width:30em;font-weight:400;font-size:clamp(15px,1.3vw,19px);line-height:1.5;color:#fff;text-shadow:0 1px 16px rgba(4,30,58,.55),0 0 2px rgba(4,30,58,.3)}
+.wk-head p{margin:18px 0 0;max-width:26em;font-weight:700;font-size:clamp(19px,1.5vw,22px);line-height:1.4;color:#fff}   /* large + bold: passes on the sky */
 .wk-trk{position:relative;z-index:1;height:640vh}
 .wk-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .wk-card{--cw:560px;position:absolute;left:0;top:0;width:var(--cw);box-sizing:border-box;margin:0;border-radius:10px;overflow:hidden;
@@ -224,7 +231,19 @@ a{color:inherit}
 @media (max-width:760px){.wk-idx{display:none}.wk-who .w{font-size:clamp(26px,8vw,38px)}}
 .wk-note{position:relative;z-index:1;margin:0 auto;padding:0 max(16px,4vw) 64px;max-width:760px;text-align:center;font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(4,30,58,.45)}
 .work:not(.grid) .wk-note{padding-top:40px}
-.wk-grid{position:relative;z-index:1;padding:64px 14px 72px;overflow-x:clip}   /* tiles tumble out sideways; never a sideways scroll */
+.wk-grid{position:relative;z-index:1;padding:64px 14px 56px;overflow-x:clip}
+.wk-more{position:relative;z-index:1;display:flex;justify-content:center;padding:0 16px 80px}
+.wk-more[hidden],.work:not(.grid) .wk-more{display:none}
+.btn.light{background:#fff;border-color:#fff;color:#0b5f93}
+.btn.light:hover{background:#08131f;border-color:#08131f;color:#fff}
+/* the name stays on every tile; the details open on hover, focus, or mid-screen on phones */
+.tile .lbl{position:absolute;left:0;right:0;bottom:0;display:grid;gap:4px;padding:40px 18px 16px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(3,14,26,.82));transition:opacity .4s}
+.tile .lbl b{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(19px,1.7vw,26px);line-height:1;letter-spacing:-.01em;color:#fff}
+.tile .lbl span{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.86)}
+@media (hover:hover){.tile:hover .lbl{opacity:0}}
+.tile.open .lbl,.tile:focus-visible .lbl{opacity:0}
+@media (max-width:639px){.tile .lbl{padding:28px 10px 10px}.tile .lbl b{font-size:15px}.tile .lbl span{font-size:9.5px;letter-spacing:.08em}}   /* tiles tumble out sideways; never a sideways scroll */
 /* two per row, sized so a whole tile fits the screen; the odd one out sits centred on the last row */
 .wk-tiles{--g:clamp(10px,1.5vw,24px);position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--g);
   max-width:min(1240px,calc((100svh - 150px) * 1.6 + var(--g)));margin-inline:auto}
@@ -274,7 +293,7 @@ a{color:inherit}
 /* ---------- hero ---------- */
 .hero{position:absolute;inset:0;z-index:1;pointer-events:none;will-change:opacity,transform}
 .hero-head{position:absolute;left:0;right:0;top:clamp(92px,13svh,150px);text-align:center;padding-inline:var(--gutter)}
-.kicker{font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);margin:0 0 clamp(30px,4.6svh,54px)}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);margin:0 0 clamp(18px,2.6svh,30px)}
 .kicker i{font-style:normal;color:var(--accent);margin:0 .9em}
 h1{margin:0;font-weight:400;line-height:.84;font-size:clamp(48px,6.7vw,108px);text-wrap:balance}
 h1 .t-script{font-size:.96em;line-height:0;display:inline-block;transform:translateY(-.06em) rotate(-6deg);margin:0 .02em 0 .06em}
@@ -287,9 +306,12 @@ h1 .l2{display:block}
 .act{right:var(--gutter);display:grid;justify-items:end;gap:18px;text-align:right}
 .pitch::before,.warm::before{content:"";display:block;width:28px;height:1px;background:var(--accent);margin-bottom:14px}
 .warm::before{margin-left:auto}
+.hero-head h1.prop{margin:0 auto;max-width:12.5em;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.025em;
+  font-size:clamp(42px,5.3vw,92px);line-height:.92;color:var(--ink);text-wrap:balance}
+.hero-head h1.prop em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-stretch:100%;letter-spacing:-.01em;color:var(--accent)}
 .pitch-q{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.015em;font-size:clamp(26px,2.5vw,40px);line-height:1.02;color:var(--ink);text-wrap:balance}
 .pitch-q em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-stretch:100%;color:var(--accent);letter-spacing:0}
-.pitch-a{margin:14px 0 0;font-size:clamp(15px,1.15vw,17.5px);line-height:1.5;color:var(--soft);text-wrap:pretty}
+.pitch-a{margin:0;font-size:clamp(16px,1.2vw,18.5px);line-height:1.5;color:var(--soft);text-wrap:pretty}
 .warm{margin:0;font-family:var(--f-serif);font-style:italic;font-size:clamp(16px,1.35vw,20px);line-height:1.3;color:var(--ink)}
 .cta-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;pointer-events:auto}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
@@ -337,6 +359,15 @@ h1 .l2{display:block}
 .small::before{content:"";display:block;width:36px;height:1px;background:var(--accent);margin-bottom:16px}
 .small.s2::before{margin-left:auto}
 .small.s2 p{text-wrap:balance}
+.yr-go{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:14px 22px;margin-top:24px;opacity:0;transform:translateY(10px);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.small.s2.done .yr-go{opacity:1;transform:none}
+.small.s2.done .yr-go .btn{pointer-events:auto}
+.yr-go .btn{min-height:46px}
+.yr-cue{display:inline-flex;align-items:center;gap:12px;font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:left}
+.yr-cue .rail{flex:none;width:1px;height:34px;background:var(--line);position:relative;overflow:hidden}
+.yr-cue .rail::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--accent);animation:drip 2.2s cubic-bezier(.6,0,.3,1) infinite}
+@media (prefers-reduced-motion:reduce){.yr-cue .rail::after{animation:none;top:30%}}
 
 /* collab folders (placeholders) */
 .file{position:absolute;z-index:3;left:0;top:0;display:grid;justify-items:center;gap:8px;text-decoration:none;opacity:0;will-change:transform,opacity}
@@ -367,7 +398,8 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
 
 /* ---------- the business half of the page: cases, proof, services, method, about, contact ---------- */
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.sec{position:relative;z-index:2;background:#000;padding:clamp(96px,12vw,168px) var(--gutter);border-top:1px solid rgba(255,255,255,.08)}
+.sec{position:relative;z-index:2;background:#000;padding:clamp(72px,9vw,128px) var(--gutter);border-top:1px solid rgba(255,255,255,.08);
+  content-visibility:auto;contain-intrinsic-size:auto 1400px}   /* laid out only when near the screen */
 .wrap{max-width:1240px;margin:0 auto}
 .eb{margin:0 0 18px;display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
 .eb::before{content:"";flex:none;width:28px;height:1px;background:currentColor}
@@ -379,7 +411,7 @@ html.js [data-rv]{opacity:0;transform:translateY(26px);transition:opacity .9s cu
 html.js [data-rv].in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html.js [data-rv]{opacity:1;transform:none;transition:none}}
 
-.case-list{display:grid;gap:clamp(56px,7vw,110px);margin-top:clamp(56px,7vw,96px)}
+.case-list{display:grid;gap:clamp(48px,6vw,90px);margin-top:clamp(44px,5.5vw,80px)}
 .case{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,4.5vw,72px);align-items:center;text-decoration:none;color:inherit}
 .case:nth-child(even) .case-img{order:2}
 .case-img{display:block;border-radius:14px;overflow:hidden;aspect-ratio:4/3.3;background:#0b1622}
@@ -417,6 +449,10 @@ html.js [data-rv].in{opacity:1;transform:none}
 .svc-c li::before{content:"";position:absolute;left:0;top:.68em;width:10px;height:1px;background:var(--accent)}
 .svc-t{margin:auto 0 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:15.5px;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
 .svc-t span{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.scope{margin-top:clamp(24px,3vw,36px);padding:clamp(22px,2.6vw,32px);border-radius:16px;border:1px solid rgba(43,159,224,.45);background:rgba(43,159,224,.07)}
+.scope-h{margin:0 0 8px;font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.scope p:not(.scope-h){margin:0;font-size:16.5px;line-height:1.55;color:var(--soft);max-width:60em}
+.scope b{color:var(--ink)}
 .svc-foot{margin-top:clamp(40px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .svc-foot p{margin:0;font-family:var(--f-serif);font-style:italic;font-size:clamp(20px,1.9vw,28px);color:var(--ink)}
 .playbook{margin-top:clamp(48px,6vw,80px);padding:clamp(28px,3.4vw,48px);border-radius:18px;background:linear-gradient(135deg,#1b78b8,#0d5a90);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
@@ -490,7 +526,7 @@ html.js [data-rv].in{opacity:1;transform:none}
 .send .btn{flex:1 1 190px;cursor:pointer;font-family:inherit}
 .fine{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted)}
 
-.end{position:relative;z-index:2;background:#000;border-top:1px solid rgba(255,255,255,.1);padding:clamp(56px,7vw,96px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 40px)}
+.end{position:relative;z-index:2;background:#000;border-top:1px solid rgba(255,255,255,.1);content-visibility:auto;contain-intrinsic-size:auto 420px;padding:clamp(56px,7vw,96px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 40px)}
 .end-g{display:grid;grid-template-columns:1.2fr 1fr auto;gap:32px;align-items:start}
 .end-mark{display:inline-block}
 .end-mark img{width:40px;height:auto;display:block}
@@ -534,8 +570,10 @@ html.js [data-rv].in{opacity:1;transform:none}
   /* phones: the question and the two buttons share the bottom of the screen; the invitation waits for the contact section */
   .pitch{left:var(--gutter);right:var(--gutter);width:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 96px);text-align:center}
   .pitch::before{margin:0 auto 12px}
-  .pitch-q{font-size:clamp(25px,7vw,30px)}
-  .pitch-a{display:none}
+  .hero-head h1.prop{font-size:clamp(31px,8.6vw,40px);max-width:11em}
+  .pitch{bottom:calc(env(safe-area-inset-bottom,0px) + 92px)}
+  .pitch::before{display:none}
+  .pitch-a{font-size:15.5px;line-height:1.45;max-width:22em;margin:0 auto}
   .act{left:var(--gutter);right:var(--gutter);justify-items:stretch;bottom:calc(env(safe-area-inset-bottom,0px) + 30px)}
   .act .warm{display:none}
   .cta-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -557,6 +595,8 @@ html.js [data-rv].in{opacity:1;transform:none}
   .small.s1{left:var(--gutter);right:auto;text-align:left}
   .small.s2{right:var(--gutter);left:auto;text-align:right}
   .small::before{margin-bottom:10px}
+  .yr-go{margin-top:18px;gap:12px}
+  .yr-cue{font-size:10.5px;letter-spacing:.14em;max-width:15em}
   .file span{font-size:10.5px;padding:5px 8px}
   .file span b{display:none}
   .chfade{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:5;pointer-events:none;opacity:0;
@@ -631,7 +671,7 @@ html.js [data-rv].in{opacity:1;transform:none}
       <div class="hero" id="hero">
         <div class="hero-head">
           <p class="kicker">Mo<i>|</i>Brand strategist &amp; creative director</p>
-          <h1 class="intro"><span class="t-script big-script">This</span><span class="l2"><span class="t-sans">Is Mo</span></span></h1>
+          <h1 class="prop">Why should anyone choose <em>your</em>&nbsp;brand?</h1>
         </div>
       </div>
 
@@ -644,7 +684,7 @@ html.js [data-rv].in{opacity:1;transform:none}
       <!-- three case files drift past: each opens a case study -->
       <a class="file" href="work/ayam-al-lulu/" data-d="0.86,0.70" data-m="0.76,0.85" data-sp="0.98" data-c="#2b9fe0" aria-label="Case study: Ayam Al Lulu"><span>Case 01<b> · Ayam Al Lulu</b></span></a>
       <a class="file" href="work/pbf/" data-d="0.47,0.98" data-m="0.2,0.40" data-sp="0.60" data-c="#8fa6ba" aria-label="Case study: PBF"><span>Case 02<b> · PBF</b></span></a>
-      <a class="file" href="work/agora/" data-d="0.09,1.30" data-m="0.64,0.15" data-sp="0.58" data-c="#d7e6f2" aria-label="Case study: Agora"><span>Case 03<b> · Agora</b></span></a>
+      <a class="file" href="#work" data-d="0.09,1.30" data-m="0.64,0.15" data-sp="0.58" data-c="#d7e6f2" aria-label="All the work"><span>All<b> the</b> work</span></a>
 
       <div class="chfade" id="chfade"></div>
 
@@ -654,6 +694,10 @@ html.js [data-rv].in{opacity:1;transform:none}
       </div>
       <div class="small s2" data-ch="1">
         <p>It started with student projects. Eighteen years later, they’re businesses in seven countries.</p>
+        <div class="yr-go">
+          <a class="btn" href="#work">View work</a>
+          <span class="yr-cue"><span class="rail" aria-hidden="true"></span>Or keep scrolling for the gravity&nbsp;method</span>
+        </div>
       </div>
 
       <!-- section 1B: gravity — one blue atom, a line beneath it, and the outcomes it pulls in -->
@@ -674,8 +718,7 @@ html.js [data-rv].in{opacity:1;transform:none}
 
       <div class="hero-foot" id="heroFoot">
         <div class="pitch">
-          <p class="pitch-q">Why should anyone choose <em>your</em> brand?</p>
-          <p class="pitch-a">I help founders answer that, with positioning, identity and launches that pull the right people&nbsp;in.</p>
+          <p class="pitch-a">I help founders of restaurants, cafés and consumer brands answer it, with positioning, identity and launches that pull the right people&nbsp;in.</p>
         </div>
         <div class="act">
           <p class="warm">Welcome to the table. Pull up a&nbsp;chair.</p>
@@ -709,7 +752,7 @@ html.js [data-rv].in{opacity:1;transform:none}
       <button type="button" data-mode="grid" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
       <button type="button" data-mode="well" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="4.5" width="9" height="9" rx="1" transform="rotate(-8 8 9)"/><rect x="3.5" y="2.5" width="9" height="9" rx="1" transform="rotate(7 8 7)"/></svg>Gravity</button>
     </div></div>
-    <header class="wk-head"><div class="wk-hd"><h2>Field <em>work</em></h2><p>The work behind the pull. Ten brands across seven countries, from launches to rebrands.</p></div></header>
+    <header class="wk-head"><div class="wk-hd"><h2>Field <em>work</em></h2><p>The work behind the pull. Nine brands across seven countries, from launches to rebrands.</p></div></header>
     <div class="wk-trk" id="wkTrk" hidden>
       <div class="wk-stage" id="wkStage">
         <div id="wkPile"></div>
@@ -718,14 +761,14 @@ html.js [data-rv].in{opacity:1;transform:none}
       </div>
     </div>
     <div class="wk-grid" id="wkGrid"><div class="wk-tiles" id="wkTiles"></div></div>
-    <p class="wk-note">*Capital behind it: my estimate of what the owners invested in the venture itself (build-out, equipment, stock). It isn’t my fee, and it isn’t money I raised.</p>
+    <div class="wk-more" id="wkMore"><button class="btn light" type="button" id="wkMoreBtn" aria-controls="wkTiles" aria-expanded="false">See all nine projects</button></div>
   </section>
 
   <!-- ======== case studies ======== -->
   <section class="sec cases" id="cases" aria-labelledby="cases-h">
     <div class="wrap">
       <p class="eb" data-rv>Case studies</p>
-      <h2 id="cases-h" class="h2" data-rv>Three stories, <em>told properly.</em></h2>
+      <h2 id="cases-h" class="h2" data-rv>Two launches, <em>told properly.</em></h2>
       <p class="lead" data-rv>Pretty pictures prove taste. These prove judgment: the problem, what I saw, what we decided, and what changed.</p>
       <div class="case-list">
         <a class="case" href="work/ayam-al-lulu/" data-rv>
@@ -748,6 +791,7 @@ html.js [data-rv].in{opacity:1;transform:none}
             <span class="case-go">Read the case study <i>→</i></span>
           </span>
         </a>
+        <!-- Agora case card: restore when its photography arrives
         <a class="case" href="work/agora/" data-rv>
           <span class="case-img"><img src="img/work/agora.webp" alt="Agora wordmark over a halftone coffee cup" width="900" height="1117" loading="lazy" decoding="async"></span>
           <span class="case-body">
@@ -758,26 +802,7 @@ html.js [data-rv].in{opacity:1;transform:none}
             <span class="case-go">Read the case study <i>→</i></span>
           </span>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== proof ======== -->
-  <section class="sec proof" id="proof" aria-labelledby="proof-h">
-    <div class="wrap">
-      <h2 id="proof-h" class="sr-only">Proof</h2>
-      <ul class="stats" data-rv>
-        <li><b>18</b><span>years building brands, since 2008</span></li>
-        <li><b>100+</b><span>campaigns created or overseen</span></li>
-        <li><b>5,000+</b><span>pieces of branded content</span></li>
-        <li><b>2M+</b><span>people reached with targeted campaigns</span></li>
-      </ul>
-      <p class="eb" data-rv>Heard it from them</p>
-      <div class="quotes">
-        <figure class="q" data-rv><blockquote>“When recruiting Mo to revisit our company’s brand strategy and marketing, I was skeptical. […] We adopted a more relevant and strategic brand, and our engagement, especially on Instagram, grew tenfold.”</blockquote><figcaption><b>Firas Jabbour</b>Founder, Edunation LTD</figcaption></figure>
-        <figure class="q" data-rv><blockquote>“He understood the core branding principles we wanted and helped us communicate the message to the public and position our brand to its current status. Clean work, diligent understanding and a very genuine leader.”</blockquote><figcaption><b>Alain Samaha</b>Founder, PBF &amp; DRIPD</figcaption></figure>
-        <figure class="q" data-rv><blockquote>“He went out of his way to understand the location of our restaurant opening in Salzburg and created a beautiful window display and brand identity. […] He adapted different languages with ease.”</blockquote><figcaption><b>May Farhat</b>Founder, Beiruti Saj</figcaption></figure>
-        <figure class="q" data-rv><blockquote>“Mo took my existing logo and turned it into a full-fledged brand that is highly aesthetic, strategic, and relevant […] leading to more sales through Instagram.”</blockquote><figcaption><b>Vanessa Emond</b>Founder, Conscious Apparel Co</figcaption></figure>
+        -->
       </div>
     </div>
   </section>
@@ -787,7 +812,7 @@ html.js [data-rv].in{opacity:1;transform:none}
     <div class="wrap">
       <p class="eb" data-rv>Services</p>
       <h2 id="svc-h" class="h2" data-rv>What I can <em>do for you.</em></h2>
-      <p class="lead" data-rv>Most founders don’t need more content. They need a reason to be chosen, and a plan that makes people feel it. Find the situation that sounds like yours.</p>
+      <p class="lead" data-rv>I work with founders of restaurants, cafés, hospitality and consumer brands: businesses people choose with their gut. Most don’t need more content. They need a reason to be chosen, and a plan that makes people feel it. Find the situation that sounds like yours.</p>
       <div class="svc">
         <article class="svc-c" data-rv>
           <p class="svc-n">01</p>
@@ -822,6 +847,10 @@ html.js [data-rv].in{opacity:1;transform:none}
           <p class="svc-t"><span>Typical timing</span>3–6 weeks</p>
         </article>
       </div>
+      <div class="scope" data-rv>
+        <p class="scope-h">What’s included</p>
+        <p><b>Every engagement:</b> the strategy, the identity and creative direction, and a launch or rollout plan your team can run. <b>Scoped separately, if you need it:</b> ongoing execution, such as content production, daily community management and paid ads.</p>
+      </div>
       <div class="svc-foot" data-rv>
         <p>Not sure which one you are? That’s what the first conversation is for.</p>
         <a class="btn" href="#contact">Discuss your project</a>
@@ -837,6 +866,26 @@ html.js [data-rv].in{opacity:1;transform:none}
     </div>
   </section>
 
+  <!-- ======== proof ======== -->
+  <section class="sec proof" id="proof" aria-labelledby="proof-h">
+    <div class="wrap">
+      <h2 id="proof-h" class="sr-only">Proof</h2>
+      <ul class="stats" data-rv>
+        <li><b>80/80</b><span>seats booked through Ayam Al Lulu’s opening week</span></li>
+        <li><b>490%</b><span>sales return on PBF’s Easter Feaster ad budget</span></li>
+        <li><b>18</b><span>years building brands, since 2008</span></li>
+        <li><b>100+</b><span>campaigns created or overseen</span></li>
+      </ul>
+      <p class="eb" data-rv>Heard it from them</p>
+      <div class="quotes">
+        <figure class="q" data-rv><blockquote>“When recruiting Mo to revisit our company’s brand strategy and marketing, I was skeptical. […] We adopted a more relevant and strategic brand, and our engagement, especially on Instagram, grew tenfold.”</blockquote><figcaption><b>Firas Jabbour</b>Founder, Edunation LTD</figcaption></figure>
+        <figure class="q" data-rv><blockquote>“He understood the core branding principles we wanted and helped us communicate the message to the public and position our brand to its current status. Clean work, diligent understanding and a very genuine leader.”</blockquote><figcaption><b>Alain Samaha</b>Founder, PBF &amp; DRIPD</figcaption></figure>
+        <figure class="q" data-rv><blockquote>“He went out of his way to understand the location of our restaurant opening in Salzburg and created a beautiful window display and brand identity. […] He adapted different languages with ease.”</blockquote><figcaption><b>May Farhat</b>Founder, Beiruti Saj</figcaption></figure>
+        <figure class="q" data-rv><blockquote>“Mo took my existing logo and turned it into a full-fledged brand that is highly aesthetic, strategic, and relevant […] leading to more sales through Instagram.”</blockquote><figcaption><b>Vanessa Emond</b>Founder, Conscious Apparel Co</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ======== method ======== -->
   <section class="sec method" id="method" aria-labelledby="method-h">
     <div class="wrap">
@@ -849,7 +898,7 @@ html.js [data-rv].in{opacity:1;transform:none}
         <li data-rv><span class="n">04</span><h3>Launch the orbit</h3><p>Pre-launch, opening and momentum, with the numbers to show what’s working, and the nerve to change what isn’t.</p></li>
       </ol>
       <div class="laws" data-rv>
-        <figure class="laws-ph"><img src="img/about/mo-workshop.webp" alt="Mo leading a workshop at a wall of sticky notes" width="625" height="414" loading="lazy" decoding="async"></figure>
+        <figure class="laws-ph"><img src="img/about/mo-workshop-team.webp" alt="Mo working through a brand roadmap with a team at a whiteboard of sticky notes" width="1541" height="1020" loading="lazy" decoding="async"></figure>
         <details>
           <summary><span class="eb">18 years, 18 laws</span><span class="laws-h">The rules I work by</span><span class="laws-x" aria-hidden="true"></span></summary>
           <ol class="laws-l">
@@ -922,7 +971,7 @@ html.js [data-rv].in{opacity:1;transform:none}
         <p class="brief-h">Start here</p>
         <label class="f"><span>Your name</span><input name="name" autocomplete="name" placeholder="Full name"></label>
         <label class="f"><span>Brand or business</span><input name="brand" autocomplete="organization" placeholder="What it’s called (or will be)"></label>
-        <fieldset class="f chips"><legend>Where are you?</legend>
+        <fieldset class="f chips"><legend>What stage is your business at?</legend>
           <label><input type="radio" name="stage" value="Launching something new"><span>Launching</span></label>
           <label><input type="radio" name="stage" value="Repositioning an existing brand"><span>Repositioning</span></label>
           <label><input type="radio" name="stage" value="Expanding to a new location"><span>Expanding</span></label>
@@ -931,8 +980,8 @@ html.js [data-rv].in{opacity:1;transform:none}
         </fieldset>
         <label class="f"><span>Timing</span><select name="when"><option value="">Choose one</option><option>As soon as possible</option><option>In 1–3 months</option><option>In 3–6 months</option><option>Just exploring</option></select></label>
         <label class="f"><span>Anything else?</span><textarea name="msg" rows="4" placeholder="A line or two about the project"></textarea></label>
-        <div class="send"><button class="btn" type="submit" data-via="wa">Send on WhatsApp</button><button class="btn ghost" type="submit" data-via="mail">Send by email</button></div>
-        <p class="fine">Nothing is stored on this site. Your note opens in WhatsApp or your email app, ready to send.</p>
+        <div class="send"><button class="btn" type="submit" data-via="wa">Continue in WhatsApp</button><button class="btn ghost" type="submit" data-via="mail">Open email draft</button></div>
+        <p class="fine">Your note opens, already written, in WhatsApp or your email app. Press send there and it reaches me directly. Nothing is stored on this site.</p>
       </form>
     </div>
   </section>
@@ -1025,17 +1074,27 @@ html.js [data-rv].in{opacity:1;transform:none}
                   ...b.map((i, k) => ({arr: frames, i, dir: "f/" + set, gate: k < bGate}))];
     jobs.sort((p, q) => q.gate - p.gate);                       // stable: gate frames first, coarse-to-fine order kept
     gateTotal = jobs.filter(j => j.gate).length;
-    let idx = 0;
-    const next = () => {
-      if (idx >= jobs.length) return;
-      const j = jobs[idx++];
+    // loading order: Mo's opening pose (gate) → the fonts → his turntable frames → the scroll set (B), which waits until the
+    // visitor starts to scroll or the page has been idle a while: a visit that never scrolls never pays for it
+    const aRest = jobs.filter(j => !j.gate && j.arr === framesA), later = jobs.filter(j => !j.gate && j.arr === frames);
+    jobs = jobs.filter(j => j.gate);
+    let idx = 0, active = 0;
+    const pump = () => { while (active < 6 && idx < jobs.length) start(jobs[idx++]); };
+    const push = arr => { if (arr.length){ jobs.push(...arr.splice(0)); pump(); } };
+    const start = (j) => {
+      active++;
       const im = new Image(); im.decoding = "async";
-      const done = (ok) => { if (ok) j.arr[j.i] = im; if (j.gate) loaded++; dirty = true; next(); };
+      const done = (ok) => { if (ok) j.arr[j.i] = im; if (j.gate) loaded++; active--; dirty = true; pump(); };
       im.onload = () => { im.decode ? im.decode().then(() => done(true), () => done(true)) : done(true); };
       im.onerror = () => done(false);
       im.src = j.dir + "/" + String(j.i).padStart(2, "0") + ".webp?v=" + FRAMES_V;
     };
-    for (let k = 0; k < 6; k++) next();
+    const fontsIn = (document.fonts && document.fonts.ready) ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 2500))]) : Promise.resolve();
+    fontsIn.then(() => push(aRest));
+    const startLater = () => push(later);
+    for (const ev of ["scroll", "wheel", "touchmove", "keydown"]) addEventListener(ev, startLater, { once:true, passive:true });
+    setTimeout(startLater, 9000);
+    pump();
   }
   function frameIn(arr, f){
     const n = arr.length, i = Math.max(0, Math.min(n-1, Math.round(f)));
@@ -1246,8 +1305,9 @@ void main(){
     } catch(e){ sgl = null; s2d = sky.getContext("2d"); }             // no WebGL: plain wing blue, still flooding out of the atom
   }
   sky.addEventListener("webglcontextlost", e => { e.preventDefault(); sgl = null; });
-  sky.addEventListener("webglcontextrestored", () => { skyGL(); skyWarm(); });
-  skyGL();
+  sky.addEventListener("webglcontextrestored", () => { skyGL(); skyWarm(); });   // (only fires after a context was made)
+  let skyTried = false;
+  const skyInit = () => { if (!skyTried){ skyTried = true; skyGL(); } };   // set up on first need, not during the opening
   function skySize(){
     const w = sky.clientWidth || innerWidth, h = sky.clientHeight || innerHeight;
     if (w === skyW && h === skyH) return;
@@ -1266,6 +1326,7 @@ void main(){
   }
   // compile and upload everything once while the page is still at the top, so the first spill of blue never hitches
   function skyWarm(){
+    skyInit();
     if (!sgl) return;
     skySize();
     sgl.bindFramebuffer(sgl.FRAMEBUFFER, skyFB); sgl.viewport(0, 0, skyGW, skyGH); sgl.useProgram(skyP1.pr); sgl.drawArrays(sgl.TRIANGLE_STRIP, 0, 4);
@@ -1275,7 +1336,9 @@ void main(){
     sgl.flush();
     sgl.clearColor(0, 0, 0, 0); sgl.clear(sgl.COLOR_BUFFER_BIT);
   }
-  setTimeout(skyWarm, 1200);
+  // warm the sky's shaders once the first screen is up and the page is idle, so it never competes with the opening
+  const skyWarmLater = () => (window.requestIdleCallback ? requestIdleCallback(skyWarm, { timeout: 2500 }) : setTimeout(skyWarm, 400));
+  const skyWarmWait = setInterval(() => { if (preDone){ clearInterval(skyWarmWait); setTimeout(skyWarmLater, 600); } }, 250);
   // how far the clouds have travelled, and which way: they rise through the story, slide right while the gravity-well cards
   // stack up to the left, and sink while the grid tiles scroll up — always against the cards
   function skyTravel(M){
@@ -1296,6 +1359,7 @@ void main(){
     const full = skyFl >= 1 || wr.top <= 0;
     skyCover = full;                                                  // the sky fills the screen: the stars beneath needn't be drawn
     if (skyFl <= .001 && !inWork){ skyCover = false; if (skyShown){ sky.style.visibility = "hidden"; skyShown = false; } return; }
+    skyInit();
     if (!skyShown){ sky.style.visibility = "visible"; skyShown = true; }
     skySize();
     const fy = M.st.top + skyFy0;
@@ -1357,7 +1421,7 @@ void main(){
   const base = {x:0, b:.86, h:.56, f:0, tx:76, rr:.52, rc:.5, vis:1};
   const K = (o) => Object.assign({}, base, o);
   const desk = [
-    K({t:0}), K({t:.22}),
+    K({t:0, b:.9, h:.54}), K({t:.22, b:.9, h:.54}),        // first screen: under the headline, clear of it
     K({t:.38, x:.17, b:.93, h:.70, f:28, tx:74, vis:2}),
     K({t:.56, x:.17, b:.93, h:.70, f:52, tx:72, vis:2}),
     K({t:.72, x:-.16,b:.93, h:.70, f:80, tx:70, vis:3}),
@@ -1646,9 +1710,10 @@ void main(){
     { name: "800PIZZA", short: "800PIZZA", cat: "Pizza restaurant", scope: "Design & Content Strategy", line: "Thin, light and crispy, served with the match.",
       loc: "Dubai, United Arab Emirates", years: "19 years", capital: "$1.5M", img: "800pizza",
       alt: "800PIZZA football campaign: illustrated pizza box, posters, menu, flour sacks and a white chef shirt with burgundy braces" },
-    { name: "Agora", short: "Agora", cat: "Coffee shop", scope: "Community & Brand Strategy", line: "Destroyed, rebuilt, and still chosen.",
+    // Agora: back on the grid once its photography arrives
+    /*{ name: "Agora", short: "Agora", cat: "Coffee shop", scope: "Community & Brand Strategy", line: "Destroyed, rebuilt, and still chosen.",
       loc: "South Lebanon to Halde", capital: "$300k", img: "agora", cs: "work/agora/",
-      alt: "Agora wordmark over a halftone coffee cup seen from above. Photography to come" },
+      alt: "Agora wordmark over a halftone coffee cup seen from above. Photography to come" },*/
     { name: "Institute for Learning Organizations", short: "ILO", cat: "Consultancy", scope: "Rebranding & Launch", line: "Shaping the future with better learning.",
       loc: "Telemark county, Norway", years: "20 years", capital: "$200k", img: "ilo-learning-organizations",
       alt: "Institute for Learning Organizations rebrand: new logo construction, social page on a desktop and the OnTrack21 workbook" },
@@ -1672,7 +1737,7 @@ void main(){
   const wkDur = (i, span) => i ? WK_DUR : innerHeight * .9 / span;
   const escH = v => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
   const wkRow = (k, v) => v ? `<div><dt>${k}</dt><dd>${escH(v)}</dd></div>` : "";
-  const wkData = p => wkRow("Location", p.loc) + wkRow("In business", p.years) + wkRow("Capital behind it*", p.capital) + wkRow("My role", p.scope);
+  const wkData = p => wkRow("Location", p.loc) + wkRow("In business", p.years) + wkRow("My role", p.scope);   // (p.capital is kept in the data, not shown)
   const wkCta = p => p.cs ? `<a class="wk-cta" href="${p.cs}">Read the case study →</a>`
                   : p.link ? `<a class="wk-cta" href="${p.link}" target="_blank" rel="noopener">See their profile ↗</a>` : "";
   const wkEl = $("#work"), wkTrk = $("#wkTrk"), wkStage = $("#wkStage"), wkPile = $("#wkPile"), wkIdx = $("#wkIdx"), wkGrid = $("#wkGrid"), wkTiles = $("#wkTiles");
@@ -1688,6 +1753,7 @@ void main(){
   const KO = ["30% 40%", "70% 30%", "50% 72%", "62% 58%"];
   wkTiles.innerHTML = WK.map((p, i) => `<article class="tile" tabindex="0" aria-label="${escH(p.name)}, ${escH(p.cat)}, ${escH(p.scope)}" style="--d:${((i % 2) * .12).toFixed(2)}s;--kb:${(-i * 2.3).toFixed(1)}s;--ko:${KO[i % 4]}">
       <div class="px"><img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async"></div>
+      <div class="lbl" aria-hidden="true"><b>${escH(p.short === "PBF" ? "PBF" : p.name)}</b><span>${escH(p.cat)} · ${escH(p.loc.split(",").pop().trim())}</span></div>
       <div class="ov"><span class="om">${escH(p.cat)}${p.cs ? " · Case study" : ""}</span><h3>${escH(p.name)}</h3><p>${escH(p.line)}</p><dl>${wkData(p)}</dl>${wkCta(p)}</div>
     </article>`).join("");
   const wkTileEls = [...wkTiles.children], wkPx = wkTileEls.map(t => t.querySelector(".px"));
@@ -1793,6 +1859,15 @@ void main(){
   }
   wkSw.forEach(b => b.addEventListener("click", () => wkSetMode(b.dataset.mode)));
   wkTileEls.forEach(t => wkReveal.observe(t));                  // the grid is what loads first
+  // the grid opens on four projects (the two case studies first); the rest are one tap away, so the offer isn't pushed far down
+  const WK_FEAT = 4, wkMoreEl = $("#wkMore"), wkMoreBtn = $("#wkMoreBtn");
+  wkTileEls.forEach((t, i) => { if (i >= WK_FEAT) t.hidden = true; });
+  wkMoreBtn.addEventListener("click", () => {
+    wkTileEls.forEach(t => { t.hidden = false; });
+    wkMoreEl.hidden = true; wkMoreBtn.setAttribute("aria-expanded", "true");
+    wkMeasure();
+    const first = wkTileEls[WK_FEAT]; if (first) first.focus({ preventScroll:true });
+  });
   addEventListener("resize", () => { if (wkMode === "well") wkLayout(); wkMeasure(); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => wkLayout());
   wkLayout();
@@ -1984,6 +2059,7 @@ void main(){
       const yKey = yp >= 1 ? "done" : String(Math.round(18 * yp));
       if (yKey !== yrShown){
         yrShown = yKey;
+        smS2.classList.toggle("done", yp >= 1);              // "View work" + the nudge appear as the counter lands
         yrNum.innerHTML = yp >= 1 ? '<span>18</span> <span class="t-script yr-w">Years</span>'
                                   : '<span>20</span><span class="b">' + String(8 + (+yKey)).padStart(2, "0") + '</span>';
       }
@@ -2073,7 +2149,15 @@ void main(){
     const y = hash === "#top" ? 0 : el.getBoundingClientRect().top + window.scrollY;
     const far = Math.abs(y - window.scrollY) > innerHeight * 1.6;
     window.scrollTo({ top: y, behavior: far || reduce ? "auto" : "smooth" });
-    if (far){ requestAnimationFrame(() => { smoothT = targetT(); dirty = true; }); }
+    if (far){
+      requestAnimationFrame(() => { smoothT = targetT(); dirty = true; });
+      // sections skipped by content-visibility settle to their real size once near; correct the landing a couple of times
+      let tries = 0; const fix = () => {
+        const y2 = hash === "#top" ? 0 : el.getBoundingClientRect().top + window.scrollY;
+        if (Math.abs(y2 - window.scrollY) > 2) window.scrollTo(0, y2);
+        if (++tries < 4) setTimeout(fix, 90);
+      }; requestAnimationFrame(() => requestAnimationFrame(fix));
+    }
     if (push) try { history.pushState(null, "", hash); } catch(e){}
     if (hash !== "#top" && el.focus){ if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1"); el.focus({ preventScroll:true }); }
     return true;
@@ -2098,7 +2182,7 @@ void main(){
     const via = (e.submitter && e.submitter.dataset.via) || "wa";
     const name = v("name"), co = v("brand"), stage = v("stage"), when = v("when"), msg = v("msg");
     const lines = [ "Hi Mo, " + (name ? "I’m " + name + (co ? " from " + co : "") + "." : "I’d like to discuss a project" + (co ? " for " + co : "") + ".") ];
-    if (stage) lines.push("Where we are: " + stage + ".");
+    if (stage) lines.push("Stage: " + stage + ".");
     if (when) lines.push("Timing: " + when + ".");
     if (msg) lines.push("", msg);
     const text = lines.join("\n");

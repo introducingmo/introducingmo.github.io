@@ -14,7 +14,7 @@
 @font-face{font-family:"Lato";font-weight:700;src:url(/fonts/lato-700.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Playfair Display";font-style:italic;font-weight:400 500;src:url(/fonts/playfair-400-italic.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Mrs Saint Delafield";src:url(/fonts/mrs-saint-delafield.woff2) format("woff2");font-display:swap}
-:root{color-scheme:dark}
+:root{color-scheme:dark;--ink:#eef2f6;--soft:#c6ced7;--accent:#2b9fe0;--line:rgba(255,255,255,.14);--gutter:clamp(16px,4vw,56px);--t-sans:Archivo,"Helvetica Neue",Arial,sans-serif;--f-ui:Lato,"Helvetica Neue",Arial,sans-serif}
 body{margin:0;min-height:100svh;display:grid;place-items:center;background:#000;color:#eef2f6;font-family:Lato,"Helvetica Neue",Arial,sans-serif;text-align:center;padding:24px;box-sizing:border-box}
 .orb{position:relative;width:120px;height:120px;margin:0 auto 34px}
 .orb::before{content:"";position:absolute;inset:0;border:1px solid rgba(110,190,240,.6);border-radius:50%}
@@ -31,8 +31,14 @@ a.b{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border
 a.b.g{background:transparent;border-color:rgba(238,242,246,.5)}
 a.b:hover{background:#fff;color:#0b5f93;border-color:#fff}
 </style>
+<link rel="stylesheet" href="/nav.css">
+<script src="/nav.js" data-home="/" defer></script>
 </head>
 <body>
+<header class="site-top">
+  <a class="mark" href="/" aria-label="Introducing Mo, home"><img src="/img/wing.png" alt="" width="240" height="254"></a>
+  <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><span class="pulse"></span><span class="pulse p2"></span><svg class="mico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="c c1" d="M3 8V3h5"/><path class="c c2" d="M16 3h5v5"/><path class="c c3" d="M21 16v5h-5"/><path class="c c4" d="M8 21H3v-5"/></svg></button>
+</header>
 <main>
   <div class="orb" aria-hidden="true"><i></i><img src="/img/wing.png" alt=""></div>
   <p class="k">Error 404</p>

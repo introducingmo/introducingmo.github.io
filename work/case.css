@@ -48,7 +48,7 @@ img{max-width:100%;display:block}
 .wrap{max-width:1180px;margin:0 auto;padding:0 var(--gutter)}
 
 /* hero */
-.hero{padding:clamp(120px,16svh,180px) 0 clamp(40px,5vw,64px)}
+.hero{padding-block:clamp(120px,16svh,180px) clamp(40px,5vw,64px)}   /* block only: the side margin comes from .wrap */
 .back{display:inline-flex;gap:8px;align-items:center;margin-bottom:34px;font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
 .back:hover{color:var(--accent)}
 .hero h1{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.03em;font-size:clamp(54px,9vw,150px);line-height:.86;text-wrap:balance}
@@ -81,7 +81,7 @@ img{max-width:100%;display:block}
 .nums b i{font-style:normal;color:var(--accent)}
 
 /* gallery */
-.gal{padding:clamp(40px,6vw,90px) 0}
+.gal{padding-block:clamp(40px,6vw,90px)}
 .gal-g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(10px,1.4vw,18px)}
 .gal figure{margin:0;grid-column:span 4;display:grid;gap:10px}
 .gal figure.w6{grid-column:span 6}
@@ -105,7 +105,7 @@ img{max-width:100%;display:block}
 .quote figcaption b{display:block;color:var(--ink);font-size:16px}
 
 /* next + talk */
-.next{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,2.4vw,30px);padding:clamp(40px,6vw,80px) 0}
+.next{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,2.4vw,30px);padding-block:clamp(40px,6vw,80px)}
 .next a{display:grid;gap:10px;padding:clamp(24px,3vw,40px);border:1px solid var(--line);border-radius:18px;text-decoration:none;background:#05080c;transition:border-color .2s,transform .2s}
 .next a:hover{border-color:var(--accent);transform:translateY(-3px)}
 .next span{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}

@@ -119,7 +119,7 @@ a{color:inherit}
 .menu-inner{display:flex;flex-direction:column;align-items:center;gap:clamp(26px,5vh,52px);margin:auto;padding:calc(env(safe-area-inset-top,0px) + 84px) var(--gutter) 40px}   /* centred when it fits, scrolls when it doesn't */
 .menu-col{display:grid;justify-items:start;gap:clamp(22px,4vh,40px);--ix:clamp(30px,3.4vw,48px);--ig:clamp(12px,1.6vw,22px)}
 .menu-nav{display:flex;flex-direction:column;gap:clamp(8px,1.6vh,18px)}
-.menu-nav a{font-family:var(--t-sans);font-weight:900;font-stretch:84%;letter-spacing:-.02em;font-size:clamp(32px,min(7vw,8.4svh),70px);line-height:1;color:var(--ink);text-decoration:none;
+.menu-nav a{font-family:var(--t-sans);font-weight:900;font-stretch:84%;letter-spacing:-.02em;font-size:min(clamp(32px,min(7vw,8.4svh),70px),calc((100vw - 2 * var(--gutter,16px) - var(--ix) - var(--ig) - 10px) / 5.9));white-space:nowrap;line-height:1;color:var(--ink);text-decoration:none;
   display:grid;grid-template-columns:var(--ix) auto;column-gap:var(--ig);align-items:baseline;opacity:0;transform:translateY(28px);transition:color .25s;will-change:transform,opacity}
 .menu-nav a .idx{justify-self:center;font-family:var(--f-ui);font-weight:700;font-size:max(11px,.26em);color:var(--accent);letter-spacing:.14em;transform:translateY(-.9em)}
 .menu-nav a:hover{color:var(--accent)}
@@ -662,7 +662,7 @@ html.js [data-rv].in{opacity:1;transform:none}
   </nav>
 </header>
 
-<div class="menu" id="menu" aria-hidden="true">
+<div class="menu" id="menu" aria-hidden="true" inert>
   <div class="menu-inner">
     <div class="menu-col">
       <nav class="menu-nav" aria-label="Menu">
@@ -1463,7 +1463,7 @@ void main(){
         tDone = setTimeout(() => menu.classList.remove("closing"), 1100);
       }
       btn.classList.toggle("active", open);
-      menu.setAttribute("aria-hidden", open ? "false" : "true"); btn.setAttribute("aria-expanded", open ? "true" : "false"); };
+      menu.setAttribute("aria-hidden", open ? "false" : "true"); menu.inert = !open; btn.setAttribute("aria-expanded", open ? "true" : "false"); };
     btn.addEventListener("click", () => setOpen(!menu.classList.contains("open") || menu.classList.contains("closing")));
     menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setOpen(false)));
     document.querySelector(".top .mark").addEventListener("click", () => setOpen(false));   // the wing always leads home
@@ -2259,7 +2259,8 @@ void main(){
 /* ---------- testimonials: the orbit ----------
    Each testimonial is a node on an orbit seen slightly from above. The front node's head turns once
    (one turn takes about as long as reading the quote), then the orbit brings the next one round.
-   Every head shares one turn, so the next head picks up exactly where the last one left off. */
+   Each head starts facing forward. The turn is ramped: it lingers on the face and sweeps quickly
+   through the back (right profile to left profile), so nobody shows the back of their head for long. */
 (() => {
   const root = document.getElementById("tm"); if (!root) return;
   const stage = root.querySelector(".tm-stage"), cv = root.querySelector(".tm-cv"), ctx = cv.getContext("2d");
@@ -2275,7 +2276,15 @@ void main(){
 
   let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, rx = 0, ry = 0, HS = 100, labels = false;
   const first = figs.map(f => f.querySelector("figcaption b").textContent.split(" ")[0].toUpperCase());
-  let off = 0, act = 0, phi = 0, prog = 0, anim = null, drag = null, dragged = 0;
+  let off = 0, act = 0, prog = 0, anim = null, drag = null, dragged = 0;
+  const turn = new Array(N).fill(0);                  // how far through its turn each head is, in time (0 to 1)
+  // time to angle: dwell density is high facing front and low facing back, so the back half takes ~20% of the turn
+  const RAMP = (() => { const n = 480, T = [0];
+    for (let i = 1; i <= n; i++) { const a = (i - .5) / n; T.push(T[i - 1] + .13 + .87 * Math.pow((1 + Math.cos(2 * Math.PI * a)) / 2, 1.6)); }
+    return T.map(v => v / T[n]); })();
+  const angle = t => { if (t <= 0) return 0; if (t >= 1) return 1;     // invert the table: what angle has the head reached after time t
+    let lo = 0, hi = RAMP.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (RAMP[m] < t) lo = m; else hi = m; }
+    return (lo + (t - RAMP[lo]) / (RAMP[hi] - RAMP[lo] || 1)) / (RAMP.length - 1); };
   let paused = false, visible = false, inView = false, lastScroll = 0, lastT = 0, raf = 0;
 
   const layout = () => {
@@ -2317,7 +2326,7 @@ void main(){
     const im = imgs[p.k]; if (!im || !ready[p.k]) return;
     const v = Math.max(0, 1 - Math.abs(p.d)); if (!v) return;
     const s = HS * (.72 + .28 * v), x = p.x - s / 2, y = p.y - 3 - s;
-    const f = (RM.matches ? 0 : phi % 1) * FR, i0 = Math.floor(f) % FR, t = f - Math.floor(f);
+    const f = (RM.matches ? 0 : angle(turn[p.k]) % 1) * FR, i0 = Math.floor(f) % FR, t = f - Math.floor(f);
     const a = v * v * (3 - 2 * v) * Math.min(1, (now - ready[p.k]) / 450);
     ctx.globalAlpha = a; tile(im, i0, x, y, s);
     if (t > .002) { ctx.globalAlpha = a * t; tile(im, (i0 + 1) % FR, x, y, s); }   // blend the two nearest frames: a smooth turn, not a flicker
@@ -2359,7 +2368,8 @@ void main(){
     old.classList.remove("is-on"); old.classList.add("is-out"); old.setAttribute("aria-hidden", "true");
     setTimeout(() => { if (!old.classList.contains("is-on")) old.classList.remove("is-out"); }, 650);
     figs[k].classList.remove("is-out"); figs[k].classList.add("is-on"); figs[k].removeAttribute("aria-hidden");
-    act = k; prog = 0; countB.textContent = String(k + 1).padStart(2, "0");
+    for (let i = 0; i < N; i++) if (i !== act) turn[i] = 0;   // the one leaving keeps its angle; everyone else waits facing forward
+    act = k; turn[k] = 0; prog = 0; countB.textContent = String(k + 1).padStart(2, "0");
     load(k); load(k + 1); load(k - 1);
   };
   const sync = dir => show(mod(Math.round(off)), dir);
@@ -2374,13 +2384,13 @@ void main(){
     raf = 0;
     const dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
     const turning = !RM.matches && !paused && visible && !document.hidden;
-    if (turning) { const dp = dt / period[act]; phi += dp; if (!drag && !anim) prog += dp; }
+    if (turning && !drag && !anim) { turn[act] = Math.min(1, turn[act] + dt / period[act]); prog = turn[act]; }
     if (anim) {
       const t = Math.min(1, (now - anim.t0) / anim.dur);
       off = anim.from + (anim.to - anim.from) * anim.e(t); sync(Math.sign(anim.to - anim.from) || 1);
       if (t >= 1) { off = anim.to; anim = null; }
     }
-    if (prog >= 1) { prog = 1; if (inView && !drag && !anim && !paused && now - lastScroll > 700) { quotes.setAttribute("aria-live", "off"); step(1, false); } }
+    if (prog >= 1) { if (inView && !drag && !anim && !paused && now - lastScroll > 700) { quotes.setAttribute("aria-live", "off"); step(1, false); } }
     draw(now);
     if (visible && (turning || anim || drag)) raf = requestAnimationFrame(tick);
   };

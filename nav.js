@@ -6,7 +6,7 @@
   if (!btn) return;
   const items = [["work","Work"],["cases","Case studies"],["services","Services"],["method","Method"],["about","About"],["contact","Contact"]];
   const menu = document.createElement("div");
-  menu.className = "menu"; menu.id = "menu"; menu.setAttribute("aria-hidden", "true");
+  menu.className = "menu"; menu.id = "menu"; menu.setAttribute("aria-hidden", "true"); menu.inert = true;   // closed: nothing inside can take focus
   menu.innerHTML = '<div class="menu-inner"><div class="menu-col"><nav class="menu-nav" aria-label="Menu">' +
     items.map(([id, t], i) => '<a href="' + home + '#' + id + '"><span class="idx">0' + (i + 1) + '</span><span class="t">' + t + '</span></a>').join("") +
     '</nav><div class="menu-contact">' +
@@ -25,7 +25,7 @@
       tDone = setTimeout(() => menu.classList.remove("closing"), 1100);
     }
     btn.classList.toggle("active", open);
-    menu.setAttribute("aria-hidden", open ? "false" : "true"); btn.setAttribute("aria-expanded", open ? "true" : "false");
+    menu.setAttribute("aria-hidden", open ? "false" : "true"); menu.inert = !open; btn.setAttribute("aria-expanded", open ? "true" : "false");
   };
   btn.addEventListener("click", () => setOpen(!menu.classList.contains("open") || menu.classList.contains("closing")));
   menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setOpen(false)));

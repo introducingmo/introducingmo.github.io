@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Daily Stories: Instagram stories for your brand, every day | Introducing Mo</title>
+<meta name="description" content="Daily Instagram stories for your brand, planned, designed and edited by Mo. Images, video, or several a day, from $60 a week.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://introducingmo.com/daily-stories/">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Daily Stories by Mo: stay in their orbit, every single day">
+<meta property="og:description" content="Daily Instagram stories for your brand. Images, video, or several a day, from $60 a week.">
+<meta property="og:url" content="https://introducingmo.com/daily-stories/">
+<meta property="og:image" content="https://introducingmo.com/daily-stories/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="preload" href="../fonts/archivo-900-86.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/playfair-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/lato-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="m/cafe.webp" as="image">
+<link rel="stylesheet" href="../nav.css">
+<script src="../nav.js" data-home="../" defer></script>
+<script>document.documentElement.classList.add("js")</script>
+<style>
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-900-86.woff2) format("woff2");font-weight:900;font-stretch:86%;font-display:swap}
+@font-face{font-family:"Lato";font-weight:300;src:url(../fonts/lato-300.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Lato";font-weight:400;src:url(../fonts/lato-400.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Lato";font-weight:700;src:url(../fonts/lato-700.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:400 500;src:url(../fonts/playfair-400-italic.woff2) format("woff2");font-display:swap}
+/* Daily Stories: a page of introducingmo.com. Same world: black, wing blue, Archivo / Playfair italic / Lato, the orbit */
+:root{
+  --bg:#000;--btn:#1872b3;--ink:#eef2f6;--soft:#c6ced7;--muted:#9ba7b4;--accent:#2b9fe0;--line:rgba(255,255,255,.12);
+  --t-sans:"Archivo","Helvetica Neue",Arial,sans-serif;--f-serif:"Playfair Display",Georgia,"Times New Roman",serif;--f-ui:"Lato","Helvetica Neue",Arial,sans-serif;
+  --gutter:clamp(16px,4vw,56px);--ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img,video{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:12px;top:-60px;z-index:50;background:var(--btn);color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:700}
+.skip:focus{top:12px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:var(--gutter)}
+
+/* header: the site's own */
+.top{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:calc(env(safe-area-inset-top,0px) + 16px) var(--gutter) 14px;transition:background .4s}
+.top.scrolled{background:linear-gradient(180deg,rgba(0,0,0,.85),rgba(0,0,0,.55) 64%,transparent)}
+.mark{display:block;width:28px;height:29px}
+.mark img{width:100%;height:100%;object-fit:contain}
+.nav{display:flex;align-items:center;gap:clamp(16px,2.4vw,36px)}
+.nav ul{display:flex;gap:clamp(16px,2.2vw,32px);list-style:none;margin:0;padding:0}
+.nav ul a{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;opacity:.86}
+.nav ul a:hover{opacity:1;color:var(--accent)}
+.cta-top{display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:background .2s,color .2s}
+.cta-top:hover{background:#fff;color:#0b5f93}
+
+/* type & buttons */
+.eb{margin:0 0 18px;display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+.eb::before{content:"";flex:none;width:28px;height:1px;background:currentColor}
+.eb.c{justify-content:center}.eb.c::after{content:"";flex:none;width:28px;height:1px;background:currentColor}
+h1,h2{font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.02em;line-height:.92;margin:0;text-wrap:balance}
+h1 em,h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-stretch:100%;letter-spacing:-.01em;color:var(--accent)}
+h2{font-size:clamp(40px,5.6vw,84px)}
+.lede{font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:var(--soft);max-width:34em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 26px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
+  font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;border:1px solid var(--btn);cursor:pointer;font-family:inherit;
+  transition:background .2s,color .2s,border-color .2s,transform .25s var(--ease)}
+.btn:hover{background:#fff;border-color:#fff;color:#0b5f93;transform:translateY(-2px)}
+.btn.ghost{background:transparent;border-color:rgba(238,242,246,.5);color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#000}
+.btn svg{width:18px;height:18px;fill:currentColor;flex:none}
+
+/* reveal on scroll */
+html.js [data-rv]{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+html.js [data-rv].in{opacity:1;transform:none}
+html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-delay:.24s}
+@media (prefers-reduced-motion:reduce){html.js [data-rv]{opacity:1;transform:none;transition:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:grid;align-items:center;padding:calc(env(safe-area-inset-top,0px) + 110px) 0 clamp(60px,8vw,110px);overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;opacity:.55;
+  background-image:radial-gradient(rgba(139,151,164,.32) 1px,transparent 1.4px);background-size:28px 28px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 70% 45%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 70% 45%,#000 20%,transparent 75%)}
+.hero::after{content:"";position:absolute;z-index:-1;width:min(900px,120vw);aspect-ratio:1;right:-12%;top:8%;border-radius:50%;
+  background:radial-gradient(circle,rgba(43,159,224,.22),rgba(43,159,224,0) 62%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"copy phone" "acts phone";align-items:center;column-gap:clamp(30px,5vw,80px)}
+.hero-copy{grid-area:copy;align-self:end}
+.hero-acts{grid-area:acts;align-self:start}
+.hero h1{font-size:clamp(50px,6.6vw,104px)}
+.hero h1 .ln{display:block}
+.hero .lede{margin:26px 0 0}
+.hero-acts .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.from{margin:22px 0 0;font-size:14px;color:var(--muted);letter-spacing:.02em}
+.from b{color:var(--ink);font-weight:700}
+.trust{margin:30px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.trust li{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 12px}
+
+/* the phone, in orbit */
+.phone-zone{grid-area:phone;position:relative;display:grid;place-items:center;padding:30px 0}
+.par{will-change:transform}
+.orbit{--ow:min(560px,150%);position:absolute;left:50%;top:56%;width:var(--ow);aspect-ratio:1;margin-left:calc(var(--ow) / -2);margin-top:calc(var(--ow) / -2);
+  border-radius:50%;border:1.5px solid rgba(43,159,224,.55);transform:rotateX(76deg);pointer-events:none}
+.orbit.back{z-index:0;opacity:.7}
+.orbit.front{z-index:3;clip-path:inset(50% 0 0 0);border:2px solid rgba(140,208,250,.95);box-shadow:0 0 14px rgba(43,159,224,.7),inset 0 0 14px rgba(43,159,224,.5)}
+.orbit .spin{position:absolute;inset:0;border-radius:50%;animation:spin 9s linear infinite}
+.orbit .spin i{position:absolute;left:50%;top:-6px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#a8dcf8;box-shadow:0 0 16px 4px rgba(43,159,224,.85)}
+.orbit .spin i:nth-child(2){top:auto;bottom:-6px;width:8px;height:8px;margin-left:-4px;opacity:.7}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.orbit .spin{animation:none}}
+.float{position:absolute;z-index:1;width:clamp(96px,10vw,150px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
+.float img{width:100%;height:100%;object-fit:cover}
+.float.f1{left:-4%;top:12%;rotate:-9deg}
+.float.f2{right:-6%;top:44%;rotate:8deg}
+.float.f3{left:4%;bottom:4%;rotate:5deg;width:clamp(80px,8vw,120px)}
+
+.phone{position:relative;z-index:2;width:clamp(258px,25vw,340px);animation:bob 7s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+@media (prefers-reduced-motion:reduce){.phone{animation:none}}
+.ph-body{position:relative;aspect-ratio:390/844;border-radius:16%/7.4%;padding:3.4%;background:linear-gradient(145deg,#3a3f46,#15181c 40%,#2a2e33 70%,#0c0d0f);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 0 0 2px #050607,0 40px 80px rgba(0,0,0,.75),0 0 90px rgba(43,159,224,.18)}
+.ph-body::before,.ph-body::after{content:"";position:absolute;width:1.2%;border-radius:2px;background:#2b2f34}
+.ph-body::before{left:-1%;top:19%;height:6%;box-shadow:0 70px 0 0 #2b2f34,0 0 0 0 transparent}
+.ph-body::after{right:-1%;top:27%;height:11%}
+.ph-screen{position:relative;width:100%;height:100%;border-radius:12.4%/5.8%;overflow:hidden;background:#000;display:flex;flex-direction:column;
+  container-type:inline-size;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.ph-status{flex:none;height:11.6cqw;display:flex;align-items:center;justify-content:space-between;padding:0 7.5cqw 0 9cqw;font-size:4.1cqw;font-weight:700;color:#fff;position:relative;z-index:4}
+.ph-island{position:absolute;left:50%;top:2.6cqw;width:30cqw;height:8.6cqw;margin-left:-15cqw;border-radius:99px;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.04)}
+.ph-icons{display:flex;gap:1.4cqw;align-items:center}
+.ph-icons svg{height:3.2cqw;width:auto;fill:#fff}
+.ph-story{position:relative;flex:none;width:100%;aspect-ratio:9/16;border-radius:2.6cqw;overflow:hidden;perspective:150cqw;background:#0b0d10;cursor:pointer}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;visibility:hidden;transform-origin:50% 50%;background:#0b0d10}
+.face.on,.face.go{visibility:visible}
+.face .media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.face img.media{transform-origin:50% 40%}
+.face.on img.media{animation:kb var(--d,4s) linear forwards}
+@keyframes kb{from{transform:scale(1.03)}to{transform:scale(1.12) translateY(-1.5%)}}
+@media (prefers-reduced-motion:reduce){.face.on img.media{animation:none}}
+.face .shade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.face .grad{position:absolute;inset:0 0 auto;height:26%;background:linear-gradient(180deg,rgba(0,0,0,.5),transparent);pointer-events:none}
+.face .bar{position:absolute;left:2.4cqw;right:2.4cqw;top:2.4cqw;height:.7cqw;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
+.face .bar b{display:block;height:100%;width:100%;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
+.face .hd{position:absolute;left:3.2cqw;right:3.2cqw;top:5.6cqw;display:flex;align-items:center;gap:2.4cqw;color:#fff;font-size:3.6cqw;line-height:1.1;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.face .av{flex:none;width:8.6cqw;height:8.6cqw;border-radius:50%;padding:.55cqw;background:conic-gradient(from 210deg,#2b9fe0,#a8dcf8,#1872b3,#2b9fe0)}
+.face .av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#0b1622;border:.5cqw solid #000;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:3.6cqw;color:#fff}
+.face .nm{font-weight:700}
+.face .tm{opacity:.75;margin-left:.4cqw}
+.face .x{margin-left:auto;display:flex;gap:3.4cqw;align-items:center}
+.face .x svg{width:4.6cqw;height:4.6cqw;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round}
+.face .x svg.dots{fill:#fff;stroke:none}
+.face .tag{position:absolute;left:50%;bottom:6cqw;transform:translateX(-50%);white-space:nowrap;padding:1.6cqw 3.4cqw;border-radius:2cqw;background:rgba(255,255,255,.94);color:#0b1622;
+  font-size:3.3cqw;font-weight:700;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.ph-reply{flex:1;display:flex;align-items:center;gap:3.6cqw;padding:0 4.6cqw 3cqw}
+.ph-reply .pill{flex:1;height:10.6cqw;border-radius:99px;border:1px solid rgba(255,255,255,.55);display:flex;align-items:center;padding:0 4.4cqw;color:rgba(255,255,255,.85);font-size:3.7cqw}
+.ph-reply svg{width:6.8cqw;height:6.8cqw;fill:none;stroke:#fff;stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+.ph-home{position:absolute;left:50%;bottom:1.8cqw;width:34cqw;height:1.3cqw;margin-left:-17cqw;border-radius:99px;background:rgba(255,255,255,.85);z-index:4}
+.ph-hint{position:absolute;inset:auto 0 22%;margin:auto;width:max-content;padding:2cqw 4cqw;border-radius:99px;background:rgba(0,0,0,.55);color:#fff;font-size:3.4cqw;
+  opacity:0;transition:opacity .4s;pointer-events:none;z-index:5}
+.ph-story.paused .ph-hint{opacity:1}
+
+.now{position:absolute;z-index:4;left:50%;bottom:-6px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:999px;
+  background:rgba(8,12,18,.78);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap;font-size:13px}
+.now .dot{width:8px;height:8px;border-radius:50%;background:#ff4d5e;box-shadow:0 0 10px #ff4d5e;animation:blink 1.6s ease-in-out infinite}
+.now.paused .dot{background:var(--muted);box-shadow:none;animation:none}
+@keyframes blink{50%{opacity:.35}}
+.now .lbl{font-weight:700;letter-spacing:.02em}
+.now .k{color:var(--muted);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
+.now button{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:none;color:#fff;display:grid;place-items:center;cursor:pointer;padding:0}
+.now button:hover{border-color:var(--accent);background:rgba(43,159,224,.16)}
+.now button svg{width:14px;height:14px;fill:currentColor}
+.now .i-play{display:none}
+.now.paused .i-play{display:block}.now.paused .i-pause{display:none}
+
+/* ---------- why ---------- */
+.sec{padding-block:clamp(90px,11vw,170px)}
+.why-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,80px);align-items:end}
+.why-head .lede{margin:0}
+.pts{margin:clamp(50px,6vw,90px) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.pts li{position:relative;padding:clamp(26px,3vw,40px);border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#07090c,#030405);overflow:hidden}
+.pts li::before{content:"";position:absolute;right:-30%;top:-40%;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(43,159,224,.14),transparent 65%)}
+.pts .n{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;color:var(--accent);letter-spacing:.06em}
+.pts h3{margin:46px 0 10px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(26px,2.4vw,34px);line-height:1;letter-spacing:-.01em}
+.pts p{margin:0;color:var(--soft);font-size:16px}
+
+/* ---------- variety: two rows that slide against each other as you scroll ---------- */
+.variety{padding-block:clamp(70px,9vw,140px);overflow:hidden;border-block:1px solid var(--line);background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(24,114,179,.18),transparent 70%)}
+.variety .wrap{text-align:center;margin-bottom:clamp(40px,5vw,70px)}
+.variety .lede{margin:20px auto 0}
+.rows{display:grid;gap:clamp(14px,1.6vw,22px)}
+.row-t{display:flex;gap:clamp(14px,1.6vw,22px);width:max-content;will-change:transform}
+.card{position:relative;flex:none;width:clamp(150px,15vw,220px);aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#0b0d10;border:1px solid rgba(255,255,255,.08)}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.card:hover img{transform:scale(1.06)}
+.card span{position:absolute;left:10px;bottom:10px;padding:5px 9px;border-radius:8px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff}
+.card .play{position:absolute;right:10px;top:10px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center}
+.card .play svg{width:10px;height:10px;fill:#fff;margin-left:2px}
+
+/* ---------- how ---------- */
+.steps{margin:clamp(50px,6vw,90px) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:s;position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:23px;height:1px;background:linear-gradient(90deg,var(--accent),rgba(43,159,224,.15))}
+.steps li{position:relative;padding:0 clamp(14px,2vw,30px) 0 0}
+.steps .k{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#000;border:1.5px solid var(--accent);
+  font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;color:var(--accent)}
+.steps h3{margin:28px 0 10px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(24px,2.2vw,30px);line-height:1}
+.steps p{margin:0;color:var(--soft);font-size:16px}
+
+/* ---------- pricing ---------- */
+.pricing{position:relative}
+.pricing .head{text-align:center}
+.pricing .head .lede{margin:20px auto 0}
+.toggles{display:flex;justify-content:center;flex-wrap:wrap;gap:14px 18px;margin:clamp(36px,4vw,56px) 0 clamp(30px,3.4vw,46px)}
+.seg{position:relative;display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;padding:5px;border-radius:999px;background:#0a0d11;border:1px solid var(--line);margin:0;min-width:0}
+.seg legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 20px;border-radius:999px;cursor:pointer;
+  font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;transition:color .3s}
+.seg input:checked + label{color:#fff}
+.seg input:focus-visible + label{outline:2px solid var(--accent);outline-offset:2px}
+.seg .pill{position:absolute;z-index:0;top:5px;bottom:5px;left:0;width:calc(50% - 5px);transform:translateX(5px);border-radius:999px;background:var(--btn);box-shadow:0 6px 20px rgba(24,114,179,.45);transition:transform .45s var(--ease),width .45s var(--ease)}
+.seg .save{font-size:10px;letter-spacing:.1em;padding:3px 7px;border-radius:99px;background:rgba(255,255,255,.16);color:#fff}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,24px);align-items:stretch}
+.plan{position:relative;display:flex;flex-direction:column;padding:clamp(28px,2.8vw,40px);border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,#080a0d,#030405);
+  transition:transform .5s var(--ease),border-color .3s}
+.plan:hover{transform:translateY(-6px);border-color:rgba(43,159,224,.45)}
+.plan.hot{border-color:rgba(43,159,224,.7);background:linear-gradient(180deg,#0a1a28,#04080d 60%);box-shadow:0 30px 90px rgba(24,114,179,.22)}
+.plan .flag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);padding:6px 14px;border-radius:99px;background:var(--accent);color:#03121f;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.plan .pk{font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.plan h3{margin:12px 0 6px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(30px,2.8vw,40px);line-height:1}
+.plan .what{margin:0;color:var(--soft);font-size:15.5px;min-height:calc(2 * 1.6em)}
+.price{display:flex;align-items:flex-end;gap:8px;margin:28px 0 4px}
+.price .cur{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:30px;line-height:1.1;align-self:flex-start;margin-top:8px}
+.price .amt{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(70px,6.4vw,96px);line-height:.82;letter-spacing:-.03em;font-variant-numeric:tabular-nums;display:inline-block;transition:transform .35s var(--ease),opacity .35s}
+.price .amt.flip{transform:translateY(-14px);opacity:0}
+.price .per{color:var(--muted);font-size:15px;padding-bottom:6px}
+.bill{margin:0;font-size:14px;color:var(--muted);min-height:1.6em}
+.bill s{opacity:.7}
+.plan ul{list-style:none;margin:26px 0 30px;padding:22px 0 0;border-top:1px solid var(--line);display:grid;gap:12px;font-size:15.5px}
+.plan li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;color:var(--ink)}
+.plan li svg{width:18px;height:18px;margin-top:4px;fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.plan li.dim{color:var(--muted)}
+.plan .btn{margin-top:auto;width:100%}
+.plan:not(.hot) .btn{background:transparent;border-color:rgba(238,242,246,.4);color:var(--ink)}
+.plan:not(.hot) .btn:hover{background:var(--ink);border-color:var(--ink);color:#000}
+.fine{margin:clamp(26px,3vw,38px) auto 0;max-width:46em;text-align:center;font-size:14.5px;color:var(--muted)}
+.fine b{color:var(--ink)}
+
+/* ---------- faq ---------- */
+.faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,6vw,100px);align-items:start}
+.faq h2{position:sticky;top:110px}
+.qa{border-top:1px solid var(--line)}
+.qa details{border-bottom:1px solid var(--line)}
+.qa summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;cursor:pointer;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(21px,2vw,27px);line-height:1.1}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary i{flex:none;position:relative;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);transition:transform .4s var(--ease),border-color .3s}
+.qa summary i::before,.qa summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.6px;margin:-.8px 0 0 -6px;background:var(--accent)}
+.qa summary i::after{transform:rotate(90deg);transition:transform .4s var(--ease)}
+.qa details[open] summary i{transform:rotate(180deg);border-color:var(--accent)}
+.qa details[open] summary i::after{transform:rotate(0)}
+.qa p{margin:0 0 26px;color:var(--soft);max-width:38em}
+.qa a{color:var(--accent)}
+
+/* ---------- close ---------- */
+.talk{position:relative;margin:0 var(--gutter) clamp(40px,6vw,80px);padding:clamp(48px,7vw,110px) clamp(24px,5vw,72px);border-radius:28px;background:linear-gradient(135deg,#1b78b8,#0b5287);text-align:center;overflow:hidden;isolation:isolate}
+.talk::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;background-image:radial-gradient(rgba(255,255,255,.4) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(ellipse at center,#000,transparent 70%);mask-image:radial-gradient(ellipse at center,#000,transparent 70%)}
+.talk h2{font-size:clamp(42px,6vw,92px)}
+.talk h2 em{color:#fff}
+.talk p{margin:20px auto 32px;max-width:30em;font-size:18px}
+.talk .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.talk .btn{background:#fff;border-color:#fff;color:#0b5f93}
+.talk .btn:hover{background:#08131f;border-color:#08131f;color:#fff}
+.talk .btn.ghost{background:transparent;border-color:#fff;color:#fff}
+.talk .btn.ghost:hover{background:#fff;color:#0b5f93}
+.foot{border-top:1px solid var(--line);padding:32px var(--gutter) calc(env(safe-area-inset-bottom,0px) + 32px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.foot a{text-decoration:none;color:var(--soft)}
+.foot a:hover{color:var(--accent)}
+.foot nav{display:flex;gap:22px;flex-wrap:wrap}
+
+/* ---------- phones & tablets ---------- */
+@media (max-width:980px){
+  .hero{padding-top:calc(env(safe-area-inset-top,0px) + 96px);min-height:0}
+  .hero-grid{grid-template-columns:1fr;grid-template-areas:"copy" "phone" "acts";text-align:center}
+  .hero .lede,.hero-acts{margin-inline:auto}
+  .hero h1 .ln{display:inline}
+  .eb.hero-eb{justify-content:center}.eb.hero-eb::after{content:"";flex:none;width:28px;height:1px;background:currentColor}
+  .phone-zone{padding:44px 0 56px}
+  .hero-acts .row{justify-content:center;margin-top:10px}
+  .trust{justify-content:center}
+  .why-head,.faq{grid-template-columns:1fr}
+  .faq h2{position:static}
+  .pts{grid-template-columns:1fr}
+  .pts h3{margin-top:26px}
+  .steps{grid-template-columns:1fr 1fr;row-gap:44px}
+  .steps::before{display:none}
+  .plans{grid-template-columns:1fr;max-width:480px;margin-inline:auto;gap:30px}
+  .plan .what{min-height:0}
+}
+@media (max-width:560px){
+  .nav ul{display:none}
+  .cta-top{min-height:34px;padding:0 14px;font-size:11px}
+  .hero h1{font-size:clamp(44px,12.4vw,60px)}
+  .hero-acts .row{display:grid;grid-template-columns:1fr;gap:10px}
+  .orbit{--ow:min(150%,calc(100vw - 24px))}
+  .float{width:84px;border-radius:10px}
+  .float.f1{left:-2%;top:6%}
+  .float.f2{right:-3%;top:46%}
+  .float.f3{display:none}
+  .steps{grid-template-columns:1fr}
+  .seg label{padding:0 14px;letter-spacing:.1em;font-size:11.5px}
+  .toggles{flex-direction:column;align-items:center}
+  .foot{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the page</a>
+<header class="top" id="top">
+  <a class="mark" href="../" aria-label="Introducing Mo, home"><img src="../img/wing.png" alt="" width="240" height="254"></a>
+  <nav class="nav" aria-label="Main">
+    <ul><li><a href="#how">How it works</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li><li><a href="../#work">My work</a></li></ul>
+    <a class="cta-top" href="#pricing">Get started</a>
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><span class="pulse"></span><span class="pulse p2"></span><svg class="mico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="c c1" d="M3 8V3h5"/><path class="c c2" d="M16 3h5v5"/><path class="c c3" d="M21 16v5h-5"/><path class="c c4" d="M8 21H3v-5"/></svg></button>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- ======== hero ======== -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eb hero-eb" data-rv>Daily stories</p>
+        <h1 id="h1" data-rv="2"><span class="ln">Stay in their orbit,</span> <em class="ln">every single day.</em></h1>
+        <p class="lede" data-rv="3">Instagram stories for your brand, planned, designed and edited by me, ready to post every day. Images, video, or several a day.</p>
+      </div>
+
+      <div class="phone-zone">
+        <div class="float f1 par" data-par=".22" aria-hidden="true"><img src="m/oysters.webp" alt="" width="720" height="1280" loading="lazy"></div>
+        <div class="float f2 par" data-par="-.18" aria-hidden="true"><img src="m/jewelry-1.webp" alt="" width="720" height="1280" loading="lazy"></div>
+        <div class="float f3 par" data-par=".12" aria-hidden="true"><img src="m/churros.webp" alt="" width="720" height="1280" loading="lazy"></div>
+        <div class="orbit back" aria-hidden="true"><div class="spin"><i></i><i></i></div></div>
+        <div class="par" data-par="-.06" style="position:relative;z-index:2">
+          <div class="phone">
+            <div class="ph-body">
+              <div class="ph-screen">
+                <div class="ph-status" aria-hidden="true"><span>9:41</span><span class="ph-island"></span>
+                  <span class="ph-icons"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.4A10.2 10.2 0 0 0 8 .4C5.2.4 2.6 1.5.7 3.4L2 4.8a8.3 8.3 0 0 1 6-2.4zm0 3.9c1.3 0 2.5.5 3.4 1.3l1.4-1.4A6.8 6.8 0 0 0 8 4.3c-1.9 0-3.6.7-4.8 1.9l1.4 1.4c.9-.8 2.1-1.3 3.4-1.3zM8 12l2.3-2.3a3.3 3.3 0 0 0-4.6 0z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="2.2" y="2.2" width="17.6" height="7.6" rx="1.8"/><path d="M25 4v4c.8-.3 1.4-1.1 1.4-2S25.8 4.3 25 4z" fill-opacity=".5"/></svg></span></div>
+                <div class="ph-story" id="stage" role="region" aria-roledescription="carousel" aria-label="Example stories. Tap the right side for the next one, the left side to go back, hold to pause.">
+                  <span class="ph-hint" aria-hidden="true">Paused</span>
+                </div>
+                <div class="ph-reply" aria-hidden="true"><span class="pill">Send message</span>
+                  <svg viewBox="0 0 24 24"><path d="M12 20.3s-7.8-4.6-8.9-9.8C2.4 7 4.6 4 7.6 4c2 0 3.4 1.1 4.4 2.6C13 5.1 14.4 4 16.4 4c3 0 5.2 3 4.5 6.5-1.1 5.2-8.9 9.8-8.9 9.8z"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M21.5 3 3 10.2l7.3 2.6L13 20.6z"/><path d="m10.3 12.8 4.3-4.2"/></svg></div>
+                <span class="ph-home" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="orbit front" aria-hidden="true"><div class="spin"><i></i><i></i></div></div>
+        <div class="now" id="now"><span class="dot" aria-hidden="true"></span><span class="lbl" id="nowLbl">Café &amp; brunch</span><span class="k" id="nowK">Video</span>
+          <button type="button" id="nowBtn" aria-label="Pause the example stories"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></button></div>
+      </div>
+
+      <div class="hero-acts" data-rv="3">
+        <div class="row"><a class="btn" href="#pricing">See the packages</a><a class="btn ghost" id="heroWa" href="https://wa.me/96170783482?text=Hi%20Mo%2C%20I%27m%20interested%20in%20daily%20stories." target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+        <p class="from">From <b>$60 a week</b>, billed monthly. Posting included for $5 more.</p>
+        <ul class="trust" aria-label="Industries in these examples"><li>Cafés</li><li>Restaurants</li><li>Jewelry</li><li>Construction</li><li>Freight</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== why ======== -->
+  <section class="sec wrap" aria-labelledby="why-h">
+    <div class="why-head">
+      <h2 id="why-h" data-rv>Gravity is a <em>daily habit.</em></h2>
+      <p class="lede" data-rv="2">Brands that pull people in don’t post louder, they show up more often. Stories are the easiest place to do it, and the hardest to keep up. That part is mine.</p>
+    </div>
+    <ul class="pts">
+      <li data-rv><span class="n">01</span><h3>First thing they see</h3><p>Stories sit at the top of the app, above the feed. A story every day keeps your name in the first row your followers tap.</p></li>
+      <li data-rv="2"><span class="n">02</span><h3>Always on brand</h3><p>One look, one voice, every day. People start recognising you before they read your name.</p></li>
+      <li data-rv="3"><span class="n">03</span><h3>No daily scramble</h3><p>I plan the week, design and edit every story, and post them if you want. You approve in WhatsApp and get on with your day.</p></li>
+    </ul>
+  </section>
+
+  <!-- ======== variety ======== -->
+  <section class="variety" aria-labelledby="var-h">
+    <div class="wrap">
+      <p class="eb c" data-rv>Any shelf, kitchen or site</p>
+      <h2 id="var-h" data-rv="2">Any industry. <em>Every day.</em></h2>
+      <p class="lede" data-rv="3">From a brunch spot to a steel plant, the job is the same: give people a reason to tap again tomorrow.</p>
+    </div>
+    <div class="rows" aria-hidden="true">
+      <div class="row-t" data-dir="1">
+        <div class="card"><img src="m/cafe.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Café</span></div>
+        <div class="card"><img src="m/burger.webp" alt="" loading="lazy" width="720" height="1280"><span>Burgers</span></div>
+        <div class="card"><img src="m/steel.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Steel</span></div>
+        <div class="card"><img src="m/jewelry-2.webp" alt="" loading="lazy" width="720" height="1280"><span>Jewelry</span></div>
+        <div class="card"><img src="m/pizza.webp" alt="" loading="lazy" width="720" height="1280"><span>Pizza</span></div>
+        <div class="card"><img src="m/freight-nile.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Freight</span></div>
+        <div class="card"><img src="m/fatayer.webp" alt="" loading="lazy" width="720" height="1280"><span>Bakery</span></div>
+        <div class="card"><img src="m/formwork.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Construction</span></div>
+        <div class="card"><img src="m/oysters.webp" alt="" loading="lazy" width="720" height="1280"><span>Fine dining</span></div>
+      </div>
+      <div class="row-t" data-dir="-1">
+        <div class="card"><img src="m/warehouse.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Logistics build</span></div>
+        <div class="card"><img src="m/eclairs.webp" alt="" loading="lazy" width="720" height="1280"><span>Pastry</span></div>
+        <div class="card"><img src="m/jewelry-1.webp" alt="" loading="lazy" width="720" height="1280"><span>Jewelry</span></div>
+        <div class="card"><img src="m/coffee.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Coffee</span></div>
+        <div class="card"><img src="m/shawarma.webp" alt="" loading="lazy" width="720" height="1280"><span>Street food</span></div>
+        <div class="card"><img src="m/freight-port.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Freight</span></div>
+        <div class="card"><img src="m/churros.webp" alt="" loading="lazy" width="720" height="1280"><span>Desserts</span></div>
+        <div class="card"><img src="m/steel.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Steel</span></div>
+        <div class="card"><img src="m/burger.webp" alt="" loading="lazy" width="720" height="1280"><span>Burgers</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== how ======== -->
+  <section class="sec wrap" id="how" aria-labelledby="how-h">
+    <p class="eb" data-rv>How it works</p>
+    <h2 id="how-h" data-rv="2">Four steps, <em>then it runs itself.</em></h2>
+    <ol class="steps">
+      <li data-rv><span class="k">01</span><h3>Kickoff</h3><p>A short call about your brand, your offers and who you want to reach. You send your logo, photos and any footage you have.</p></li>
+      <li data-rv="2"><span class="k">02</span><h3>The week, planned</h3><p>Each week I share the plan: what goes out every day, and why.</p></li>
+      <li data-rv="3"><span class="k">03</span><h3>Stories, every day</h3><p>Designed and edited for 9:16, on brand, ready to post. You approve in WhatsApp.</p></li>
+      <li data-rv><span class="k">04</span><h3>Posted, or yours to post</h3><p>Pick “with posting” and I publish them on your account. Or keep the keys and post them yourself.</p></li>
+    </ol>
+  </section>
+
+  <!-- ======== pricing ======== -->
+  <section class="sec pricing wrap" id="pricing" aria-labelledby="price-h">
+    <div class="head">
+      <p class="eb c" data-rv>Packages</p>
+      <h2 id="price-h" data-rv="2">Pick your <em>pace.</em></h2>
+      <p class="lede" data-rv="3">Every package is a story a day, designed for your brand. Choose how you pay, and whether I post them for you.</p>
+    </div>
+    <div class="toggles" data-rv>
+      <fieldset class="seg" id="segBill"><legend>How you pay</legend><span class="pill" aria-hidden="true"></span>
+        <input type="radio" name="bill" id="billM" value="month" checked><label for="billM">Pay by month <span class="save">Save up to 30%</span></label>
+        <input type="radio" name="bill" id="billW" value="week"><label for="billW">Pay by week</label>
+      </fieldset>
+      <fieldset class="seg" id="segPost"><legend>Posting</legend><span class="pill" aria-hidden="true"></span>
+        <input type="radio" name="post" id="postN" value="0" checked><label for="postN">Without posting</label>
+        <input type="radio" name="post" id="postY" value="1"><label for="postY">With posting</label>
+      </fieldset>
+    </div>
+    <div class="plans">
+      <article class="plan" data-plan="0" data-rv>
+        <p class="pk">Package 01</p><h3>Stills</h3><p class="what">Daily stories, images only.</p>
+        <div class="price" aria-live="polite"><span class="cur">$</span><span class="amt">60</span><span class="per">/ week</span></div>
+        <p class="bill">$240 billed every 4 weeks</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A new story every day</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Designed images: offers, products, moments</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A weekly plan you approve</li>
+          <li class="post"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg><span>Ready to post, sent to you daily</span></li>
+        </ul>
+        <a class="btn" href="#" target="_blank" rel="noopener">Start with Stills</a>
+      </article>
+      <article class="plan hot" data-plan="1" data-rv="2">
+        <span class="flag">Most picked</span>
+        <p class="pk">Package 02</p><h3>Motion</h3><p class="what">Daily stories, images and videos.</p>
+        <div class="price" aria-live="polite"><span class="cur">$</span><span class="amt">80</span><span class="per">/ week</span></div>
+        <p class="bill">$320 billed every 4 weeks</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A new story every day</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Edited video stories, plus designed images</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A weekly plan you approve</li>
+          <li class="post"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg><span>Ready to post, sent to you daily</span></li>
+        </ul>
+        <a class="btn" href="#" target="_blank" rel="noopener">Start with Motion</a>
+      </article>
+      <article class="plan" data-plan="2" data-rv="3">
+        <p class="pk">Package 03</p><h3>Always On</h3><p class="what">Multiple stories every day, images and videos.</p>
+        <div class="price" aria-live="polite"><span class="cur">$</span><span class="amt">90</span><span class="per">/ week</span></div>
+        <p class="bill">$360 billed every 4 weeks</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Several stories a day, morning to night</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Edited video stories, plus designed images</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A weekly plan you approve</li>
+          <li class="post"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg><span>Ready to post, sent to you daily</span></li>
+        </ul>
+        <a class="btn" href="#" target="_blank" rel="noopener">Start with Always On</a>
+      </article>
+    </div>
+    <p class="fine" id="fine" data-rv>A <b>minimum of 4 weeks</b> applies to these prices. Paying by week has no minimum, at a higher weekly rate.</p>
+  </section>
+
+  <!-- ======== faq ======== -->
+  <section class="sec wrap" id="faq" aria-labelledby="faq-h">
+    <div class="faq">
+      <h2 id="faq-h" data-rv>Before you <em>ask.</em></h2>
+      <div class="qa" data-rv="2">
+        <details open><summary>Is there a minimum commitment?<i aria-hidden="true"></i></summary><p>The monthly prices need a minimum of 4 weeks. If you’d rather not commit, pay by week: no minimum, at a higher weekly rate. You can switch to monthly whenever you’re ready.</p></details>
+        <details><summary>What does “with posting” mean?<i aria-hidden="true"></i></summary><p>I publish the stories on your account for you, for $5 more a week. Without posting, you receive each story ready to post, and you publish it yourself.</p></details>
+        <details><summary>What do I need to send you?<i aria-hidden="true"></i></summary><p>Your logo and any brand guidelines, plus photos and footage of your products, your space and your team. The more raw material you send, the more variety your stories get.</p></details>
+        <details><summary>What’s the difference between the packages?<i aria-hidden="true"></i></summary><p>Stills is designed images only. Motion adds edited video stories, which is where most of the attention goes. Always On gives you several stories a day instead of one, so you show up from morning to night.</p></details>
+        <details><summary>Do you do more than stories?<i aria-hidden="true"></i></summary><p>Yes. Daily stories is one service. For brand strategy, identity and launch campaigns, see <a href="../#services">my services</a> and <a href="../#cases">case studies</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== close ======== -->
+  <section class="talk" aria-labelledby="talk-h" data-rv>
+    <h2 id="talk-h">Tomorrow’s story <em>could be yours.</em></h2>
+    <p>Tell me about your brand and I’ll suggest the right package. The first conversation is on me.</p>
+    <div class="row"><a class="btn" id="talkWa" href="https://wa.me/96170783482?text=Hi%20Mo%2C%20I%27m%20interested%20in%20daily%20stories." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm0-21.6A11.8 11.8 0 0 0 1.9 18l-1.7 6 6.2-1.6A11.8 11.8 0 1 0 12 .2z"/></svg>Start on WhatsApp</a><a class="btn ghost" href="mailto:introducingmo@gmail.com?subject=Daily%20stories">Email me</a></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Build A Better Brand. 💙 · Mohamad Abou Younes, Beirut</span>
+  <nav aria-label="Footer"><a href="../">Home</a><a href="../#work">All work</a><a href="../#cases">Case studies</a><a href="../#services">Services</a><a href="mailto:introducingmo@gmail.com?subject=Daily%20stories">Email</a></nav>
+</footer>
+
+<script>
+/* ---------- the phone: stories back to back ----------
+   Videos lead; stills sit between them. Food never follows food and no industry follows itself, wrap-around included.
+   Only the current story and the next one are loaded. Moving to the next brand turns the cube, the way stories do. */
+(() => {
+  const S = [
+    { k: "v", src: "cafe",         lbl: "Café & brunch",  a: "C", t: "2h" },
+    { k: "v", src: "steel",        lbl: "Steel structures", a: "S", t: "4h" },
+    { k: "i", src: "oysters",      lbl: "Fine dining",    a: "F", t: "1h" },
+    { k: "v", src: "freight-nile", lbl: "Freight & cargo", a: "F", t: "3h" },
+    { k: "v", src: "coffee",       lbl: "Coffee bar",     a: "C", t: "5h" },
+    { k: "i", src: "jewelry-1",    lbl: "Jewelry",        a: "J", t: "2h" },
+    { k: "i", src: "burger",       lbl: "Burger joint",   a: "B", t: "6h" },
+    { k: "v", src: "warehouse",    lbl: "Logistics build", a: "L", t: "1h" },
+    { k: "i", src: "shawarma",     lbl: "Street food",    a: "S", t: "3h" },
+    { k: "v", src: "freight-port", lbl: "Freight & cargo", a: "F", t: "7h" },
+    { k: "i", src: "churros",      lbl: "Desserts",       a: "D", t: "2h" },
+    { k: "v", src: "formwork",     lbl: "Construction",   a: "C", t: "4h" },
+    { k: "i", src: "fatayer",      lbl: "Bakery",         a: "B", t: "1h" },
+    { k: "i", src: "jewelry-2",    lbl: "Jewelry",        a: "J", t: "5h" },
+  ];
+  const IMG_MS = 3400, TURN_MS = 620;
+  const stage = document.getElementById("stage"); if (!stage) return;
+  const now = document.getElementById("now"), nowLbl = document.getElementById("nowLbl"), nowK = document.getElementById("nowK"), nowBtn = document.getElementById("nowBtn");
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const X = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>', DOTS = '<svg class="dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>';
+  const faces = S.map(s => {
+    const f = document.createElement("div"); f.className = "face";
+    f.innerHTML = (s.k === "v"
+      ? `<video class="media" muted playsinline preload="none" poster="m/${s.src}.webp" disablepictureinpicture></video>`
+      : `<img class="media" alt="" decoding="async">`) +
+      `<span class="grad"></span><span class="bar"><b></b></span><div class="hd"><span class="av"><span>${s.a}</span></span><span class="nm">${s.lbl}</span><span class="tm">${s.t}</span><span class="x">${DOTS}${X}</span></div><span class="shade"></span>`;
+    stage.appendChild(f); return f;
+  });
+  const media = i => faces[i].querySelector(".media"), bar = i => faces[i].querySelector(".bar b"), shade = i => faces[i].querySelector(".shade");
+  const prep = i => { const s = S[i], m = media(i); if (m.dataset.ready) return; m.dataset.ready = 1;
+    if (s.k === "v") { m.preload = "auto"; m.src = `m/${s.src}.mp4`; } else m.src = `m/${s.src}.webp`; };
+  const N = S.length, mod = i => ((i % N) + N) % N;
+
+  let begun = 0, cur = 0, t0 = 0, held = 0, elapsed = 0, dur = IMG_MS, paused = RM, visible = false, turning = false, raf = 0, holdT = 0, userPaused = RM;
+  const durOf = i => S[i].k === "v" ? ((media(i).duration || 6) * 1000) : IMG_MS;
+  const label = () => { nowLbl.textContent = S[cur].lbl; nowK.textContent = S[cur].k === "v" ? "Video" : "Photo"; };
+  const playMedia = () => {
+    const m = media(cur);
+    if (S[cur].k === "v") { m.currentTime = Math.min(m.currentTime, Math.max(0, (m.duration || 99) - .05)); const p = m.play(); if (p) p.catch(() => {}); }
+  };
+  const start = i => {
+    cur = mod(i); prep(cur); const nx = mod(cur + 1); clearTimeout(start.t); start.t = setTimeout(() => prep(nx), 1800);   // fetch the next one once this one is playing
+    faces.forEach((f, k) => { f.classList.toggle("on", k === cur); f.classList.remove("go"); f.style.transform = ""; shade(k).style.opacity = 0; if (k !== cur) bar(k).style.transform = "scaleX(0)"; });
+    const m = media(cur); faces[cur].style.setProperty("--d", IMG_MS + "ms");
+    if (S[cur].k === "v") { m.currentTime = 0; }
+    elapsed = 0; t0 = begun = performance.now(); dur = durOf(cur);
+    label(); if (!paused && visible) playMedia(); kick();
+  };
+  // the cube turn: both faces swing round a shared centre, a half story-width behind the screen
+  const turn = dir => {
+    if (turning) return; turning = true;
+    const a = cur, b = mod(cur + dir); prep(b); prep(mod(b + dir));
+    const ma = media(a); if (S[a].k === "v") ma.pause();
+    faces[b].classList.add("go"); bar(b).style.transform = "scaleX(0)";
+    if (S[b].k === "v") { const mb = media(b); mb.currentTime = 0; }
+    const T = RM ? 1 : TURN_MS, ts = performance.now();
+    const step = t => {
+      const p = Math.min(1, (t - ts) / T), e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      if (RM) { faces[a].style.opacity = 1 - e; }
+      else {
+        faces[a].style.transform = `translateZ(-50cqw) rotateY(${-90 * e * dir}deg) translateZ(50cqw)`;
+        faces[b].style.transform = `translateZ(-50cqw) rotateY(${90 * (1 - e) * dir}deg) translateZ(50cqw)`;
+        shade(a).style.opacity = e * .55; shade(b).style.opacity = (1 - e) * .55;
+      }
+      if (p < 1) requestAnimationFrame(step);
+      else { faces[a].style.opacity = ""; turning = false; start(b); }
+    };
+    requestAnimationFrame(step);
+  };
+  const tick = t => {
+    raf = 0;
+    if (!paused && visible && !turning) {
+      const m = media(cur), v = S[cur].k === "v";
+      const stuck = v && (m.error || (m.readyState < 2 && t - begun > 5000));   // can't play or still loading after 5 s: show the poster on the clock
+      if (stuck) { if (!dur || dur > 20000) dur = 6000; elapsed += t - t0; }
+      else if (v && m.readyState >= 2 && !m.paused) { dur = durOf(cur); elapsed = m.currentTime * 1000; }
+      else if (!v || m.readyState >= 2) { elapsed += t - t0; }   // stills, or a video the browser won't autoplay: run on the clock
+      t0 = t;
+      bar(cur).style.transform = `scaleX(${Math.min(1, elapsed / dur)})`;
+      if (elapsed >= dur - 30) { turn(1); }
+    } else t0 = t;
+    if (visible) raf = requestAnimationFrame(tick);
+  };
+  const kick = () => { if (!raf && visible) { t0 = performance.now(); raf = requestAnimationFrame(tick); } };
+  const setPaused = (v, user) => {
+    paused = v; if (user) userPaused = v;
+    stage.classList.toggle("paused", v); now.classList.toggle("paused", v);
+    nowBtn.setAttribute("aria-label", v ? "Play the example stories" : "Pause the example stories");
+    const m = media(cur); if (S[cur].k === "v") { if (v) m.pause(); else playMedia(); }
+    faces[cur].querySelectorAll("img.media").forEach(im => im.style.animationPlayState = v ? "paused" : "running");
+    kick();
+  };
+  faces.forEach((f, i) => { if (S[i].k === "v") media(i).addEventListener("ended", () => { if (i === cur && !turning) turn(1); }); });
+
+  // tap right for next, left for back; hold anywhere to pause, like the real thing
+  let downAt = 0;
+  stage.addEventListener("pointerdown", e => { downAt = performance.now(); holdT = setTimeout(() => { if (!paused) { setPaused(true); stage.dataset.held = 1; } }, 260); });
+  const release = e => {
+    clearTimeout(holdT);
+    if (stage.dataset.held) { delete stage.dataset.held; if (!userPaused) setPaused(false); return; }
+    if (e.type !== "pointerup" || performance.now() - downAt > 260) return;
+    const r = stage.getBoundingClientRect(); turn(e.clientX - r.left < r.width * .32 ? -1 : 1);
+  };
+  stage.addEventListener("pointerup", release); stage.addEventListener("pointercancel", release); stage.addEventListener("pointerleave", e => { clearTimeout(holdT); if (stage.dataset.held) release(e); });
+  stage.addEventListener("contextmenu", e => e.preventDefault());
+  stage.tabIndex = 0;
+  stage.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); turn(1); } else if (e.key === "ArrowLeft") { e.preventDefault(); turn(-1); } else if (e.key === " ") { e.preventDefault(); setPaused(!paused, true); } });
+  nowBtn.addEventListener("click", () => setPaused(!paused, true));
+
+  // play only while the phone is on screen and the tab is open
+  new IntersectionObserver(es => es.forEach(en => {
+    visible = en.isIntersecting;
+    const m = media(cur);
+    if (visible) { if (!paused) playMedia(); kick(); } else if (S[cur].k === "v") m.pause();
+  }), { threshold: .25 }).observe(stage);
+  document.addEventListener("visibilitychange", () => { const m = media(cur); if (document.hidden) { if (S[cur].k === "v") m.pause(); } else if (!paused && visible) playMedia(); });
+  setPaused(paused); start(0);
+})();
+
+/* ---------- pricing: how you pay, and whether I post ---------- */
+(() => {
+  const P = { month: [60, 80, 90], week: [80, 110, 130] }, POST = 5;
+  const names = ["Package 01, Stills (images only)", "Package 02, Motion (images and videos)", "Package 03, Always On (multiple stories a day)"];
+  const plans = [...document.querySelectorAll(".plan")];
+  const segBill = document.getElementById("segBill"), segPost = document.getElementById("segPost"), fine = document.getElementById("fine");
+  const wa = t => "https://wa.me/96170783482?text=" + encodeURIComponent(t);
+  let first = true;
+  const render = () => {
+    const bill = document.querySelector('input[name="bill"]:checked').value, post = document.querySelector('input[name="post"]:checked').value === "1";
+    pills();
+    plans.forEach((pl, i) => {
+      const v = P[bill][i] + (post ? POST : 0), amt = pl.querySelector(".amt");
+      if (first || amt.textContent === String(v)) amt.textContent = v;
+      else { amt.classList.add("flip"); setTimeout(() => { amt.textContent = v; amt.classList.remove("flip"); }, 180); }
+      const weekly = P.week[i] + (post ? POST : 0);
+      pl.querySelector(".bill").innerHTML = bill === "month" ? `$${v * 4} billed every 4 weeks · <s>$${weekly}</s> by week` : "Billed weekly · no minimum";
+      pl.querySelector(".post span").textContent = post ? "Posted on your account for you" : "Ready to post, sent to you daily";
+      pl.querySelector(".btn").href = wa(`Hi Mo, I'd like daily stories: ${names[i]}, paid by ${bill}, ${post ? "with" : "without"} posting ($${v} a week).`);
+    });
+    fine.innerHTML = bill === "month"
+      ? "A <b>minimum of 4 weeks</b> applies to these prices. Paying by week has no minimum, at a higher weekly rate."
+      : "Paying by week has <b>no minimum</b>. Commit to 4 weeks and pay $" + P.month.map(x => x + (post ? POST : 0)).join(", $") + " a week instead.";
+    first = false;
+  };
+  // the highlight takes the size of whichever option is picked, so it fits labels of any length
+  function pills() { [segBill, segPost].forEach(seg => { const lab = seg.querySelector("input:checked + label"), pill = seg.querySelector(".pill");
+    pill.style.width = lab.offsetWidth + "px"; pill.style.transform = `translateX(${lab.offsetLeft}px)`; }); }
+  document.querySelectorAll('.seg input').forEach(i => i.addEventListener("change", render));
+  addEventListener("resize", pills); if (document.fonts) document.fonts.ready.then(pills);
+  render();
+})();
+
+/* ---------- motion: reveals, parallax, the sliding rows, the header ---------- */
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll("[data-rv]").forEach(el => io.observe(el));
+  const top = document.getElementById("top");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { addEventListener("scroll", () => top.classList.toggle("scrolled", scrollY > 30), { passive: true }); return; }
+  const pars = [...document.querySelectorAll("[data-par]")], rows = [...document.querySelectorAll(".row-t")], variety = document.querySelector(".variety");
+  let ticking = false;
+  const frame = () => {
+    ticking = false; const vh = innerHeight;
+    top.classList.toggle("scrolled", scrollY > 30);
+    pars.forEach(el => { const r = el.parentElement.getBoundingClientRect(); const c = r.top + r.height / 2 - vh / 2; el.style.transform = `translate3d(0,${(c * +el.dataset.par).toFixed(1)}px,0)`; });
+    if (variety) { const r = variety.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) {
+      const p = (vh - r.top) / (vh + r.height);
+      rows.forEach(row => { const span = Math.max(0, row.scrollWidth - innerWidth); const d = +row.dataset.dir;
+        const x = d > 0 ? -p * span * .9 : -(1 - p) * span * .9; row.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`; }); } }
+  };
+  const on = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener("scroll", on, { passive: true }); addEventListener("resize", on); frame();
+})();
+</script>
+</body>
+</html>

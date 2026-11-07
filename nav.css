@@ -1,6 +1,7 @@
 /* Introducing Mo: the shared menu (the diamond), used on every page that isn't the home page.
    The rules are the home page's own, so it behaves the same everywhere. */
 :root{--accent-soft:rgba(43,159,224,.18)}
+@font-face{font-family:"Archivo";src:url(fonts/archivo-500-86.woff2) format("woff2");font-weight:500;font-stretch:86%;font-display:swap}
 .menu-btn{color:var(--accent,#2b9fe0)}
 .menu-btn{position:relative;width:34px;height:34px;padding:6px;background:none;border:0;cursor:pointer;display:grid;place-items:center;pointer-events:auto}
 .menu-btn .mico{width:22px;height:22px;overflow:visible;transition:transform .55s cubic-bezier(.3,.8,.25,1),filter .3s}
@@ -20,11 +21,13 @@
   clip-path:circle(0px at calc(100% - 48px) 46px);transition:clip-path .75s cubic-bezier(.76,0,.24,1);pointer-events:none;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
 .menu.open{clip-path:circle(160% at calc(100% - 48px) 46px);pointer-events:auto}
 .menu-inner{display:flex;flex-direction:column;align-items:center;gap:clamp(26px,5vh,52px);margin:auto;padding:calc(env(safe-area-inset-top,0px) + 84px) var(--gutter) 40px}   /* centred when it fits, scrolls when it doesn't */
-.menu-col{display:grid;justify-items:start;gap:clamp(22px,4vh,40px);--ix:clamp(30px,3.4vw,48px);--ig:clamp(12px,1.6vw,22px)}
-.menu-nav{display:flex;flex-direction:column;gap:clamp(8px,1.6vh,18px)}
-.menu-nav a{font-family:var(--t-sans);font-weight:900;font-stretch:84%;letter-spacing:-.02em;font-size:min(clamp(32px,min(7vw,8.4svh),70px),calc((100vw - 2 * var(--gutter,16px) - var(--ix) - var(--ig) - 10px) / 5.9));white-space:nowrap;line-height:1;color:var(--ink);text-decoration:none;
+.menu-col{display:grid;justify-items:start;gap:clamp(30px,5.4vh,56px);--ix:clamp(30px,3.4vw,48px);--ig:clamp(14px,1.8vw,26px)}
+.menu-nav{display:flex;flex-direction:column;gap:clamp(14px,2.9vh,30px)}
+.menu-nav a{font-family:var(--t-sans);font-weight:500;font-stretch:86%;letter-spacing:-.01em;font-size:min(clamp(28px,min(4.4vw,5.2svh),48px),calc((100vw - 2 * var(--gutter,16px) - var(--ix) - var(--ig) - 10px) / 5.6));white-space:nowrap;line-height:1;color:var(--ink);text-decoration:none;
   display:grid;grid-template-columns:var(--ix) auto;column-gap:var(--ig);align-items:baseline;opacity:0;transform:translateY(28px);transition:color .25s;will-change:transform,opacity}
-.menu-nav a .idx{justify-self:center;font-family:var(--f-ui);font-weight:700;font-size:max(11px,.26em);color:var(--accent);letter-spacing:.14em;transform:translateY(-.9em)}
+.menu-nav a .idx{justify-self:center;font-family:var(--f-ui);font-weight:400;font-size:11px;color:var(--accent);letter-spacing:.22em;transform:translateY(-.55em)}
+.menu-nav a .t{display:inline-block;transition:transform .45s cubic-bezier(.2,.7,.2,1),color .25s}
+.menu-nav a:hover .t{transform:translateX(8px)}
 .menu-nav a:hover{color:var(--accent)}
 .menu.open .menu-nav a{animation:menuIn .6s cubic-bezier(.2,.7,.2,1) forwards}
 .menu.open .menu-nav a:nth-child(1){animation-delay:.22s}

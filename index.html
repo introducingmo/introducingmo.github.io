@@ -27,6 +27,8 @@
 <style>
 /* fonts are self-hosted (all four families are SIL Open Font License) */
 @font-face{font-family:"Archivo";src:url(fonts/archivo-900-86.woff2) format("woff2");font-weight:900;font-stretch:86%;font-display:swap}
+@font-face{font-family:"Archivo";src:url(fonts/archivo-600-86.woff2) format("woff2");font-weight:600;font-stretch:86%;font-display:swap}
+@font-face{font-family:"Archivo";src:url(fonts/archivo-500-86.woff2) format("woff2");font-weight:500;font-stretch:86%;font-display:swap}
 @font-face{font-family:"Lato";font-weight:300;src:url(fonts/lato-300.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Lato";font-weight:400;src:url(fonts/lato-400.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Lato";font-weight:700;src:url(fonts/lato-700.woff2) format("woff2");font-display:swap}
@@ -117,11 +119,13 @@ a{color:inherit}
   clip-path:circle(0px at calc(100% - 48px) 46px);transition:clip-path .75s cubic-bezier(.76,0,.24,1);pointer-events:none;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
 .menu.open{clip-path:circle(160% at calc(100% - 48px) 46px);pointer-events:auto}
 .menu-inner{display:flex;flex-direction:column;align-items:center;gap:clamp(26px,5vh,52px);margin:auto;padding:calc(env(safe-area-inset-top,0px) + 84px) var(--gutter) 40px}   /* centred when it fits, scrolls when it doesn't */
-.menu-col{display:grid;justify-items:start;gap:clamp(22px,4vh,40px);--ix:clamp(30px,3.4vw,48px);--ig:clamp(12px,1.6vw,22px)}
-.menu-nav{display:flex;flex-direction:column;gap:clamp(8px,1.6vh,18px)}
-.menu-nav a{font-family:var(--t-sans);font-weight:900;font-stretch:84%;letter-spacing:-.02em;font-size:min(clamp(32px,min(7vw,8.4svh),70px),calc((100vw - 2 * var(--gutter,16px) - var(--ix) - var(--ig) - 10px) / 5.9));white-space:nowrap;line-height:1;color:var(--ink);text-decoration:none;
+.menu-col{display:grid;justify-items:start;gap:clamp(30px,5.4vh,56px);--ix:clamp(30px,3.4vw,48px);--ig:clamp(14px,1.8vw,26px)}
+.menu-nav{display:flex;flex-direction:column;gap:clamp(14px,2.9vh,30px)}
+.menu-nav a{font-family:var(--t-sans);font-weight:500;font-stretch:86%;letter-spacing:-.01em;font-size:min(clamp(28px,min(4.4vw,5.2svh),48px),calc((100vw - 2 * var(--gutter,16px) - var(--ix) - var(--ig) - 10px) / 5.6));white-space:nowrap;line-height:1;color:var(--ink);text-decoration:none;
   display:grid;grid-template-columns:var(--ix) auto;column-gap:var(--ig);align-items:baseline;opacity:0;transform:translateY(28px);transition:color .25s;will-change:transform,opacity}
-.menu-nav a .idx{justify-self:center;font-family:var(--f-ui);font-weight:700;font-size:max(11px,.26em);color:var(--accent);letter-spacing:.14em;transform:translateY(-.9em)}
+.menu-nav a .idx{justify-self:center;font-family:var(--f-ui);font-weight:400;font-size:11px;color:var(--accent);letter-spacing:.22em;transform:translateY(-.55em)}
+.menu-nav a .t{display:inline-block;transition:transform .45s cubic-bezier(.2,.7,.2,1),color .25s}
+.menu-nav a:hover .t{transform:translateX(8px)}
 .menu-nav a:hover{color:var(--accent)}
 .menu.open .menu-nav a{animation:menuIn .6s cubic-bezier(.2,.7,.2,1) forwards}
 .menu.open .menu-nav a:nth-child(1){animation-delay:.22s}
@@ -210,7 +214,7 @@ a{color:inherit}
 .wk-card{--cw:560px;position:absolute;left:0;top:0;width:var(--cw);box-sizing:border-box;margin:0;border-radius:10px;overflow:hidden;
   background:#08131f;color:#fff;will-change:transform,opacity;transform-origin:50% 50%;visibility:hidden}
 .wk-card::after{content:"";position:absolute;inset:0;background:#05101c;opacity:var(--fog,0);pointer-events:none}   /* older cards sink back into depth */
-.wk-media{aspect-ratio:4/5;overflow:hidden;background:#0d2236}
+.wk-media{display:block;aspect-ratio:4/5;overflow:hidden;background:#0d2236}
 .wk-media img{width:100%;height:100%;object-fit:cover;display:block}
 .wk-info{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:8px 22px;padding:16px 18px 18px;align-items:start}
 .wk-meta{grid-column:1 / -1;display:flex;justify-content:space-between;gap:12px;margin:0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.72)}
@@ -221,6 +225,10 @@ a{color:inherit}
 .wk-data div{min-width:0}
 .wk-data dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.66)}
 .wk-data dd{margin:3px 0 0;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk-data .w,.tile dl .w{grid-column:1 / -1}
+.wk-data .w dd,.tile dl .w dd{white-space:normal;line-height:1.35}
+.wk-cta.soon,.tile .wk-cta.soon{color:rgba(255,255,255,.62);border-bottom-color:rgba(255,255,255,.3);cursor:default}
+.wk-cta.soon:hover{color:rgba(255,255,255,.62)}
 .wk-cta{grid-column:1 / -1;justify-self:end;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#7cc8f2;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
 .wk-cta:hover{color:#fff}
 .wk-cta:focus-visible{outline:2px solid #fff;outline-offset:3px}
@@ -276,6 +284,15 @@ a{color:inherit}
 .tile.open .ov,.tile:focus-visible .ov{opacity:1}
 .tile.open .ov>*,.tile:focus-visible .ov>*{transform:none;opacity:1}
 .tile:focus-visible{box-shadow:0 0 0 2px #fff}
+/* the corner arrow: a case study behind this tile (a link only where one exists) */
+.tile-arr{position:absolute;top:12px;right:12px;z-index:3;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;box-shadow:0 4px 14px rgba(3,14,26,.25);transition:background .25s,transform .35s cubic-bezier(.2,.7,.2,1)}
+.tile-arr svg{width:15px;height:15px;fill:none;stroke:var(--btn);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
+a.tile-arr:hover{background:var(--btn);transform:translate(2px,-2px)}
+a.tile-arr:hover svg{stroke:#fff}
+a.tile-arr:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (max-width:639px){.tile-arr{top:8px;right:8px;width:24px;height:24px}.tile-arr svg{width:12px;height:12px}}
+.tile .ov>.tile-link{position:absolute;inset:0;z-index:0;opacity:1;transform:none}
+.tile .ov>:not(.tile-link){position:relative;z-index:1}
 @media (prefers-reduced-motion:reduce){.tile{transition:none;opacity:1;transform:none}.tile .px img{animation:none}.tile .ov,.tile .ov>*{transition:none}}
 
 /* ---------- section 1B: gravity ---------- */
@@ -407,7 +424,7 @@ html.locked,html.locked body{overflow:hidden;overscroll-behavior:none}
   content-visibility:auto;contain-intrinsic-size:auto 1400px}   /* laid out only when near the screen */
 .wrap{max-width:1240px;margin:0 auto}
 .eb{margin:0 0 18px;display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
-.eb::before{content:"";flex:none;width:28px;height:1px;background:currentColor}
+.eb::before{content:none}
 .h2{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.025em;font-size:clamp(46px,7vw,112px);line-height:.9;color:var(--ink);text-wrap:balance}
 .h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-stretch:100%;letter-spacing:-.01em;color:var(--accent)}
 .lead{margin:26px 0 0;max-width:34em;font-size:clamp(18px,1.55vw,22px);line-height:1.5;color:var(--soft)}
@@ -416,15 +433,17 @@ html.js [data-rv]{opacity:0;transform:translateY(26px);transition:opacity .9s cu
 html.js [data-rv].in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html.js [data-rv]{opacity:1;transform:none;transition:none}}
 
-.case-list{display:grid;gap:clamp(48px,6vw,90px);margin-top:clamp(44px,5.5vw,80px)}
-.case{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,4.5vw,72px);align-items:center;text-decoration:none;color:inherit}
+.cases{padding-top:clamp(140px,16vw,240px)}   /* air between the work and the case studies */
+.case-list{display:grid;gap:clamp(96px,12vw,180px);margin-top:clamp(56px,7vw,100px)}
+.case{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,84px);align-items:center;text-decoration:none;color:inherit}
 .case:nth-child(even) .case-img{order:2}
-.case-img{display:block;border-radius:14px;overflow:hidden;aspect-ratio:4/3.3;background:#0b1622}
+.case-img{display:block;position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1;background:#0b1622}
+.case-par{position:absolute;left:0;right:0;top:-8%;bottom:-8%;display:block;will-change:transform}   /* the photo drifts inside its frame as you scroll */
 .case-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
 .case:hover .case-img img{transform:scale(1.04)}
 .case-body{display:grid;gap:16px;align-content:center;justify-items:start}
-.case-k{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.case-h{font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.02em;font-size:clamp(36px,4.4vw,68px);line-height:.92;color:var(--ink);text-wrap:balance}
+.case-k{font-size:12px;font-weight:700;letter-spacing:.16em;line-height:1.6;text-transform:uppercase;color:var(--accent);max-width:34em}
+.case-h{font-family:var(--t-sans);font-weight:600;font-stretch:86%;letter-spacing:-.02em;font-size:clamp(36px,4.4vw,66px);line-height:.95;color:var(--ink);text-wrap:balance}
 .case-r{font-family:var(--f-serif);font-style:italic;font-size:clamp(22px,2.1vw,32px);line-height:1.2;color:var(--ink)}
 .case-r b{font-family:var(--t-sans);font-style:normal;font-weight:900;font-stretch:86%;color:var(--accent);letter-spacing:-.01em}
 .case-d{font-size:17px;line-height:1.55;color:var(--soft);max-width:30em}
@@ -433,21 +452,23 @@ html.js [data-rv].in{opacity:1;transform:none}
 .case:hover .case-go i{transform:translateX(5px)}
 
 .proof{padding-block:clamp(80px,9vw,130px)}
-.stats{list-style:none;margin:0 0 clamp(70px,8vw,120px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;border-block:1px solid rgba(255,255,255,.12);padding:clamp(32px,4vw,52px) 0}
+.tm-skyw{position:absolute;inset:0;z-index:0;overflow:clip;pointer-events:none}
+.tm-sky{position:sticky;top:0;display:block;width:100%;height:100vh;height:100lvh}
+.proof .wrap{position:relative;z-index:1}
+.stats{list-style:none;margin:0 0 clamp(70px,8vw,120px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;border-block:1px solid rgba(255,255,255,.12);padding:clamp(32px,4vw,52px) 0}
 .stats li{display:grid;gap:12px;align-content:start}
 .stats b{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(52px,6vw,96px);line-height:.85;color:var(--ink);letter-spacing:-.02em}
 .stats span{font-size:15.5px;line-height:1.4;color:var(--soft);max-width:14em}
 /* testimonials: an orbit of the people who said it. Each head rides its node; the front one turns once, then the next arrives */
 .tm-eb{justify-content:center}
-.tm-eb::after{content:"";flex:none;width:28px;height:1px;background:currentColor}
 .tm{position:relative;outline:none;touch-action:pan-y;-webkit-user-select:none;user-select:none;margin-top:6px}
 .tm:focus-visible{outline:1px solid rgba(43,159,224,.55);outline-offset:12px;border-radius:16px}
-.tm-stage{position:relative;height:var(--tm-h,134px);cursor:grab}
-@media (min-width:780px){.tm-stage{height:var(--tm-h,180px)}}
+.tm-stage{position:relative;height:var(--tm-h,165px);cursor:grab}
+@media (min-width:780px){.tm-stage{height:var(--tm-h,213px)}}
 .tm.drag .tm-stage{cursor:grabbing}
 .tm-cv{position:absolute;inset:0;width:100%;height:100%;display:block}
-.tm-quotes{display:grid;max-width:760px;margin:clamp(18px,2.4vw,30px) auto 0;text-align:center}
-.tm-q{grid-area:1/1;margin:0;display:grid;align-content:start;gap:20px;opacity:0;visibility:hidden;transform:translateX(calc(var(--d,1) * 26px));
+.tm-quotes{display:grid;max-width:760px;margin:clamp(6px,1vw,12px) auto 0;text-align:center}
+.tm-q{grid-area:1/1;margin:0;display:grid;align-content:start;gap:18px;opacity:0;visibility:hidden;transform:translateX(calc(var(--d,1) * 26px));
   transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1),visibility 0s .6s}
 .tm-q.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .6s cubic-bezier(.2,.7,.2,1) .12s,transform .7s cubic-bezier(.2,.7,.2,1) .12s,visibility 0s}
 .tm-q.is-out{transform:translateX(calc(var(--d,1) * -26px))}
@@ -469,7 +490,11 @@ html.js [data-rv].in{opacity:1;transform:none}
 
 .svc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.2vw,30px);margin-top:clamp(52px,6vw,84px)}
 .svc-c{padding:clamp(28px,3vw,44px);border:1px solid rgba(255,255,255,.12);border-radius:18px;background:linear-gradient(180deg,#07101a,#040608);display:flex;flex-direction:column;gap:14px}
-.svc-n{margin:0;font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--accent)}
+.svc-n{margin:0;font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.svc-go{align-self:flex-start;margin-top:4px;font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:4px}
+.svc-go i{font-style:normal;display:inline-block;transition:transform .3s}
+.svc-go:hover{color:var(--accent)}
+.svc-go:hover i{transform:translateX(5px)}
 .svc-c h3{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.015em;font-size:clamp(28px,2.7vw,42px);line-height:.98;color:var(--ink)}
 .svc-s{margin:0;font-family:var(--f-serif);font-style:italic;font-size:clamp(18px,1.45vw,21px);line-height:1.4;color:var(--soft)}
 .svc-l{margin:12px 0 0;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
@@ -481,11 +506,19 @@ html.js [data-rv].in{opacity:1;transform:none}
 .scope{margin-top:clamp(24px,3vw,36px);padding:clamp(22px,2.6vw,32px);border-radius:16px;border:1px solid rgba(43,159,224,.45);background:rgba(43,159,224,.07)}
 .scope-h{margin:0 0 8px;font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
 .scope p:not(.scope-h){margin:0;font-size:16.5px;line-height:1.55;color:var(--soft);max-width:60em}
+.scope p:not(.scope-h) + p{margin-top:10px}
 .scope b{color:var(--ink)}
-.svc-foot{margin-top:clamp(40px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.svc-foot{margin:clamp(72px,9vw,130px) 0 clamp(72px,9vw,130px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .svc-foot p{margin:0;font-family:var(--f-serif);font-style:italic;font-size:clamp(20px,1.9vw,28px);color:var(--ink)}
-.playbook{margin-top:clamp(48px,6vw,80px);padding:clamp(28px,3.4vw,48px);border-radius:18px;background:linear-gradient(135deg,#1b78b8,#0d5a90);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.playbook{position:relative;overflow:hidden;isolation:isolate;margin-top:0;padding:clamp(28px,3.4vw,48px);border-radius:18px;background:linear-gradient(135deg,#1b78b8,#0d5a90);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
 .playbook .eb{color:#fff}
+.pb-fx{position:absolute;inset:0;z-index:-1;pointer-events:none;--p:0}
+.pb-fx i{position:absolute;display:block;border-radius:50%;will-change:transform}
+.pb-fx .r1{width:520px;height:520px;right:-160px;top:-190px;border:1px solid rgba(255,255,255,.22);transform:translate3d(0,calc(var(--p) * 60px),0) rotate(calc(var(--p) * 40deg))}
+.pb-fx .r2{width:300px;height:300px;right:-40px;top:-70px;border:1px dashed rgba(255,255,255,.28);transform:translate3d(0,calc(var(--p) * 34px),0) rotate(calc(var(--p) * -70deg))}
+.pb-fx .d1{width:12px;height:12px;right:80px;top:20px;background:#a8dcf8;box-shadow:0 0 18px 4px rgba(168,220,248,.7);transform:translate3d(calc(var(--p) * -90px),calc(var(--p) * 70px),0)}
+.pb-fx .d2{width:7px;height:7px;right:330px;bottom:26px;background:#fff;opacity:.8;transform:translate3d(calc(var(--p) * 60px),calc(var(--p) * -40px),0)}
+.pb-fx .g{width:640px;height:640px;left:-220px;bottom:-420px;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 62%);transform:translate3d(calc(var(--p) * 50px),calc(var(--p) * -50px),0)}
 .playbook h3{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(30px,3.2vw,50px);line-height:.95;letter-spacing:-.015em}
 .playbook p:not(.eb){margin:12px 0 0;max-width:34em;font-size:17px;line-height:1.5}
 .playbook .btn.ghost{border-color:#fff;color:#fff}
@@ -497,8 +530,12 @@ html.js [data-rv].in{opacity:1;transform:none}
 .steps h3{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(26px,2.3vw,36px);line-height:1;letter-spacing:-.015em;color:var(--ink)}
 .steps p{margin:0;font-size:16px;line-height:1.55;color:var(--soft)}
 .laws{margin-top:clamp(60px,7vw,100px);display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,64px);align-items:start}
-.laws-ph{margin:0;border-radius:14px;overflow:hidden}
-.laws-ph img{width:100%;height:auto;display:block}
+.laws-ph{position:relative;margin:0;border-radius:14px;overflow:hidden;will-change:transform}
+.laws-ph img{width:100%;height:auto;display:block;transform-origin:60% 45%;animation:lawsKb 18s ease-in-out infinite alternate}
+@keyframes lawsKb{from{transform:scale(1.03)}to{transform:scale(1.14) translate3d(-1.6%,-1.2%,0)}}
+.laws-ph::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);background-size:250% 100%;animation:sheen 7s ease-in-out infinite}
+@keyframes sheen{0%,55%{background-position:130% 0}100%{background-position:-60% 0}}
+@media (prefers-reduced-motion:reduce){.laws-ph img,.laws-ph::after{animation:none}}
 .laws details{border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:clamp(22px,2.6vw,34px);background:#05070a}
 .laws summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 18px}
 .laws summary::-webkit-details-marker{display:none}
@@ -523,6 +560,11 @@ html.js [data-rv].in{opacity:1;transform:none}
 .facts li{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:16px;color:var(--ink)}
 .facts .k{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-top:.25em}
 .facts a{color:var(--accent);font-weight:700}
+.facts li.pres{align-items:center}
+.pres-i{display:flex;flex-wrap:wrap;gap:8px}
+.pres-i a{box-sizing:border-box;width:36px;height:36px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);border-radius:50%;color:var(--soft);transition:color .2s,border-color .2s,background .2s,transform .2s}
+.pres-i a:hover{color:#fff;border-color:var(--accent);background:rgba(43,159,224,.16);transform:translateY(-2px)}
+.pres-i svg{width:16px;height:16px;fill:currentColor}
 .cta-row.l{justify-content:flex-start;margin-top:32px}
 
 .contact{background:radial-gradient(ellipse 90% 70% at 85% 10%,rgba(43,159,224,.14),transparent 60%),#000}
@@ -558,6 +600,10 @@ html.js [data-rv].in{opacity:1;transform:none}
 .end{position:relative;z-index:2;background:#000;border-top:1px solid rgba(255,255,255,.1);content-visibility:auto;contain-intrinsic-size:auto 420px;padding:clamp(56px,7vw,96px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 40px)}
 .end-g{display:grid;grid-template-columns:1.2fr 1fr auto;gap:32px;align-items:start}
 .end-mark{display:inline-block}
+.to-top{display:flex;width:max-content;margin:clamp(40px,5vw,64px) auto 0;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-decoration:none;transition:border-color .2s,color .2s,background .2s}
+.to-top i{font-style:normal;display:inline-block;transition:transform .3s}
+.to-top:hover{border-color:var(--accent);color:#fff;background:rgba(43,159,224,.14)}
+.to-top:hover i{transform:translateY(-3px)}
 .end-mark img{width:40px;height:auto;display:block}
 .end-sign{margin:18px 0 0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(30px,3vw,46px);line-height:1;color:var(--ink)}
 .end-legal{margin:16px 0 0;font-size:14px;color:var(--muted)}
@@ -572,7 +618,7 @@ html.js [data-rv].in{opacity:1;transform:none}
 @media (max-width:980px){
   .case{grid-template-columns:1fr}
   .case:nth-child(even) .case-img{order:0}
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:34px}
+  .stats{grid-template-columns:1fr;row-gap:34px}
   .svc{grid-template-columns:1fr}
   .steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:36px}
   .laws,.about-g,.contact-g{grid-template-columns:1fr}
@@ -583,7 +629,7 @@ html.js [data-rv].in{opacity:1;transform:none}
   .steps{grid-template-columns:1fr}
   .facts li{grid-template-columns:1fr;gap:4px}
   .case-d,.about-t p:not(.eb):not(.lead){font-size:16px}
-  .cta-row.l{display:grid;grid-template-columns:1fr 1fr}
+  .cta-row.l{display:grid;grid-template-columns:1fr}   /* the longer channel button needs its own line on phones */
   .send .btn{flex-basis:100%}
 }
 
@@ -787,7 +833,7 @@ html.js [data-rv].in{opacity:1;transform:none}
       <button type="button" data-mode="grid" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
       <button type="button" data-mode="well" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="4.5" width="9" height="9" rx="1" transform="rotate(-8 8 9)"/><rect x="3.5" y="2.5" width="9" height="9" rx="1" transform="rotate(7 8 7)"/></svg>Gravity</button>
     </div></div>
-    <header class="wk-head"><div class="wk-hd"><h2>Field <em>work</em></h2><p>The work behind the pull. Nine brands across seven countries, from launches to rebrands.</p></div></header>
+    <header class="wk-head"><div class="wk-hd"><h2>Field <em>work</em></h2><p>The work behind the pull. Eleven brands across eight countries, from launches to rebrands.</p></div></header>
     <div class="wk-trk" id="wkTrk" hidden>
       <div class="wk-stage" id="wkStage">
         <div id="wkPile"></div>
@@ -796,48 +842,46 @@ html.js [data-rv].in{opacity:1;transform:none}
       </div>
     </div>
     <div class="wk-grid" id="wkGrid"><div class="wk-tiles" id="wkTiles"></div></div>
-    <div class="wk-more" id="wkMore"><button class="btn light" type="button" id="wkMoreBtn" aria-controls="wkTiles" aria-expanded="false">See all nine projects</button></div>
+    <div class="wk-more" id="wkMore"><button class="btn light" type="button" id="wkMoreBtn" aria-controls="wkTiles" aria-expanded="false">See all eleven projects</button></div>
   </section>
 
   <!-- ======== case studies ======== -->
   <section class="sec cases" id="cases" aria-labelledby="cases-h">
     <div class="wrap">
       <p class="eb" data-rv>Case studies</p>
-      <h2 id="cases-h" class="h2" data-rv>Two launches, <em>told properly.</em></h2>
-      <p class="lead" data-rv>Pretty pictures prove taste. These prove judgment: the problem, what I saw, what we decided, and what changed.</p>
+      <h2 id="cases-h" class="h2" data-rv>Mo, <em>In Action.</em></h2>
+      <p class="lead" data-rv>Curious to know more? Click on one of the case studies below.</p>
       <div class="case-list">
         <a class="case" href="work/ayam-al-lulu/" data-rv>
-          <span class="case-img"><img src="img/work/ayam-al-lulu.webp" alt="Ayam Al Lulu identity: stationery, menu, shutter sign, mural and the team in uniform" width="900" height="1117" loading="lazy" decoding="async"></span>
+          <span class="case-img"><span class="case-par"><img src="img/cases/ayam-al-lulu-sq.webp" alt="A guest in a red shemagh laughing with his arms open at Ayam Al Lulu, under the staircase mural" width="1000" height="1000" loading="lazy" decoding="async"></span></span>
           <span class="case-body">
-            <span class="case-k">01 · Launch · Jeddah, Saudi Arabia</span>
             <span class="case-h">Ayam Al Lulu</span>
+            <span class="case-k">Brand Strategy, Branding, Launch, Social Media Strategy &amp; Implementation · Saudi Arabia</span>
             <span class="case-r"><b>80 seats,</b> fully booked through opening week.</span>
             <span class="case-d">A Lebanese resto-café built on nostalgia, with three months of community-building before the doors opened.</span>
             <span class="case-go">Read the case study <i>→</i></span>
           </span>
         </a>
         <a class="case" href="work/pbf/" data-rv>
-          <span class="case-img"><img src="img/work/pbf-pastrami-burgers-fries.webp" alt="A woman biting into a PBF burger in front of the red PBF food truck" width="900" height="1117" loading="lazy" decoding="async"></span>
+          <span class="case-img"><span class="case-par"><img src="img/cases/pbf-sq.webp" alt="Two men toasting with PBF sliders in front of the red PBF food truck" width="1000" height="1000" loading="lazy" decoding="async"></span></span>
           <span class="case-body">
-            <span class="case-k">02 · Sell · Lebanon &amp; Abu Dhabi</span>
             <span class="case-h">PBF: Pastrami, Burgers &amp; Fries</span>
+            <span class="case-k">Brand Strategy, Branding, Launch, Social Media Strategy &amp; Implementation · Lebanon &amp; Abu Dhabi</span>
             <span class="case-r"><b>490%</b> return on ad spend on its best campaign.</span>
             <span class="case-d">A first-to-market name, one food truck, and three months of teaching people what good pastrami is. It grew into branches in Lebanon and Abu Dhabi.</span>
             <span class="case-go">Read the case study <i>→</i></span>
           </span>
         </a>
-        <!-- Agora case card: restore when its photography arrives
-        <a class="case" href="work/agora/" data-rv>
-          <span class="case-img"><img src="img/work/agora.webp" alt="Agora wordmark over a halftone coffee cup" width="900" height="1117" loading="lazy" decoding="async"></span>
+        <a class="case" href="work/ilo/" data-rv>
+          <span class="case-img"><span class="case-par"><img src="img/cases/ilo-sq.webp" alt="ILO’s new Facebook cover: “Shaping the future with better learning”, with the new leaf-and-lens mark" width="1000" height="1000" loading="lazy" decoding="async"></span></span>
           <span class="case-body">
-            <span class="case-k">03 · Endure · South Lebanon to Halde</span>
-            <span class="case-h">Agora</span>
-            <span class="case-r"><b>Destroyed. Rebuilt.</b> Still chosen.</span>
-            <span class="case-d">A coffee shop whose community outlived its building. When the shop was lost, the people followed the brand.</span>
+            <span class="case-h">Institute for Learning Organizations</span>
+            <span class="case-k">Brand Strategy, Rebranding, Sub-Branding &amp; Launch · Norway</span>
+            <span class="case-r"><b>One brand,</b> from the company to its first tech product.</span>
+            <span class="case-d">A Norwegian consultancy that helps companies build a learning culture, rebranded to the standard of its clients, and the launch of OnTrack21.</span>
             <span class="case-go">Read the case study <i>→</i></span>
           </span>
         </a>
-        -->
       </div>
     </div>
   </section>
@@ -846,51 +890,57 @@ html.js [data-rv].in{opacity:1;transform:none}
   <section class="sec services" id="services" aria-labelledby="svc-h">
     <div class="wrap">
       <p class="eb" data-rv>Services</p>
-      <h2 id="svc-h" class="h2" data-rv>What I can <em>do for you.</em></h2>
-      <p class="lead" data-rv>I work with founders of restaurants, cafés, hospitality and consumer brands: businesses people choose with their gut. Most don’t need more content. They need a reason to be chosen, and a plan that makes people feel it. Find the situation that sounds like yours.</p>
+      <h2 id="svc-h" class="h2" data-rv>Let’s Build <em>A Better Brand.</em></h2>
+      <p class="lead" data-rv>Where do you stand currently?</p>
       <div class="svc">
         <article class="svc-c" data-rv>
-          <p class="svc-n">01</p>
-          <h3>You’re launching.</h3>
+          <p class="svc-n">Strategy package 01</p>
+          <h3>I’m launching.</h3>
           <p class="svc-s">A new restaurant, venue or product, and one shot at a first impression.</p>
           <p class="svc-l">What you get</p>
           <ul><li>Positioning and concept: the one reason to choose you</li><li>Naming, if it needs one</li><li>Identity: logo, type, colour, voice</li><li>Menu, packaging and in-store touchpoints</li><li>Pre-launch and launch plan, influencers included</li></ul>
           <p class="svc-t"><span>Typical timing</span>8–12 weeks before opening</p>
+          <a class="svc-go" href="#contact" data-stage="Launching something new">Tell me more <i aria-hidden="true">→</i></a>
         </article>
         <article class="svc-c" data-rv>
-          <p class="svc-n">02</p>
-          <h3>You’re repositioning.</h3>
-          <p class="svc-s">Good product, wrong perception. Or the market moved and you didn’t.</p>
+          <p class="svc-n">Strategy package 02</p>
+          <h3>I’m repositioning.</h3>
+          <p class="svc-s">Good product, wrong perception. Or the market moved and I didn’t.</p>
           <p class="svc-l">What you get</p>
           <ul><li>Brand audit and a benchmark of at least three competitors</li><li>New positioning and messaging</li><li>Identity refresh or full rebrand</li><li>A rollout plan for every touchpoint</li></ul>
           <p class="svc-t"><span>Typical timing</span>4–8 weeks</p>
+          <a class="svc-go" href="#contact" data-stage="Repositioning an existing brand">Tell me more <i aria-hidden="true">→</i></a>
         </article>
         <article class="svc-c" data-rv>
-          <p class="svc-n">03</p>
-          <h3>You’re expanding.</h3>
+          <p class="svc-n">Strategy package 03</p>
+          <h3>I’m expanding.</h3>
           <p class="svc-s">A new branch, city or country. Same soul, new audience.</p>
           <p class="svc-l">What you get</p>
           <ul><li>A read of the new market and its culture</li><li>Concept and language adapted: Arabic, English and beyond</li><li>Launch plan for the new location</li></ul>
           <p class="svc-t"><span>Typical timing</span>6–10 weeks</p>
+          <a class="svc-go" href="#contact" data-stage="Expanding to a new location">Tell me more <i aria-hidden="true">→</i></a>
         </article>
         <article class="svc-c" data-rv>
-          <p class="svc-n">04</p>
-          <h3>Your brand says ten different things.</h3>
+          <p class="svc-n">Strategy package 04</p>
+          <h3>My brand says ten different things.</h3>
           <p class="svc-s">Five people posting, ten different brands. Customers can feel it.</p>
           <p class="svc-l">What you get</p>
-          <ul><li>Voice and visual rules</li><li>Content pillars and a calendar</li><li>Templates your team can actually use</li><li>A playbook for whoever runs your channels</li></ul>
+          <ul><li>Voice and visual rules</li><li>Content pillars</li><li>Templates your team can actually use</li><li>A playbook for whoever runs your channels</li></ul>
           <p class="svc-t"><span>Typical timing</span>3–6 weeks</p>
+          <a class="svc-go" href="#contact" data-stage="Fixing inconsistent communication">Tell me more <i aria-hidden="true">→</i></a>
         </article>
       </div>
       <div class="scope" data-rv>
         <p class="scope-h">What’s included</p>
-        <p><b>Every engagement:</b> the strategy, the identity and creative direction, and a launch or rollout plan your team can run. <b>Scoped separately, if you need it:</b> ongoing execution, such as content production, daily community management and paid ads.</p>
+        <p><b>Every engagement:</b> you get a strategy, which includes the research, an audit and a business and market analysis; a one-on-one discovery session and a strategy session with me; and a final strategy deliverable with guidelines.</p>
+        <p><b>Scoped separately:</b> brand guidelines with a full identity guide, content strategy, community management, social media management and paid ads.</p>
       </div>
       <div class="svc-foot" data-rv>
         <p>Not sure which one you are? That’s what the first conversation is for.</p>
         <a class="btn" href="#contact">Discuss your project</a>
       </div>
       <aside class="playbook" data-rv>
+        <span class="pb-fx" aria-hidden="true"><i class="r1"></i><i class="r2"></i><i class="d1"></i><i class="d2"></i><i class="g"></i></span>
         <div>
           <p class="eb">Coming soon</p>
           <h3>The Gravity Playbook</h3>
@@ -903,26 +953,26 @@ html.js [data-rv].in{opacity:1;transform:none}
 
   <!-- ======== proof ======== -->
   <section class="sec proof" id="proof" aria-labelledby="proof-h">
+    <div class="tm-skyw" aria-hidden="true"><canvas class="tm-sky" id="tmSky"></canvas></div>
     <div class="wrap">
       <h2 id="proof-h" class="sr-only">Proof</h2>
       <ul class="stats" data-rv>
-        <li><b>80/80</b><span>seats booked through Ayam Al Lulu’s opening week</span></li>
-        <li><b>490%</b><span>sales return on PBF’s Easter Feaster ad budget</span></li>
-        <li><b>18</b><span>years building brands, since 2008</span></li>
         <li><b>100+</b><span>campaigns created or overseen</span></li>
+        <li><b>8</b><span>countries where my brands live</span></li>
+        <li><b>10×</b><span>Instagram engagement for Edunation, in its founder’s words</span></li>
       </ul>
       <p class="eb tm-eb" data-rv>Heard it from them</p>
       <div class="tm" id="tm" data-rv role="region" aria-roledescription="carousel" aria-label="Testimonials" tabindex="0">
         <div class="tm-stage"><canvas class="tm-cv" aria-hidden="true"></canvas></div>
         <div class="tm-quotes" aria-live="off">
-          <figure class="tm-q is-on" id="tm-q1" data-head="vanessa-emond"><blockquote>“I hired Mo to market my conscious clothing brand, but little did I know the magnitude of the transformation to come. Mo took my existing logo and turned it into a full-fledged brand that is highly aesthetic, strategic, and relevant. […] Mo is an expert at visuals, brand messaging, and community building, leading to more sales through Instagram.”</blockquote><figcaption><b>Vanessa Emond</b><span>Founder, Conscious Apparel Co</span></figcaption></figure>
-          <figure class="tm-q" id="tm-q2" data-head="bob-ghandour" aria-hidden="true"><blockquote>“Mo actively helped us build a strong brand and community, which resulted in spiked sales even through the constant wars. Despite the situation we were able to open multiple branches, and once everything was gone, our brand moved out of South Lebanon and we found that our entire community followed us there. Moral of the story: if you’re looking to build a brand that people will love and follow, Mo is your guy.”</blockquote><figcaption><b>Bob Ghandour</b><span>Owner, Agora &amp; business consultant</span></figcaption></figure>
-          <figure class="tm-q" id="tm-q3" data-head="hanine-zaiter" aria-hidden="true"><blockquote>“I met Mo when he was an account manager at an agency. I felt he was the only one who understood how I think and my vision for Ifran. He directed the rebrand, helped us launch in Kuwait, and provided effective strategies that helped the brand go viral, especially with our newest branch in Downtown Beirut. I highly recommend working with Mo to take your brand to the next level!”</blockquote><figcaption><b>Hanine Zaiter</b><span>Owner, Ifran</span></figcaption></figure>
-          <figure class="tm-q" id="tm-q4" data-head="alain-samaha" aria-hidden="true"><blockquote>“It was a pleasure working with Mo during the branding and launch of PBF. He understood the core branding principles we wanted and helped us communicate the message to the public and position our brand to its current status. Clean work, diligent understanding and a very genuine leader overall. Highly recommended!”</blockquote><figcaption><b>Alain Samaha</b><span>Founder, PBF &amp; DRIPD</span></figcaption></figure>
-          <figure class="tm-q" id="tm-q5" data-head="firas-jabbour" aria-hidden="true"><blockquote>“When recruiting Mo to revisit our company’s brand strategy and marketing, I was skeptical. After moving forward, Mo proved to be a highly skilled and versatile professional, who understood our brand’s needs and was highly qualified to position it accordingly. As a result we adopted a more relevant and strategic brand, and our engagement, especially on Instagram, grew tenfold.”</blockquote><figcaption><b>Firas Jabbour</b><span>Founder, Edunation LTD</span></figcaption></figure>
-          <figure class="tm-q" id="tm-q6" data-head="may-farhat" aria-hidden="true"><blockquote>“Mo displayed exceptional service from the first day we worked with him. He went out of his way to understand the location of our restaurant opening in Salzburg and created a beautiful window display and brand identity. He took the time to understand every detail of the menu and adapted it to different languages with ease.”</blockquote><figcaption><b>May Farhat</b><span>Founder, Beiruti Saj</span></figcaption></figure>
-          <figure class="tm-q" id="tm-q7" data-head="judith-amorada" aria-hidden="true"><blockquote>“One of the best! Highly creative and multi-talented. The level of expertise and professionalism in the services he offered us is exceptional. Mo displayed a keen understanding of the Abu Dhabi market and delivered a great brand strategy. Versatile, he was able to extend our brand in many ways that helped us reach our goals.”</blockquote><figcaption><b>Judith Amorada</b><span>Operations Manager, Beauty Leaders LLC</span></figcaption></figure>
-          <figure class="tm-q" id="tm-q8" data-head="dina-murad" aria-hidden="true"><blockquote>“Mo was a straight-A student at the Lebanese American University, and since then I have watched him grow into a poised and accomplished man. He is an exceptional creative, with an excellent scope of creativity and work habits.”</blockquote><figcaption><b>Dina Murad</b><span>Co-founder, DigiCrowns LLC</span></figcaption></figure>
+          <figure class="tm-q is-on" id="tm-q1" data-head="vanessa-emond" data-frames="100"><figcaption><b>Vanessa Emond</b><span>Founder, Conscious Apparel Co</span></figcaption><blockquote>“I hired Mo to market my conscious clothing brand, but little did I know the magnitude of the transformation to come. Mo took my existing logo and turned it into a full-fledged brand that is highly aesthetic, strategic, and relevant. […] Mo is an expert at visuals, brand messaging, and community building, leading to more sales through Instagram.”</blockquote></figure>
+          <figure class="tm-q" id="tm-q2" data-head="bob-ghandour" data-frames="99" aria-hidden="true"><figcaption><b>Bob Ghandour</b><span>Owner, Agora &amp; business consultant</span></figcaption><blockquote>“Mo actively helped us build a strong brand and community, which resulted in spiked sales even through the constant wars. Despite the situation we were able to open multiple branches, and once everything was gone, our brand moved out of South Lebanon and we found that our entire community followed us there. Moral of the story: if you’re looking to build a brand that people will love and follow, Mo is your guy.”</blockquote></figure>
+          <figure class="tm-q" id="tm-q3" data-head="hanine-zaiter" data-frames="98" aria-hidden="true"><figcaption><b>Hanine Zaiter</b><span>Owner, Ifran</span></figcaption><blockquote>“I met Mo when he was an account manager at an agency. I felt he was the only one who understood how I think and my vision for Ifran. He directed the rebrand, helped us launch in Kuwait, and provided effective strategies that helped the brand go viral, especially with our newest branch in Downtown Beirut. I highly recommend working with Mo to take your brand to the next level!”</blockquote></figure>
+          <figure class="tm-q" id="tm-q4" data-head="alain-samaha" data-frames="92" aria-hidden="true"><figcaption><b>Alain Samaha</b><span>Founder, PBF &amp; DRIPD</span></figcaption><blockquote>“It was a pleasure working with Mo during the branding and launch of PBF. He understood the core branding principles we wanted and helped us communicate the message to the public and position our brand to its current status. Clean work, diligent understanding and a very genuine leader overall. Highly recommended!”</blockquote></figure>
+          <figure class="tm-q" id="tm-q5" data-head="firas-jabbour" data-frames="100" aria-hidden="true"><figcaption><b>Firas Jabbour</b><span>Founder, Edunation LTD</span></figcaption><blockquote>“When recruiting Mo to revisit our company’s brand strategy and marketing, I was skeptical. After moving forward, Mo proved to be a highly skilled and versatile professional, who understood our brand’s needs and was highly qualified to position it accordingly. As a result we adopted a more relevant and strategic brand, and our engagement, especially on Instagram, grew tenfold.”</blockquote></figure>
+          <figure class="tm-q" id="tm-q6" data-head="may-farhat" data-frames="95" aria-hidden="true"><figcaption><b>May Farhat</b><span>Founder, Beiruti Saj</span></figcaption><blockquote>“Mo displayed exceptional service from the first day we worked with him. He went out of his way to understand the location of our restaurant opening in Salzburg and created a beautiful window display and brand identity. He took the time to understand every detail of the menu and adapted it to different languages with ease.”</blockquote></figure>
+          <figure class="tm-q" id="tm-q7" data-head="judith-amorada" data-frames="71" aria-hidden="true"><figcaption><b>Judith Amorada</b><span>Operations Manager, Beauty Leaders LLC</span></figcaption><blockquote>“One of the best! Highly creative and multi-talented. The level of expertise and professionalism in the services he offered us is exceptional. Mo displayed a keen understanding of the Abu Dhabi market and delivered a great brand strategy. Versatile, he was able to extend our brand in many ways that helped us reach our goals.”</blockquote></figure>
+          <figure class="tm-q" id="tm-q8" data-head="dina-murad" data-frames="97" aria-hidden="true"><figcaption><b>Dina Murad</b><span>Co-founder, DigiCrowns LLC</span></figcaption><blockquote>“Mo was a straight-A student at the Lebanese American University, and since then I have watched him grow into a poised and accomplished man. He is an exceptional creative, with an excellent scope of creativity and work habits.”</blockquote></figure>
         </div>
         <div class="tm-ctrl">
           <button class="tm-btn tm-prev" type="button" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -941,10 +991,10 @@ html.js [data-rv].in{opacity:1;transform:none}
       <p class="eb" data-rv>The method</p>
       <h2 id="method-h" class="h2" data-rv>How we’ll <em>work.</em></h2>
       <ol class="steps">
-        <li data-rv><span class="n">01</span><h3>Sit down</h3><p>A 30-minute conversation. You tell me what you’re building; I ask the uncomfortable questions. No pitch deck needed.</p></li>
-        <li data-rv><span class="n">02</span><h3>Find the pull</h3><p>I study your numbers, your audience and at least three competitors, then name the one thing that makes you worth choosing.</p></li>
-        <li data-rv><span class="n">03</span><h3>Build the mass</h3><p>Positioning, identity, voice and every touchpoint, built around that one thing, so people feel it before anyone explains it.</p></li>
-        <li data-rv><span class="n">04</span><h3>Launch the orbit</h3><p>Pre-launch, opening and momentum, with the numbers to show what’s working, and the nerve to change what isn’t.</p></li>
+        <li data-rv><span class="n">01</span><h3>Discovery</h3><p>We start with a 30-minute conversation. You tell me what you’re building; I ask the uncomfortable questions. No pitch deck needed.</p></li>
+        <li data-rv><span class="n">02</span><h3>Research</h3><p>I study your numbers, your audience and at least three competitors, then name the one thing that makes you worth choosing.</p></li>
+        <li data-rv><span class="n">03</span><h3>Development</h3><p>Positioning, identity, voice and every touchpoint, built around that one thing, so people feel it before anyone explains it.</p></li>
+        <li data-rv><span class="n">04</span><h3>Launch</h3><p>Congrats! Your new strategy is ready to collect momentum and launch.</p></li>
       </ol>
       <div class="laws" data-rv>
         <figure class="laws-ph"><img src="img/about/mo-workshop-team.webp" alt="Mo working through a brand roadmap with a team at a whiteboard of sticky notes" width="1541" height="1020" loading="lazy" decoding="async"></figure>
@@ -985,16 +1035,18 @@ html.js [data-rv].in{opacity:1;transform:none}
       <div class="about-t">
         <p class="eb" data-rv>About</p>
         <h2 id="about-h" class="h2" data-rv>Hi, <em>I’m Mo.</em></h2>
-        <p class="lead" data-rv>Mohamad Abou Younes, if we’re being formal. A brand strategist and creative director, based in Beirut.</p>
-        <p data-rv>For eighteen years I’ve named, built and launched brands for restaurants, cafés, retailers and service businesses in Lebanon, Saudi Arabia, the UAE, Jordan, Austria, Norway and the US. I’ve hired agencies and founded them. I know what it costs when a brand gets it wrong, because I’ve paid for it on both sides of the table.</p>
-        <p data-rv>I’m not a magician. I’ve just made most of the mistakes already, and studied the trends, so you won’t have to.</p>
+        <p class="lead" data-rv>Mohamad Abou Younes, if we’re being formal. A brand strategist and creative director based in Beirut, and marketing manager at Second 2 None Group.</p>
+        <p data-rv>I graduated in 2014 with degrees in graphic design and advertising from the Lebanese American University. My love for branding and marketing led me on to a Brand Management certification from London Business School. In parallel, I trained myself in marketing through programs such as B-School by Marie Forleo, Digital Course Academy by Amy Porterfield, Full Time Purpose by Victor Oddo &amp; Aaron Doughty, and much more.</p>
+        <p data-rv>For almost two decades I’ve named, built and launched brands for restaurants, cafés, retailers and service businesses in Lebanon, Saudi Arabia, the UAE, Kuwait, Jordan, Austria, Norway and the US. I’ve hired agencies, and founded them. I know what it costs when a brand gets it wrong, because I’ve paid for it on both sides of the table.</p>
+        <p data-rv>I’m not a magician. I’ve just made most of the mistakes already, and studied what works when building a brand, so you won’t have to.</p>
         <ul class="facts" data-rv>
           <li><span class="k">Based in</span><span>Beirut, Lebanon</span></li>
           <li><span class="k">Studied</span><span>Graphic design &amp; advertising, LAU</span></li>
+          <li><span class="k">Continuing education</span><span>Brand Management, London Business School</span></li>
           <li><span class="k">Working across</span><span>Lebanon, the Gulf, Europe and the US</span></li>
-          <li><span class="k">Publishes</span><span><a href="https://youtube.com/@moayounes" target="_blank" rel="noopener">INTRO</a>, a weekly dispatch on YouTube and Instagram</span></li>
+          <li class="pres"><span class="k">Presence</span><span class="pres-i"><a href="https://instagram.com/introducingmo" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.86s0 3.6-.07 4.86c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.9.07s-3.6 0-4.86-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.6 2.2 15.2 2.2 12s0-3.6.07-4.86c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.4 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52.01-4.76.07-.9.04-1.39.2-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.12.32-.28.81-.32 1.71C3.21 9.08 3.2 9.45 3.2 12s.01 2.92.07 4.16c.04.9.2 1.39.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.32.12.81.28 1.71.32 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.9-.04 1.39-.2 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.12-.32.28-.81.32-1.71.06-1.24.07-1.61.07-4.16s-.01-2.92-.07-4.16c-.04-.9-.2-1.39-.32-1.71a2.9 2.9 0 0 0-.69-1.06 2.9 2.9 0 0 0-1.06-.69c-.32-.12-.81-.28-1.71-.32C15.52 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.14-.9a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3z"/></svg></a><a href="https://youtube.com/@moayounes" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg></a><a href="https://x.com/introducingmo" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.3 3h3.3l-7.2 8.2L21.7 21h-6.6l-5.17-6.76L4 21H.7l7.7-8.8L2.6 3h6.76l4.67 6.17L17.3 3zm-1.16 16h1.83L7.03 4.9H5.06L16.14 19z"/></svg></a><a href="https://linkedin.com/in/introducingmo" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a1.94 1.94 0 1 1-3.88 0 1.94 1.94 0 0 1 3.88 0zM3.3 8.4h3.3V21H3.3V8.4zM9.1 8.4h3.16v1.72h.04c.44-.83 1.52-1.72 3.12-1.72 3.34 0 3.96 2.2 3.96 5.06V21h-3.3v-5.76c0-1.37-.03-3.14-1.92-3.14-1.92 0-2.21 1.5-2.21 3.04V21H9.1V8.4z"/></svg></a><a href="https://tiktok.com/@introducingmo3" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.33 2.28 1.6 3.64 3.8 3.78v2.55c-1.28.13-2.4-.29-3.7-1.08v4.78c0 6.07-6.62 7.97-9.28 3.62-1.71-2.8-.66-7.72 4.84-7.92v2.69c-.42.07-.87.18-1.28.32-1.23.42-1.93 1.2-1.74 2.58.37 2.63 5.2 3.4 4.8-1.73V3h2.56z"/></svg></a><a href="https://www.facebook.com/share/19Tf4hJvR9/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.54-1.5h1.64V3.6c-.28-.04-1.26-.12-2.4-.12-2.37 0-4 1.45-4 4.1v2.3H7.5V13h2.8v8h3.2z"/></svg></a><a href="https://behance.net/introducingmo" target="_blank" rel="noopener" aria-label="Behance"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 7.9c.66 0 1.26.06 1.8.18.54.1 1 .3 1.38.55.38.26.67.6.88 1.04.2.43.3.97.3 1.6 0 .7-.15 1.27-.47 1.73-.32.46-.8.84-1.42 1.13.86.25 1.5.68 1.92 1.3.42.6.63 1.34.63 2.2 0 .68-.13 1.28-.4 1.78-.26.5-.62.9-1.07 1.22-.45.3-.96.53-1.54.67-.57.14-1.16.2-1.76.2H1V7.9h7.2zM7.77 13c.5 0 .9-.12 1.22-.36.32-.24.47-.62.47-1.15 0-.3-.05-.54-.16-.73a1.17 1.17 0 0 0-.44-.44 1.8 1.8 0 0 0-.63-.22 4 4 0 0 0-.75-.06H4.3V13h3.47zm.2 5.3c.27 0 .54-.03.78-.08.25-.05.47-.14.65-.27.18-.12.33-.3.44-.52.1-.22.16-.5.16-.85 0-.67-.19-1.15-.56-1.44-.38-.28-.88-.42-1.5-.42H4.3v3.58h3.67zM15.3 18.1c.36.35.88.52 1.56.52.49 0 .9-.12 1.26-.37.35-.25.57-.5.65-.78h2.6c-.42 1.3-1.06 2.22-1.92 2.78-.86.55-1.9.83-3.12.83-.85 0-1.62-.14-2.3-.4-.68-.28-1.26-.66-1.73-1.16a5.2 5.2 0 0 1-1.1-1.8 6.6 6.6 0 0 1-.38-2.3c0-.82.13-1.57.4-2.26a5.3 5.3 0 0 1 2.86-2.98 5.7 5.7 0 0 1 2.26-.44c.9 0 1.7.17 2.37.52.68.35 1.23.82 1.66 1.4.43.6.74 1.27.92 2.03.18.76.25 1.55.2 2.38h-7.65c0 .84.28 1.63.65 1.98zm2.75-5.37c-.3-.32-.8-.5-1.42-.5-.42 0-.76.07-1.03.2-.27.15-.5.32-.66.53-.17.2-.28.43-.35.66-.06.24-.1.45-.12.63h4.74c-.07-.74-.33-1.2-.63-1.52zM14.5 7.9h5.93v1.44H14.5V7.9z"/></svg></a><a href="https://www.threads.net/@introducingmo" target="_blank" rel="noopener" aria-label="Threads"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.2 11.15c-.1-.05-.2-.09-.3-.13-.17-3.23-1.94-5.08-4.9-5.1-1.78-.01-3.3.74-4.22 2.17l1.64 1.12c.68-1.02 1.74-1.24 2.57-1.24h.03c1.03.01 1.8.31 2.3.9.37.42.61 1.01.73 1.75a13 13 0 0 0-2.84-.14c-2.86.16-4.7 1.83-4.57 4.14.06 1.17.65 2.18 1.64 2.83.84.55 1.92.82 3.05.76 1.49-.08 2.66-.65 3.48-1.69.62-.79 1.02-1.8 1.2-3.08.74.45 1.29 1.04 1.59 1.75.52 1.2.55 3.18-1.06 4.78-1.41 1.41-3.11 2.02-5.68 2.04-2.85-.02-5.01-.93-6.42-2.7C4.14 17.5 3.46 15.2 3.43 12c.03-3.2.71-5.5 2.04-7.16C6.88 3.07 9.04 2.16 11.89 2.14c2.87.02 5.07.93 6.54 2.71.72.87 1.26 1.97 1.62 3.24l1.96-.52c-.43-1.57-1.11-2.92-2.03-4.03C18.1 1.3 15.44.15 11.9.13h-.01C8.37.15 5.73 1.3 4.06 3.57 2.57 5.59 1.8 8.4 1.77 11.99v.02c.03 3.59.8 6.4 2.29 8.42C5.73 22.7 8.37 23.85 11.89 23.87h.01c3.13-.02 5.33-.84 7.15-2.66 2.38-2.37 2.31-5.35 1.52-7.18-.56-1.31-1.63-2.38-3.37-3.08zm-4.68 4.95c-1.25.07-2.55-.49-2.61-1.72-.05-.91.65-1.93 2.69-2.05.23-.01.46-.02.68-.02.74 0 1.44.07 2.07.21-.24 2.94-1.62 3.52-2.83 3.58z"/></svg></a><a href="https://www.pinterest.com/introducingmo/" target="_blank" rel="noopener" aria-label="Pinterest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.64 7.86 6.36 9.32-.09-.79-.17-2.01.03-2.88.18-.76 1.17-4.85 1.17-4.85s-.3-.6-.3-1.49c0-1.39.81-2.43 1.81-2.43.85 0 1.26.64 1.26 1.41 0 .86-.55 2.14-.83 3.33-.24 1 .5 1.81 1.48 1.81 1.78 0 3.14-1.87 3.14-4.58 0-2.39-1.72-4.07-4.18-4.07-2.85 0-4.52 2.14-4.52 4.35 0 .86.33 1.78.74 2.28.08.1.09.19.07.29-.08.33-.25 1-.28 1.14-.04.18-.15.22-.34.13-1.25-.58-2.03-2.4-2.03-3.87 0-3.15 2.29-6.04 6.6-6.04 3.46 0 6.16 2.47 6.16 5.77 0 3.44-2.17 6.21-5.18 6.21-1.01 0-1.97-.53-2.29-1.15l-.62 2.37c-.23.86-.83 1.94-1.24 2.6.94.29 1.92.44 2.95.44 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></a><a href="https://soundcloud.com/introducingmo" target="_blank" rel="noopener" aria-label="SoundCloud"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.4 13.6c-.07 0-.12.05-.13.13l-.2 1.86.2 1.82c.01.08.06.13.13.13.06 0 .11-.05.12-.13l.23-1.82-.23-1.86c-.01-.08-.06-.13-.12-.13zm1.26-.56c-.08 0-.14.06-.15.15l-.26 2.4.26 2.33c.01.08.07.14.15.14.07 0 .13-.06.14-.14l.3-2.33-.3-2.4c-.01-.09-.07-.15-.14-.15zm12.74-3.2c-.46 0-.9.09-1.3.26-.27-3.06-2.82-5.46-5.93-5.46-.76 0-1.5.15-2.15.42-.25.1-.32.2-.32.39v9.97c0 .2.16.37.35.39h9.35c1.86 0 3.37-1.5 3.37-3.35s-1.51-3.36-3.37-3.36zm-11.49.98c-.09 0-.16.07-.17.16l-.23 2.42.23 2.34c.01.09.08.16.17.16.08 0 .15-.07.16-.16l.26-2.34-.26-2.42c-.01-.09-.08-.16-.16-.16zm1.27-.7c-.1 0-.17.07-.18.17l-.2 3.11.2 3.01c.01.1.08.17.18.17.09 0 .16-.07.17-.17l.23-3.01-.23-3.11c-.01-.1-.08-.17-.17-.17z"/></svg></a></span></li>
         </ul>
-        <div class="cta-row l" data-rv><a class="btn" href="#contact">Discuss your project</a><a class="btn ghost" href="https://youtube.com/@moayounes" target="_blank" rel="noopener">Watch INTRO</a></div>
+        <div class="cta-row l" data-rv><a class="btn" href="#contact">Discuss your project</a><a class="btn ghost" href="https://youtube.com/@moayounes?sub_confirmation=1" target="_blank" rel="noopener">Subscribe to Mo’s channel</a></div>
       </div>
     </div>
   </section>
@@ -1009,7 +1061,7 @@ html.js [data-rv].in{opacity:1;transform:none}
         <ol class="nx" data-rv>
           <li><b>You send a short note.</b> What you’re building or fixing, where you are, and your timing.</li>
           <li><b>I reply within two working days.</b> If I’m not the right fit, I’ll say so, and point you to someone who is.</li>
-          <li><b>We sit down for 30 minutes.</b> A call, or coffee in Beirut. You leave with a clear next step, either way.</li>
+          <li><b>We chat for 30 minutes.</b> It doesn’t need to be a physical meeting: a call works just as well. You leave with a clear next step, either way.</li>
         </ol>
         <div class="direct" data-rv>
           <a href="https://wa.me/96170783482?text=Hi%20Mo%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener"><span>WhatsApp</span>+961 70 783 482</a>
@@ -1057,6 +1109,7 @@ html.js [data-rv].in{opacity:1;transform:none}
         <a href="https://soundcloud.com/introducingmo" target="_blank" rel="noopener" aria-label="SoundCloud"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.4 13.6c-.07 0-.12.05-.13.13l-.2 1.86.2 1.82c.01.08.06.13.13.13.06 0 .11-.05.12-.13l.23-1.82-.23-1.86c-.01-.08-.06-.13-.12-.13zm1.26-.56c-.08 0-.14.06-.15.15l-.26 2.4.26 2.33c.01.08.07.14.15.14.07 0 .13-.06.14-.14l.3-2.33-.3-2.4c-.01-.09-.07-.15-.14-.15zm12.74-3.2c-.46 0-.9.09-1.3.26-.27-3.06-2.82-5.46-5.93-5.46-.76 0-1.5.15-2.15.42-.25.1-.32.2-.32.39v9.97c0 .2.16.37.35.39h9.35c1.86 0 3.37-1.5 3.37-3.35s-1.51-3.36-3.37-3.36zm-11.49.98c-.09 0-.16.07-.17.16l-.23 2.42.23 2.34c.01.09.08.16.17.16.08 0 .15-.07.16-.16l.26-2.34-.26-2.42c-.01-.09-.08-.16-.16-.16zm1.27-.7c-.1 0-.17.07-.18.17l-.2 3.11.2 3.01c.01.1.08.17.18.17.09 0 .16-.07.17-.17l.23-3.01-.23-3.11c-.01-.1-.08-.17-.17-.17z"/></svg></a>
       </div>
     </div>
+    <a class="to-top" href="#top">Back to top <i aria-hidden="true">↑</i></a>
   </footer>
 </main>
 
@@ -1749,56 +1802,61 @@ void main(){
   /* ---------- the work: gravity well ⇄ grid ---------- */
   // plain labels: "years" = how long the business has been running; "capital" = my estimate of what the owners put into the venture
   const WK = [
-    { name: "Ayam Al Lulu", short: "Ayam Al Lulu", cat: "Resto-café", scope: "Branding & Launch", line: "Lebanon’s golden days, served in Jeddah.",
-      loc: "Jeddah, Saudi Arabia", years: "8 years", capital: "$450k", img: "ayam-al-lulu", cs: "work/ayam-al-lulu/",
-      alt: "Ayam Al Lulu identity in blush and powder blue: stationery, menu, bag, Arabic shutter sign, mural and the uniformed team" },
-    { name: "PBF: Pastrami, Burgers & Fries", short: "PBF", cat: "Food truck to restaurants", scope: "Naming, Branding & Launch", line: "It started with a truck. The queue built the restaurant.",
-      loc: "Lebanon & Abu Dhabi", years: "8 years", capital: "$300k", img: "pbf-pastrami-burgers-fries", cs: "work/pbf/",
-      alt: "A woman biting into a PBF burger in front of the red PBF food truck, with branded bags and wrappers" },
-    { name: "Beiruti Saj", short: "Beiruti Saj", cat: "Restaurant", scope: "Naming, Branding & Launch", line: "Beirut opens its doors in the heart of Europe.",
-      loc: "Salzburg, Austria", years: "2 years", capital: "$70k", img: "beiruti-saj",
-      alt: "Beiruti Saj identity: logo engraved in a wooden table, an embroidered denim apron, the shopfront and the menu" },
-    { name: "HKN Diamonds", short: "HKN Diamonds", cat: "Jeweler", scope: "Rebranding", line: "A name worth repeating, set in diamonds.",
+    { name: "Ayam Al Lulu", short: "Ayam Al Lulu", cat: "Resto-Café", scope: "Brand Strategy, Branding, Launch, Social Media Strategy & Implementation", line: "Lebanon’s golden days, served in Jeddah.",
+      loc: "Jeddah, Saudi Arabia", years: "8 years", capital: "$450k", img: "ayam-al-lulu-2", cs: "work/ayam-al-lulu/",
+      alt: "Ayam Al Lulu’s dining room: turquoise shutters on a stone wall, a portrait mural on the staircase and tables of guests" },
+    { name: "PBF: Pastrami, Burgers & Fries", short: "PBF", cat: "Food Truck to Restaurant", scope: "Brand Strategy, Branding, Launch, Social Media Strategy & Implementation", line: "It started with a truck. The queue built the restaurant.",
+      loc: "Lebanon & Abu Dhabi", years: "8 years", capital: "$300k", img: "pbf-2", cs: "work/pbf/",
+      alt: "A woman biting into a PBF burger at the red PBF food truck, with branded bags and wrapped burgers on the table" },
+    { name: "HKN Diamonds", short: "HKN Diamonds", cat: "Diamond Jeweler", scope: "Brand Strategy & Rebranding", line: "A name worth repeating, set in diamonds.",
       loc: "Beirut, Lebanon", years: "9 years", capital: "$1M", img: "hkn-diamonds",
       alt: "HKN Diamonds rebrand: website on a desktop and phones, brand guideline spreads and a diamond tennis bracelet" },
-    { name: "800PIZZA", short: "800PIZZA", cat: "Pizza restaurant", scope: "Design & Content Strategy", line: "Thin, light and crispy, served with the match.",
+    { name: "800PIZZA", short: "800PIZZA", cat: "Pizza Restaurant", scope: "Brand Uplift, Content Strategy & Implementation", line: "Thin, light and crispy, served with the match.",
       loc: "Dubai, United Arab Emirates", years: "19 years", capital: "$1.5M", img: "800pizza",
       alt: "800PIZZA football campaign: illustrated pizza box, posters, menu, flour sacks and a white chef shirt with burgundy braces" },
-    // Agora: back on the grid once its photography arrives
-    /*{ name: "Agora", short: "Agora", cat: "Coffee shop", scope: "Community & Brand Strategy", line: "Destroyed, rebuilt, and still chosen.",
-      loc: "South Lebanon to Halde", capital: "$300k", img: "agora", cs: "work/agora/",
-      alt: "Agora wordmark over a halftone coffee cup seen from above. Photography to come" },*/
-    { name: "Institute for Learning Organizations", short: "ILO", cat: "Consultancy", scope: "Rebranding & Launch", line: "Shaping the future with better learning.",
-      loc: "Telemark county, Norway", years: "20 years", capital: "$200k", img: "ilo-learning-organizations",
+    { name: "Ifran", short: "Ifran", cat: "Beauty & Haircare", scope: "Rebranding, Launch & Social Media Strategy", line: "From Beirut to Kuwait, one viral launch at a time.",
+      loc: "Beirut, Lebanon & Kuwait", img: "ifran",
+      alt: "Ifran Cloudy Dust dry shampoo in lilac, between its pastel cloud-print boxes" },
+    { name: "Agora", short: "Agora", cat: "Coffee Shop", scope: "Brand Strategy & Community Building", line: "Destroyed, rebuilt, and still chosen.",
+      loc: "South Lebanon to Halde", capital: "$300k", img: "agora-2",
+      alt: "Agora’s storefront at night, “To gather together” lit above the door, as a man sweeps up broken glass" },
+    { name: "Beiruti Saj", short: "Beiruti Saj", cat: "Restaurant & Catering", scope: "Brand Strategy, Branding, Launch, Social Media Strategy & Implementation", line: "Beirut opens its doors in the heart of Europe.",
+      loc: "Salzburg, Austria", years: "2 years", capital: "$70k", img: "beiruti-saj-2",
+      alt: "Beiruti’s two founders behind a counter of mezze, with the purple Beiruti menu on an easel" },
+    { name: "Institute for Learning Organizations", short: "ILO", cat: "Software Technology & Consultancy", scope: "Brand Strategy, Rebranding, Sub-Branding & Launch", line: "Shaping the future with better learning.",
+      loc: "Telemark county, Norway", years: "20 years", capital: "$200k", img: "ilo-learning-organizations", cs: "work/ilo/",
       alt: "Institute for Learning Organizations rebrand: new logo construction, social page on a desktop and the OnTrack21 workbook" },
-    { name: "Chef Charles Webb", short: "Charles Webb", cat: "Chef & entrepreneur", scope: "Brand Uplift & Launch", line: "From Cinco de Mayo to live streaming innovation.",
+    { name: "Chef Charles Webb", short: "Charles Webb", cat: "Chef & Entrepreneur", scope: "Brand Uplift & Launch", line: "From Cinco de Mayo to live streaming innovation.",
       loc: "Chicago, USA", years: "30 years", capital: "$500k", img: "chef-charles-webb",
       alt: "Chef Charles Webb seasoning a dish in a Mexican-tiled kitchen, with his masterclass deck and case-study slides" },
-    { name: "Simply Quiche", short: "Simply Quiche", cat: "Frozen foods", scope: "Content Strategy", line: "Ready in no time, whenever the craving hits.",
+    { name: "Simply Quiche", short: "Simply Quiche", cat: "Frozen Foods", scope: "Content Strategy", line: "Ready in no time, whenever the craving hits.",
       loc: "Amman, Jordan", years: "20 years", capital: "$1.5M", img: "simply-quiche",
       alt: "Simply Quiche and Simply Pie boxes on marble, phones showing night-snack social posts, and fresh-baked pies" },
-    { name: "Brand Story MET", short: "Brand Story", cat: "Events company", scope: "Rebranding & Launch", line: "Where brands and ideas meet.",
+    { name: "Brand Story MET", short: "Brand Story", cat: "Events Company", scope: "Rebranding & Launch", line: "Where brands and ideas meet.",
       loc: "Jeddah, Saudi Arabia", years: "5 years", capital: "$400k", img: "brand-story",
       alt: "Brand Story stationery suite in blue and violet: letterhead, cards, envelopes, a tablet and the company profile",
       link: "https://brandstory.com.sa/wp-content/uploads/2023/11/Brand-Story-Company-Profile-Web.pdf" },
   ];
-  const WK_ROT = [-7, 8.5, -6, 9, -8, 6.5, -9, 7, -6.5, 8];        // alternating, never near straight: neighbours differ by 12°+
-  const WK_IN = [38, 25, -20, 60, -75, 5, 45, -35, 15, -50];          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll
-  const WK_DY = [0, 14, -10, 8, -14, 10, -6, 12, -8, 6];
-  const WK_S0 = 0, WK_STEP = .09, WK_DUR = .12;
+  const WK_ROT = [-7, 8.5, -6, 9, -8, 6.5, -9, 7, -6.5, 8, -7.5];        // alternating, never near straight: neighbours differ by 12°+
+  const WK_IN = [38, 25, -20, 60, -75, 5, 45, -35, 15, -50, 30];          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll
+  const WK_DY = [0, 14, -10, 8, -14, 10, -6, 12, -8, 6, -12];
+  const WK_S0 = 0, WK_STEP = .078, WK_DUR = .11;
   // the first card starts early — while "Field work" is still rising past mid-screen — and has landed by the time the title is gone
   const wkStart = (i, span) => i ? WK_S0 + i * WK_STEP : -innerHeight * .55 / span;
   const wkDur = (i, span) => i ? WK_DUR : innerHeight * .9 / span;
   const escH = v => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-  const wkRow = (k, v) => v ? `<div><dt>${k}</dt><dd>${escH(v)}</dd></div>` : "";
-  const wkData = p => wkRow("Location", p.loc) + wkRow("In business", p.years) + wkRow("My role", p.scope);   // (p.capital is kept in the data, not shown)
-  const wkCta = p => p.cs ? `<a class="wk-cta" href="${p.cs}">Read the case study →</a>`
-                  : p.link ? `<a class="wk-cta" href="${p.link}" target="_blank" rel="noopener">See their profile ↗</a>` : "";
+  const wkRow = (k, v, w) => v ? `<div${w ? ' class="w"' : ""}><dt>${k}</dt><dd>${escH(v)}</dd></div>` : "";
+  const wkData = p => wkRow("Location", p.loc) + wkRow("Type of business", p.cat) + wkRow("Scope", p.scope, 1);   // (p.years and p.capital stay in the data, not shown)
+  const wkCta = p => p.cs ? `<a class="wk-cta" href="${p.cs}">Read the case study →</a>` : `<span class="wk-cta soon">Case study coming soon</span>`;
+  const ARR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+  // every tile carries the arrow; it is a link only where a case study exists
+  const wkArr = p => p.cs ? `<a class="tile-arr" href="${p.cs}" aria-label="Read the ${escH(p.name)} case study">${ARR}</a>` : `<span class="tile-arr" aria-hidden="true">${ARR}</span>`;
+  const wkImgLink = p => p.link ? `<a class="tile-link" href="${p.link}" target="_blank" rel="noopener" aria-label="${escH(p.short)}’s company profile (opens in a new tab)"></a>` : "";
   const wkEl = $("#work"), wkTrk = $("#wkTrk"), wkStage = $("#wkStage"), wkPile = $("#wkPile"), wkIdx = $("#wkIdx"), wkGrid = $("#wkGrid"), wkTiles = $("#wkTiles");
   const wkWhoS = $("#wkWhoS"), wkWhoW = $("#wkWhoW"), wkWho = wkWhoS.parentElement, wkHead = $(".wk-head"), wkHeadP = wkHead.querySelector("p");
   wkPile.innerHTML = WK.map((p, i) => `<article class="wk-card" data-i="${i}">
-      <div class="wk-media"><img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async"></div>
-      <div class="wk-info"><p class="wk-meta"><span>${escH(p.cat)}</span><span class="sc">${p.cs ? "Case study" : escH(p.scope)}</span></p>
+      ${p.link ? `<a class="wk-media" href="${p.link}" target="_blank" rel="noopener" aria-label="${escH(p.short)}’s company profile (opens in a new tab)">` : '<div class="wk-media">'}<img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async">${p.link ? "</a>" : "</div>"}
+      <div class="wk-info">
         <div class="wk-t"><h3>${escH(p.name)}</h3><p>${escH(p.line)}</p></div><dl class="wk-data">${wkData(p)}</dl>${wkCta(p)}</div>
     </article>`).join("");
   const wkCards = [...wkPile.children];
@@ -1808,7 +1866,7 @@ void main(){
   wkTiles.innerHTML = WK.map((p, i) => `<article class="tile" tabindex="0" aria-label="${escH(p.name)}, ${escH(p.cat)}, ${escH(p.scope)}" style="--d:${((i % 2) * .12).toFixed(2)}s;--kb:${(-i * 2.3).toFixed(1)}s;--ko:${KO[i % 4]}">
       <div class="px"><img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async"></div>
       <div class="lbl" aria-hidden="true"><b>${escH(p.short === "PBF" ? "PBF" : p.name)}</b><span>${escH(p.cat)} · ${escH(p.loc.split(",").pop().trim())}</span></div>
-      <div class="ov"><span class="om">${escH(p.cat)}${p.cs ? " · Case study" : ""}</span><h3>${escH(p.name)}</h3><p>${escH(p.line)}</p><dl>${wkData(p)}</dl>${wkCta(p)}</div>
+      <div class="ov">${wkImgLink(p)}<h3>${escH(p.name)}</h3><p>${escH(p.line)}</p><dl>${wkData(p)}</dl>${wkCta(p)}</div>${wkArr(p)}
     </article>`).join("");
   const wkTileEls = [...wkTiles.children], wkPx = wkTileEls.map(t => t.querySelector(".px"));
   const wkSide = wkTileEls.map((_, i) => (i === WK.length - 1 && WK.length % 2) ? 0 : (i % 2 ? 1 : -1));   // left column, right column, the lone last tile
@@ -1859,6 +1917,7 @@ void main(){
     const span = Math.max(1, wkTrkH - M.vh), tp = Math.max(-1, Math.min(1, -r.top / span));   // below 0: the stage is still rising into place
     wkSp += (tp - wkSp) * (reduce ? 1 : 1 - Math.pow(1 - .16, dt / 16.7));
     const p = wkSp, n = WK.length;
+    const ex = reduce ? 0 : Math.pow(clamp01((M.vh - r.bottom) / (M.vh * .85)), 1.25);   // 0 while pinned, 1 as the stage leaves the screen
     const qs = WK.map((_, i) => clamp01((p - wkStart(i, span)) / wkDur(i, span)));
     let c = -1; qs.forEach(q => { c += ss(.55, 1, q); }); c = Math.max(0, c);   // the camera follows the newest card, so the stack migrates left
     let cur = wkChrome ? 0 : -1;                                // the first name shows the moment the title is gone
@@ -1870,10 +1929,11 @@ void main(){
       const a0 = WK_IN[i] * Math.PI / 180, R0 = Math.hypot(wkW, wkH) * .78, ang = a0 + .35 * (1 - e);
       const x = tx + Math.cos(ang) * R0 * (1 - e), y = wkAY + WK_DY[i] + Math.sin(ang) * R0 * (1 - e);
       const rot = WK_ROT[i] + (1 - e) * (i % 2 ? 18 : -18), sc = .74 + .26 * e;
-      el.style.visibility = "visible"; el.style.opacity = ss(0, .06, q).toFixed(3); el.style.zIndex = 10 + i;
+      el.style.visibility = "visible"; el.style.opacity = (ss(0, .06, q) * (1 - ex * .55)).toFixed(3); el.style.zIndex = 10 + i;
       el.style.setProperty("--fog", Math.min(.72, Math.max(0, (back - .1) * .46)).toFixed(3));   // older cards recede, so the white label stays readable
       el.style.pointerEvents = back > .5 ? "none" : "auto";
-      el.style.transform = `translate3d(${(x - wkCw / 2).toFixed(1)}px,${(y - wkCh[i] / 2).toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+      const sd = (i - c) % 2 ? 1 : -1, xe = ex * sd * wkW * (.1 + .05 * Math.max(0, Math.min(3, back))), ye = -ex * wkH * .06 * (1 + back * .3);
+      el.style.transform = `translate3d(${(x - wkCw / 2 + xe).toFixed(1)}px,${(y - wkCh[i] / 2 + ye).toFixed(1)}px,0) rotate(${(rot + ex * sd * 9).toFixed(2)}deg) scale(${(sc * (1 - ex * .07)).toFixed(3)})`;
     });
     if (cur !== wkCur){
       wkCur = cur;
@@ -1913,8 +1973,8 @@ void main(){
   }
   wkSw.forEach(b => b.addEventListener("click", () => wkSetMode(b.dataset.mode)));
   wkTileEls.forEach(t => wkReveal.observe(t));                  // the grid is what loads first
-  // the grid opens on four projects (the two case studies first); the rest are one tap away, so the offer isn't pushed far down
-  const WK_FEAT = 4, wkMoreEl = $("#wkMore"), wkMoreBtn = $("#wkMoreBtn");
+  // the grid opens on six projects (the case studies first); the rest are one tap away, so the offer isn't pushed far down
+  const WK_FEAT = 6, wkMoreEl = $("#wkMore"), wkMoreBtn = $("#wkMoreBtn");
   wkTileEls.forEach((t, i) => { if (i >= WK_FEAT) t.hidden = true; });
   wkMoreBtn.addEventListener("click", () => {
     wkTileEls.forEach(t => { t.hidden = false; });
@@ -2260,23 +2320,25 @@ void main(){
    Each testimonial is a node on an orbit seen slightly from above. The front node's head turns once
    (one turn takes about as long as reading the quote), then the orbit brings the next one round.
    Each head starts facing forward. The turn is ramped: it lingers on the face and sweeps quickly
-   through the back (right profile to left profile), so nobody shows the back of their head for long. */
+   through the back (right profile to left profile), so nobody shows the back of their head for long.
+   While a head turns, the orbit inches toward the next person; when the ring around the point closes, it lands there. */
 (() => {
   const root = document.getElementById("tm"); if (!root) return;
   const stage = root.querySelector(".tm-stage"), cv = root.querySelector(".tm-cv"), ctx = cv.getContext("2d");
   const figs = [...root.querySelectorAll(".tm-q")], N = figs.length;
   const quotes = root.querySelector(".tm-quotes"), countB = root.querySelector(".tm-count b"), pauseBtn = root.querySelector(".tm-pause");
   const RM = matchMedia("(prefers-reduced-motion: reduce)");
-  const FR = 48, COLS = 8, TILE = 192, STEP = Math.PI * 2 / N, ACC = "#2b9fe0";
-  const period = figs.map(f => Math.min(22, Math.max(10, f.querySelector("blockquote").textContent.trim().split(/\s+/).length / 3.8 + 2)));
+  const COLS = 12, TILE = 200, STEP = Math.PI * 2 / N, ACC = "#2b9fe0", CREEP = .18;
+  const FRN = figs.map(f => +f.dataset.frames || 96);       // every frame of each person's turn in the video, one tile each
+  const period = figs.map(f => Math.min(16, Math.max(7.5, f.querySelector("blockquote").textContent.trim().split(/\s+/).length / 5.2 + 1.5)));
   const imgs = [], ready = [];
   const mod = k => ((k % N) + N) % N;
   const load = k => { k = mod(k); if (imgs[k]) return; const im = new Image(); im.decoding = "async";
-    im.onload = () => { ready[k] = performance.now(); kick(); }; im.src = "img/heads/" + figs[k].dataset.head + ".webp"; imgs[k] = im; };
+    im.onload = () => { ready[k] = performance.now(); kick(); }; im.src = "img/heads/" + figs[k].dataset.head + ".webp?v=3"; imgs[k] = im; };   // v3: one tile per video frame, 12 a row
 
   let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, rx = 0, ry = 0, HS = 100, labels = false;
   const first = figs.map(f => f.querySelector("figcaption b").textContent.split(" ")[0].toUpperCase());
-  let off = 0, act = 0, prog = 0, anim = null, drag = null, dragged = 0;
+  let off = 0, rest = 0, act = 0, prog = 0, anim = null, drag = null, dragged = 0;
   const turn = new Array(N).fill(0);                  // how far through its turn each head is, in time (0 to 1)
   // time to angle: dwell density is high facing front and low facing back, so the back half takes ~20% of the turn
   const RAMP = (() => { const n = 480, T = [0];
@@ -2290,10 +2352,10 @@ void main(){
   const layout = () => {
     W = stage.clientWidth; if (!W) return;
     const mob = W < 700;
-    HS = mob ? 100 : 132;
+    HS = mob ? 118 : 152;
     rx = mob ? Math.min(W / 2 - 16, 190) : Math.min(W * .3, 340);
     ry = rx * .2; labels = !mob;
-    cy = 12 + HS + 4 - ry; cx = W / 2; H = Math.round(HS + 16 + 14 + (mob ? 4 : 18));
+    cy = 12 + HS + 17 - ry; cx = W / 2; H = Math.round(HS + 29 + 14 + (mob ? 4 : 18));
     stage.style.setProperty("--tm-h", H + "px");
     dpr = Math.min(2, devicePixelRatio || 1);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
@@ -2310,7 +2372,7 @@ void main(){
     ctx.globalAlpha = .28 + .72 * depth;
     ctx.lineWidth = 1.5; ctx.strokeStyle = ACC; ctx.fillStyle = "#000";
     ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-    const f = Math.max(0, 1 - Math.abs(p.d) * 1.6);          // the front node opens into a ring that fills as the head turns
+    const f = 1 - Math.min(1, Math.max(0, (Math.abs(p.d) - .2) * 2));   // the front node opens into a ring that fills as the head turns
     if (f > 0) {
       ctx.globalAlpha = f;
       ctx.lineWidth = 1; ctx.strokeStyle = "rgba(43,159,224,.28)";
@@ -2324,12 +2386,14 @@ void main(){
   const tile = (im, i, x, y, s) => ctx.drawImage(im, (i % COLS) * TILE, Math.floor(i / COLS) * TILE, TILE, TILE, x, y, s, s);
   const head = (p, now) => {
     const im = imgs[p.k]; if (!im || !ready[p.k]) return;
-    const v = Math.max(0, 1 - Math.abs(p.d)); if (!v) return;
-    const s = HS * (.72 + .28 * v), x = p.x - s / 2, y = p.y - 3 - s;
-    const f = (RM.matches ? 0 : angle(turn[p.k]) % 1) * FR, i0 = Math.floor(f) % FR, t = f - Math.floor(f);
+    const v = 1 - Math.min(1, Math.max(0, (Math.abs(p.d) - .2) / .8)); if (!v) return;   // full size while it inches; fades as it leaves
+    const s = HS * (.72 + .28 * v), x = p.x - s / 2, y = p.y - 16 - s;                       // a clear gap between the neck and the point
+    const F = FRN[p.k], f = (RM.matches ? 0 : angle(turn[p.k]) % 1) * F, i0 = Math.floor(f) % F, t = f - Math.floor(f);
     const a = v * v * (3 - 2 * v) * Math.min(1, (now - ready[p.k]) / 450);
     ctx.globalAlpha = a; tile(im, i0, x, y, s);
-    if (t > .002) { ctx.globalAlpha = a * t; tile(im, (i0 + 1) % FR, x, y, s); }   // blend the two nearest frames: a smooth turn, not a flicker
+    // frames are ~3.6° apart; each holds crisp and only hands over to the next in its last stretch, so no doubled faces
+    const b = t < .6 ? 0 : (u => u * u * (3 - 2 * u))((t - .6) / .4);
+    if (b > .002) { ctx.globalAlpha = a * b; tile(im, (i0 + 1) % F, x, y, s); }
     ctx.globalAlpha = 1;
   };
   const draw = (now = performance.now()) => {
@@ -2376,7 +2440,7 @@ void main(){
   const easeIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, easeO = t => 1 - Math.pow(1 - t, 3);
   const go = (to, user) => {
     if (user) quotes.setAttribute("aria-live", "polite");
-    anim = { from: off, to, t0: performance.now(), dur: RM.matches ? 200 : user ? 620 : 950, e: user ? easeO : easeIO }; kick();
+    anim = { from: off, to, t0: performance.now(), dur: RM.matches ? 200 : user ? 620 : 620, e: easeO }; kick();   // the landing is quick
   };
   const step = (n, user) => go(Math.round(off) + n, user);
 
@@ -2385,10 +2449,11 @@ void main(){
     const dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
     const turning = !RM.matches && !paused && visible && !document.hidden;
     if (turning && !drag && !anim) { turn[act] = Math.min(1, turn[act] + dt / period[act]); prog = turn[act]; }
+    if (!drag && !anim) off = rest + (RM.matches ? 0 : CREEP * Math.pow(prog, 1.7));   // inching toward the next point as the ring fills
     if (anim) {
       const t = Math.min(1, (now - anim.t0) / anim.dur);
       off = anim.from + (anim.to - anim.from) * anim.e(t); sync(Math.sign(anim.to - anim.from) || 1);
-      if (t >= 1) { off = anim.to; anim = null; }
+      if (t >= 1) { off = rest = anim.to; anim = null; }
     }
     if (prog >= 1) { if (inView && !drag && !anim && !paused && now - lastScroll > 700) { quotes.setAttribute("aria-live", "off"); step(1, false); } }
     draw(now);
@@ -2450,6 +2515,59 @@ void main(){
   }), { threshold: [0, .35, .6] }).observe(root);
   new ResizeObserver(layout).observe(stage);
   layout();
+})();
+</script>
+<script>
+/* ---------- below the fold: parallax, the stars behind the testimonials, the package links ---------- */
+(() => {
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // "Tell me more" opens the brief with that situation already picked
+  document.querySelectorAll(".svc-go").forEach(a => a.addEventListener("click", () => {
+    const r = document.querySelector(`#brief input[name="stage"][value="${a.dataset.stage}"]`); if (r) r.checked = true;
+  }));
+  const cases = [...document.querySelectorAll(".case-par")], pb = document.querySelector(".pb-fx"), ph = document.querySelector(".laws-ph");
+  // the stars: three depths that drift at their own pace as you scroll, lean with the mouse (or the phone's tilt), and twinkle
+  const sec = document.getElementById("proof"), cv = document.getElementById("tmSky"), ctx = cv && cv.getContext("2d");
+  let W = 0, H = 0, dpr = 1, stars = [], skyOn = false, mx = 0, my = 0, tx = 0, ty = 0, raf = 0;
+  const rnd = (a => () => (a = (a * 16807) % 2147483647) / 2147483647)(9301);
+  const size = () => {
+    if (!cv) return; W = innerWidth; H = innerHeight; dpr = Math.min(2, devicePixelRatio || 1);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    const n = Math.min(360, Math.round(W * H / 3600)); stars = [];
+    for (let i = 0; i < n; i++) { const z = rnd(); stars.push({ x: rnd(), y: rnd(), z, r: .45 + z * z * 1.5, a: .25 + z * .6, f: .6 + rnd() * 1.8, p: rnd() * 7, b: rnd() < .22 }); }
+  };
+  const sky = t => {
+    if (!ctx || !W) return;
+    mx += (tx - mx) * .05; my += (ty - my) * .05;
+    const top = sec.getBoundingClientRect().top, FH = H * 1.7;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      const sp = .12 + s.z * .5;                                   // near stars move more
+      let y = (s.y * FH + top * sp) % FH; if (y < 0) y += FH; y -= (FH - H) / 2;
+      const x = s.x * W + mx * s.z * 34, yy = y + my * s.z * 22;
+      if (yy < -4 || yy > H + 4) continue;
+      const tw = RM ? 1 : .62 + .38 * Math.sin(t / 1000 * s.f + s.p);
+      ctx.globalAlpha = s.a * tw; ctx.fillStyle = s.b ? "#8fd0f6" : "#dfe8f2";
+      ctx.beginPath(); ctx.arc(x, yy, s.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+  addEventListener("pointermove", e => { if (!skyOn || e.pointerType === "touch") return; tx = (e.clientX / W - .5) * 2; ty = (e.clientY / H - .5) * 2; }, { passive: true });
+  addEventListener("deviceorientation", e => { if (!skyOn || e.gamma == null) return; tx = Math.max(-1, Math.min(1, e.gamma / 25)); ty = Math.max(-1, Math.min(1, (e.beta - 45) / 25)); }, { passive: true });
+  const frame = t => {
+    raf = 0; const vh = innerHeight;
+    cases.forEach(el => { const r = el.parentElement.getBoundingClientRect(); if (r.bottom < -50 || r.top > vh + 50) return;
+      const o = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh)); el.style.transform = `translate3d(0,${(-o * 6).toFixed(2)}%,0)`; });
+    if (pb) { const r = pb.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) pb.style.setProperty("--p", Math.max(-1.2, Math.min(1.2, (r.top + r.height / 2 - vh / 2) / (vh / 2))).toFixed(3)); }
+    if (ph) { const r = ph.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) ph.style.transform = `translate3d(0,${((r.top + r.height / 2 - vh / 2) * -.06).toFixed(1)}px,0)`; }
+    if (skyOn) sky(t);
+    if (skyOn && !RM) raf = requestAnimationFrame(frame);
+  };
+  const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
+  if (!RM) addEventListener("scroll", kick, { passive: true });
+  addEventListener("resize", () => { size(); kick(); });
+  if (cv) new IntersectionObserver(es => es.forEach(en => { skyOn = en.isIntersecting; if (skyOn) { if (!W) size(); kick(); } })).observe(sec);
+  kick();
 })();
 </script>
 </body>

@@ -59,7 +59,7 @@ img{max-width:100%;display:block}
 .meta li{display:grid;gap:6px;font-size:16px}
 .meta span{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .cover{margin:0 auto;max-width:1180px;padding:0 var(--gutter)}
-.cover img,.cover .ph{width:100%;border-radius:16px;aspect-ratio:16/9;object-fit:cover}
+.cover img,.cover .ph{width:100%;border-radius:16px;aspect-ratio:16/9;object-fit:cover;object-position:50% 45%}
 
 /* chapters */
 .ch{display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,1fr);gap:clamp(20px,5vw,80px);padding:clamp(56px,7vw,100px) 0;border-bottom:1px solid var(--line)}
@@ -92,6 +92,9 @@ img{max-width:100%;display:block}
 .gal figure.w8 img,.gal figure.w8 .ph{aspect-ratio:16/10}
 .gal figure .ph{aspect-ratio:4/5}
 .gal figcaption{font-size:14px;line-height:1.4;color:var(--muted)}
+.gal figure.w12{grid-column:1 / -1}
+.gal figure.nat img{aspect-ratio:auto;height:auto;object-fit:contain;background:#fff}   /* wide boards and slides keep their shape */
+.gal-g{align-items:start}
 
 /* placeholder for photography that isn't here yet */
 .ph{display:grid;place-items:center;text-align:center;padding:24px;aspect-ratio:var(--r,4/3);border:1px dashed rgba(43,159,224,.5);

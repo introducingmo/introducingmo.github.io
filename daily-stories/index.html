@@ -61,14 +61,14 @@ img,video{display:block;max-width:100%}
 .nav ul a:hover{opacity:1;color:var(--accent)}
 .cta-top{display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:background .2s,color .2s}
-.cta-top{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 2px rgba(3,30,60,.3);box-shadow:0 6px 18px rgba(14,114,186,.32);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
-.cta-top:hover{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(30,163,237,.45)}
+.cta-top{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 3px rgba(0,45,100,.45);box-shadow:0 6px 18px rgba(52,152,255,.35);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.cta-top:hover{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(84,214,239,.45)}
 .foot .heart{display:inline-block;width:1em;height:1em;vertical-align:-.15em;fill:#8fd3fb}
 
 /* type & buttons */
 .eb{margin:0 0 18px;display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
-.eb::before{content:"";flex:none;width:28px;height:1px;background:currentColor}
-.eb.c{justify-content:center}.eb.c::after{content:"";flex:none;width:28px;height:1px;background:currentColor}
+.eb::before{content:none}
+.eb.c{justify-content:center}
 h1,h2{font-family:var(--t-sans);font-weight:900;font-stretch:86%;letter-spacing:-.02em;line-height:.92;margin:0;text-wrap:balance}
 h1 em,h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-stretch:100%;letter-spacing:-.01em;color:var(--accent)}
 h2{font-size:clamp(40px,5.6vw,84px)}
@@ -191,6 +191,17 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .pts .n{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;color:var(--accent);letter-spacing:.06em}
 .pts h3{margin:46px 0 10px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(26px,2.4vw,34px);line-height:1;letter-spacing:-.01em}
 .pts p{margin:0;color:var(--soft);font-size:16px}
+.pts p a{color:var(--accent)}
+.facts-n{margin:clamp(16px,2vw,28px) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.facts-n li{position:relative;display:grid;align-content:start;gap:10px;padding:clamp(26px,3vw,40px);border-radius:20px;border:1px solid rgba(52,152,255,.35);
+  background:radial-gradient(120% 90% at 100% 0,rgba(84,214,239,.16),transparent 60%),linear-gradient(180deg,#071320,#03070c);overflow:hidden}
+.facts-n .n{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;color:var(--accent);letter-spacing:.06em}
+.facts-n b{margin-top:24px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(60px,5.4vw,86px);line-height:.85;letter-spacing:-.03em;white-space:nowrap;
+  background:linear-gradient(100deg,#fff 0%,#fff 45%,#54d6ef 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.facts-n b i{font-style:normal}
+.facts-n p{margin:0;color:var(--soft);font-size:16.5px;max-width:20em}
+.facts-n a{margin-top:6px;justify-self:start;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(155,167,180,.4);padding-bottom:3px}
+.facts-n a:hover{color:var(--accent);border-color:var(--accent)}
 
 /* ---------- variety: two rows that slide against each other as you scroll ---------- */
 .variety{padding-block:clamp(70px,9vw,140px);overflow:hidden;border-block:1px solid var(--line);background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(14,114,186,.18),transparent 70%)}
@@ -199,8 +210,9 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .rows{display:grid;gap:clamp(14px,1.6vw,22px)}
 .row-t{display:flex;gap:clamp(14px,1.6vw,22px);width:max-content;will-change:transform}
 .card{position:relative;flex:none;width:clamp(150px,15vw,220px);aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#0b0d10;border:1px solid rgba(255,255,255,.08)}
-.card img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.card img,.card video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--ease)}
 .card:hover img{transform:scale(1.06)}
+.card video{pointer-events:none}
 .card span{position:absolute;left:10px;bottom:10px;padding:5px 9px;border-radius:8px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff}
 .card .play{position:absolute;right:10px;top:10px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center}
@@ -260,7 +272,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .faq h2{position:sticky;top:110px}
 .qa{border-top:1px solid var(--line)}
 .qa details{border-bottom:1px solid var(--line)}
-.qa summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;cursor:pointer;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(21px,2vw,27px);line-height:1.1}
+.qa summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;cursor:pointer;font-family:var(--t-sans);font-weight:500;font-stretch:86%;font-size:clamp(21px,2vw,27px);line-height:1.1}
 .qa summary::-webkit-details-marker{display:none}
 .qa summary i{flex:none;position:relative;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);transition:transform .4s var(--ease),border-color .3s}
 .qa summary i::before,.qa summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.6px;margin:-.8px 0 0 -6px;background:var(--accent)}
@@ -271,17 +283,18 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .qa a{color:var(--accent)}
 
 /* ---------- close ---------- */
-.talk{position:relative;margin:0 var(--gutter) clamp(40px,6vw,80px);padding:clamp(48px,7vw,110px) clamp(24px,5vw,72px);border-radius:28px;background:linear-gradient(135deg,#0f77bf,#06528a);text-align:center;overflow:hidden;isolation:isolate}
+.talk{position:relative;margin:0 var(--gutter) clamp(40px,6vw,80px);padding:clamp(48px,7vw,110px) clamp(24px,5vw,72px);border-radius:28px;background:linear-gradient(120deg,#3498ff 0%,#54d6ef 100%);color:#04213d;text-align:center;overflow:hidden;isolation:isolate}
 .talk::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;background-image:radial-gradient(rgba(255,255,255,.4) 1px,transparent 1.4px);background-size:22px 22px;
   -webkit-mask-image:radial-gradient(ellipse at center,#000,transparent 70%);mask-image:radial-gradient(ellipse at center,#000,transparent 70%)}
 .talk h2{font-size:clamp(42px,6vw,92px)}
-.talk h2 em{color:#fff}
+.talk h2{color:#04213d}
+.talk h2 em{color:#fff;text-shadow:0 2px 18px rgba(0,60,130,.25)}
 .talk p{margin:20px auto 32px;max-width:30em;font-size:18px}
 .talk .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.talk .btn{background:#fff;border-color:#fff;color:#065f95}
-.talk .btn:hover{background:#051323;border-color:#051323;color:#fff}
-.talk .btn.ghost{background:transparent;border-color:#fff;color:#fff}
-.talk .btn.ghost:hover{background:#fff;color:#065f95}
+.talk .btn{background:#04213d;border-color:#04213d;color:#fff;text-shadow:none}
+.talk .btn:hover{background:#fff;border-color:#fff;color:#04213d}
+.talk .btn.ghost{background:transparent;border-color:#04213d;color:#04213d}
+.talk .btn.ghost:hover{background:#04213d;color:#fff}
 .foot{border-top:1px solid var(--line);padding:32px var(--gutter) calc(env(safe-area-inset-bottom,0px) + 32px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
 .foot a{text-decoration:none;color:var(--soft)}
 .foot a:hover{color:var(--accent)}
@@ -293,13 +306,13 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   .hero-grid{grid-template-columns:1fr;grid-template-areas:"copy" "phone" "acts";text-align:center}
   .hero .lede,.hero-acts{margin-inline:auto}
   .hero h1 .ln{display:inline}
-  .eb.hero-eb{justify-content:center}.eb.hero-eb::after{content:"";flex:none;width:28px;height:1px;background:currentColor}
+  .eb.hero-eb{justify-content:center}
   .phone-zone{padding:44px 0 56px}
   .hero-acts .row{justify-content:center;margin-top:10px}
   .trust{justify-content:center}
   .why-head,.faq{grid-template-columns:1fr}
   .faq h2{position:static}
-  .pts{grid-template-columns:1fr}
+  .pts,.facts-n{grid-template-columns:1fr}
   .pts h3{margin-top:26px}
   .steps{grid-template-columns:1fr 1fr;row-gap:44px}
   .steps::before{display:none}
@@ -373,8 +386,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 
       <div class="hero-acts" data-rv="3">
         <div class="row"><a class="btn" href="#pricing">See the packages</a><a class="btn ghost" id="heroWa" href="https://wa.me/96170783482?text=Hi%20Mo%2C%20I%27m%20interested%20in%20daily%20stories." target="_blank" rel="noopener">Ask on WhatsApp</a></div>
-        <p class="from">From <b>$60 a week</b>, billed monthly. Posting included for $5 more.</p>
-        <ul class="trust" aria-label="Industries in these examples"><li>Cafés</li><li>Restaurants</li><li>Jewelry</li><li>Construction</li><li>Freight</li></ul>
+        <p class="from">From <b>$10 a day</b>, billed monthly. Posting included for $5 more a week.</p>
       </div>
     </div>
   </section>
@@ -388,7 +400,15 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
     <ul class="pts">
       <li data-rv><span class="n">01</span><h3>First thing they see</h3><p>Stories sit at the top of the app, above the feed. A story every day keeps your name in the first row your followers tap.</p></li>
       <li data-rv="2"><span class="n">02</span><h3>Always on brand</h3><p>One look, one voice, every day. People start recognising you before they read your name.</p></li>
-      <li data-rv="3"><span class="n">03</span><h3>No daily scramble</h3><p>I plan the week, design and edit every story, and post them if you want. You approve in WhatsApp and get on with your day.</p></li>
+      <li data-rv="3"><span class="n">03</span><h3>No daily scramble</h3><p>I plan the month, design and edit every story, and post them if you want. You approve in WhatsApp and get on with your day.</p></li>
+      <li data-rv><span class="n">04</span><h3>Skyrocket engagement</h3><p>Polls, quizzes, questions and sliders turn viewers into tappers and repliers. And Instagram ranks your next story on exactly that: <a href="https://www.socialmediatoday.com/news/instagram-stories-ranking-factors-2025/738541/" target="_blank" rel="noopener">taps, likes and replies</a>, says Adam Mosseri.</p></li>
+      <li data-rv="2"><span class="n">05</span><h3>Boost visibility</h3><p>Location stickers, hashtag stickers, mentions and tags carry your stories past your followers, and every guest who reshares puts you in front of theirs.</p></li>
+      <li data-rv="3"><span class="n">06</span><h3>Turn views into visits</h3><p>Link stickers take people straight to your menu, your booking page or your WhatsApp, while the craving is still fresh.</p></li>
+    </ul>
+    <ul class="facts-n">
+      <li data-rv><span class="n">07</span><b>3B</b><p>people use Instagram every month.</p><a href="https://www.thestar.com.my/tech/tech-news/2025/09/25/meta-ceo-zuckerberg-says-instagram-has-grown-to-3-billion-monthly-active-users" target="_blank" rel="noopener">Mark Zuckerberg, via Reuters, Sept 2025 ↗</a></li>
+      <li data-rv="2"><span class="n">08</span><b>500M<i>+</i></b><p>accounts use Instagram Stories every day.</p><a href="https://business.instagram.com/igb/a/stories" target="_blank" rel="noopener">Instagram for Business ↗</a></li>
+      <li data-rv="3"><span class="n">09</span><b>58<i>%</i></b><p>of people say they became more interested in a brand after seeing it in Stories.</p><a href="https://business.instagram.com/igb/a/stories" target="_blank" rel="noopener">Instagram for Business ↗</a></li>
     </ul>
   </section>
 
@@ -401,25 +421,25 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
     </div>
     <div class="rows" aria-hidden="true">
       <div class="row-t" data-dir="1">
-        <div class="card"><img src="m/cafe.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Café</span></div>
+        <div class="card"><video src="m/sm/cafe.mp4" poster="m/cafe.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Café</span></div>
         <div class="card"><img src="m/burger.webp" alt="" loading="lazy" width="720" height="1280"><span>Burgers</span></div>
-        <div class="card"><img src="m/steel.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Steel</span></div>
+        <div class="card"><video src="m/sm/steel.mp4" poster="m/steel.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Steel</span></div>
         <div class="card"><img src="m/jewelry-2.webp" alt="" loading="lazy" width="720" height="1280"><span>Jewelry</span></div>
         <div class="card"><img src="m/pizza.webp" alt="" loading="lazy" width="720" height="1280"><span>Pizza</span></div>
-        <div class="card"><img src="m/freight-nile.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Freight</span></div>
+        <div class="card"><video src="m/sm/freight-nile.mp4" poster="m/freight-nile.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Freight</span></div>
         <div class="card"><img src="m/fatayer.webp" alt="" loading="lazy" width="720" height="1280"><span>Bakery</span></div>
-        <div class="card"><img src="m/formwork.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Construction</span></div>
+        <div class="card"><video src="m/sm/formwork.mp4" poster="m/formwork.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Construction</span></div>
         <div class="card"><img src="m/oysters.webp" alt="" loading="lazy" width="720" height="1280"><span>Fine dining</span></div>
       </div>
       <div class="row-t" data-dir="-1">
-        <div class="card"><img src="m/warehouse.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Logistics build</span></div>
+        <div class="card"><video src="m/sm/warehouse.mp4" poster="m/warehouse.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Logistics build</span></div>
         <div class="card"><img src="m/eclairs.webp" alt="" loading="lazy" width="720" height="1280"><span>Pastry</span></div>
         <div class="card"><img src="m/jewelry-1.webp" alt="" loading="lazy" width="720" height="1280"><span>Jewelry</span></div>
-        <div class="card"><img src="m/coffee.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Coffee</span></div>
+        <div class="card"><video src="m/sm/coffee.mp4" poster="m/coffee.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Coffee</span></div>
         <div class="card"><img src="m/shawarma.webp" alt="" loading="lazy" width="720" height="1280"><span>Street food</span></div>
-        <div class="card"><img src="m/freight-port.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Freight</span></div>
+        <div class="card"><video src="m/sm/freight-port.mp4" poster="m/freight-port.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Freight</span></div>
         <div class="card"><img src="m/churros.webp" alt="" loading="lazy" width="720" height="1280"><span>Desserts</span></div>
-        <div class="card"><img src="m/steel.webp" alt="" loading="lazy" width="576" height="1024"><b class="play"><svg viewBox="0 0 10 12"><path d="M0 0v12l10-6z"/></svg></b><span>Steel</span></div>
+        <div class="card"><video src="m/sm/steel.mp4" poster="m/steel.webp" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video><span>Steel</span></div>
         <div class="card"><img src="m/burger.webp" alt="" loading="lazy" width="720" height="1280"><span>Burgers</span></div>
       </div>
     </div>
@@ -431,7 +451,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
     <h2 id="how-h" data-rv="2">Four steps, <em>then it runs itself.</em></h2>
     <ol class="steps">
       <li data-rv><span class="k">01</span><h3>Kickoff</h3><p>A short call about your brand, your offers and who you want to reach. You send your logo, photos and any footage you have.</p></li>
-      <li data-rv="2"><span class="k">02</span><h3>The week, planned</h3><p>Each week I share the plan: what goes out every day, and why.</p></li>
+      <li data-rv="2"><span class="k">02</span><h3>The month, planned</h3><p>Every month I share the plan: what goes out every day, and why. Holidays, occasions and last-minute announcements included.</p></li>
       <li data-rv="3"><span class="k">03</span><h3>Stories, every day</h3><p>Designed and edited for 9:16, on brand, ready to post. You approve in WhatsApp.</p></li>
       <li data-rv><span class="k">04</span><h3>Posted, or yours to post</h3><p>Pick “with posting” and I publish them on your account. Or keep the keys and post them yourself.</p></li>
     </ol>
@@ -460,9 +480,10 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
         <div class="price" aria-live="polite"><span class="cur">$</span><span class="amt">60</span><span class="per">/ week</span></div>
         <p class="bill">$240 billed every 4 weeks</p>
         <ul>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Free 1-on-1 discovery call with Mo</li>
           <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A new story every day</li>
           <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Designed images: offers, products, moments</li>
-          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A weekly plan you approve</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A monthly plan you approve</li>
           <li class="post"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg><span>Ready to post, sent to you daily</span></li>
         </ul>
         <a class="btn" href="#" target="_blank" rel="noopener">Start with Stills</a>
@@ -473,24 +494,26 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
         <div class="price" aria-live="polite"><span class="cur">$</span><span class="amt">80</span><span class="per">/ week</span></div>
         <p class="bill">$320 billed every 4 weeks</p>
         <ul>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Free 1-on-1 discovery call with Mo</li>
           <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A new story every day</li>
           <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Edited video stories, plus designed images</li>
-          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A weekly plan you approve</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A monthly plan you approve</li>
           <li class="post"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg><span>Ready to post, sent to you daily</span></li>
         </ul>
         <a class="btn" href="#" target="_blank" rel="noopener">Start with Motion</a>
       </article>
       <article class="plan" data-plan="2" data-rv="3">
-        <p class="pk">Package 03</p><h3>Always On</h3><p class="what">Multiple stories every day, images and videos.</p>
+        <p class="pk">Package 03</p><h3>Domination</h3><p class="what">Up to five stories per day, images and videos.</p>
         <div class="price" aria-live="polite"><span class="cur">$</span><span class="amt">90</span><span class="per">/ week</span></div>
         <p class="bill">$360 billed every 4 weeks</p>
         <ul>
-          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Several stories a day, morning to night</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Free 1-on-1 discovery call with Mo</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Up to five stories per day</li>
           <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Edited video stories, plus designed images</li>
-          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A weekly plan you approve</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg>A monthly plan you approve</li>
           <li class="post"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></svg><span>Ready to post, sent to you daily</span></li>
         </ul>
-        <a class="btn" href="#" target="_blank" rel="noopener">Start with Always On</a>
+        <a class="btn" href="#" target="_blank" rel="noopener">Start with Domination</a>
       </article>
     </div>
     <p class="fine" id="fine" data-rv>A <b>minimum of 4 weeks</b> applies to these prices. Paying by week has no minimum, at a higher weekly rate.</p>
@@ -504,7 +527,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
         <details open><summary>Is there a minimum commitment?<i aria-hidden="true"></i></summary><p>The monthly prices need a minimum of 4 weeks. If you’d rather not commit, pay by week: no minimum, at a higher weekly rate. You can switch to monthly whenever you’re ready.</p></details>
         <details><summary>What does “with posting” mean?<i aria-hidden="true"></i></summary><p>I publish the stories on your account for you, for $5 more a week. Without posting, you receive each story ready to post, and you publish it yourself.</p></details>
         <details><summary>What do I need to send you?<i aria-hidden="true"></i></summary><p>Your logo and any brand guidelines, plus photos and footage of your products, your space and your team. The more raw material you send, the more variety your stories get.</p></details>
-        <details><summary>What’s the difference between the packages?<i aria-hidden="true"></i></summary><p>Stills is designed images only. Motion adds edited video stories, which is where most of the attention goes. Always On gives you several stories a day instead of one, so you show up from morning to night.</p></details>
+        <details><summary>What’s the difference between the packages?<i aria-hidden="true"></i></summary><p>Stills is designed images only. Motion adds edited video stories, which is where most of the attention goes. Domination gives you up to five stories a day instead of one, so you show up from morning to night.</p></details>
         <details><summary>Do you do more than stories?<i aria-hidden="true"></i></summary><p>Yes. Daily stories is one service. For brand strategy, identity and launch campaigns, see <a href="../#services">my services</a> and <a href="../#cases">case studies</a>.</p></details>
       </div>
     </div>
@@ -648,10 +671,20 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   setPaused(paused); start(0);
 })();
 
+/* ---------- the example rows: video stories play by themselves while they're on screen ---------- */
+(() => {
+  const vids = [...document.querySelectorAll(".card video")]; if (!vids.length) return;
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const io = new IntersectionObserver(es => es.forEach(en => { const v = en.target;
+    if (en.isIntersecting && !RM && !document.hidden) { if (v.preload !== "auto") v.preload = "auto"; const p = v.play(); if (p) p.catch(() => {}); } else v.pause(); }), { rootMargin: "120px 0px" });
+  vids.forEach(v => io.observe(v));
+  document.addEventListener("visibilitychange", () => { if (document.hidden) vids.forEach(v => v.pause()); });
+})();
+
 /* ---------- pricing: how you pay, and whether I post ---------- */
 (() => {
   const P = { month: [60, 80, 90], week: [80, 110, 130] }, POST = 5;
-  const names = ["Package 01, Stills (images only)", "Package 02, Motion (images and videos)", "Package 03, Always On (multiple stories a day)"];
+  const names = ["Package 01, Stills (images only)", "Package 02, Motion (images and videos)", "Package 03, Domination (up to five stories a day)"];
   const plans = [...document.querySelectorAll(".plan")];
   const segBill = document.getElementById("segBill"), segPost = document.getElementById("segPost"), fine = document.getElementById("fine");
   const wa = t => "https://wa.me/96170783482?text=" + encodeURIComponent(t);

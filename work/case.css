@@ -34,8 +34,8 @@ img{max-width:100%;display:block}
 .nav ul a:hover{opacity:1;color:var(--accent)}
 .cta-top{display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-.cta-top{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 2px rgba(3,30,60,.3);box-shadow:0 6px 18px rgba(14,114,186,.32);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
-.cta-top:hover{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(30,163,237,.45)}
+.cta-top{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 3px rgba(0,45,100,.45);box-shadow:0 6px 18px rgba(52,152,255,.35);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.cta-top:hover{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(84,214,239,.45)}
 .cta-top .s{display:none}
 
 /* type */
@@ -121,8 +121,8 @@ img{max-width:100%;display:block}
 .talk p{margin:16px auto 28px;max-width:30em;font-size:18px}
 .talk .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .talk .btn{background:#fff;border-color:#fff;color:#065f95}
-.talk .btn.grad{color:#fff;background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 2px rgba(3,30,60,.3);box-shadow:0 6px 18px rgba(14,114,186,.32);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s;box-shadow:0 0 0 1.5px rgba(255,255,255,.85),0 10px 26px rgba(3,30,60,.35)}
-.talk .btn.grad:hover{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(30,163,237,.45);box-shadow:0 0 0 1.5px #fff,0 12px 30px rgba(3,30,60,.4)}
+.talk .btn.grad{color:#fff;background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 3px rgba(0,45,100,.45);box-shadow:0 6px 18px rgba(52,152,255,.35);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s;box-shadow:0 0 0 1.5px rgba(255,255,255,.85),0 10px 26px rgba(3,30,60,.35)}
+.talk .btn.grad:hover{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(84,214,239,.45);box-shadow:0 0 0 1.5px #fff,0 12px 30px rgba(3,30,60,.4)}
 .foot .heart{display:inline-block;width:1em;height:1em;vertical-align:-.15em;fill:#8fd3fb}
 .talk .btn:hover{background:#051323;border-color:#051323;color:#fff}
 .talk .btn.ghost{background:transparent;border-color:#fff;color:#fff}

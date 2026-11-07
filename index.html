@@ -92,8 +92,8 @@ a{color:inherit}
 /* the one action that matters, always in reach */
 .cta-top{display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:background .2s,color .2s,transform .2s}
-.cta-top{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 2px rgba(3,30,60,.3);box-shadow:0 6px 18px rgba(14,114,186,.32);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
-.cta-top:hover{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(30,163,237,.45)}
+.cta-top{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 3px rgba(0,45,100,.45);box-shadow:0 6px 18px rgba(52,152,255,.35);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.cta-top:hover{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(84,214,239,.45)}
 .cta-top .s{display:none}
 .top.on-blue .cta-top{box-shadow:0 0 0 1.5px rgba(255,255,255,.85),0 6px 18px rgba(3,30,60,.3)}
 /* a soft scrim once the page scrolls, so the bar stays legible over anything */
@@ -114,6 +114,19 @@ a{color:inherit}
 .menu-btn.active .pulse{animation:pulseRing .7s cubic-bezier(.2,.7,.2,1)}
 .menu-btn.active .pulse.p2{animation:pulseRing .7s cubic-bezier(.2,.7,.2,1) .12s}
 @keyframes pulseRing{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(3.2)}}
+/* social icons in their own colours (Instagram's gradient is defined once in the page as #ig-grad) */
+:is(.menu-social,.end-social,.pres-i) a{--bc:#fff}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="Instagram"]{--bc:#e1306c}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="Facebook"]{--bc:#1877f2}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="LinkedIn"]{--bc:#0a66c2}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="YouTube"]{--bc:#ff0000}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="Behance"]{--bc:#1769ff}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="Pinterest"]{--bc:#e60023}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="SoundCloud"]{--bc:#ff5500}
+:is(.menu-social,.end-social,.pres-i) a svg{fill:var(--bc)}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="Instagram"] svg{fill:url(#ig-grad)}
+:is(.menu-social,.end-social,.pres-i) a[aria-label="TikTok"] svg{filter:drop-shadow(-1px -1px 0 #25f4ee) drop-shadow(1px 1px 0 #fe2c55)}
+:is(.menu-social,.end-social,.pres-i) a[aria-label]:hover{border-color:var(--bc);background:color-mix(in srgb,var(--bc) 16%,transparent)}
 /* ---------- full menu overlay ---------- */
 .menu{position:fixed;inset:0;z-index:29;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   clip-path:circle(0px at calc(100% - 48px) 46px);transition:clip-path .75s cubic-bezier(.76,0,.24,1);pointer-events:none;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
@@ -227,9 +240,9 @@ a{color:inherit}
 .wk-data dd{margin:3px 0 0;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wk-data .w,.tile dl .w{grid-column:1 / -1}
 .wk-data .w dd,.tile dl .w dd{white-space:normal;line-height:1.35}
-.wk-cta.soon,.tile .wk-cta.soon{color:rgba(255,255,255,.62);border-bottom-color:rgba(255,255,255,.3);cursor:default}
-.wk-cta.soon:hover{color:rgba(255,255,255,.62)}
-.wk-cta{grid-column:1 / -1;justify-self:end;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#77caf7;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.wk-cta.soon{cursor:default}
+.wk-cta.soon:hover{color:#77caf7}
+.wk-cta{grid-column:1 / -1;justify-self:end;margin-top:10px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#77caf7;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
 .wk-cta:hover{color:#fff}
 .wk-cta:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media (max-width:760px){.wk-info{grid-template-columns:1fr;padding:13px 14px 15px;gap:9px}.wk-data dd{font-size:11.5px}}
@@ -248,8 +261,8 @@ a{color:inherit}
 :root{--seam:clamp(88px,10vw,150px)}
 .work::after{content:"";display:block;height:var(--seam)}   /* the blue side of the seam */
 .wk-more[hidden],.work:not(.grid) .wk-more{display:none}
-.btn.grad{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 2px rgba(3,30,60,.3);box-shadow:0 6px 18px rgba(14,114,186,.32);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
-.btn.grad:hover{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(30,163,237,.45)}
+.btn.grad{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 3px rgba(0,45,100,.45);box-shadow:0 6px 18px rgba(52,152,255,.35);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.btn.grad:hover{background:linear-gradient(100deg,#3498ff 0%,#54d6ef 100%);background-size:150% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(84,214,239,.45)}
 .btn.light{background:#fff;border-color:#fff;color:#065f95}
 .btn.light:hover{background:#051323;border-color:#051323;color:#fff}
 /* the name stays on every tile; the details open on hover, focus, or mid-screen on phones */
@@ -281,9 +294,11 @@ a{color:inherit}
 .tile dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;margin:4px 0 0;padding-top:11px;border-top:1px solid rgba(255,255,255,.28)}
 .tile dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.7)}
 .tile dd{margin:3px 0 0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tile .wk-cta{justify-self:start}
+.tile .wk-cta{justify-self:start;margin-top:12px;color:#77caf7}
+.tile .wk-cta:hover{color:#fff}
+.tile .wk-cta.soon:hover{color:#77caf7}
 @media (max-width:639px){.tile{border-radius:9px}.tile .ov{padding:11px;gap:5px}.tile dl{display:none}.tile .om{font-size:7px;letter-spacing:.18em}
-  .tile h3{font-size:17px}.tile p{font-size:12.5px;line-height:1.3}.tile .wk-cta{font-size:10px;letter-spacing:.08em}}
+  .tile h3{font-size:17px}.tile p{font-size:12.5px;line-height:1.3}.tile .wk-cta{font-size:10px;letter-spacing:.08em;margin-top:8px}}
 @media (hover:hover){.tile:hover .ov{opacity:1}.tile:hover .ov>*{transform:none;opacity:1}}
 .tile.open .ov,.tile:focus-visible .ov{opacity:1}
 .tile.open .ov>*,.tile:focus-visible .ov>*{transform:none;opacity:1}
@@ -398,9 +413,9 @@ h1 .l2{display:block}
 /* collab folders (placeholders) */
 .file{position:absolute;z-index:3;left:0;top:0;display:grid;justify-items:center;gap:9px;text-decoration:none;opacity:0;will-change:transform,opacity}
 .file img{width:clamp(56px,5vw,84px);height:auto;filter:drop-shadow(0 10px 14px rgba(0,0,0,.55));transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-.file span{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#cde9fd;padding:6px 10px;border:1px solid rgba(30,163,237,.6);background:rgba(0,0,0,.78);white-space:nowrap}
-.file span{display:grid;justify-items:center;gap:3px;line-height:1.15;color:var(--accent);font-size:10.5px;letter-spacing:.2em}
-.file span b{display:block;font-weight:700;font-size:12.5px;letter-spacing:.1em;color:#fff}
+.file span{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:6px;background:rgba(0,0,0,.62);white-space:nowrap}
+.file span{display:grid;justify-items:center;gap:3px;line-height:1.15;color:#fff;font-size:10.5px;letter-spacing:.2em}
+.file span b{display:block;font-weight:700;font-size:12.5px;letter-spacing:.1em;color:var(--accent)}
 .file span b::after{content:" ↗";letter-spacing:0;color:var(--accent)}
 .file:hover img{transform:translateY(-4px) rotate(-4deg)}
 
@@ -460,16 +475,17 @@ html.js [data-rv].in{opacity:1;transform:none}
 .tm-skyw{position:absolute;inset:0;z-index:0;overflow:clip;pointer-events:none}
 .tm-sky{position:sticky;top:0;display:block;width:100%;height:100vh;height:100lvh}
 .proof .wrap{position:relative;z-index:1}
-.stats{list-style:none;margin:0 0 clamp(70px,8vw,120px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;border-block:1px solid rgba(255,255,255,.12);padding:clamp(32px,4vw,52px) 0}
-.stats li{display:grid;gap:12px;align-content:start}
+.stats{list-style:none;margin:0 0 clamp(70px,8vw,120px);display:grid;grid-template-columns:repeat(3,minmax(0,300px));justify-content:center;text-align:center;gap:24px;border-block:1px solid rgba(255,255,255,.12);padding:clamp(32px,4vw,52px) 0}
+.stats li{display:grid;gap:12px;align-content:start;justify-items:center}
 .stats b{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(52px,6vw,96px);line-height:.85;color:var(--ink);letter-spacing:-.02em}
 .stats span{font-size:15.5px;line-height:1.4;color:var(--soft);max-width:14em}
+.stats b i{font-style:normal;color:var(--accent)}
 /* testimonials: an orbit of the people who said it. Each head rides its node; the front one turns once, then the next arrives */
 .tm-eb{justify-content:center}
 .tm{position:relative;outline:none;touch-action:pan-y;-webkit-user-select:none;user-select:none;margin-top:6px}
 .tm:focus-visible{outline:1px solid rgba(30,163,237,.55);outline-offset:12px;border-radius:16px}
-.tm-stage{position:relative;height:var(--tm-h,165px);cursor:grab}
-@media (min-width:780px){.tm-stage{height:var(--tm-h,213px)}}
+.tm-stage{position:relative;height:var(--tm-h,214px);cursor:grab}
+@media (min-width:780px){.tm-stage{height:var(--tm-h,274px)}}
 .tm.drag .tm-stage{cursor:grabbing}
 .tm-cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .tm-quotes{display:grid;max-width:760px;margin:clamp(6px,1vw,12px) auto 0;text-align:center}
@@ -557,9 +573,12 @@ html.js [data-rv].in{opacity:1;transform:none}
 .laws-l b{color:var(--ink)}
 
 .about-g{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,6vw,96px);align-items:center}
-.about-ph{position:relative;padding-bottom:14%}
-.about-ph .a1{width:82%;height:auto;display:block;border-radius:16px}
-.about-ph .a2{position:absolute;right:0;bottom:0;width:40%;height:auto;border-radius:12px;border:6px solid #000}
+/* about: an imperfect collage. Every photo overlaps, leans a little and drifts at its own depth; the one you point at comes forward */
+.about-ph.collage{position:relative;aspect-ratio:100/150}
+.collage img{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);width:calc(var(--w) * 1%);height:auto;display:block;box-sizing:border-box;
+  border:5px solid #000;border-radius:12px;rotate:var(--r);z-index:var(--z);box-shadow:0 18px 40px rgba(0,0,0,.6);background:#0b1622;
+  transition:scale .45s cubic-bezier(.2,.7,.2,1),rotate .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s;will-change:translate}
+@media (hover:hover){.collage img:hover{z-index:20;scale:1.06;rotate:0deg;box-shadow:0 26px 60px rgba(0,0,0,.75),0 0 0 1px rgba(30,163,237,.5)}}
 .about-t p:not(.eb):not(.lead){margin:18px 0 0;font-size:17px;line-height:1.6;color:var(--soft);max-width:36em}
 .facts{list-style:none;margin:30px 0 0;padding:0;border-top:1px solid rgba(255,255,255,.12)}
 .facts li{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:16px;color:var(--ink)}
@@ -684,7 +703,7 @@ html.js [data-rv].in{opacity:1;transform:none}
   .small::before{margin-bottom:10px}
   .yr-go{margin-top:18px;gap:12px}
   .yr-cue{font-size:10.5px;letter-spacing:.14em;max-width:15em}
-  .file span{font-size:10.5px;padding:5px 8px}
+  .file span{font-size:10px;padding:5px 8px}
   .file span b{font-size:11.5px}
   .chfade{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:5;pointer-events:none;opacity:0;
     background:linear-gradient(180deg,transparent,rgba(0,0,0,.86) 34%,var(--bg) 70%)}
@@ -701,6 +720,7 @@ html.js [data-rv].in{opacity:1;transform:none}
 </style>
 </head>
 <body style="margin:0">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="ig-grad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".3" stop-color="#fa7e1e"/><stop offset=".55" stop-color="#d62976"/><stop offset=".8" stop-color="#962fbf"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs></svg>
 <a class="skip" href="#work">Skip the intro</a>
 
 <header class="top" id="top-bar">
@@ -843,7 +863,7 @@ html.js [data-rv].in{opacity:1;transform:none}
       <button type="button" data-mode="grid" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
       <button type="button" data-mode="well" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="4.5" width="9" height="9" rx="1" transform="rotate(-8 8 9)"/><rect x="3.5" y="2.5" width="9" height="9" rx="1" transform="rotate(7 8 7)"/></svg>Gravity</button>
     </div></div>
-    <header class="wk-head"><div class="wk-hd"><h2>Field <em>work</em></h2><p>The work behind the pull. Eleven brands across eight countries, from launches to rebrands.</p></div></header>
+    <header class="wk-head"><div class="wk-hd"><h2>Field <em>work</em></h2><p>The work behind the pull. Some of the brands I’ve been involved with in Lebanon and beyond.</p></div></header>
     <div class="wk-trk" id="wkTrk" hidden>
       <div class="wk-stage" id="wkStage">
         <div id="wkPile"></div>
@@ -967,9 +987,9 @@ html.js [data-rv].in{opacity:1;transform:none}
     <div class="wrap">
       <h2 id="proof-h" class="sr-only">Proof</h2>
       <ul class="stats" data-rv>
-        <li><b>100+</b><span>campaigns created or overseen</span></li>
-        <li><b>8</b><span>countries where my brands live</span></li>
-        <li><b>10×</b><span>Instagram engagement for Edunation, in its founder’s words</span></li>
+        <li><b>100<i>+</i></b><span>campaigns created or overseen</span></li>
+        <li><b>8<i>+</i></b><span>countries where my brands live</span></li>
+        <li><b>10M<i>+</i></b><span>people around the world reached through campaigns</span></li>
       </ul>
       <p class="eb tm-eb" data-rv>Heard it from them</p>
       <div class="tm" id="tm" data-rv role="region" aria-roledescription="carousel" aria-label="Testimonials" tabindex="0">
@@ -1038,20 +1058,28 @@ html.js [data-rv].in{opacity:1;transform:none}
   <!-- ======== about ======== -->
   <section class="sec about" id="about" aria-labelledby="about-h">
     <div class="wrap about-g">
-      <div class="about-ph" data-rv>
-        <img class="a1" src="img/about/mo-studio.webp" alt="Mo at a laptop in a studio" width="574" height="763" loading="lazy" decoding="async">
-        <img class="a2" src="img/about/mo-coffee.webp" alt="Mo with a small cup of coffee" width="358" height="511" loading="lazy" decoding="async">
+      <div class="about-ph collage" data-rv>
+        <img src="img/about/c/mo-event.webp" alt="Mo with fellow marketers in a group selfie at a marketing conference" width="620" height="465" loading="lazy" decoding="async" data-sp="0.07" style="--x:0;--y:0.00;--w:48;--r:-4deg;--z:1">
+        <img src="img/about/c/mo-dubai.webp" alt="Mo at a café table in Downtown Dubai, the Burj Khalifa lit up behind him" width="620" height="719" loading="lazy" decoding="async" data-sp="0.05" style="--x:55;--y:2.00;--w:41;--r:3.5deg;--z:2">
+        <img src="img/about/c/mo-festival.webp" alt="Mo in the crowd at a Japanese culture festival, beside two performers in kimono" width="620" height="558" loading="lazy" decoding="async" data-sp="0.09" style="--x:0;--y:26.00;--w:31;--r:-5deg;--z:4">
+        <img src="img/about/mo-studio.webp" alt="Mo at a laptop in a studio" width="574" height="763" loading="lazy" decoding="async" data-sp="0.0" style="--x:19;--y:18.00;--w:51;--r:-1.5deg;--z:5">
+        <img src="img/about/c/mo-laptop.webp" alt="Mo and a colleague working through a brief at a laptop, in black and white" width="620" height="620" loading="lazy" decoding="async" data-sp="0.08" style="--x:66;--y:31.33;--w:33;--r:4deg;--z:6">
+        <img src="img/about/c/mo-pbf.webp" alt="Mo sharing a PBF slider at the PBF food truck" width="620" height="827" loading="lazy" decoding="async" data-sp="0.06" style="--x:1;--y:47.33;--w:29;--r:3deg;--z:6">
+        <img src="img/about/mo-coffee.webp" alt="Mo with a small cup of coffee" width="358" height="511" loading="lazy" decoding="async" data-sp="0.1" style="--x:70;--y:54.00;--w:28;--r:-3deg;--z:7">
+        <img src="img/about/c/mo-sofa.webp" alt="Mo with two colleagues on a leather sofa under a painted Union Jack" width="620" height="602" loading="lazy" decoding="async" data-sp="0.04" style="--x:27;--y:63.33;--w:40;--r:1.5deg;--z:8">
+        <img src="img/about/c/mo-sky.webp" alt="Mo looking down at the camera under a striped awning" width="620" height="844" loading="lazy" decoding="async" data-sp="0.08" style="--x:2;--y:72.00;--w:27;--r:-2.5deg;--z:7">
+        <img src="img/about/c/mo-theo.webp" alt="Mo photographing the dishes at Théo in Beirut" width="620" height="513" loading="lazy" decoding="async" data-sp="0.06" style="--x:58;--y:75.33;--w:40;--r:2.5deg;--z:9">
       </div>
       <div class="about-t">
         <p class="eb" data-rv>About</p>
         <h2 id="about-h" class="h2" data-rv>Hi, <em>I’m Mo.</em></h2>
         <p class="lead" data-rv>Mohamad Abou Younes, if we’re being formal. A brand strategist and creative director based in Beirut, and marketing manager at Second 2 None Group.</p>
-        <p data-rv>I graduated in 2014 with degrees in graphic design and advertising from the Lebanese American University. My love for branding and marketing led me on to a Brand Management certification from London Business School. In parallel, I trained myself in marketing through programs such as B-School by Marie Forleo, Digital Course Academy by Amy Porterfield, Full Time Purpose by Victor Oddo &amp; Aaron Doughty, and much more.</p>
+        <p data-rv>I graduated in 2014 with a Bachelor of Science in Graphic Design and a minor in Advertising from the Lebanese American University. My love for branding and marketing led me on to a Brand Management certification from London Business School. In parallel, I trained myself in marketing through programs such as B-School by Marie Forleo, Digital Course Academy by Amy Porterfield, Full Time Purpose by Victor Oddo &amp; Aaron Doughty, and much more.</p>
         <p data-rv>For almost two decades I’ve named, built and launched brands for restaurants, cafés, retailers and service businesses in Lebanon, Saudi Arabia, the UAE, Kuwait, Jordan, Austria, Norway and the US. I’ve hired agencies, and founded them. I know what it costs when a brand gets it wrong, because I’ve paid for it on both sides of the table.</p>
         <p data-rv>I’m not a magician. I’ve just made most of the mistakes already, and studied what works when building a brand, so you won’t have to.</p>
         <ul class="facts" data-rv>
           <li><span class="k">Based in</span><span>Beirut, Lebanon</span></li>
-          <li><span class="k">Studied</span><span>Graphic design &amp; advertising, LAU</span></li>
+          <li><span class="k">Studied</span><span>Bachelor of Science in Graphic Design, Minor in Advertising · Lebanese American University</span></li>
           <li><span class="k">Continuing education</span><span>Brand Management, London Business School</span></li>
           <li><span class="k">Working across</span><span>Lebanon, the Gulf, Europe and the US</span></li>
           <li class="pres"><span class="k">Presence</span><span class="pres-i"><a href="https://instagram.com/introducingmo" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.86s0 3.6-.07 4.86c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.9.07s-3.6 0-4.86-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.6 2.2 15.2 2.2 12s0-3.6.07-4.86c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.4 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52.01-4.76.07-.9.04-1.39.2-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.12.32-.28.81-.32 1.71C3.21 9.08 3.2 9.45 3.2 12s.01 2.92.07 4.16c.04.9.2 1.39.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.32.12.81.28 1.71.32 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.9-.04 1.39-.2 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.12-.32.28-.81.32-1.71.06-1.24.07-1.61.07-4.16s-.01-2.92-.07-4.16c-.04-.9-.2-1.39-.32-1.71a2.9 2.9 0 0 0-.69-1.06 2.9 2.9 0 0 0-1.06-.69c-.32-.12-.81-.28-1.71-.32C15.52 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.14-.9a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3z"/></svg></a><a href="https://youtube.com/@moayounes" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg></a><a href="https://x.com/introducingmo" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.3 3h3.3l-7.2 8.2L21.7 21h-6.6l-5.17-6.76L4 21H.7l7.7-8.8L2.6 3h6.76l4.67 6.17L17.3 3zm-1.16 16h1.83L7.03 4.9H5.06L16.14 19z"/></svg></a><a href="https://linkedin.com/in/introducingmo" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a1.94 1.94 0 1 1-3.88 0 1.94 1.94 0 0 1 3.88 0zM3.3 8.4h3.3V21H3.3V8.4zM9.1 8.4h3.16v1.72h.04c.44-.83 1.52-1.72 3.12-1.72 3.34 0 3.96 2.2 3.96 5.06V21h-3.3v-5.76c0-1.37-.03-3.14-1.92-3.14-1.92 0-2.21 1.5-2.21 3.04V21H9.1V8.4z"/></svg></a><a href="https://tiktok.com/@introducingmo3" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.33 2.28 1.6 3.64 3.8 3.78v2.55c-1.28.13-2.4-.29-3.7-1.08v4.78c0 6.07-6.62 7.97-9.28 3.62-1.71-2.8-.66-7.72 4.84-7.92v2.69c-.42.07-.87.18-1.28.32-1.23.42-1.93 1.2-1.74 2.58.37 2.63 5.2 3.4 4.8-1.73V3h2.56z"/></svg></a><a href="https://www.facebook.com/share/19Tf4hJvR9/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.54-1.5h1.64V3.6c-.28-.04-1.26-.12-2.4-.12-2.37 0-4 1.45-4 4.1v2.3H7.5V13h2.8v8h3.2z"/></svg></a><a href="https://behance.net/introducingmo" target="_blank" rel="noopener" aria-label="Behance"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 7.9c.66 0 1.26.06 1.8.18.54.1 1 .3 1.38.55.38.26.67.6.88 1.04.2.43.3.97.3 1.6 0 .7-.15 1.27-.47 1.73-.32.46-.8.84-1.42 1.13.86.25 1.5.68 1.92 1.3.42.6.63 1.34.63 2.2 0 .68-.13 1.28-.4 1.78-.26.5-.62.9-1.07 1.22-.45.3-.96.53-1.54.67-.57.14-1.16.2-1.76.2H1V7.9h7.2zM7.77 13c.5 0 .9-.12 1.22-.36.32-.24.47-.62.47-1.15 0-.3-.05-.54-.16-.73a1.17 1.17 0 0 0-.44-.44 1.8 1.8 0 0 0-.63-.22 4 4 0 0 0-.75-.06H4.3V13h3.47zm.2 5.3c.27 0 .54-.03.78-.08.25-.05.47-.14.65-.27.18-.12.33-.3.44-.52.1-.22.16-.5.16-.85 0-.67-.19-1.15-.56-1.44-.38-.28-.88-.42-1.5-.42H4.3v3.58h3.67zM15.3 18.1c.36.35.88.52 1.56.52.49 0 .9-.12 1.26-.37.35-.25.57-.5.65-.78h2.6c-.42 1.3-1.06 2.22-1.92 2.78-.86.55-1.9.83-3.12.83-.85 0-1.62-.14-2.3-.4-.68-.28-1.26-.66-1.73-1.16a5.2 5.2 0 0 1-1.1-1.8 6.6 6.6 0 0 1-.38-2.3c0-.82.13-1.57.4-2.26a5.3 5.3 0 0 1 2.86-2.98 5.7 5.7 0 0 1 2.26-.44c.9 0 1.7.17 2.37.52.68.35 1.23.82 1.66 1.4.43.6.74 1.27.92 2.03.18.76.25 1.55.2 2.38h-7.65c0 .84.28 1.63.65 1.98zm2.75-5.37c-.3-.32-.8-.5-1.42-.5-.42 0-.76.07-1.03.2-.27.15-.5.32-.66.53-.17.2-.28.43-.35.66-.06.24-.1.45-.12.63h4.74c-.07-.74-.33-1.2-.63-1.52zM14.5 7.9h5.93v1.44H14.5V7.9z"/></svg></a><a href="https://www.threads.net/@introducingmo" target="_blank" rel="noopener" aria-label="Threads"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.2 11.15c-.1-.05-.2-.09-.3-.13-.17-3.23-1.94-5.08-4.9-5.1-1.78-.01-3.3.74-4.22 2.17l1.64 1.12c.68-1.02 1.74-1.24 2.57-1.24h.03c1.03.01 1.8.31 2.3.9.37.42.61 1.01.73 1.75a13 13 0 0 0-2.84-.14c-2.86.16-4.7 1.83-4.57 4.14.06 1.17.65 2.18 1.64 2.83.84.55 1.92.82 3.05.76 1.49-.08 2.66-.65 3.48-1.69.62-.79 1.02-1.8 1.2-3.08.74.45 1.29 1.04 1.59 1.75.52 1.2.55 3.18-1.06 4.78-1.41 1.41-3.11 2.02-5.68 2.04-2.85-.02-5.01-.93-6.42-2.7C4.14 17.5 3.46 15.2 3.43 12c.03-3.2.71-5.5 2.04-7.16C6.88 3.07 9.04 2.16 11.89 2.14c2.87.02 5.07.93 6.54 2.71.72.87 1.26 1.97 1.62 3.24l1.96-.52c-.43-1.57-1.11-2.92-2.03-4.03C18.1 1.3 15.44.15 11.9.13h-.01C8.37.15 5.73 1.3 4.06 3.57 2.57 5.59 1.8 8.4 1.77 11.99v.02c.03 3.59.8 6.4 2.29 8.42C5.73 22.7 8.37 23.85 11.89 23.87h.01c3.13-.02 5.33-.84 7.15-2.66 2.38-2.37 2.31-5.35 1.52-7.18-.56-1.31-1.63-2.38-3.37-3.08zm-4.68 4.95c-1.25.07-2.55-.49-2.61-1.72-.05-.91.65-1.93 2.69-2.05.23-.01.46-.02.68-.02.74 0 1.44.07 2.07.21-.24 2.94-1.62 3.52-2.83 3.58z"/></svg></a><a href="https://www.pinterest.com/introducingmo/" target="_blank" rel="noopener" aria-label="Pinterest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.64 7.86 6.36 9.32-.09-.79-.17-2.01.03-2.88.18-.76 1.17-4.85 1.17-4.85s-.3-.6-.3-1.49c0-1.39.81-2.43 1.81-2.43.85 0 1.26.64 1.26 1.41 0 .86-.55 2.14-.83 3.33-.24 1 .5 1.81 1.48 1.81 1.78 0 3.14-1.87 3.14-4.58 0-2.39-1.72-4.07-4.18-4.07-2.85 0-4.52 2.14-4.52 4.35 0 .86.33 1.78.74 2.28.08.1.09.19.07.29-.08.33-.25 1-.28 1.14-.04.18-.15.22-.34.13-1.25-.58-2.03-2.4-2.03-3.87 0-3.15 2.29-6.04 6.6-6.04 3.46 0 6.16 2.47 6.16 5.77 0 3.44-2.17 6.21-5.18 6.21-1.01 0-1.97-.53-2.29-1.15l-.62 2.37c-.23.86-.83 1.94-1.24 2.6.94.29 1.92.44 2.95.44 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></a><a href="https://soundcloud.com/introducingmo" target="_blank" rel="noopener" aria-label="SoundCloud"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.4 13.6c-.07 0-.12.05-.13.13l-.2 1.86.2 1.82c.01.08.06.13.13.13.06 0 .11-.05.12-.13l.23-1.82-.23-1.86c-.01-.08-.06-.13-.12-.13zm1.26-.56c-.08 0-.14.06-.15.15l-.26 2.4.26 2.33c.01.08.07.14.15.14.07 0 .13-.06.14-.14l.3-2.33-.3-2.4c-.01-.09-.07-.15-.14-.15zm12.74-3.2c-.46 0-.9.09-1.3.26-.27-3.06-2.82-5.46-5.93-5.46-.76 0-1.5.15-2.15.42-.25.1-.32.2-.32.39v9.97c0 .2.16.37.35.39h9.35c1.86 0 3.37-1.5 3.37-3.35s-1.51-3.36-3.37-3.36zm-11.49.98c-.09 0-.16.07-.17.16l-.23 2.42.23 2.34c.01.09.08.16.17.16.08 0 .15-.07.16-.16l.26-2.34-.26-2.42c-.01-.09-.08-.16-.16-.16zm1.27-.7c-.1 0-.17.07-.18.17l-.2 3.11.2 3.01c.01.1.08.17.18.17.09 0 .16-.07.17-.17l.23-3.01-.23-3.11c-.01-.1-.08-.17-.17-.17z"/></svg></a></span></li>
@@ -1818,8 +1846,8 @@ void main(){
     { name: "Ifran", short: "Ifran", cat: "Beauty & Haircare", scope: "Rebranding, Launch & Social Media Strategy", line: "From Beirut to Kuwait, one viral launch at a time.",
       loc: "Beirut, Lebanon & Kuwait", img: "ifran",
       alt: "Ifran Cloudy Dust dry shampoo in lilac, between its pastel cloud-print boxes" },
-    { name: "Agora", short: "Agora", cat: "Coffee Shop", scope: "Brand Strategy & Community Building", line: "Destroyed, rebuilt, and still chosen.",
-      loc: "South Lebanon to Halde", capital: "$300k", img: "agora-2",
+    { name: "AGORA Coffee Shop", short: "AGORA", cat: "Coffee Shop", scope: "Brand Strategy & Community Building", line: "Destroyed, rebuilt, and still chosen.",
+      loc: "South Lebanon to Beirut", capital: "$300k", img: "agora-2",
       alt: "Agora’s storefront at night, “To gather together” lit above the door, as a man sweeps up broken glass" },
     { name: "Beiruti Saj", short: "Beiruti Saj", cat: "Restaurant & Catering", scope: "Brand Strategy, Branding, Launch, Social Media Strategy & Implementation", line: "Beirut opens its doors in the heart of Europe.",
       loc: "Salzburg, Austria", years: "2 years", capital: "$70k", img: "beiruti-saj-2",
@@ -2318,51 +2346,53 @@ void main(){
 
 <script>
 /* ---------- testimonials: the orbit ----------
-   Each testimonial is a node on an orbit seen slightly from above. The front node's head turns once
-   (one turn takes about as long as reading the quote), then the orbit brings the next one round.
-   Each head starts facing forward. The turn is ramped: it lingers on the face and sweeps quickly
-   through the back (right profile to left profile), so nobody shows the back of their head for long.
-   While a head turns, the orbit inches toward the next person; when the ring around the point closes, it lands there. */
+   The person in front stands still on the front point, eyes level with the far side of the orbit. Their head turns
+   from one profile, through the face, to the other profile (slowest on the face), then the orbit carries the next
+   person in: the dots travel round, the front point and the head stay put, and the next head starts from the profile
+   the last one ended on. While a head turns, the orbit inches toward the next person, then lands when the ring closes. */
 (() => {
   const root = document.getElementById("tm"); if (!root) return;
   const stage = root.querySelector(".tm-stage"), cv = root.querySelector(".tm-cv"), ctx = cv.getContext("2d");
   const figs = [...root.querySelectorAll(".tm-q")], N = figs.length;
   const quotes = root.querySelector(".tm-quotes"), countB = root.querySelector(".tm-count b"), pauseBtn = root.querySelector(".tm-pause");
   const RM = matchMedia("(prefers-reduced-motion: reduce)");
-  const COLS = 12, TILE = 200, STEP = Math.PI * 2 / N, ACC = "#1ea3ed", CREEP = .18;
+  const COLS = 12, TILE = 200, STEP = Math.PI * 2 / N, ACC = "#1ea3ed", CREEP = .16, EYE = .41, GAP = 12, PRO = .22;   // PRO: how far toward each profile a turn goes (.25 = full profile)
   const FRN = figs.map(f => +f.dataset.frames || 96);       // every frame of each person's turn in the video, one tile each
-  const period = figs.map(f => Math.min(16, Math.max(7.5, f.querySelector("blockquote").textContent.trim().split(/\s+/).length / 5.2 + 1.5)));
+  const period = figs.map(f => Math.min(10, Math.max(5.5, f.querySelector("blockquote").textContent.trim().split(/\s+/).length / 8 + 1.5)));
   const imgs = [], ready = [];
   const mod = k => ((k % N) + N) % N;
   const load = k => { k = mod(k); if (imgs[k]) return; const im = new Image(); im.decoding = "async";
-    im.onload = () => { ready[k] = performance.now(); kick(); }; im.src = "img/heads/" + figs[k].dataset.head + ".webp?v=3"; imgs[k] = im; };   // v3: one tile per video frame, 12 a row
-
-  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, rx = 0, ry = 0, HS = 100, labels = false;
+    im.onload = () => { ready[k] = performance.now(); kick(); }; im.src = "img/heads/" + figs[k].dataset.head + ".webp?v=3"; imgs[k] = im; };
   const first = figs.map(f => f.querySelector("figcaption b").textContent.split(" ")[0].toUpperCase());
+  const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  // a sweep from angle a0 to a1 (in turns; 0 = facing us, ±.25 = the profiles), slowest on the face
+  const dens = a => .3 + .7 * Math.pow(Math.cos(2 * Math.PI * a), 2);
+  const sweep = (a0, a1) => { const n = 96, T = [0]; for (let i = 1; i <= n; i++) T.push(T[i - 1] + dens(a0 + (a1 - a0) * (i - .5) / n));
+    return { a0, a1, n, T: T.map(v => v / T[n]) }; };
+  const angleAt = (sw, t) => { if (t <= 0) return sw.a0; if (t >= 1) return sw.a1;
+    let lo = 0, hi = sw.n; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (sw.T[m] < t) lo = m; else hi = m; }
+    return sw.a0 + (sw.a1 - sw.a0) * (lo + (t - sw.T[lo]) / (sw.T[hi] - sw.T[lo] || 1)) / sw.n; };
+
+  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, rx = 0, ry = 0, HS = 160, labels = false;
   let off = 0, rest = 0, act = 0, prog = 0, anim = null, drag = null, dragged = 0;
-  const turn = new Array(N).fill(0);                  // how far through its turn each head is, in time (0 to 1)
-  // time to angle: dwell density is high facing front and low facing back, so the back half takes ~20% of the turn
-  const RAMP = (() => { const n = 480, T = [0];
-    for (let i = 1; i <= n; i++) { const a = (i - .5) / n; T.push(T[i - 1] + .13 + .87 * Math.pow((1 + Math.cos(2 * Math.PI * a)) / 2, 1.6)); }
-    return T.map(v => v / T[n]); })();
-  const angle = t => { if (t <= 0) return 0; if (t >= 1) return 1;     // invert the table: what angle has the head reached after time t
-    let lo = 0, hi = RAMP.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (RAMP[m] < t) lo = m; else hi = m; }
-    return (lo + (t - RAMP[lo]) / (RAMP[hi] - RAMP[lo] || 1)) / (RAMP.length - 1); };
+  let sw = sweep(-PRO, PRO), tt = 0, dur = period[0], prevAct = -1, prevA = 0;
   let paused = false, visible = false, inView = false, lastScroll = 0, lastT = 0, raf = 0;
+  const curA = () => RM.matches ? 0 : angleAt(sw, tt);
 
   const layout = () => {
     W = stage.clientWidth; if (!W) return;
     const mob = W < 700;
-    HS = mob ? 118 : 152;
+    HS = mob ? Math.min(168, W * .46) : 214;
     rx = mob ? Math.min(W / 2 - 16, 190) : Math.min(W * .3, 340);
-    ry = rx * .2; labels = !mob;
-    cy = 12 + HS + 17 - ry; cx = W / 2; H = Math.round(HS + 29 + 14 + (mob ? 4 : 18));
+    ry = Math.min(rx * .42, Math.max(rx * .16, ((1 - EYE) * HS + GAP) / 2));   // eyes level with the far side of the orbit
+    labels = !mob;
+    cx = W / 2; cy = 8 + HS + GAP - ry; H = Math.round(cy + ry + (mob ? 26 : 40));
     stage.style.setProperty("--tm-h", H + "px");
     dpr = Math.min(2, devicePixelRatio || 1);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     draw();
   };
-  // where testimonial k sits on the orbit right now
   const node = k => {
     let d = ((k - off) % N + N) % N; if (d >= N / 2) d -= N;
     const th = Math.PI / 2 - d * STEP;
@@ -2373,41 +2403,31 @@ void main(){
     ctx.globalAlpha = .28 + .72 * depth;
     ctx.lineWidth = 1.5; ctx.strokeStyle = ACC; ctx.fillStyle = "#000";
     ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-    const f = 1 - Math.min(1, Math.max(0, (Math.abs(p.d) - .2) * 2));   // the front node opens into a ring that fills as the head turns
-    if (f > 0) {
-      ctx.globalAlpha = f;
-      ctx.lineWidth = 1; ctx.strokeStyle = "rgba(30,163,237,.28)";
-      ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, Math.PI * 2); ctx.stroke();
-      if (p.k === act && prog > 0) { ctx.lineWidth = 2; ctx.strokeStyle = ACC; ctx.beginPath(); ctx.arc(p.x, p.y, 10, -Math.PI / 2, -Math.PI / 2 + Math.min(1, prog) * Math.PI * 2); ctx.stroke(); }
-      ctx.fillStyle = ACC; ctx.shadowColor = "rgba(30,163,237,.9)"; ctx.shadowBlur = 8;
-      ctx.beginPath(); ctx.arc(p.x, p.y, 2.6, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
-    }
     ctx.globalAlpha = 1;
   };
   const tile = (im, i, x, y, s) => ctx.drawImage(im, (i % COLS) * TILE, Math.floor(i / COLS) * TILE, TILE, TILE, x, y, s, s);
-  const head = (p, now) => {
-    const im = imgs[p.k]; if (!im || !ready[p.k]) return;
-    const v = 1 - Math.min(1, Math.max(0, (Math.abs(p.d) - .2) / .8)); if (!v) return;   // full size while it inches; fades as it leaves
-    const s = HS * (.72 + .28 * v), x = p.x - s / 2, y = p.y - 16 - s;                       // a clear gap between the neck and the point
-    const F = FRN[p.k], f = (RM.matches ? 0 : angle(turn[p.k]) % 1) * F, i0 = Math.floor(f) % F, t = f - Math.floor(f);
-    const a = v * v * (3 - 2 * v) * Math.min(1, (now - ready[p.k]) / 450);
-    ctx.globalAlpha = a; tile(im, i0, x, y, s);
-    // frames are ~3.6° apart; each holds crisp and only hands over to the next in its last stretch, so no doubled faces
-    const b = t < .6 ? 0 : (u => u * u * (3 - 2 * u))((t - .6) / .4);
-    if (b > .002) { ctx.globalAlpha = a * b; tile(im, (i0 + 1) % F, x, y, s); }
+  const head = (k, w, a, now) => {
+    const im = imgs[k]; if (!im || !ready[k] || w < .003) return;
+    const s = HS, x = cx - s / 2, y = cy + ry - GAP - s;
+    const F = FRN[k], f = (((a % 1) + 1) % 1) * F, i0 = Math.floor(f) % F, t = f - Math.floor(f);
+    const al = w * Math.min(1, (now - ready[k]) / 450);
+    ctx.globalAlpha = al; tile(im, i0, x, y, s);
+    const b = ss(.6, 1, t);                                   // frames hold crisp and only hand over at the end: no doubled faces
+    if (b > .002) { ctx.globalAlpha = al * b; tile(im, (i0 + 1) % F, x, y, s); }
     ctx.globalAlpha = 1;
   };
   const draw = (now = performance.now()) => {
     if (!W) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     const P = []; for (let k = 0; k < N; k++) P.push(node(k));
-    ctx.lineWidth = 1.2; ctx.strokeStyle = "rgba(30,163,237,.2)";
+    const fx = cx, fy = cy + ry;
+    ctx.lineWidth = 1.2; ctx.strokeStyle = "rgba(30,163,237,.22)";
     ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, Math.PI, Math.PI * 2); ctx.stroke();
     P.filter(p => p.z < 0).forEach(dot);
-    ctx.save(); ctx.translate(cx, cy + ry); ctx.scale(1, .26);
-    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, HS * .95);
+    ctx.save(); ctx.translate(fx, fy); ctx.scale(1, .26);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, HS * .8);
     g.addColorStop(0, "rgba(30,163,237,.26)"); g.addColorStop(.55, "rgba(30,163,237,.08)"); g.addColorStop(1, "rgba(30,163,237,0)");
-    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, HS * .95, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, HS * .8, 0, Math.PI * 2); ctx.fill(); ctx.restore();
     const lg = ctx.createLinearGradient(cx - rx, 0, cx + rx, 0);
     lg.addColorStop(0, "rgba(30,163,237,.2)"); lg.addColorStop(.5, "rgba(30,163,237,.9)"); lg.addColorStop(1, "rgba(30,163,237,.2)");
     ctx.lineWidth = 1.5; ctx.strokeStyle = lg; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI); ctx.stroke();
@@ -2415,15 +2435,24 @@ void main(){
     if (labels) {
       ctx.font = "700 10.5px Lato, 'Helvetica Neue', Arial, sans-serif";
       if ("letterSpacing" in ctx) ctx.letterSpacing = "2.4px";
-      P.forEach(p => { const a = Math.min(1, Math.abs(p.d) * 1.4) * (.3 + .7 * (p.z + 1) / 2) * .8; if (a < .05) return;
-        const c = (p.x - cx) / rx;          // each name sits on the outside of the orbit, clear of the line
+      P.forEach(p => { const a = Math.min(1, Math.max(0, Math.abs(p.d) - .35) * 1.6) * (.3 + .7 * (p.z + 1) / 2) * .8; if (a < .05) return;
+        const c = (p.x - cx) / rx;
         ctx.globalAlpha = a; ctx.fillStyle = "#9ba7b4";
         if (p.z > .35) { ctx.textAlign = "center"; ctx.textBaseline = "top"; ctx.fillText(first[p.k], p.x, p.y + 12); }
         else if (p.z < -.35) { ctx.textAlign = "center"; ctx.textBaseline = "bottom"; ctx.fillText(first[p.k], p.x, p.y - 10); }
         else { ctx.textAlign = c > 0 ? "left" : "right"; ctx.textBaseline = "middle"; ctx.fillText(first[p.k], p.x + (c > 0 ? 14 : -14), p.y); } });
       ctx.globalAlpha = 1;
     }
-    P.filter(p => Math.abs(p.d) < 1).sort((a, b) => a.z - b.z).forEach(p => head(p, now));
+    // the front point never moves: a ring that fills as the head turns, around a lit centre
+    ctx.lineWidth = 1; ctx.strokeStyle = "rgba(30,163,237,.3)";
+    ctx.beginPath(); ctx.arc(fx, fy, 10, 0, Math.PI * 2); ctx.stroke();
+    if (prog > 0) { ctx.lineWidth = 2; ctx.strokeStyle = ACC; ctx.beginPath(); ctx.arc(fx, fy, 10, -Math.PI / 2, -Math.PI / 2 + Math.min(1, prog) * Math.PI * 2); ctx.stroke(); }
+    ctx.fillStyle = ACC; ctx.shadowColor = "rgba(30,163,237,.9)"; ctx.shadowBlur = 8;
+    ctx.beginPath(); ctx.arc(fx, fy, 2.8, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+    // the heads stand on the front point; between two people, one fades into the next in place
+    const base = Math.floor(off), u = off - base, A = mod(base), B = mod(base + 1), wB = ss(.3, .8, u);
+    const aOf = k => k === act ? curA() : (k === prevAct ? prevA : curA());
+    head(A, 1 - wB, aOf(A), now); head(B, wB, aOf(B), now);
   };
 
   const show = (k, dir) => {
@@ -2433,15 +2462,17 @@ void main(){
     old.classList.remove("is-on"); old.classList.add("is-out"); old.setAttribute("aria-hidden", "true");
     setTimeout(() => { if (!old.classList.contains("is-on")) old.classList.remove("is-out"); }, 650);
     figs[k].classList.remove("is-out"); figs[k].classList.add("is-on"); figs[k].removeAttribute("aria-hidden");
-    for (let i = 0; i < N; i++) if (i !== act) turn[i] = 0;   // the one leaving keeps its angle; everyone else waits facing forward
-    act = k; turn[k] = 0; prog = 0; countB.textContent = String(k + 1).padStart(2, "0");
+    prevAct = act; prevA = curA();                            // the one leaving keeps its angle as it fades
+    const a0 = Math.max(-PRO, Math.min(PRO, prevA)), a1 = a0 >= 0 ? -PRO : PRO;   // the next one picks up there, and turns to the other profile
+    sw = sweep(a0, a1); tt = 0; dur = period[k] * Math.max(.4, Math.abs(a1 - a0) / (2 * PRO));
+    act = k; prog = 0; countB.textContent = String(k + 1).padStart(2, "0");
     load(k); load(k + 1); load(k - 1);
   };
   const sync = dir => show(mod(Math.round(off)), dir);
-  const easeIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, easeO = t => 1 - Math.pow(1 - t, 3);
+  const easeO = t => 1 - Math.pow(1 - t, 3);
   const go = (to, user) => {
     if (user) quotes.setAttribute("aria-live", "polite");
-    anim = { from: off, to, t0: performance.now(), dur: RM.matches ? 200 : user ? 620 : 620, e: easeO }; kick();   // the landing is quick
+    anim = { from: off, to, t0: performance.now(), dur: RM.matches ? 200 : 650, e: easeO }; kick();
   };
   const step = (n, user) => go(Math.round(off) + n, user);
 
@@ -2449,20 +2480,20 @@ void main(){
     raf = 0;
     const dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
     const turning = !RM.matches && !paused && visible && !document.hidden;
-    if (turning && !drag && !anim) { turn[act] = Math.min(1, turn[act] + dt / period[act]); prog = turn[act]; }
-    if (!drag && !anim) off = rest + (RM.matches ? 0 : CREEP * Math.pow(prog, 1.7));   // inching toward the next point as the ring fills
+    if (turning && !drag && !anim) { tt = Math.min(1, tt + dt / dur); prog = tt; }
+    if (!drag && !anim) off = rest + (RM.matches ? 0 : CREEP * Math.pow(prog, 1.7));   // the dots inch toward the next person
     if (anim) {
       const t = Math.min(1, (now - anim.t0) / anim.dur);
       off = anim.from + (anim.to - anim.from) * anim.e(t); sync(Math.sign(anim.to - anim.from) || 1);
       if (t >= 1) { off = rest = anim.to; anim = null; }
     }
-    if (prog >= 1) { if (inView && !drag && !anim && !paused && now - lastScroll > 700) { quotes.setAttribute("aria-live", "off"); step(1, false); } }
+    if (prog >= 1 && inView && !drag && !anim && !paused && now - lastScroll > 700) { quotes.setAttribute("aria-live", "off"); step(1, false); }
     draw(now);
     if (visible && (turning || anim || drag)) raf = requestAnimationFrame(tick);
   };
   const kick = () => { if (!raf) { lastT = performance.now(); raf = requestAnimationFrame(tick); } };
 
-  // swipe (touch anywhere on it, mouse on the orbit), keys, buttons, nodes
+  // swipe (touch anywhere on it, mouse on the orbit), keys, buttons, the dots
   root.addEventListener("pointerdown", e => {
     if (e.button || e.target.closest("button") || (e.pointerType === "mouse" && e.target !== cv)) return;
     drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, o0: off, on: false, lx: e.clientX, lt: e.timeStamp, v: 0 };
@@ -2477,7 +2508,7 @@ void main(){
     }
     drag.v = (e.clientX - drag.lx) / Math.max(1, e.timeStamp - drag.lt); drag.lx = e.clientX; drag.lt = e.timeStamp;
     let r = -dx / (rx * .72); const m = Math.abs(r);
-    if (m > 1) r = Math.sign(r) * Math.min(1.2, 1 + (m - 1) * .2);   // one swipe, one person: past the next node it resists
+    if (m > 1) r = Math.sign(r) * Math.min(1.2, 1 + (m - 1) * .2);   // one swipe, one person: past the next point it resists
     off = drag.o0 + r; sync(dx < 0 ? 1 : -1); kick();
   }, { passive: true });
   const up = e => {
@@ -2527,6 +2558,7 @@ void main(){
     const r = document.querySelector(`#brief input[name="stage"][value="${a.dataset.stage}"]`); if (r) r.checked = true;
   }));
   const cases = [...document.querySelectorAll(".case-par")], pb = document.querySelector(".pb-fx"), ph = document.querySelector(".laws-ph");
+  const col = [...document.querySelectorAll(".collage img")];
   // the stars: three depths that drift at their own pace as you scroll, lean with the mouse (or the phone's tilt), and twinkle
   const sec = document.getElementById("proof"), cv = document.getElementById("tmSky"), ctx = cv && cv.getContext("2d");
   let W = 0, H = 0, dpr = 1, stars = [], skyOn = false, mx = 0, my = 0, tx = 0, ty = 0, raf = 0;
@@ -2561,6 +2593,8 @@ void main(){
       const o = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh)); el.style.transform = `translate3d(0,${(-o * 6).toFixed(2)}%,0)`; });
     if (pb) { const r = pb.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) pb.style.setProperty("--p", Math.max(-1.2, Math.min(1.2, (r.top + r.height / 2 - vh / 2) / (vh / 2))).toFixed(3)); }
     if (ph) { const r = ph.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) ph.style.transform = `translate3d(0,${((r.top + r.height / 2 - vh / 2) * -.06).toFixed(1)}px,0)`; }
+    if (col.length) { const r = col[0].parentElement.getBoundingClientRect(); if (r.bottom > -100 && r.top < vh + 100) {
+      const c = r.top + r.height / 2 - vh / 2; col.forEach(im => im.style.translate = `0 ${(c * -im.dataset.sp).toFixed(1)}px`); } }
     if (skyOn) sky(t);
     if (skyOn && !RM) raf = requestAnimationFrame(frame);
   };

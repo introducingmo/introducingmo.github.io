@@ -16,6 +16,19 @@
 .menu-btn.active .pulse{animation:pulseRing .7s cubic-bezier(.2,.7,.2,1)}
 .menu-btn.active .pulse.p2{animation:pulseRing .7s cubic-bezier(.2,.7,.2,1) .12s}
 @keyframes pulseRing{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(3.2)}}
+/* social icons in their own colours (Instagram's gradient is defined once in the page as #ig-grad) */
+.menu-social a{--bc:#fff}
+.menu-social a[aria-label="Instagram"]{--bc:#e1306c}
+.menu-social a[aria-label="Facebook"]{--bc:#1877f2}
+.menu-social a[aria-label="LinkedIn"]{--bc:#0a66c2}
+.menu-social a[aria-label="YouTube"]{--bc:#ff0000}
+.menu-social a[aria-label="Behance"]{--bc:#1769ff}
+.menu-social a[aria-label="Pinterest"]{--bc:#e60023}
+.menu-social a[aria-label="SoundCloud"]{--bc:#ff5500}
+.menu-social a svg{fill:var(--bc)}
+.menu-social a[aria-label="Instagram"] svg{fill:url(#ig-grad)}
+.menu-social a[aria-label="TikTok"] svg{filter:drop-shadow(-1px -1px 0 #25f4ee) drop-shadow(1px 1px 0 #fe2c55)}
+.menu-social a[aria-label]:hover{border-color:var(--bc);background:color-mix(in srgb,var(--bc) 16%,transparent)}
 /* ---------- full menu overlay ---------- */
 .menu{position:fixed;inset:0;z-index:29;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   clip-path:circle(0px at calc(100% - 48px) 46px);transition:clip-path .75s cubic-bezier(.76,0,.24,1);pointer-events:none;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}

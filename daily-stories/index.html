@@ -107,7 +107,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .trust li{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 12px}
 
 /* the phone, in orbit */
-.phone-zone{grid-area:phone;position:relative;display:grid;place-items:center;padding:30px 0}
+.phone-zone{grid-area:phone;position:relative;display:grid;place-items:center;padding:30px 0 84px}
 .par{will-change:transform}
 .orbit{--ow:min(560px,150%);position:absolute;left:50%;top:56%;width:var(--ow);aspect-ratio:1;margin-left:calc(var(--ow) / -2);margin-top:calc(var(--ow) / -2);
   border-radius:50%;border:1.5px solid rgba(30,163,237,.55);transform:rotateX(76deg);pointer-events:none}
@@ -138,7 +138,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .ph-island{position:absolute;left:50%;top:2.6cqw;width:30cqw;height:8.6cqw;margin-left:-15cqw;border-radius:99px;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.04)}
 .ph-icons{display:flex;gap:1.4cqw;align-items:center}
 .ph-icons svg{height:3.2cqw;width:auto;fill:#fff}
-.ph-story{position:relative;flex:none;width:100%;aspect-ratio:9/16;border-radius:2.6cqw;overflow:hidden;perspective:150cqw;background:#0b0d10;cursor:pointer}
+.ph-story{position:relative;flex:1 1 auto;min-height:0;width:100%;border-radius:2.6cqw;overflow:hidden;perspective:150cqw;background:#0b0d10;cursor:pointer}
 .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;visibility:hidden;transform-origin:50% 50%;background:#0b0d10}
 .face.on,.face.go{visibility:visible}
 .face .media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -160,7 +160,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .face .x svg.dots{fill:#fff;stroke:none}
 .face .tag{position:absolute;left:50%;bottom:6cqw;transform:translateX(-50%);white-space:nowrap;padding:1.6cqw 3.4cqw;border-radius:2cqw;background:rgba(255,255,255,.94);color:#071627;
   font-size:3.3cqw;font-weight:700;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.ph-reply{flex:1;display:flex;align-items:center;gap:3.6cqw;padding:0 4.6cqw 3cqw}
+.ph-reply{flex:none;display:flex;align-items:center;gap:3.6cqw;padding:2.6cqw 4.6cqw 7.2cqw}
 .ph-reply .pill{flex:1;height:10.6cqw;border-radius:99px;border:1px solid rgba(255,255,255,.55);display:flex;align-items:center;padding:0 4.4cqw;color:rgba(255,255,255,.85);font-size:3.7cqw}
 .ph-reply svg{width:6.8cqw;height:6.8cqw;fill:none;stroke:#fff;stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
 .ph-home{position:absolute;left:50%;bottom:1.8cqw;width:34cqw;height:1.3cqw;margin-left:-17cqw;border-radius:99px;background:rgba(255,255,255,.85);z-index:4}
@@ -168,7 +168,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   opacity:0;transition:opacity .4s;pointer-events:none;z-index:5}
 .ph-story.paused .ph-hint{opacity:1}
 
-.now{position:absolute;z-index:4;left:50%;bottom:-6px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:999px;
+.now{position:absolute;z-index:4;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:999px;
   background:rgba(8,12,18,.78);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap;font-size:13px}
 .now .dot{width:8px;height:8px;border-radius:50%;background:#ff4d5e;box-shadow:0 0 10px #ff4d5e;animation:blink 1.6s ease-in-out infinite}
 .now.paused .dot{background:var(--muted);box-shadow:none;animation:none}
@@ -186,25 +186,43 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .why-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,80px);align-items:end}
 .why-head .lede{margin:0}
 .pts{margin:clamp(50px,6vw,90px) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
-.pts li{position:relative;padding:clamp(26px,3vw,40px);border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#07090c,#030405);overflow:hidden}
-.pts li::before{content:"";position:absolute;right:-30%;top:-40%;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(30,163,237,.14),transparent 65%)}
+.pts li{position:relative;display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:baseline;align-content:start;padding:clamp(26px,3vw,40px);border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#07090c,#030405);overflow:hidden;transition:border-color .4s}
+.pts li:hover{border-color:rgba(30,163,237,.4)}
+.pts li::before{content:"";position:absolute;right:-30%;top:-40%;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(30,163,237,.16),transparent 65%);translate:var(--gx,0px) var(--gy,0px);pointer-events:none}   /* the glow drifts as you scroll */
+.pts li::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(84,214,239,.13) 50%,transparent 65%) no-repeat;background-size:260% 100%;background-position:120% 0}
+.pts li.in::after{animation:sheen 1.5s .35s var(--ease) both}
+@keyframes sheen{to{background-position:-60% 0}}
+html.js .pts li[data-rv]{transform:translateY(48px) scale(.96);transform-origin:50% 100%;transition:opacity .9s var(--ease),transform 1.1s cubic-bezier(.16,1,.3,1),border-color .4s}
+html.js .pts li[data-rv].in{transform:none}
+html.js .pts li[data-rv] h3,html.js .pts li[data-rv] .n{transition:opacity .8s var(--ease) .25s,transform .9s var(--ease) .25s;opacity:0;transform:translateX(-12px)}
+html.js .pts li[data-rv].in h3,html.js .pts li[data-rv].in .n{opacity:1;transform:none}
 .pts .n{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;color:var(--accent);letter-spacing:.06em}
-.pts h3{margin:46px 0 10px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(26px,2.4vw,34px);line-height:1;letter-spacing:-.01em}
-.pts p{margin:0;color:var(--soft);font-size:16px}
+.pts h3{margin:0 0 12px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(26px,2.4vw,34px);line-height:1;letter-spacing:-.01em}
+.pts p{grid-column:1/-1;margin:0;color:var(--soft);font-size:16px}
 .pts p a{color:var(--accent)}
-.facts-n{margin:clamp(16px,2vw,28px) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
-.facts-n li{position:relative;display:grid;align-content:start;gap:10px;padding:clamp(26px,3vw,40px);border-radius:20px;border:1px solid rgba(52,152,255,.35);
-  background:radial-gradient(120% 90% at 100% 0,rgba(84,214,239,.16),transparent 60%),linear-gradient(180deg,#071320,#03070c);overflow:hidden}
-.facts-n .n{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;color:var(--accent);letter-spacing:.06em}
-.facts-n b{margin-top:24px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(60px,5.4vw,86px);line-height:.85;letter-spacing:-.03em;white-space:nowrap;
-  background:linear-gradient(100deg,#fff 0%,#fff 45%,#54d6ef 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.facts-n b i{font-style:normal}
-.facts-n p{margin:0;color:var(--soft);font-size:16.5px;max-width:20em}
-.facts-n a{margin-top:6px;justify-self:start;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(155,167,180,.4);padding-bottom:3px}
-.facts-n a:hover{color:var(--accent);border-color:var(--accent)}
+.stats-sky{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(180deg,#000 0,#0b5f9e 16%,#1493e2 34%,#1493e2 66%,#0b5f9e 84%,#000 100%);
+  padding:clamp(190px,24vw,330px) 0;color:#fff}
+.stats-sky .cl{position:absolute;left:-15%;width:130%;top:-20%;height:140%;z-index:-1;pointer-events:none;will-change:translate}
+.stats-sky .cl canvas{width:100%;height:100%;display:block;animation:drift var(--dr,60s) ease-in-out infinite alternate}
+@keyframes drift{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+.stats-sky::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,#000 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 78%,#000 100%)}   /* black in, black out */
+.facts-n{margin:0 auto;padding-block:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(48px,5vw,80px);text-align:center}
+.facts-n li{display:grid;justify-items:center;align-content:start;gap:16px}
+.facts-n b{position:relative;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(76px,6.4vw,108px);line-height:.82;letter-spacing:-.035em;white-space:nowrap;color:#fff;
+  font-variant-numeric:tabular-nums;text-shadow:0 10px 50px rgba(0,40,90,.35)}
+.facts-n b i{font-style:normal;color:#bfe9ff}
+.facts-n p{margin:6px 0 0;max-width:15em;font-size:clamp(20px,1.8vw,26px);line-height:1.32;font-weight:700;color:#fff;text-wrap:balance}
+.facts-n a{white-space:nowrap;display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.82);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.4);padding-bottom:4px;transition:color .2s,border-color .2s}
+.facts-n a svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
+.facts-n a:hover{color:#fff;border-color:#fff}
+.facts-n a:hover svg{transform:translate(2px,-2px)}
+html.js .facts-n li[data-rv]{transform:translateY(40px) scale(.94);transition:opacity 1s var(--ease),transform 1.2s cubic-bezier(.16,1,.3,1)}
+html.js .facts-n li[data-rv].in{transform:none}
 
 /* ---------- variety: two rows that slide against each other as you scroll ---------- */
-.variety{padding-block:clamp(70px,9vw,140px);overflow:hidden;border-block:1px solid var(--line);background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(14,114,186,.18),transparent 70%)}
+.variety{padding-block:clamp(70px,9vw,140px);overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(14,114,186,.18),transparent 70%)}
 .variety .wrap{text-align:center;margin-bottom:clamp(40px,5vw,70px)}
 .variety .lede{margin:20px auto 0}
 .rows{display:grid;gap:clamp(14px,1.6vw,22px)}
@@ -218,17 +236,35 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .card .play{position:absolute;right:10px;top:10px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center}
 .card .play svg{width:10px;height:10px;fill:#fff;margin-left:2px}
 
-/* ---------- how ---------- */
-.steps{margin:clamp(50px,6vw,90px) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:s;position:relative}
-.steps::before{content:"";position:absolute;left:0;right:0;top:23px;height:1px;background:linear-gradient(90deg,var(--accent),rgba(30,163,237,.15))}
-.steps li{position:relative;padding:0 clamp(14px,2vw,30px) 0 0}
-.steps .k{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#000;border:1.5px solid var(--accent);
-  font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;color:var(--accent)}
-.steps h3{margin:28px 0 10px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(24px,2.2vw,30px);line-height:1}
-.steps p{margin:0;color:var(--soft);font-size:16px}
+/* ---------- how it works & faq: accordions, one open at a time ---------- */
+.acc{border-top:1px solid var(--line)}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;display:flex;align-items:center;gap:18px;padding:24px 0;cursor:pointer}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .t{flex:1}
+.acc summary i{flex:none;position:relative;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);transition:transform .45s var(--ease),border-color .3s,background .3s}
+.acc summary i::before,.acc summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.6px;margin:-.8px 0 0 -6px;background:var(--accent)}
+.acc summary i::after{transform:rotate(90deg);transition:transform .45s var(--ease)}
+.acc summary:hover i{border-color:var(--accent)}
+.acc details.is-open summary i{transform:rotate(180deg);border-color:var(--accent);background:rgba(30,163,237,.12)}
+.acc details.is-open summary i::after{transform:rotate(0)}
+.acc .ac-b{overflow:hidden}
+.acc .ac-b p{margin:0 0 26px;color:var(--soft);max-width:38em}
+.acc a{color:var(--accent)}
+.how-acc{margin-top:clamp(40px,5vw,70px)}
+.how-acc summary{padding:clamp(22px,2.4vw,30px) 0}
+.how-acc summary .n{flex:none;width:3.2em;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:15px;letter-spacing:.06em;color:var(--accent)}
+.how-acc summary .t{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-.015em;transition:color .3s}
+.how-acc details:not(.is-open) summary:hover .t{color:#fff}
+.how-acc details:not(.is-open) summary .t{color:var(--soft)}
+.how-acc .ac-b p{padding-left:66px;font-size:clamp(17px,1.4vw,19px)}
 
 /* ---------- pricing ---------- */
-.pricing{position:relative}
+.pricing{position:relative;isolation:isolate}
+.pricing .sky-w{position:absolute;inset:0;z-index:-1;overflow:clip;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 clamp(180px,26vh,300px),#000 calc(100% - clamp(180px,26vh,300px)),transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 clamp(180px,26vh,300px),#000 calc(100% - clamp(180px,26vh,300px)),transparent 100%)}
+.pricing .sky{position:sticky;top:0;display:block;width:100%;height:100vh;height:100lvh}
 .pricing .head{text-align:center}
 .pricing .head .lede{margin:20px auto 0}
 .toggles{display:flex;justify-content:center;flex-wrap:wrap;gap:14px 18px;margin:clamp(36px,4vw,56px) 0 clamp(30px,3.4vw,46px)}
@@ -245,7 +281,25 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .plan{position:relative;display:flex;flex-direction:column;padding:clamp(28px,2.8vw,40px);border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,#080a0d,#030405);
   transition:transform .5s var(--ease),border-color .3s}
 .plan:hover{transform:translateY(-6px);border-color:rgba(30,163,237,.45)}
-.plan.hot{border-color:rgba(30,163,237,.7);background:linear-gradient(180deg,#061a2b,#04080d 60%);box-shadow:0 30px 90px rgba(14,114,186,.22)}
+.plan.hot{border-color:rgba(30,163,237,.5);background:linear-gradient(180deg,#061a2b,#04080d 60%);box-shadow:0 30px 90px rgba(14,114,186,.22)}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+.plan.hot::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--a),transparent 0 62%,rgba(84,214,239,.95) 76%,#3498ff 84%,transparent 94%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  animation:orbitA 7s linear infinite}   /* a light that travels round the most-picked card */
+@keyframes orbitA{to{--a:360deg}}
+html.js .plan[data-rv]{transform:translateY(54px) scale(.965);filter:blur(6px);transition:opacity 1s var(--ease),transform 1.2s cubic-bezier(.16,1,.3,1),filter 1s var(--ease),border-color .3s}
+html.js .plan[data-rv].in{transform:none;filter:none}
+html.js .plan[data-rv].in:hover{transform:translateY(-6px)}
+html.js .plan[data-rv] li{opacity:0;transform:translateX(-10px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+html.js .plan[data-rv].in li{opacity:1;transform:none}
+.plan li:nth-child(1){transition-delay:.45s!important}.plan li:nth-child(2){transition-delay:.53s!important}.plan li:nth-child(3){transition-delay:.61s!important}
+.plan li:nth-child(4){transition-delay:.69s!important}.plan li:nth-child(5){transition-delay:.77s!important}
+.plan li.post span{transition:opacity .25s}
+.plan li.post.swap span{opacity:0}
+.price .amt.up{animation:glowUp .9s var(--ease)}
+@keyframes glowUp{0%{text-shadow:0 0 0 rgba(84,214,239,0)}35%{text-shadow:0 0 28px rgba(84,214,239,.65)}100%{text-shadow:0 0 0 rgba(84,214,239,0)}}
+@media (prefers-reduced-motion:reduce){.plan.hot::before{animation:none}html.js .plan[data-rv]{filter:none}}
 .plan .flag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);padding:6px 14px;border-radius:99px;background:var(--accent);color:#03121f;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
 .plan .pk{font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
 .plan h3{margin:12px 0 6px;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(30px,2.8vw,40px);line-height:1}
@@ -264,41 +318,50 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 .plan .btn{margin-top:auto;width:100%}
 .plan:not(.hot) .btn{background:transparent;border-color:rgba(238,242,246,.4);color:var(--ink)}
 .plan:not(.hot) .btn:hover{background:var(--ink);border-color:var(--ink);color:#000}
+.plan[data-plan="2"] .btn{background:#fff;border-color:#fff;color:#000}
+.plan[data-plan="2"] .btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 .fine{margin:clamp(26px,3vw,38px) auto 0;max-width:46em;text-align:center;font-size:14.5px;color:var(--muted)}
 .fine b{color:var(--ink)}
 
 /* ---------- faq ---------- */
 .faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,6vw,100px);align-items:start}
 .faq h2{position:sticky;top:110px}
-.qa{border-top:1px solid var(--line)}
-.qa details{border-bottom:1px solid var(--line)}
-.qa summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;cursor:pointer;font-family:var(--t-sans);font-weight:500;font-stretch:86%;font-size:clamp(21px,2vw,27px);line-height:1.1}
-.qa summary::-webkit-details-marker{display:none}
-.qa summary i{flex:none;position:relative;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);transition:transform .4s var(--ease),border-color .3s}
-.qa summary i::before,.qa summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.6px;margin:-.8px 0 0 -6px;background:var(--accent)}
-.qa summary i::after{transform:rotate(90deg);transition:transform .4s var(--ease)}
-.qa details[open] summary i{transform:rotate(180deg);border-color:var(--accent)}
-.qa details[open] summary i::after{transform:rotate(0)}
-.qa p{margin:0 0 26px;color:var(--soft);max-width:38em}
-.qa a{color:var(--accent)}
+.qa summary .t{font-family:var(--t-sans);font-weight:500;font-stretch:86%;font-size:clamp(21px,2vw,27px);line-height:1.1}
 
 /* ---------- close ---------- */
 .talk{position:relative;margin:0 var(--gutter) clamp(40px,6vw,80px);padding:clamp(48px,7vw,110px) clamp(24px,5vw,72px);border-radius:28px;background:linear-gradient(120deg,#3498ff 0%,#54d6ef 100%);color:#04213d;text-align:center;overflow:hidden;isolation:isolate}
 .talk::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;background-image:radial-gradient(rgba(255,255,255,.4) 1px,transparent 1.4px);background-size:22px 22px;
   -webkit-mask-image:radial-gradient(ellipse at center,#000,transparent 70%);mask-image:radial-gradient(ellipse at center,#000,transparent 70%)}
 .talk h2{font-size:clamp(42px,6vw,92px)}
-.talk h2{color:#04213d}
-.talk h2 em{color:#fff;text-shadow:0 2px 18px rgba(0,60,130,.25)}
+.talk h2{color:#fff;text-shadow:0 2px 22px rgba(0,60,130,.28)}
+.talk h2 em{color:#fff}
 .talk p{margin:20px auto 32px;max-width:30em;font-size:18px}
 .talk .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.talk .btn{background:#04213d;border-color:#04213d;color:#fff;text-shadow:none}
-.talk .btn:hover{background:#fff;border-color:#fff;color:#04213d}
-.talk .btn.ghost{background:transparent;border-color:#04213d;color:#04213d}
-.talk .btn.ghost:hover{background:#04213d;color:#fff}
-.foot{border-top:1px solid var(--line);padding:32px var(--gutter) calc(env(safe-area-inset-bottom,0px) + 32px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
-.foot a{text-decoration:none;color:var(--soft)}
-.foot a:hover{color:var(--accent)}
-.foot nav{display:flex;gap:22px;flex-wrap:wrap}
+.talk .btn{background:transparent;border-color:#04213d;color:#04213d;text-shadow:none}
+.talk .btn:hover{background:#04213d;border-color:#04213d;color:#fff}
+.foot{border-top:1px solid var(--line);padding:clamp(48px,6vw,80px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 104px);display:grid;justify-items:center;text-align:center;font-size:14px;color:var(--muted)}
+.foot .sign{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(28px,3vw,42px);line-height:1;color:var(--ink)}
+.foot address{margin:12px 0 0;font-style:normal}
+.foot address a{color:var(--soft);text-decoration:none;border-bottom:1px solid rgba(30,163,237,.45)}
+.foot address a:hover{color:var(--accent)}
+.foot nav{display:grid;justify-items:center;gap:14px;margin-top:clamp(30px,4vw,44px)}
+.foot nav a{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--soft)}
+.foot nav a:hover{color:var(--accent)}
+.wa-float,.top-btn{position:fixed;z-index:25;display:grid;place-items:center;border-radius:50%;text-decoration:none}
+.wa-float{right:calc(env(safe-area-inset-right,0px) + 18px);bottom:calc(env(safe-area-inset-bottom,0px) + 18px);width:58px;height:58px;color:#fff;
+  background:linear-gradient(135deg,#3498ff,#1e8fe6);box-shadow:0 10px 30px rgba(14,114,186,.5),0 0 0 1px rgba(255,255,255,.14) inset;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.wa-float svg{width:28px;height:28px;fill:currentColor}
+.wa-float::after{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(52,152,255,.8);opacity:0;animation:waRing 5s cubic-bezier(.2,.7,.2,1) 3s infinite;pointer-events:none}
+@keyframes waRing{0%{opacity:.8;transform:scale(1)}22%,100%{opacity:0;transform:scale(1.7)}}
+.wa-float:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 14px 36px rgba(14,114,186,.6),0 0 0 1px rgba(255,255,255,.2) inset}
+.top-btn{right:calc(env(safe-area-inset-right,0px) + 24px);bottom:calc(env(safe-area-inset-bottom,0px) + 90px);width:46px;height:46px;color:#fff;
+  background:rgba(8,12,18,.78);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  opacity:0;visibility:hidden;transform:translateY(14px) scale(.6);transition:opacity .3s,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s .5s,border-color .2s,background .2s}
+.top-btn.show{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s,border-color .2s,background .2s}
+.top-btn:hover{border-color:var(--accent);background:rgba(30,163,237,.2)}
+.top-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
+.top-btn:hover svg{transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){.wa-float::after{animation:none}.top-btn,.top-btn.show{transition:opacity .2s,visibility 0s}}
 
 /* ---------- phones & tablets ---------- */
 @media (max-width:980px){
@@ -307,19 +370,18 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   .hero .lede,.hero-acts{margin-inline:auto}
   .hero h1 .ln{display:inline}
   .eb.hero-eb{justify-content:center}
-  .phone-zone{padding:44px 0 56px}
+  .phone-zone{padding:44px 0 84px}
   .hero-acts .row{justify-content:center;margin-top:10px}
   .trust{justify-content:center}
   .why-head,.faq{grid-template-columns:1fr}
   .faq h2{position:static}
   .pts,.facts-n{grid-template-columns:1fr}
-  .pts h3{margin-top:26px}
-  .steps{grid-template-columns:1fr 1fr;row-gap:44px}
-  .steps::before{display:none}
+  .facts-n{gap:clamp(70px,16vw,110px)}
   .plans{grid-template-columns:1fr;max-width:480px;margin-inline:auto;gap:30px}
   .plan .what{min-height:0}
 }
 @media (max-width:560px){
+  .facts-n b{font-size:clamp(76px,22vw,96px)}
   .nav ul{display:none}
   .cta-top{min-height:34px;padding:0 14px;font-size:11px}
   .hero h1{font-size:clamp(44px,12.4vw,60px)}
@@ -329,10 +391,9 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   .float.f1{left:-2%;top:6%}
   .float.f2{right:-3%;top:46%}
   .float.f3{display:none}
-  .steps{grid-template-columns:1fr}
+  .how-acc .ac-b p{padding-left:0}
   .seg label{padding:0 14px;letter-spacing:.1em;font-size:11.5px}
   .toggles{flex-direction:column;align-items:center}
-  .foot{flex-direction:column}
 }
 </style>
 </head>
@@ -394,21 +455,28 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   <!-- ======== why ======== -->
   <section class="sec wrap" aria-labelledby="why-h">
     <div class="why-head">
-      <h2 id="why-h" data-rv>Gravity is a <em>daily habit.</em></h2>
-      <p class="lede" data-rv="2">Brands that pull people in don’t post louder, they show up more often. Stories are the easiest place to do it, and the hardest to keep up. That part is mine.</p>
+      <h2 id="why-h" data-rv>Why invest in <em>daily stories?</em></h2>
+      <p class="lede" data-rv="2">Stories is the most underrated tool out there to get the attention of your audience. We all watch stories every day, but which of those stories are memorable? In this plan, we will use stories to help your brand stand out and pull in the right people.</p>
     </div>
     <ul class="pts">
       <li data-rv><span class="n">01</span><h3>First thing they see</h3><p>Stories sit at the top of the app, above the feed. A story every day keeps your name in the first row your followers tap.</p></li>
       <li data-rv="2"><span class="n">02</span><h3>Always on brand</h3><p>One look, one voice, every day. People start recognising you before they read your name.</p></li>
       <li data-rv="3"><span class="n">03</span><h3>No daily scramble</h3><p>I plan the month, design and edit every story, and post them if you want. You approve in WhatsApp and get on with your day.</p></li>
-      <li data-rv><span class="n">04</span><h3>Skyrocket engagement</h3><p>Polls, quizzes, questions and sliders turn viewers into tappers and repliers. And Instagram ranks your next story on exactly that: <a href="https://www.socialmediatoday.com/news/instagram-stories-ranking-factors-2025/738541/" target="_blank" rel="noopener">taps, likes and replies</a>, says Adam Mosseri.</p></li>
+      <li data-rv><span class="n">04</span><h3>Skyrocket engagement</h3><p>Polls, quizzes, questions and sliders turn viewers into tappers and repliers. And Instagram ranks your next story on exactly that: <a href="https://www.socialmediatoday.com/news/instagram-stories-ranking-factors-2025/738541/" target="_blank" rel="noopener">taps, likes and replies</a>, says Adam Mosseri, Head of Instagram.</p></li>
       <li data-rv="2"><span class="n">05</span><h3>Boost visibility</h3><p>Location stickers, hashtag stickers, mentions and tags carry your stories past your followers, and every guest who reshares puts you in front of theirs.</p></li>
       <li data-rv="3"><span class="n">06</span><h3>Turn views into visits</h3><p>Link stickers take people straight to your menu, your booking page or your WhatsApp, while the craving is still fresh.</p></li>
     </ul>
-    <ul class="facts-n">
-      <li data-rv><span class="n">07</span><b>3B</b><p>people use Instagram every month.</p><a href="https://www.thestar.com.my/tech/tech-news/2025/09/25/meta-ceo-zuckerberg-says-instagram-has-grown-to-3-billion-monthly-active-users" target="_blank" rel="noopener">Mark Zuckerberg, via Reuters, Sept 2025 ↗</a></li>
-      <li data-rv="2"><span class="n">08</span><b>500M<i>+</i></b><p>accounts use Instagram Stories every day.</p><a href="https://business.instagram.com/igb/a/stories" target="_blank" rel="noopener">Instagram for Business ↗</a></li>
-      <li data-rv="3"><span class="n">09</span><b>58<i>%</i></b><p>of people say they became more interested in a brand after seeing it in Stories.</p><a href="https://business.instagram.com/igb/a/stories" target="_blank" rel="noopener">Instagram for Business ↗</a></li>
+  </section>
+
+  <!-- ======== the numbers ======== -->
+  <section class="stats-sky" aria-label="Instagram Stories in numbers">
+    <div class="cl" data-sp=".10" aria-hidden="true"><canvas data-layer="0"></canvas></div>
+    <div class="cl" data-sp=".22" aria-hidden="true" style="--dr:48s"><canvas data-layer="1"></canvas></div>
+    <div class="cl" data-sp=".38" aria-hidden="true" style="--dr:38s"><canvas data-layer="2"></canvas></div>
+    <ul class="facts-n wrap">
+      <li data-rv><b data-n="3" data-u="B">3B</b><p>people use Instagram every month.</p><a href="https://www.thestar.com.my/tech/tech-news/2025/09/25/meta-ceo-zuckerberg-says-instagram-has-grown-to-3-billion-monthly-active-users" target="_blank" rel="noopener">Reuters, Sept 2025 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      <li data-rv="2"><b data-n="500" data-u="M+">500M<i>+</i></b><p>accounts use Instagram Stories every day.</p><a href="https://business.instagram.com/igb/a/stories" target="_blank" rel="noopener">Instagram for Business <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      <li data-rv="3"><b data-n="58" data-u="%">58<i>%</i></b><p>of people say they became more interested in a brand after seeing it in Stories.</p><a href="https://business.instagram.com/igb/a/stories" target="_blank" rel="noopener">Instagram for Business <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
     </ul>
   </section>
 
@@ -449,16 +517,18 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   <section class="sec wrap" id="how" aria-labelledby="how-h">
     <p class="eb" data-rv>How it works</p>
     <h2 id="how-h" data-rv="2">Four steps, <em>then it runs itself.</em></h2>
-    <ol class="steps">
-      <li data-rv><span class="k">01</span><h3>Kickoff</h3><p>A short call about your brand, your offers and who you want to reach. You send your logo, photos and any footage you have.</p></li>
-      <li data-rv="2"><span class="k">02</span><h3>The month, planned</h3><p>Every month I share the plan: what goes out every day, and why. Holidays, occasions and last-minute announcements included.</p></li>
-      <li data-rv="3"><span class="k">03</span><h3>Stories, every day</h3><p>Designed and edited for 9:16, on brand, ready to post. You approve in WhatsApp.</p></li>
-      <li data-rv><span class="k">04</span><h3>Posted, or yours to post</h3><p>Pick “with posting” and I publish them on your account. Or keep the keys and post them yourself.</p></li>
-    </ol>
+    <div class="acc how-acc" data-rv="3">
+      <details class="is-open" open><summary><span class="n">01</span><span class="t">The Kickoff</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>A short call about your brand, your offers and who you want to reach. You send your logo, photos and any footage you have.</p></div></details>
+      <details><summary><span class="n">02</span><span class="t">The Plan</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>Every month I share the plan: what goes out every day, and why. Holidays, occasions and last-minute announcements included.</p></div></details>
+      <details><summary><span class="n">03</span><span class="t">The Execution</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>Every story is designed and edited for 9:16, on brand and ready to post. You approve them in WhatsApp.</p></div></details>
+      <details><summary><span class="n">04</span><span class="t">The Domination</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>Your brand shows up every day. Pick “with posting” and I publish the stories on your account, or keep the keys and post them yourself.</p></div></details>
+    </div>
   </section>
 
   <!-- ======== pricing ======== -->
-  <section class="sec pricing wrap" id="pricing" aria-labelledby="price-h">
+  <section class="pricing" id="pricing" aria-labelledby="price-h">
+    <div class="sky-w" aria-hidden="true"><canvas class="sky"></canvas></div>
+    <div class="sec wrap">
     <div class="head">
       <p class="eb c" data-rv>Packages</p>
       <h2 id="price-h" data-rv="2">Pick your <em>pace.</em></h2>
@@ -517,18 +587,19 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
       </article>
     </div>
     <p class="fine" id="fine" data-rv>A <b>minimum of 4 weeks</b> applies to these prices. Paying by week has no minimum, at a higher weekly rate.</p>
+    </div>
   </section>
 
   <!-- ======== faq ======== -->
   <section class="sec wrap" id="faq" aria-labelledby="faq-h">
     <div class="faq">
-      <h2 id="faq-h" data-rv>Before you <em>ask.</em></h2>
-      <div class="qa" data-rv="2">
-        <details open><summary>Is there a minimum commitment?<i aria-hidden="true"></i></summary><p>The monthly prices need a minimum of 4 weeks. If you’d rather not commit, pay by week: no minimum, at a higher weekly rate. You can switch to monthly whenever you’re ready.</p></details>
-        <details><summary>What does “with posting” mean?<i aria-hidden="true"></i></summary><p>I publish the stories on your account for you, for $5 more a week. Without posting, you receive each story ready to post, and you publish it yourself.</p></details>
-        <details><summary>What do I need to send you?<i aria-hidden="true"></i></summary><p>Your logo and any brand guidelines, plus photos and footage of your products, your space and your team. The more raw material you send, the more variety your stories get.</p></details>
-        <details><summary>What’s the difference between the packages?<i aria-hidden="true"></i></summary><p>Stills is designed images only. Motion adds edited video stories, which is where most of the attention goes. Domination gives you up to five stories a day instead of one, so you show up from morning to night.</p></details>
-        <details><summary>Do you do more than stories?<i aria-hidden="true"></i></summary><p>Yes. Daily stories is one service. For brand strategy, identity and launch campaigns, see <a href="../#services">my services</a> and <a href="../#cases">case studies</a>.</p></details>
+      <h2 id="faq-h" data-rv>Still got <em>questions?</em></h2>
+      <div class="qa acc" data-rv="2">
+        <details class="is-open" open><summary><span class="t">Is there a minimum commitment?</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>The monthly prices need a minimum of 4 weeks. If you’d rather not commit, pay by week: no minimum, at a higher weekly rate. You can switch to monthly whenever you’re ready.</p></div></details>
+        <details><summary><span class="t">What does “with posting” mean?</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>I publish the stories on your account for you, for $5 more a week. Without posting, you receive each story ready to post, and you publish it yourself.</p></div></details>
+        <details><summary><span class="t">What do I need to send you?</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>Your logo and any brand guidelines, plus photos and footage of your products, your space and your team. The more raw material you send, the more variety your stories get.</p></div></details>
+        <details><summary><span class="t">What’s the difference between the packages?</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>Stills is designed images only. Motion adds edited video stories, which is where most of the attention goes. Domination gives you up to five stories a day instead of one, so you show up from morning to night.</p></div></details>
+        <details><summary><span class="t">Do you do more than stories?</span><i aria-hidden="true"></i></summary><div class="ac-b"><p>Yes. Daily stories is one service. For brand strategy, identity and launch campaigns, see <a href="../#services">my services</a> and <a href="../#cases">case studies</a>.</p></div></details>
       </div>
     </div>
   </section>
@@ -542,9 +613,12 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
 </main>
 
 <footer class="foot">
-  <span>Build A Better Brand. <svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.2S2.6 15.6 2.1 9.1C1.8 5.7 4.2 3 7.3 3c2 0 3.6 1.1 4.7 2.8C13.1 4.1 14.7 3 16.7 3c3.1 0 5.5 2.7 5.2 6.1-.5 6.5-9.9 12.1-9.9 12.1z"/></svg> · Mohamad Abou Younes · Azarieh Building, Downtown Beirut, Lebanon</span>
+  <p class="sign">Build A Better Brand. <svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.2S2.6 15.6 2.1 9.1C1.8 5.7 4.2 3 7.3 3c2 0 3.6 1.1 4.7 2.8C13.1 4.1 14.7 3 16.7 3c3.1 0 5.5 2.7 5.2 6.1-.5 6.5-9.9 12.1-9.9 12.1z"/></svg></p>
+  <address><a href="https://www.google.com/maps/search/?api=1&amp;query=Azarieh+Building%2C+Downtown+Beirut%2C+Lebanon" target="_blank" rel="noopener">Azarieh Building, Downtown Beirut, Lebanon</a></address>
   <nav aria-label="Footer"><a href="../">Home</a><a href="../#work">All work</a><a href="../#cases">Case studies</a><a href="../#services">Services</a><a href="mailto:introducingmo@gmail.com?subject=Daily%20stories">Email</a></nav>
 </footer>
+<a class="top-btn" id="toTop" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></a>
+<a class="wa-float" href="https://wa.me/96170783482?text=Hi%20Mo%2C%20I%27m%20interested%20in%20daily%20stories." target="_blank" rel="noopener" aria-label="Chat with Mo on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm0-21.6A11.8 11.8 0 0 0 1.9 18l-1.7 6 6.2-1.6A11.8 11.8 0 1 0 12 .2z"/></svg></a>
 
 <script>
 /* ---------- the phone: stories back to back ----------
@@ -567,7 +641,7 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
     { k: "i", src: "fatayer",      lbl: "Bakery",         a: "B", t: "1h" },
     { k: "i", src: "jewelry-2",    lbl: "Jewelry",        a: "J", t: "5h" },
   ];
-  const IMG_MS = 3400, TURN_MS = 620;
+  const IMG_MS = 2600, TURN_MS = 440;   // a still never holds longer than ~3 s, turn included
   const stage = document.getElementById("stage"); if (!stage) return;
   const now = document.getElementById("now"), nowLbl = document.getElementById("nowLbl"), nowK = document.getElementById("nowK"), nowBtn = document.getElementById("nowBtn");
   const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -695,10 +769,12 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
     plans.forEach((pl, i) => {
       const v = P[bill][i] + (post ? POST : 0), amt = pl.querySelector(".amt");
       if (first || amt.textContent === String(v)) amt.textContent = v;
-      else { amt.classList.add("flip"); setTimeout(() => { amt.textContent = v; amt.classList.remove("flip"); }, 180); }
+      else { amt.classList.add("flip"); setTimeout(() => { amt.textContent = v; amt.classList.remove("flip", "up"); void amt.offsetWidth; amt.classList.add("up"); }, 180); }
       const weekly = P.week[i] + (post ? POST : 0);
       pl.querySelector(".bill").innerHTML = bill === "month" ? `$${v * 4} billed every 4 weeks · <s>$${weekly}</s> by week` : "Billed weekly · no minimum";
-      pl.querySelector(".post span").textContent = post ? "Posted on your account for you" : "Ready to post, sent to you daily";
+      const ps = pl.querySelector(".post span"), pt = post ? "We post daily for you" : "Ready to post, sent to you daily";
+      if (first) ps.textContent = pt;
+      else if (ps.textContent !== pt) { ps.parentElement.classList.add("swap"); setTimeout(() => { ps.textContent = pt; ps.parentElement.classList.remove("swap"); }, 220); }
       pl.querySelector(".btn").href = wa(`Hi Mo, I'd like daily stories: ${names[i]}, paid by ${bill}, ${post ? "with" : "without"} posting ($${v} a week).`);
     });
     fine.innerHTML = bill === "month"
@@ -714,18 +790,144 @@ html.js [data-rv="2"]{transition-delay:.12s}html.js [data-rv="3"]{transition-del
   render();
 })();
 
+/* ---------- how it works & faq: one answer open at a time, opening and closing smoothly ---------- */
+(() => {
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll(".acc").forEach(acc => {
+    const items = [...acc.querySelectorAll("details")];
+    const set = (d, open) => {
+      const b = d.querySelector(".ac-b"); d.classList.toggle("is-open", open);
+      b.getAnimations().forEach(a => a.cancel());
+      if (open) {
+        d.open = true; if (RM) return;
+        b.animate([{ height: "0px", opacity: 0 }, { height: b.scrollHeight + "px", opacity: 1 }], { duration: 460, easing: "cubic-bezier(.2,.7,.2,1)" });
+      } else {
+        if (RM || !d.open) { d.open = false; return; }
+        b.animate([{ height: b.scrollHeight + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 340, easing: "cubic-bezier(.4,0,.2,1)" })
+          .onfinish = () => { if (!d.classList.contains("is-open")) d.open = false; };
+      }
+    };
+    items.forEach(d => {
+      d.querySelector("summary").addEventListener("click", e => {
+        e.preventDefault(); const open = !d.classList.contains("is-open");
+        if (open) items.forEach(o => { if (o !== d && o.classList.contains("is-open")) set(o, false); });
+        set(d, open);
+      });
+      d.addEventListener("toggle", () => {                      // opened some other way (find in page): keep the rule
+        if (d.open && !d.classList.contains("is-open")) { items.forEach(o => { if (o !== d && o.classList.contains("is-open")) set(o, false); }); d.classList.add("is-open"); }
+      });
+    });
+  });
+})();
+
+/* ---------- the numbers: a wing-blue sky with halftone clouds at three depths, and figures that count up ---------- */
+(() => {
+  const sec = document.querySelector(".stats-sky"); if (!sec) return;
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const layers = [...sec.querySelectorAll(".cl")];
+  const h12 = (x, y) => { const q = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return q - Math.floor(q); };
+  const vn = (x, y) => { const ix = Math.floor(x), iy = Math.floor(y), fx = x - ix, fy = y - iy, ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+    const a = h12(ix, iy), b = h12(ix + 1, iy), c = h12(ix, iy + 1), d = h12(ix + 1, iy + 1);
+    return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy; };
+  const fbm = (x, y) => { let s = 0, a = .55; for (let k = 0; k < 4; k++) { s += a * vn(x, y); x = x * 2.03 + 17.1; y = y * 2.03 + 9.7; a *= .42; } return s / .917; };
+  const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const P = [{ sc: 120, th: .6, al: .12, pitch: 9 }, { sc: 190, th: .6, al: .18, pitch: 11 }, { sc: 300, th: .6, al: .25, pitch: 13 }];   // far, mid, near
+  let drawnW = 0;
+  const paint = () => {
+    const vw = sec.clientWidth; if (!vw || vw === drawnW) return; drawnW = vw;
+    layers.forEach((L, i) => {
+      const cv = L.querySelector("canvas"), w = L.clientWidth, h = L.clientHeight, dpr = Math.min(2, devicePixelRatio || 1), p = P[i];
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.fillStyle = "#fff"; ctx.globalAlpha = p.al;
+      for (let r = 0, y = p.pitch / 2; y < h; r++, y += p.pitch * .87)
+        for (let x = p.pitch / 2 + (r % 2) * p.pitch / 2; x < w; x += p.pitch) {
+          const d = ss(p.th, p.th + .15, fbm(x / p.sc + i * 37.3, y / p.sc * 2.3 + i * 11.9)); if (d < .03) continue;
+          ctx.beginPath(); ctx.arc(x, y, p.pitch * .47 * Math.sqrt(d), 0, 6.283); ctx.fill();
+        }
+    });
+  };
+  new IntersectionObserver(es => { if (es[0].isIntersecting) paint(); }, { rootMargin: "800px 0px" }).observe(sec);
+  let rt = 0; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { drawnW = 0; if (sec.getBoundingClientRect().top < innerHeight + 800) paint(); }, 250); });
+  // parallax: the near clouds travel further than the far ones
+  if (!RM) {
+    let tk = false;
+    const move = () => { tk = false; const r = sec.getBoundingClientRect(); if (r.bottom < -200 || r.top > innerHeight + 200) return;
+      const c = r.top + r.height / 2 - innerHeight / 2; layers.forEach(L => L.style.translate = `0 ${(c * -L.dataset.sp).toFixed(1)}px`); };
+    addEventListener("scroll", () => { if (!tk) { tk = true; requestAnimationFrame(move); } }, { passive: true }); move();
+  }
+  // count up once, when each figure arrives
+  const fmt = (b, v) => { b.innerHTML = Math.round(v) + b.dataset.u.replace(/([+%])$/, "<i>$1</i>"); };
+  if (!RM) {
+    const nums = [...sec.querySelectorAll("b[data-n]")]; nums.forEach(b => fmt(b, 0));
+    const io = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) return; io.unobserve(en.target);
+      const b = en.target, n = +b.dataset.n, t0 = performance.now() + 250, D = 1500;
+      const f = t => { const p = Math.max(0, Math.min(1, (t - t0) / D)); fmt(b, n * (1 - Math.pow(1 - p, 4))); if (p < 1) requestAnimationFrame(f); };
+      requestAnimationFrame(f); }), { threshold: .6 });
+    nums.forEach(b => io.observe(b));
+  }
+})();
+
+/* ---------- the packages, under the stars: three depths that drift as you scroll, lean with the mouse, and twinkle ---------- */
+(() => {
+  const sec = document.getElementById("pricing"), cv = sec && sec.querySelector(".sky"), ctx = cv && cv.getContext("2d"); if (!ctx) return;
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0, dpr = 1, stars = [], on = false, raf = 0, mx = 0, my = 0, tx = 0, ty = 0;
+  const rnd = (a => () => (a = (a * 16807) % 2147483647) / 2147483647)(4517);
+  const size = () => {
+    W = cv.clientWidth; H = cv.clientHeight; if (!W) return; dpr = Math.min(2, devicePixelRatio || 1);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    const n = Math.min(340, Math.round(W * H / 3800)); stars = [];
+    for (let i = 0; i < n; i++) { const z = rnd(); stars.push({ x: rnd(), y: rnd(), z, r: .45 + z * z * 1.5, a: .25 + z * .6, f: .6 + rnd() * 1.8, p: rnd() * 7, b: rnd() < .22 }); }
+  };
+  const draw = t => {
+    raf = 0; if (!W) size(); if (!W) return;
+    mx += (tx - mx) * .05; my += (ty - my) * .05;
+    const top = sec.getBoundingClientRect().top, FH = H * 1.7;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      const sp = .12 + s.z * .5;
+      let y = (s.y * FH + top * sp) % FH; if (y < 0) y += FH; y -= (FH - H) / 2;
+      const x = s.x * W + mx * s.z * 34, yy = y + my * s.z * 22;
+      if (yy < -4 || yy > H + 4) continue;
+      const tw = RM ? 1 : .62 + .38 * Math.sin(t / 1000 * s.f + s.p);
+      ctx.globalAlpha = s.a * tw; ctx.fillStyle = s.b ? "#8bd1fa" : "#dae8f7";
+      ctx.beginPath(); ctx.arc(x, yy, s.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (on && !RM && !document.hidden) raf = requestAnimationFrame(draw);
+  };
+  const kick = () => { if (!raf && on) raf = requestAnimationFrame(draw); };
+  addEventListener("pointermove", e => { if (!on || e.pointerType === "touch") return; tx = (e.clientX / innerWidth - .5) * 2; ty = (e.clientY / innerHeight - .5) * 2; }, { passive: true });
+  addEventListener("resize", () => { size(); kick(); });
+  if (RM) addEventListener("scroll", kick, { passive: true });
+  document.addEventListener("visibilitychange", kick);
+  new IntersectionObserver(es => { on = es[0].isIntersecting; kick(); }).observe(sec);
+})();
+
+/* ---------- back to top: pops up once you're a screen down, sitting above the WhatsApp button ---------- */
+(() => {
+  const b = document.getElementById("toTop"); if (!b) return;
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let shown = false;
+  const check = () => { const s = scrollY > innerHeight * 1.1; if (s !== shown) { shown = s; b.classList.toggle("show", s); } };
+  addEventListener("scroll", check, { passive: true }); check();
+  b.addEventListener("click", e => { e.preventDefault(); scrollTo({ top: 0, behavior: RM ? "auto" : "smooth" }); document.querySelector(".mark").focus({ preventScroll: true }); });
+})();
+
 /* ---------- motion: reveals, parallax, the sliding rows, the header ---------- */
 (() => {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   document.querySelectorAll("[data-rv]").forEach(el => io.observe(el));
   const top = document.getElementById("top");
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) { addEventListener("scroll", () => top.classList.toggle("scrolled", scrollY > 30), { passive: true }); return; }
-  const pars = [...document.querySelectorAll("[data-par]")], rows = [...document.querySelectorAll(".row-t")], variety = document.querySelector(".variety");
+  const pts = [...document.querySelectorAll(".pts li")], pars = [...document.querySelectorAll("[data-par]")], rows = [...document.querySelectorAll(".row-t")], variety = document.querySelector(".variety");
   let ticking = false;
   const frame = () => {
     ticking = false; const vh = innerHeight;
     top.classList.toggle("scrolled", scrollY > 30);
     pars.forEach(el => { const r = el.parentElement.getBoundingClientRect(); const c = r.top + r.height / 2 - vh / 2; el.style.transform = `translate3d(0,${(c * +el.dataset.par).toFixed(1)}px,0)`; });
+    pts.forEach((el, i) => { const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const c = r.top + r.height / 2 - vh / 2;
+      el.style.setProperty("--gy", (c * -.22).toFixed(1) + "px"); el.style.setProperty("--gx", (c * (i % 2 ? .08 : -.08)).toFixed(1) + "px"); });
     if (variety) { const r = variety.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) {
       const p = (vh - r.top) / (vh + r.height);
       rows.forEach(row => { const span = Math.max(0, row.scrollWidth - innerWidth); const d = +row.dataset.dir;

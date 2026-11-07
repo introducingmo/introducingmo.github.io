@@ -17,7 +17,9 @@
 .menu-btn.active .pulse.p2{animation:pulseRing .7s cubic-bezier(.2,.7,.2,1) .12s}
 @keyframes pulseRing{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(3.2)}}
 /* social icons in their own colours (Instagram's gradient is defined once in the page as #ig-grad) */
-.menu-social a{--bc:#fff}
+.menu-social a{--bc:#000;--hc:color-mix(in srgb,var(--bc) 55%,transparent)}
+.menu-social a[aria-label]{background:#fff;border-color:#fff}
+.menu-social a:is([aria-label="X"],[aria-label="Threads"],[aria-label="TikTok"]){--hc:rgba(255,255,255,.55)}
 .menu-social a[aria-label="Instagram"]{--bc:#e1306c}
 .menu-social a[aria-label="Facebook"]{--bc:#1877f2}
 .menu-social a[aria-label="LinkedIn"]{--bc:#0a66c2}
@@ -28,7 +30,7 @@
 .menu-social a svg{fill:var(--bc)}
 .menu-social a[aria-label="Instagram"] svg{fill:url(#ig-grad)}
 .menu-social a[aria-label="TikTok"] svg{filter:drop-shadow(-1px -1px 0 #25f4ee) drop-shadow(1px 1px 0 #fe2c55)}
-.menu-social a[aria-label]:hover{border-color:var(--bc);background:color-mix(in srgb,var(--bc) 16%,transparent)}
+.menu-social a[aria-label]:hover{border-color:#fff;background:#fff;box-shadow:0 0 0 3px var(--hc)}
 /* ---------- full menu overlay ---------- */
 .menu{position:fixed;inset:0;z-index:29;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   clip-path:circle(0px at calc(100% - 48px) 46px);transition:clip-path .75s cubic-bezier(.76,0,.24,1);pointer-events:none;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
@@ -70,7 +72,7 @@
 .menu.closing .menu-nav a:nth-child(3){animation-delay:.12s}
 .menu.closing .menu-nav a:nth-child(2){animation-delay:.15s}
 .menu.closing .menu-nav a:nth-child(1){animation-delay:.18s}
-.menu-social a{box-sizing:border-box;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--soft);transition:color .2s,border-color .2s,background .2s,transform .2s}
+.menu-social a{box-sizing:border-box;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--soft);transition:color .2s,border-color .2s,background .2s,transform .2s,box-shadow .2s}
 .menu-social a:hover{color:#fff;border-color:var(--accent);background:var(--accent-soft);transform:translateY(-3px)}
 .menu-social svg{width:18px;height:18px;fill:currentColor}
 @media (prefers-reduced-motion:reduce){.menu,.menu-nav a,.menu-social{transition:none;animation:none}.menu.open .menu-nav a,.menu.open .menu-social{opacity:1;transform:none;animation:none}.menu.closing .menu-nav a,.menu.closing .menu-social{opacity:0;animation:none}}
@@ -83,3 +85,8 @@
 .site-top{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 16px) clamp(16px,4vw,56px) 14px}
 .site-top .mark{display:block;width:28px;height:29px}
 .site-top .mark img{width:100%;height:100%;object-fit:contain;display:block}
+/* images and video: no dragging out, no iOS save callout (a deterrent; see nav.js) */
+img,video{-webkit-user-drag:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+/* every button answers a press: it gives a little, and two rings ripple out (see nav.js) */
+.btn:active{scale:.97}
+.tap-ring{position:fixed;z-index:60;pointer-events:none;box-sizing:border-box;border:1.5px solid var(--ring,#1ea3ed)}

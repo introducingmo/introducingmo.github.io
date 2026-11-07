@@ -32,3 +32,22 @@
   menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setOpen(false)));
   addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
 })();
+
+/* Every page: images and video can't be dragged out or saved from the context menu (a deterrent; anything on
+   screen can still be captured), and a pressed button sends out two rings, like the menu button. */
+(() => {
+  const keep = e => { if (e.target.closest && e.target.closest("img,video,canvas,picture")) e.preventDefault(); };
+  document.addEventListener("contextmenu", keep); document.addEventListener("dragstart", keep);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !Element.prototype.animate) return;
+  document.addEventListener("pointerdown", e => {
+    const b = e.button === 0 && e.target.closest(".btn,.seg label,.cta-top,.wa-float,.top-btn"); if (!b) return;
+    const r = b.getBoundingClientRect(), cs = getComputedStyle(b), col = b.dataset.ring || (b.closest(".talk") ? "#fff" : "#1ea3ed");
+    [0, 120].forEach(delay => {
+      const o = document.createElement("span"); o.className = "tap-ring";
+      o.style.cssText = `left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;border-radius:${cs.borderRadius};--ring:${col};opacity:0`;
+      document.body.appendChild(o);
+      o.animate([{ opacity: .85, transform: "scale(1)" }, { opacity: 0, transform: `scale(${1 + 44 / r.width},${1 + 44 / r.height})` }],
+        { duration: 700, delay, easing: "cubic-bezier(.2,.7,.2,1)", fill: "forwards" }).onfinish = () => o.remove();
+    });
+  }, { passive: true });
+})();

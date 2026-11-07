@@ -6,7 +6,7 @@
 @font-face{font-family:"Mrs Saint Delafield";src:url(../fonts/mrs-saint-delafield.woff2) format("woff2");font-display:swap}
 /* Case-study pages: the same world as the home page (black, wing blue, Archivo / Playfair italic / Lato), built for reading */
 :root{
-  --bg:#000;--btn:#1872b3;--ink:#eef2f6;--soft:#c6ced7;--muted:#9ba7b4;--accent:#2b9fe0;--line:rgba(255,255,255,.12);
+  --bg:#000;--btn:#0e72ba;--ink:#eef2f6;--soft:#c6ced7;--muted:#9ba7b4;--accent:#1ea3ed;--line:rgba(255,255,255,.12);
   --t-sans:"Archivo","Helvetica Neue",Arial,sans-serif;
   --f-serif:"Playfair Display",Georgia,"Times New Roman",serif;
   --f-ui:"Lato","Helvetica Neue",Arial,sans-serif;
@@ -34,7 +34,8 @@ img{max-width:100%;display:block}
 .nav ul a:hover{opacity:1;color:var(--accent)}
 .cta-top{display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-.cta-top:hover{background:#fff;color:#0b5f93}
+.cta-top{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 2px rgba(3,30,60,.3);box-shadow:0 6px 18px rgba(14,114,186,.32);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.cta-top:hover{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(30,163,237,.45)}
 .cta-top .s{display:none}
 
 /* type */
@@ -42,7 +43,7 @@ img{max-width:100%;display:block}
 .eb::before{content:"";flex:none;width:28px;height:1px;background:currentColor}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
   font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;border:1px solid var(--btn);transition:background .2s,color .2s,transform .2s}
-.btn:hover{background:#fff;border-color:#fff;color:#0b5f93;transform:translateY(-2px)}
+.btn:hover{background:#fff;border-color:#fff;color:#065f95;transform:translateY(-2px)}
 .btn.ghost{background:transparent;border-color:rgba(238,242,246,.5);color:var(--ink)}
 .btn.ghost:hover{background:var(--ink);color:#000}
 .wrap{max-width:1180px;margin:0 auto;padding:0 var(--gutter)}
@@ -86,7 +87,7 @@ img{max-width:100%;display:block}
 .gal figure{margin:0;grid-column:span 4;display:grid;gap:10px}
 .gal figure.w6{grid-column:span 6}
 .gal figure.w8{grid-column:span 8}
-.gal figure img,.gal .ph{width:100%;border-radius:12px;object-fit:cover;background:#0b1622}
+.gal figure img,.gal .ph{width:100%;border-radius:12px;object-fit:cover;background:#071627}
 .gal figure img{aspect-ratio:4/5;height:auto}            /* rows line up: 4 cols at 4:5 = 8 cols at 16:10 */
 .gal figure.w6 img,.gal figure.w6 .ph{aspect-ratio:4/3}
 .gal figure.w8 img,.gal figure.w8 .ph{aspect-ratio:16/10}
@@ -97,8 +98,8 @@ img{max-width:100%;display:block}
 .gal-g{align-items:start}
 
 /* placeholder for photography that isn't here yet */
-.ph{display:grid;place-items:center;text-align:center;padding:24px;aspect-ratio:var(--r,4/3);border:1px dashed rgba(43,159,224,.5);
-  background:radial-gradient(circle,rgba(43,159,224,.28) 1.2px,transparent 1.6px) 0 0/14px 14px,#05090e;color:var(--soft);font-size:14px;line-height:1.45}
+.ph{display:grid;place-items:center;text-align:center;padding:24px;aspect-ratio:var(--r,4/3);border:1px dashed rgba(30,163,237,.5);
+  background:radial-gradient(circle,rgba(30,163,237,.28) 1.2px,transparent 1.6px) 0 0/14px 14px,#05090e;color:var(--soft);font-size:14px;line-height:1.45}
 .ph b{display:block;margin-bottom:6px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
 
 /* quote */
@@ -114,13 +115,16 @@ img{max-width:100%;display:block}
 .next span{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .next strong{font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(28px,3vw,44px);line-height:.95}
 .next em{font-family:var(--f-serif);color:var(--soft);font-size:18px}
-.talk{margin:0 var(--gutter) clamp(40px,6vw,80px);padding:clamp(36px,5vw,72px);border-radius:22px;background:linear-gradient(135deg,#1b78b8,#0b5287);text-align:center}
+.talk{margin:0 var(--gutter) clamp(40px,6vw,80px);padding:clamp(36px,5vw,72px);border-radius:22px;background:linear-gradient(135deg,#0f77bf,#06528a);text-align:center}
 .talk h2{margin:0;font-family:var(--t-sans);font-weight:900;font-stretch:86%;font-size:clamp(38px,5vw,76px);line-height:.92;letter-spacing:-.02em;text-wrap:balance}
 .talk h2 em{font-family:var(--f-serif);font-style:italic;font-weight:400;font-stretch:100%}
 .talk p{margin:16px auto 28px;max-width:30em;font-size:18px}
 .talk .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.talk .btn{background:#fff;border-color:#fff;color:#0b5f93}
-.talk .btn:hover{background:#08131f;border-color:#08131f;color:#fff}
+.talk .btn{background:#fff;border-color:#fff;color:#065f95}
+.talk .btn.grad{color:#fff;background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:0 50%;border-color:transparent;text-shadow:0 1px 2px rgba(3,30,60,.3);box-shadow:0 6px 18px rgba(14,114,186,.32);transition:background-position .5s cubic-bezier(.2,.7,.2,1),transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s;box-shadow:0 0 0 1.5px rgba(255,255,255,.85),0 10px 26px rgba(3,30,60,.35)}
+.talk .btn.grad:hover{background:linear-gradient(100deg,var(--btn) 0%,var(--btn) 30%,#3db3f4 100%);background-size:130% 100%;background-position:100% 50%;color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 26px rgba(30,163,237,.45);box-shadow:0 0 0 1.5px #fff,0 12px 30px rgba(3,30,60,.4)}
+.foot .heart{display:inline-block;width:1em;height:1em;vertical-align:-.15em;fill:#8fd3fb}
+.talk .btn:hover{background:#051323;border-color:#051323;color:#fff}
 .talk .btn.ghost{background:transparent;border-color:#fff;color:#fff}
 
 .foot{border-top:1px solid var(--line);padding:32px var(--gutter) calc(env(safe-area-inset-bottom,0px) + 32px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted)}

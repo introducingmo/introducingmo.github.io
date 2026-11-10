@@ -844,7 +844,7 @@ html.js .steps li[data-rv].in{transform:none}
       <div class="hero-foot" id="heroFoot">
         <div class="pitch"><p class="warm">Welcome to the table. Pull up a&nbsp;chair.</p></div>
         <div class="act">
-          <div class="cta-row"><a class="btn grad" href="#contact">Discuss your project</a><a class="btn ghost" href="#work">View the work</a></div>
+          <div class="cta-row"><a class="btn grad" href="#contact">Contact</a><a class="btn ghost" href="#work">View the work</a></div>
         </div>
         <div class="cue"><span class="label">Or scroll for the story</span><span class="rail"></span></div>
       </div>
@@ -1849,8 +1849,8 @@ void main(){
       loc: "Beirut, Lebanon", years: "9 years", capital: "$1M", img: "hkn-diamonds",
       alt: "HKN Diamonds rebrand: website on a desktop and phones, brand guideline spreads and a diamond tennis bracelet" },
     { name: "800PIZZA", short: "800PIZZA", cat: "Pizza Restaurant", scope: "Brand Uplift, Content Strategy & Implementation", line: "Thin, light and crispy, served with the match.",
-      loc: "Dubai, United Arab Emirates", years: "19 years", capital: "$1.5M", img: "800pizza",
-      alt: "800PIZZA football campaign: illustrated pizza box, posters, menu, flour sacks and a white chef shirt with burgundy braces" },
+      loc: "Dubai, United Arab Emirates", years: "19 years", capital: "$1.5M", img: "800pizza-2",
+      alt: "A smiling guest in a black apron holding an 800PIZZA box, illustrated with a delivery rider crossing a bridge in Rome" },
     { name: "Ifran", short: "Ifran", cat: "Beauty & Haircare", scope: "Rebranding, Launch & Social Media Strategy", line: "From Beirut to Kuwait, one viral launch at a time.",
       loc: "Beirut, Lebanon & Kuwait", img: "ifran",
       alt: "Ifran Cloudy Dust dry shampoo in lilac, between its pastel cloud-print boxes" },
@@ -1873,11 +1873,29 @@ void main(){
       loc: "Jeddah, Saudi Arabia", years: "5 years", capital: "$400k", img: "brand-story",
       alt: "Brand Story stationery suite in blue and violet: letterhead, cards, envelopes, a tablet and the company profile",
       link: "https://brandstory.com.sa/wp-content/uploads/2023/11/Brand-Story-Company-Profile-Web.pdf" },
+    { name: "Ahlan Salzburg", short: "Ahlan Salzburg", cat: "Premium Travel & Experiences", scope: "Brand Strategy & Brand Identity", line: "An Arabic welcome to Salzburg.",
+      loc: "Salzburg, Austria", img: "ahlan-salzburg",
+      alt: "Ahlan Salzburg brand board: a deep teal logo with a lime arrow, a line drawing of the Salzburg skyline, business cards, a tote bag and a seven-colour palette" },
+    { name: "Djaj W Toum", short: "Djaj W Toum", cat: "Chicken Restaurant", scope: "Brand Strategy & Brand Identity", line: "Chicken, garlic and a rooster with attitude.",
+      loc: "Jeddah, Saudi Arabia", img: "djaj-w-toum",
+      alt: "Djaj W Toum identity: a hand-drawn rooster logo in red, white and black, a grilled chicken wrap rising from flames, and Instagram posts on a phone" },
+    { name: "Mirror Skin", short: "Mirror Skin", cat: "Premium Skincare", scope: "Brand Strategy, Brand Identity & Launch", line: "Where skincare becomes self-care.",
+      loc: "Dubai, United Arab Emirates", img: "mirror-skin",
+      alt: "A woman holding an iridescent Mirror Skin box in the desert at dusk, with another woman in pink standing in the distance" },
+    { name: "MAPO", short: "MAPO", cat: "Skincare", scope: "Brand Strategy & Brand Identity", line: "Calm, considered skincare from Beirut.",
+      loc: "Beirut, Lebanon", img: "mapo",
+      alt: "The MAPO skincare range in sage green, cream and gold: cleansing gel, serum, eye gel, sunscreen and creams on travertine" },
+    { name: "Caffe Borbone", short: "Caffe Borbone", cat: "Italian Coffee & Café", scope: "Brand Uplift & Collaterals", line: "Naples’ coffee, poured by the sea in Dubai.",
+      loc: "Dubai, United Arab Emirates", img: "caffe-borbone",
+      alt: "A smiling waiter giving a thumbs-up beside a woman holding a pizza on the café terrace at Conestreet, JBR" },
+    { name: "Master Matcha", short: "Master Matcha", cat: "Organic Matcha", scope: "Brand Strategy & Brand Identity", line: "Ceremonial grade, made for every day.",
+      loc: "Jeddah, Saudi Arabia", img: "master-matcha",
+      alt: "Three Master Matcha tins in green, orange and cream, their lids lifting to show matcha sticks, in a pastel kitchen" },
   ];
-  const WK_ROT = [-7, 8.5, -6, 9, -8, 6.5, -9, 7, -6.5, 8, -7.5];        // alternating, never near straight: neighbours differ by 12°+
-  const WK_IN = [38, 25, -20, 60, -75, 5, 45, -35, 15, -50, 30];          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll          // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll
-  const WK_DY = [0, 14, -10, 8, -14, 10, -6, 12, -8, 6, -12];
-  const WK_S0 = 0, WK_STEP = .078, WK_DUR = .11;
+  const WK_ROT = [-7, 8.5, -6, 9, -8, 6.5, -9, 7, -6.5, 8, -7.5, 9, -6, 7.5, -8.5, 6, -7];        // alternating, never near straight: neighbours differ by 12°+
+  const WK_IN = [38, 25, -20, 60, -75, 5, 45, -35, 15, -50, 30, -60, 20, -15, 55, -40, 10];   // entry direction, degrees from the right (− above, + below); the first rises from below with the scroll
+  const WK_DY = [0, 14, -10, 8, -14, 10, -6, 12, -8, 6, -12, 10, -8, 14, -10, 6, -12];
+  const WK_DUR = 1.21 / WK.length, WK_S0 = 0, WK_STEP = (.89 - WK_DUR) / (WK.length - 1);   // ~70vh to land, ~50vh between cards, whatever the count
   // the first card starts early — while "Field work" is still rising past mid-screen — and has landed by the time the title is gone
   const wkStart = (i, span) => i ? WK_S0 + i * WK_STEP : -innerHeight * .55 / span;
   const wkDur = (i, span) => i ? WK_DUR : innerHeight * .9 / span;
@@ -1890,6 +1908,7 @@ void main(){
   const wkArr = p => p.cs ? `<a class="tile-arr" href="${p.cs}" aria-label="Read the ${escH(p.name)} case study">${ARR}</a>` : "";
   const wkImgLink = p => p.link ? `<a class="tile-link" href="${p.link}" target="_blank" rel="noopener" aria-label="${escH(p.short)}’s company profile (opens in a new tab)"></a>` : "";
   const wkEl = $("#work"), wkTrk = $("#wkTrk"), wkStage = $("#wkStage"), wkPile = $("#wkPile"), wkIdx = $("#wkIdx"), wkGrid = $("#wkGrid"), wkTiles = $("#wkTiles");
+  wkTrk.style.height = WK.length * 58 + "vh";       // Gravity view: the pinned scroll grows with the number of brands (11 → 640vh)
   const wkWhoS = $("#wkWhoS"), wkWhoW = $("#wkWhoW"), wkWho = wkWhoS.parentElement, wkHead = $(".wk-head"), wkHeadP = wkHead.querySelector("p");
   wkPile.innerHTML = WK.map((p, i) => `<article class="wk-card" data-i="${i}">
       ${p.link ? `<a class="wk-media" href="${p.link}" target="_blank" rel="noopener" aria-label="${escH(p.short)}’s company profile (opens in a new tab)">` : '<div class="wk-media">'}<img src="img/work/${p.img}.webp" alt="${escH(p.alt)}" width="900" height="1117" loading="lazy" decoding="async">${p.link ? "</a>" : "</div>"}
